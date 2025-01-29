@@ -1,0 +1,90 @@
+{
+    "dlanguage": "Language",
+    "@dlanguage": {
+        "description": "Language"
+    },
+    "language": "English",
+    "@language": {
+        "description": "The current Language"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Label for email input field"
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "edit"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "User profile"
+    },
+    "username": "Username",
+    "@username": {
+        "description": "username"
+    },
+    "setting": "Setting",
+    "@setting": {
+        "description": "setting"
+    },
+    "bookmark": "Bookmark",
+    "@bookmark": {
+        "description": "bookmark"
+    },
+    "notification": "Notification",
+    "@notification": {
+        "description": "notification"
+    },
+    "payment_method": "Payment Method",
+    "@payment_method": {
+        "description": "payment_method"
+    },
+    "contact_us": "Contact Us",
+    "@contact_us": {
+        "description": "contact_us"
+    },
+    "about_us": "About Us",
+    "@about_us": {
+        "description": "about_us"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "password"
+    },
+    "password_quide": "Password must be at least 8 characters",
+    "@password_quide": {
+        "description": "password_quide"
+    },
+    "remember_me": "Rememmber me",
+    "@remember_me": {
+        "description": "remember_me"
+    },
+    "forget_password": "Forget Password?",
+    "@forget_password": {
+        "description": "forget_password"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "login"
+    },
+    "sign_up_with": "or sign up with",
+    "@sign_up_with": {
+        "description": "sign_up_with"
+    },
+    "sign_up_with_fb": "sign in with facebook",
+    "@sign_up_with_fb": {
+        "description": "sign_up_with_fb"
+    },
+    "sign_up_with_gmail": "sign in with gmail",
+    "@sign_up_with_gmail": {
+        "description": "sign_up_with_gmail"
+    },
+    "dont_have_acc": "Don’t have any account?",
+    "@dont_have_acc": {
+        "description": "dont_have_acc"
+    },
+    "sign_up": "Sign up",
+    "@sign_up": {
+        "description": "sign_up"
+    }
+}
