@@ -71,14 +71,6 @@
     "@sign_up_with": {
         "description": "sign_up_with"
     },
-    "sign_up_with_fb": "sign in with facebook",
-    "@sign_up_with_fb": {
-        "description": "sign_up_with_fb"
-    },
-    "sign_up_with_gmail": "sign in with gmail",
-    "@sign_up_with_gmail": {
-        "description": "sign_up_with_gmail"
-    },
     "dont_have_acc": "Don’t have any account?",
     "@dont_have_acc": {
         "description": "dont_have_acc"
@@ -86,5 +78,137 @@
     "sign_up": "Sign up",
     "@sign_up": {
         "description": "sign_up"
+    },
+    "create_account": "Create account",
+    "@create_account": {
+        "description": "create_acc"
+    },
+    "confirm_password": "Confirm Password",
+    "@confirm_password": {
+        "description": "confirm_password"
+    },
+    "confirm_password_guide": "Please re-enter your password",
+    "@confirm_password_guide": {
+        "description": "please_re_enter_password"
+    },
+    "sign_in_with_fb": "sign in with facebook",
+    "@sign_in_with_fb": {
+        "description": "sign_in_with_fb"
+    },
+    "sign_in_with_gmail": "sign in with gmail",
+    "@sign_in_with_gmail": {
+        "description": "sign_in_with_gmail"
+    },
+    "already_have_acc": "Already have an account?",
+    "@already_have_acc": {
+        "description": "already_have_acc"
+    },
+    "forget_your_password": "Forget Your Password",
+    "@forget_your_password": {
+        "description": "forget_your_password"
+    },
+    "forget_your_password_guide": "Please enter your email address to verify",
+    "@forget_your_password_guide": {
+        "description": "forget_password_guide"
+    },
+    "back_to_login": "Back to Login,",
+    "@back_to_login": {
+        "description": "back_to_login"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "next"
+    },
+    "verify": "Verify",
+    "@verify": {
+        "description": "verify"
+    },
+    "verify_guide": "We've sent you the email, please check your Email to verify",
+    "@verify_guide": {
+        "description": "verify_guide"
+    },
+    "not_receive_code": "If you don't receive the code,",
+    "@not_receive_code": {
+        "description": "not_receive_cde"
+    },
+    "resend": "Resend",
+    "@resend": {
+        "description": "resend"
+    },
+    "change_password": "Change Password",
+    "@change_password": {
+        "description": "change_password"
+    },
+    "change_password_guide": "Please enter your new password and confirm password",
+    "@change_password_guide": {
+        "description": "change_password_guide"
+    },
+    "new_password": "New password",
+    "@new_password": {
+        "description": "New password"
+    },
+    "confirm_new_password": "Re-enter your password",
+    "@confirm_new_password": {
+        "description": "confirm_new_password"
+    },
+    "current_location": "Current Location",
+    "@current_location": {
+        "description": "current_location"
+    },
+    "search_event": "Search Event",
+    "@search_event": {
+        "description": "search_event"
+    },
+    "welcome": "Welcome!",
+    "@welcome": {
+        "description": "welcome"
+    },
+    "view_ticket": "View Ticket",
+    "@view_ticket": {
+        "description": "view_ticket"
+    },
+    "view_profile": "View Profile",
+    "@view_profile": {
+        "description": "view_profile"
+    },
+    "sport": "Sport",
+    "@sport": {
+        "description": "sport"
+    },
+    "concert": "Concert",
+    "@concert": {
+        "description": "concert"
+    },
+    "fashion": "Fashion",
+    "@fashion": {
+        "description": "fashion"
+    },
+    "upcoming_event": "Upcoming Event",
+    "@upcoming_event": {
+        "description": "upcoming_event"
+    },
+    "see_all": "See all",
+    "@see_all": {
+        "description": "see_all"
+    },
+    "view_detail": "view detail",
+    "@view_detail": {
+        "description": "view_detail"
+    },
+    "apply_code_to_get_voucher": "Apply code to get free voucher",
+    "@apply_code_to_get_voucher": {
+        "description": "apply_code_to_get_voucher"
+    },
+    "enter_code": "Enter Code",
+    "@enter_code": {
+        "description": "enter_code"
+    },
+    "nearby_you": "Nearby you",
+    "@nearby_you": {
+        "description": "nearby_you"
+    },
+    "showing": "Showing",
+    "@showing": {
+        "description": "showing"
     }
 }

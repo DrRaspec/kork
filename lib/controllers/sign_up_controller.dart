@@ -1,8 +1,8 @@
-part of '../views/login_view.dart';
+part of '../views/sign_up_view.dart';
 
-class LoginController extends GetxController {
+class SignUpController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  var isRemember = false.obs;
+  final TextEditingController conPasswordController = TextEditingController();
 }

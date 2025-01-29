@@ -1,4 +1,4 @@
-part of '../screens/profile_view.dart';
+part of '../views/profile_view.dart';
 
 class ProfileBinding extends Bindings {
   @override

@@ -1,4 +1,4 @@
-part of '../screens/profile_view.dart';
+part of '../views/profile_view.dart';
 
 class ProfileController extends GetxController {
   final languageController = Get.find<LanguageController>();
