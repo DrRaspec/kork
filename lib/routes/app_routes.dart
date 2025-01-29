@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/change_password_view.dart';
 import 'package:kork/views/forget_password_view.dart';
+import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
 import 'package:kork/views/profile_view.dart';
 import 'package:kork/views/sign_up_view.dart';
@@ -31,5 +33,15 @@ var appRoutes = [
     name: Routes.verifyOtp,
     page: () => const VerifyOtpView(),
     binding: VerifyOtpBinding(),
+  ),
+  GetPage(
+    name: Routes.changePassword,
+    page: () => const ChangePasswordView(),
+    binding: ChangePasswordBinding(),
+  ),
+  GetPage(
+    name: Routes.home,
+    page: () => const HomeView(),
+    binding: HomeBinding(),
   ),
 ];

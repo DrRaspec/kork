@@ -167,11 +167,6 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                             child: Center(
                               child: TextFormField(
                                 controller: controller.textFieldFour,
-                                onChanged: (value) {
-                                  if (value.length == 1) {
-                                    Get.focusScope!.nextFocus();
-                                  }
-                                },
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
                                 inputFormatters: [
@@ -210,17 +205,14 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                                 color: Color(0xffC9131E),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 24),
                       GestureDetector(
                         onTap: () {
                           if (controller.formKey.currentState!.validate()) {
-                            Get.snackbar(
-                              'Send messsage',
-                              'Message already send to email',
-                            );
+                            Get.toNamed(Routes.changePassword);
                           }
                         },
                         child: Container(
