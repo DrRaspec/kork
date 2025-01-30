@@ -13,19 +13,35 @@ part of 'package:kork/main.dart';
 
 // for boolean
 class LanguageController extends GetxController {
+  static const LANGUAGE_KEY = 'selected_language';
+
   var currentLocale = Get.deviceLocale ?? const Locale('en');
   var isEnglish = true.obs;
+
+  final SharedPreferences _prefs;
+  LanguageController(this._prefs);
 
   @override
   void onInit() {
     super.onInit();
+    loadSaveLanguage();
     // Initialize isEnglish based on current locale
-    isEnglish.value = currentLocale.languageCode == 'en';
+    // isEnglish.value = currentLocale.languageCode == 'en';
   }
 
-  void switchLanguage(bool value) {
+  void loadSaveLanguage() {
+    String savedLang = _prefs.getString(LANGUAGE_KEY) ?? 'en';
+    isEnglish.value = savedLang == 'en';
+    currentLocale = Locale(savedLang);
+    Get.updateLocale(currentLocale);
+  }
+
+  void switchLanguage(bool value) async {
     isEnglish.value = value;
-    currentLocale = Locale(value ? 'en' : 'km');
+    String newLang = value ? 'en' : 'km';
+    currentLocale = Locale(newLang);
+
+    await _prefs.setString(LANGUAGE_KEY, newLang);
     Get.updateLocale(currentLocale);
   }
 }

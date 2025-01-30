@@ -43,8 +43,8 @@ class ProfileView extends GetView<ProfileController> {
                   ),
                 ),
                 Container(
-                  width: 134,
-                  height: 134,
+                  width: 131,
+                  height: 131,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Theme.of(context).colorScheme.onInverseSurface,
