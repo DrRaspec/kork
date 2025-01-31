@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/event_category.dart';
+import 'package:kork/widget/up_coming_widget.dart';
 
 part '../controllers/home_controller.dart';
 part '../bindings/home_binding.dart';
@@ -55,8 +56,8 @@ class HomeView extends GetView<HomeController> {
                                                 .current_location,
                                             style: TextStyle(
                                               fontSize: 12,
-                                              color: Get.theme.colorScheme
-                                                  .surfaceTint,
+                                              color: Get
+                                                  .theme.colorScheme.tertiary,
                                             ),
                                           ),
                                           const SizedBox(width: 1),
@@ -140,8 +141,8 @@ class HomeView extends GetView<HomeController> {
                                                   .search_event,
                                           hintStyle: TextStyle(
                                             fontSize: 12,
-                                            color: Get
-                                                .theme.colorScheme.surfaceTint,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
                                           ),
                                           border: OutlineInputBorder(
                                             borderRadius:
@@ -201,15 +202,15 @@ class HomeView extends GetView<HomeController> {
                                                     .view_ticket,
                                                 style: TextStyle(
                                                   color: Get.theme.colorScheme
-                                                      .surfaceTint,
+                                                      .tertiary,
                                                   fontSize: 12,
                                                 ),
                                               ),
                                               const SizedBox(width: 2),
                                               Icon(
                                                 Icons.arrow_forward_ios_rounded,
-                                                color: Get.theme.colorScheme
-                                                    .surfaceTint,
+                                                color: Get
+                                                    .theme.colorScheme.tertiary,
                                                 size: 16,
                                               ),
                                               SizedBox(width: Get.width * 0.01),
@@ -226,7 +227,7 @@ class HomeView extends GetView<HomeController> {
                                                         color: Get
                                                             .theme
                                                             .colorScheme
-                                                            .surfaceTint,
+                                                            .tertiary,
                                                         fontSize: 12,
                                                       ),
                                                     ),
@@ -234,10 +235,8 @@ class HomeView extends GetView<HomeController> {
                                                     Icon(
                                                       Icons
                                                           .arrow_forward_ios_rounded,
-                                                      color: Get
-                                                          .theme
-                                                          .colorScheme
-                                                          .surfaceTint,
+                                                      color: Get.theme
+                                                          .colorScheme.tertiary,
                                                       size: 16,
                                                     ),
                                                   ],
@@ -302,13 +301,44 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
                 const SizedBox(height: 29),
-                Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.upcoming_event,
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.upcoming_event,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            AppLocalizations.of(context)!.see_all,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 8,
+                            color: Get.theme.colorScheme.tertiary,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: Get.width,
+                  height: 158,
+                  child: upComingWidget(),
+                )
               ],
             ),
           ),

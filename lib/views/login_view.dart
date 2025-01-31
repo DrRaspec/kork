@@ -77,7 +77,7 @@ class LoginView extends GetView<LoginController> {
                           hintText: 'example@gmail.com',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -114,7 +114,7 @@ class LoginView extends GetView<LoginController> {
                               AppLocalizations.of(context)!.password_quide,
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -218,29 +218,23 @@ class LoginView extends GetView<LoginController> {
                             ),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 175,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/image/svg/facebook_icon.svg',
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .sign_in_with_fb,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/image/svg/facebook_icon.svg',
+                                width: 24,
+                                height: 24,
                               ),
-                            ),
+                              const SizedBox(width: 16),
+                              Text(
+                                AppLocalizations.of(context)!.sign_in_with_fb,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -256,29 +250,25 @@ class LoginView extends GetView<LoginController> {
                             ),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Center(
-                            child: SizedBox(
-                              width: 175,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/image/svg/google_icon.svg',
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .sign_in_with_gmail,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/image/svg/google_icon.svg',
+                                width: 24,
+                                height: 24,
                               ),
-                            ),
+                              const SizedBox(width: 16),
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .sign_in_with_gmail,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 22),
+                            ],
                           ),
                         ),
                       ),
@@ -303,7 +293,7 @@ class LoginView extends GetView<LoginController> {
                                 color: Color(0xffC9131E),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],

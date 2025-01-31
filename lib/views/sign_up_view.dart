@@ -89,7 +89,7 @@ class SignUpView extends GetView<SignUpController> {
                           hintText: 'example@gmail.com',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -127,7 +127,7 @@ class SignUpView extends GetView<SignUpController> {
                               AppLocalizations.of(context)!.password_quide,
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -164,7 +164,7 @@ class SignUpView extends GetView<SignUpController> {
                               .confirm_new_password,
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(

@@ -52,7 +52,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                       AppLocalizations.of(context)!.forget_your_password_guide,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Get.theme.colorScheme.surfaceTint,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -94,7 +94,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                           hintText: 'example@gmail.com',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(

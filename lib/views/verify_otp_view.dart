@@ -53,7 +53,7 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                       AppLocalizations.of(context)!.verify_guide,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Get.theme.colorScheme.surfaceTint,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                       textAlign: TextAlign.center,
                     ),

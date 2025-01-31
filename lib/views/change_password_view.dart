@@ -52,7 +52,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                       AppLocalizations.of(context)!.change_password_guide,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Get.theme.colorScheme.surfaceTint,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -90,7 +90,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                           hintText: AppLocalizations.of(context)!.new_password,
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -127,7 +127,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                           hintText: 'example@gmail.com',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
