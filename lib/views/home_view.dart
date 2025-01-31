@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/event_category.dart';
+import 'package:kork/widget/get_free_voucher_widget.dart';
 import 'package:kork/widget/up_coming_widget.dart';
 
 part '../controllers/home_controller.dart';
@@ -302,33 +303,36 @@ class HomeView extends GetView<HomeController> {
                 ),
                 const SizedBox(height: 29),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.only(left: 16),
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.upcoming_event,
-                            style: TextStyle(
-                              fontSize: 12,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.upcoming_event,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              AppLocalizations.of(context)!.see_all,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 8,
                               color: Get.theme.colorScheme.tertiary,
                             ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            AppLocalizations.of(context)!.see_all,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            size: 8,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 24),
                       SizedBox(
@@ -337,28 +341,76 @@ class HomeView extends GetView<HomeController> {
                         child: upComingWidget(),
                       ),
                       const SizedBox(height: 23),
-                      Container(
-                        height: 107,
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.techmango.net%2Fhow-custom-mobile-apps-help-to-make-your-business-more-successful&psig=AOvVaw055DBmRLtrYqALDLHs9WXn&ust=1738419426926000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCKC916mToIsDFQAAAAAdAAAAABAE',
+                      getFreeVoucher(),
+                      const SizedBox(height: 24),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.nearby_you,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
                             ),
-                            fit: BoxFit.cover,
-                          ),
+                            const Spacer(),
+                            Text(
+                              AppLocalizations.of(context)!.see_all,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 8,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                          ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.apply_code_to_get,
-                              )
-                            ],
-                          ),
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: Get.width,
+                        height: 158,
+                        child: upComingWidget(),
+                      ),
+                      const SizedBox(height: 24),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.showing,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              AppLocalizations.of(context)!.see_all,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              size: 8,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                          ],
                         ),
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: Get.width,
+                        height: 158,
+                        child: upComingWidget(),
                       ),
                     ],
                   ),
