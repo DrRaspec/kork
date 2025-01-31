@@ -195,9 +195,13 @@
     "@view_detail": {
         "description": "view_detail"
     },
-    "apply_code_to_get_voucher": "Apply code to get free voucher",
-    "@apply_code_to_get_voucher": {
-        "description": "apply_code_to_get_voucher"
+    "apply_code_to_get": "Apply code to get",
+    "@apply_code_to_get": {
+        "description": "apply_code_to_get"
+    },
+    "free_voucher": "Free voucher",
+    "@free_voucher": {
+        "description": "free_voucher"
     },
     "enter_code": "Enter Code",
     "@enter_code": {

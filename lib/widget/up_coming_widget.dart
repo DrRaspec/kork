@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/views/home_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget upComingWidget() {
   final homeController = Get.find<HomeController>();
@@ -49,14 +50,20 @@ Widget upComingWidget() {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            item['date'],
-                            style: TextStyle(
-                              fontSize: 8,
-                              color: Get.theme.colorScheme.tertiary,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
                             ),
-                            softWrap: true,
-                            maxLines: 2,
+                            child: Text(
+                              item['date'],
+                              style: TextStyle(
+                                fontSize: 8,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                              softWrap: true,
+                              maxLines: 2,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                       ),
@@ -95,15 +102,19 @@ Widget upComingWidget() {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
-                      item['title'],
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.tertiary,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        item['title'],
+                        style: TextStyle(
+                          color: Get.theme.colorScheme.tertiary,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        textAlign: TextAlign.left,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
                         Icon(
@@ -120,7 +131,7 @@ Widget upComingWidget() {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    // const SizedBox(height: 8),
                     Row(
                       children: [
                         SvgPicture.asset(
@@ -140,6 +151,31 @@ Widget upComingWidget() {
                         ),
                       ],
                     ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.view_detail,
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                          ),
+                          const SizedBox(width: 2),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 1.5),
+                            child: Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: Get.theme.colorScheme.tertiary,
+                              size: 8,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

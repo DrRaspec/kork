@@ -330,15 +330,39 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: Get.width,
+                        height: 158,
+                        child: upComingWidget(),
+                      ),
+                      const SizedBox(height: 23),
+                      Container(
+                        height: 107,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: const DecorationImage(
+                            image: NetworkImage(
+                              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.techmango.net%2Fhow-custom-mobile-apps-help-to-make-your-business-more-successful&psig=AOvVaw055DBmRLtrYqALDLHs9WXn&ust=1738419426926000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCKC916mToIsDFQAAAAAdAAAAABAE',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.apply_code_to_get,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: Get.width,
-                  height: 158,
-                  child: upComingWidget(),
-                )
               ],
             ),
           ),
