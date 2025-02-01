@@ -4,6 +4,7 @@ import 'package:kork/views/change_password_view.dart';
 import 'package:kork/views/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
+import 'package:kork/views/main_view.dart';
 import 'package:kork/views/profile_view.dart';
 import 'package:kork/views/sign_up_view.dart';
 import 'package:kork/views/verify_otp_view.dart';
@@ -38,6 +39,11 @@ var appRoutes = [
     name: Routes.changePassword,
     page: () => const ChangePasswordView(),
     binding: ChangePasswordBinding(),
+  ),
+  GetPage(
+    name: Routes.main,
+    page: () => const MainView(),
+    binding: MainBinding(),
   ),
   GetPage(
     name: Routes.home,

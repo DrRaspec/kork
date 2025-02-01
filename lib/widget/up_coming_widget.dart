@@ -15,8 +15,16 @@ Widget upComingWidget() {
         height: 238,
         clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
-          color: const Color(0xff252525),
           borderRadius: BorderRadius.circular(16),
+          gradient: LinearGradient(
+            colors: [
+              Get.theme.colorScheme.primary,
+              Get.theme.colorScheme.onInverseSurface,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [.05, 1],
+          ),
         ),
         child: Column(
           children: [
@@ -47,6 +55,7 @@ Widget upComingWidget() {
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
+                            // stops: [1,1]
                           ),
                         ),
                         child: Center(
@@ -98,10 +107,11 @@ Widget upComingWidget() {
               ),
             ),
             Expanded(
-              child: Padding(
+              child: Container(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    const SizedBox(height: 8),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -114,7 +124,7 @@ Widget upComingWidget() {
                         textAlign: TextAlign.left,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Icon(
@@ -122,6 +132,7 @@ Widget upComingWidget() {
                           size: 10,
                           color: Get.theme.colorScheme.tertiary,
                         ),
+                        const SizedBox(width: 8),
                         Text(
                           item['location'],
                           style: TextStyle(
@@ -131,7 +142,7 @@ Widget upComingWidget() {
                         ),
                       ],
                     ),
-                    // const SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Row(
                       children: [
                         SvgPicture.asset(
@@ -142,6 +153,7 @@ Widget upComingWidget() {
                             BlendMode.srcIn,
                           ),
                         ),
+                        const SizedBox(width: 8),
                         Text(
                           item['time'],
                           style: TextStyle(
@@ -151,6 +163,8 @@ Widget upComingWidget() {
                         ),
                       ],
                     ),
+                    const Spacer(),
+                    // const SizedBox(height: 15),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Row(

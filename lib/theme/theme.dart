@@ -9,6 +9,10 @@ ThemeData lightMode = ThemeData(
     surfaceTint: Color(0xffD1D5DB), // For disabled components
     onInverseSurface: Color(0xffF7F8F9), // For inverted text & icons
   ),
+  scaffoldBackgroundColor: const Color(0xff1C1818),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color(0xffFAFAFA),
+  ),
 );
 
 ThemeData darkMode = ThemeData(
@@ -19,5 +23,9 @@ ThemeData darkMode = ThemeData(
     tertiary: Color(0xffEAE9FC), //text
     surfaceTint: Color(0x80EAE9FC), // For disabled components
     onInverseSurface: Color(0xff1C1818), // For inverted text & icons
+  ),
+  scaffoldBackgroundColor: const Color(0xff1C1818),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Color(0xffFAFAFA),
   ),
 );

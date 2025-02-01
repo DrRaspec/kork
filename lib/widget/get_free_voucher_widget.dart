@@ -47,7 +47,7 @@ Widget getFreeVoucher() {
           ),
           const SizedBox(height: 2),
           Text(
-            AppLocalizations.of(context)!.enter_code,
+            AppLocalizations.of(context)!.get_20,
             style: TextStyle(
               fontSize: 11,
               color: Get.theme.colorScheme.surfaceTint,

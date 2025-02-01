@@ -203,6 +203,10 @@
     "@free_voucher": {
         "description": "free_voucher"
     },
+    "get_20": "Get 20$ Free",
+    "@get_20": {
+        "description": "get_20"
+    },
     "enter_code": "Enter Code",
     "@enter_code": {
         "description": "enter_code"
@@ -214,5 +218,77 @@
     "showing": "Showing",
     "@showing": {
         "description": "showing"
+    },
+    "events": "Events",
+    "@events": {
+        "description": "events"
+    },
+    "event": "Event",
+    "@event": {
+        "description": "event"
+    },
+    "up_coming": "Up Coming",
+    "@up_coming": {
+        "description": "up_coming"
+    },
+    "sports": "Sports",
+    "@sports": {
+        "description": "sports"
+    },
+    "vs": "Vs",
+    "@vs": {
+        "description": "Versus"
+    },
+    "more_detial": "More Detail",
+    "@more_detial": {
+        "description": "more_detial"
+    },
+    "filter": "Filter",
+    "@filter": {
+        "description": "filter"
+    },
+    "categories": "Categories",
+    "@categories": {
+        "description": "categories"
+    },
+    "time_date": "Time & Date",
+    "@time_date": {
+        "description": "time_date"
+    },
+    "today": "Today",
+    "@today": {
+        "description": "today"
+    },
+    "tomorrow": "Tomorrow",
+    "@tomorrow": {
+        "description": "tomorrow"
+    },
+    "this_weel": "This week",
+    "@this_weel": {
+        "description": "this_weel"
+    },
+    "choose_from_calender": "Choose from calender",
+    "@choose_from_calender": {
+        "description": "choose_from_calender"
+    },
+    "choose_location": "Choose Locations",
+    "@choose_location": {
+        "description": "choose_location"
+    },
+    "location": "Location",
+    "@location": {
+        "description": "location"
+    },
+    "select_price_range": "Select price range",
+    "@select_price_range": {
+        "description": "select_price_range"
+    },
+    "reset": "Reset",
+    "@reset": {
+        "description": "reset"
+    },
+    "apply": "Apply",
+    "@apply": {
+        "description": "apply"
     }
 }
