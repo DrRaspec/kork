@@ -2,6 +2,10 @@ part of '../views/main_view.dart';
 
 Widget myBottomNavigation() {
   var currentIndex = Get.find<MainController>().currentIndex;
+  var context = Get.context;
+  if (context == null) {
+    return const SizedBox();
+  }
   return Obx(
     () => BottomNavigationBar(
       items: [
@@ -17,7 +21,7 @@ Widget myBottomNavigation() {
               BlendMode.srcIn,
             ),
           ),
-          label: 'Home',
+          label: AppLocalizations.of(context)!.home,
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
@@ -31,7 +35,7 @@ Widget myBottomNavigation() {
               BlendMode.srcIn,
             ),
           ),
-          label: 'Event',
+          label: AppLocalizations.of(context)!.event,
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
@@ -45,7 +49,7 @@ Widget myBottomNavigation() {
               BlendMode.srcIn,
             ),
           ),
-          label: 'Ticket',
+          label: AppLocalizations.of(context)!.ticket,
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
@@ -59,7 +63,7 @@ Widget myBottomNavigation() {
               BlendMode.srcIn,
             ),
           ),
-          label: 'Profile',
+          label: AppLocalizations.of(context)!.profile,
         ),
       ],
       type: BottomNavigationBarType.fixed,

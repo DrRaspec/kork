@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/change_password_view.dart';
+import 'package:kork/views/event_view.dart';
 import 'package:kork/views/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
@@ -49,5 +50,10 @@ var appRoutes = [
     name: Routes.home,
     page: () => const HomeView(),
     binding: HomeBinding(),
+  ),
+  GetPage(
+    name: Routes.eventScreen,
+    page: () => const EventView(),
+    binding: EventBinding(),
   ),
 ];

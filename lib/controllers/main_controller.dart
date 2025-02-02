@@ -4,7 +4,7 @@ class MainController extends GetxController {
   var currentIndex = 0.obs;
   var screen = [
     const HomeView(),
-    const HomeView(),
+    const EventView(),
     const HomeView(),
     const HomeView(),
   ];

@@ -7,5 +7,8 @@ class InitialBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => LanguageController(prefs));
+    Get.lazyPut(() => MainController());
+    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => EventController());
   }
 }

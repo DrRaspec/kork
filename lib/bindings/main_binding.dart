@@ -9,5 +9,8 @@ class MainBinding extends Bindings {
     Get.lazyPut(
       () => HomeController(),
     );
+    Get.lazyPut(
+      () => EventBinding(),
+    );
   }
 }

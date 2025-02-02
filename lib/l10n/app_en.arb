@@ -290,5 +290,13 @@
     "apply": "Apply",
     "@apply": {
         "description": "apply"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "home"
+    },
+    "ticket": "Ticket",
+    "@ticket": {
+        "description": "ticket"
     }
 }

@@ -4,6 +4,9 @@ class EventBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(
+      () => MainController(),
+    );
+    Get.lazyPut(
       () => EventController(),
     );
   }
