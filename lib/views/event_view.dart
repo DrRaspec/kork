@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/views/main_view.dart';
@@ -6,6 +7,7 @@ import 'package:kork/views/main_view.dart';
 part '../controllers/event_controller.dart';
 part '../bindings/event_binding.dart';
 part '../widget/event_display_widget.dart';
+part '../widget/event_widget.dart';
 
 class EventView extends GetView<EventController> {
   const EventView({super.key});
@@ -126,36 +128,8 @@ class EventView extends GetView<EventController> {
                 ),
               ),
               const SizedBox(height: 17),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.sports,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.see_all,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Icon(
-                    Icons.arrow_forward_ios_outlined,
-                    size: 8,
-                    color: Get.theme.colorScheme.tertiary,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: 380,
-                height: 311,
-                child: eventDisplayWidget(),
+              Obx(
+                () => eventWidget(),
               ),
             ],
           ),
