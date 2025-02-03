@@ -298,5 +298,233 @@
     "ticket": "Ticket",
     "@ticket": {
         "description": "ticket"
+    },
+    "book_ticket": "Booked Ticket",
+    "@book_ticket": {
+        "description": "book ticket"
+    },
+    "booked": "Booked",
+    "@booked": {
+        "description": "booked"
+    },
+    "more_event": "More Event",
+    "@more_event": {
+        "description": "more event"
+    },
+    "ticket_type": "Ticket Type",
+    "@ticket_type": {
+        "description": "ticket type"
+    },
+    "normal": "Normal",
+    "@normal": {
+        "description": "normal"
+    },
+    "standard": "Standard",
+    "@standard": {
+        "description": "standard"
+    },
+    "about_event": "About Event",
+    "@about_event": {
+        "description": "about event"
+    },
+    "price": "Price",
+    "@price": {
+        "description": "price"
+    },
+    "buy_now": "Buy Now",
+    "@buy_now": {
+        "description": "buy now"
+    },
+    "check_out": "Check Out",
+    "@check_out": {
+        "description": "check out"
+    },
+    "quantity": "Quantity",
+    "@quantity": {
+        "description": "quantity"
+    },
+    "payment_detail": "Payment Detail",
+    "@payment_detail": {
+        "description": "payment detail"
+    },
+    "select_payment_method": "Select Payment Method",
+    "@select_payment_method": {
+        "description": "payment"
+    },
+    "apply_voucher": "Apply Voucher",
+    "@apply_voucher": {
+        "description": "apply voucher"
+    },
+    "total": "Total",
+    "@total": {
+        "description": "total"
+    },
+    "see_detail": "See Detail",
+    "@see_detail": {
+        "description": "see detail"
+    },
+    "confirm_pay": "Confirm and pay",
+    "@confirm_pay": {
+        "description": "confirm and pay"
+    },
+    "remove": "Remove",
+    "@remove": {
+        "description": "remove"
+    },
+    "voucher": "Voucher",
+    "@voucher": {
+        "description": "voucher"
+    },
+    "fee": "Fee",
+    "@fee": {
+        "description": "fee"
+    },
+    "online_payment_option": "Online payment option",
+    "@online_payment_option": {
+        "description": "online payment"
+    },
+    "available_voucher": "Available Voucher",
+    "@available_voucher": {
+        "description": "available voucher"
+    },
+    "claim_ticket": "Claim Ticket",
+    "@claim_ticket": {
+        "description": "claim ticket"
+    },
+    "get_your_ticket_here": "Get Your Ticket Here",
+    "@get_your_ticket_here": {
+        "description": "get ticket"
+    },
+    "get_your_ticket_here_guide": "Please kindly save your Ticket here, make sure not to lose it.",
+    "@get_your_ticket_here_guide": {
+        "description": "get ticket guide"
+    },
+    "download": "Download",
+    "@download": {
+        "description": "download"
+    },
+    "screenshot": "Screenshot",
+    "@screenshot": {
+        "description": "screenshot"
+    },
+    "add_event": "Add Event",
+    "@add_event": {
+        "description": "add event"
+    },
+    "event_information": "Event Information",
+    "@event_information": {
+        "description": "event information"
+    },
+    "name": "Name",
+    "@name": {
+        "description": "name"
+    },
+    "your_event_name": "Your Event Name",
+    "@your_event_name": {
+        "description": "event name"
+    },
+    "your_location": "Your Event Location",
+    "@your_location": {
+        "description": "event location"
+    },
+    "category": "Category",
+    "@category": {
+        "description": "category"
+    },
+    "your_event_category": "Your Event Category",
+    "@your_event_category": {
+        "description": "event category"
+    },
+    "date": "Date",
+    "@date": {
+        "description": "date"
+    },
+    "your_event_date": "Your Event Date",
+    "@your_event_date": {
+        "description": "event date"
+    },
+    "time": "Time",
+    "@time": {
+        "description": "time"
+    },
+    "start_time": "Start Time",
+    "@start_time": {
+        "description": "start time"
+    },
+    "end_time": "End Time",
+    "@end_time": {
+        "description": "end time"
+    },
+    "detail": "Detail",
+    "@detail": {
+        "description": "detail"
+    },
+    "detail_guide": "Describe about your event",
+    "@detail_guide": {
+        "description": "describe about event"
+    },
+    "ticket_information": "Ticket Information",
+    "@ticket_information": {
+        "description": "ticket info"
+    },
+    "ticket_amount": "Ticket Amount",
+    "@ticket_amount": {
+        "description": "ticket amount"
+    },
+    "ticket_price": "Ticket Price",
+    "@ticket_price": {
+        "description": "ticket price"
+    },
+    "organizer_information": "Organizer Information",
+    "@organizer_information": {
+        "description": "org information"
+    },
+    "first_name": "First Name",
+    "@first_name": {
+        "description": "first name"
+    },
+    "last_name": "Last Name",
+    "@last_name": {
+        "description": "last name"
+    },
+    "publish": "Publish",
+    "@publish": {
+        "description": "publish"
+    },
+    "publish_share": "Publish and share",
+    "@publish_share": {
+        "description": "publish share"
+    },
+    "read": "Read",
+    "@read": {
+        "description": "read"
+    },
+    "my_event": "My Event",
+    "@my_event": {
+        "description": "my event"
+    },
+    "available": "Available",
+    "@available": {
+        "description": "available"
+    },
+    "sold": "Sold",
+    "@sold": {
+        "description": "sold"
+    },
+    "no_notification": "No Notifications",
+    "@no_notification": {
+        "description": "no notification"
+    },
+    "no_notification_guide": "No notification",
+    "@no_notification_guide": {
+        "description": "no notification"
+    },
+    "contact_us_via": "Contact us via",
+    "@contact_us_via": {
+        "description": "contact us"
+    },
+    "people_who_buy": "People who buy",
+    "@people_who_buy": {
+        "description": "people who buy"
     }
 }
