@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/main.dart';
 import 'package:kork/views/main_view.dart';
+import 'package:translator/translator.dart';
 
 part '../controllers/event_controller.dart';
 part '../bindings/event_binding.dart';

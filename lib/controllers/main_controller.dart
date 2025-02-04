@@ -6,6 +6,6 @@ class MainController extends GetxController {
     const HomeView(),
     const EventView(),
     const HomeView(),
-    const HomeView(),
+    const ProfileView(),
   ];
 }

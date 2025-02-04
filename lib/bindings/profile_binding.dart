@@ -6,5 +6,8 @@ class ProfileBinding extends Bindings {
     Get.lazyPut(
       () => ProfileController(),
     );
+    Get.lazyPut(
+      () => MainController(),
+    );
   }
 }

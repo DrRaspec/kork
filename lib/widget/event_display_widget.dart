@@ -1,6 +1,8 @@
 part of '../views/event_view.dart';
 
 Widget eventDisplayWidget() {
+  final EventController controller = Get.find<EventController>();
+  print(controller.translatedDate);
   return ListView.separated(
     physics: const NeverScrollableScrollPhysics(),
     itemBuilder: (context, index) {
@@ -58,6 +60,7 @@ Widget eventDisplayWidget() {
                           width: 38,
                           height: 39,
                           decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
                             gradient: LinearGradient(
                               colors: [
                                 Get.theme.colorScheme.primary,
@@ -67,19 +70,17 @@ Widget eventDisplayWidget() {
                               end: Alignment.bottomCenter,
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(9),
-                            child: Center(
-                              child: Text(
-                                '14 Apr',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                                softWrap: true,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                          child: Center(
+                            child: Text(
+                              '14\n${controller.translatedDate}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
                               ),
+                              softWrap: true,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
                             ),
                           ),
                         ),

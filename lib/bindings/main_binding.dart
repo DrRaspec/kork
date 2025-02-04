@@ -12,5 +12,8 @@ class MainBinding extends Bindings {
     Get.lazyPut(
       () => EventBinding(),
     );
+    Get.lazyPut(
+      () => ProfileBinding(),
+    );
   }
 }

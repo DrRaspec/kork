@@ -130,7 +130,7 @@ Widget homeViewDetail() {
                     Icon(
                       Icons.filter_list,
                       size: 24,
-                      color: Get.theme.colorScheme.primary,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ],
                 ),

@@ -74,8 +74,11 @@ Widget eventWidget() {
             ),
           ],
         )
-      : Center(
+      : SizedBox(
+          width: Get.width,
+          height: Get.height * 0.73,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 202,
