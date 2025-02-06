@@ -15,5 +15,8 @@ class MainBinding extends Bindings {
     Get.lazyPut(
       () => ProfileBinding(),
     );
+    Get.lazyPut(
+      () => TicketBinding(),
+    );
   }
 }

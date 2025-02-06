@@ -5,7 +5,7 @@ class MainController extends GetxController {
   var screen = [
     const HomeView(),
     const EventView(),
-    const HomeView(),
+    const TicketView(),
     const ProfileView(),
   ];
 }

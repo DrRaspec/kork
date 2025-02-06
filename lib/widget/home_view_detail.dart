@@ -90,9 +90,11 @@ Widget homeViewDetail() {
                       child: SizedBox(
                         height: 30,
                         child: TextField(
+                          textAlignVertical: TextAlignVertical.center,
                           controller: TextEditingController(),
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
+                              vertical: 0,
                               horizontal: 16,
                             ),
                             prefixIconConstraints: const BoxConstraints(
@@ -127,10 +129,13 @@ Widget homeViewDetail() {
                       ),
                     ),
                     const SizedBox(width: 19),
-                    Icon(
-                      Icons.filter_list,
-                      size: 24,
-                      color: Get.theme.colorScheme.tertiary,
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.filter),
+                      child: Icon(
+                        Icons.filter_list,
+                        size: 24,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
                     ),
                   ],
                 ),

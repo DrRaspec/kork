@@ -32,6 +32,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       initialBinding: InitialBinding(prefs),
       supportedLocales: L10n.all,
       locale: Get.find<LanguageController>().currentLocale,

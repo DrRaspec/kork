@@ -7,5 +7,8 @@ class Routes {
   static const String main = '/main';
   static const String home = '/home';
   static const String eventScreen = '/event_screen';
+  static const String filter = '/filter_screen';
+  static const String filtered = '/filtered_screen';
+  static const String filterLocation = '/filter_location';
   static const String profile = '/profile_view';
 }

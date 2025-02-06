@@ -526,5 +526,121 @@
     "people_who_buy": "People who buy",
     "@people_who_buy": {
         "description": "people who buy"
+    },
+    "clear": "Clear",
+    "@clear": {
+        "description": "Clear"
+    },
+    "select_map": "Select Map",
+    "@select_map": {
+        "description": "Select Map"
+    },
+    "browsing_in": "Browsing in",
+    "@browsing_in": {
+        "description": "Browsing in"
+    },
+    "phnom_penh": "Phnom Penh",
+    "@phnom_penh": {
+        "description": "Capital city of Cambodia"
+    },
+    "banteay_meanchey": "Banteay Meanchey",
+    "@banteay_meanchey": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "battambang": "Battambang",
+    "@battambang": {
+        "description": "Province in western Cambodia"
+    },
+    "kampong_cham": "Kampong Cham",
+    "@kampong_cham": {
+        "description": "Province in central Cambodia"
+    },
+    "kampong_chhnang": "Kampong Chhnang",
+    "@kampong_chhnang": {
+        "description": "Province in central Cambodia"
+    },
+    "kampong_speu": "Kampong Speu",
+    "@kampong_speu": {
+        "description": "Province in southern Cambodia"
+    },
+    "kampong_thom": "Kampong Thom",
+    "@kampong_thom": {
+        "description": "Province in central Cambodia"
+    },
+    "kampot": "Kampot",
+    "@kampot": {
+        "description": "Province in southern Cambodia"
+    },
+    "kandal": "Kandal",
+    "@kandal": {
+        "description": "Province surrounding Phnom Penh"
+    },
+    "koh_kong": "Koh Kong",
+    "@koh_kong": {
+        "description": "Province in southwestern Cambodia"
+    },
+    "kratie": "Kratie",
+    "@kratie": {
+        "description": "Province in eastern Cambodia"
+    },
+    "mondulkiri": "Mondulkiri",
+    "@mondulkiri": {
+        "description": "Province in eastern Cambodia"
+    },
+    "preah_vihear": "Preah Vihear",
+    "@preah_vihear": {
+        "description": "Province in northern Cambodia"
+    },
+    "prey_veng": "Prey Veng",
+    "@prey_veng": {
+        "description": "Province in southeastern Cambodia"
+    },
+    "pursat": "Pursat",
+    "@pursat": {
+        "description": "Province in western Cambodia"
+    },
+    "rattanakiri": "Rattanakiri",
+    "@rattanakiri": {
+        "description": "Province in northeastern Cambodia"
+    },
+    "siem_reap": "Siem Reap",
+    "@siem_reap": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "preah_sihanouk": "Preah Sihanouk",
+    "@preah_sihanouk": {
+        "description": "Province in southern Cambodia"
+    },
+    "stung_treng": "Stung Treng",
+    "@stung_treng": {
+        "description": "Province in northern Cambodia"
+    },
+    "svay_rieng": "Svay Rieng",
+    "@svay_rieng": {
+        "description": "Province in southeastern Cambodia"
+    },
+    "takeo": "Takeo",
+    "@takeo": {
+        "description": "Province in southern Cambodia"
+    },
+    "oddar_meanchey": "Oddar Meanchey",
+    "@oddar_meanchey": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "kep": "Kep",
+    "@kep": {
+        "description": "Province in southern Cambodia"
+    },
+    "pailin": "Pailin",
+    "@pailin": {
+        "description": "Province in western Cambodia"
+    },
+    "tboung_khmum": "Tboung Khmum",
+    "@tboung_khmum": {
+        "description": "Province in eastern Cambodia"
+    },
+    "cambodia": "Cambodia",
+    "@cambodia": {
+        "description": "Cambodia Kingdom of Wonder"
     }
 }

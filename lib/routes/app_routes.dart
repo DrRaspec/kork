@@ -2,6 +2,9 @@ import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/change_password_view.dart';
 import 'package:kork/views/event_view.dart';
+import 'package:kork/views/filter_location.dart';
+import 'package:kork/views/filter_view.dart';
+import 'package:kork/views/filtered_view.dart';
 import 'package:kork/views/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
@@ -55,5 +58,20 @@ var appRoutes = [
     name: Routes.eventScreen,
     page: () => const EventView(),
     binding: EventBinding(),
+  ),
+  GetPage(
+    name: Routes.filter,
+    page: () => const FilterView(),
+    binding: FilterBinding(),
+  ),
+  GetPage(
+    name: Routes.filtered,
+    page: () => const FilteredView(),
+    binding: FilteredBinding(),
+  ),
+  GetPage(
+    name: Routes.filterLocation,
+    page: () => const FilterLocation(),
+    binding: FilterLocationBinding(),
   ),
 ];

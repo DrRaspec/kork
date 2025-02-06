@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/main.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/views/main_view.dart';
-import 'package:translator/translator.dart';
 
 part '../controllers/event_controller.dart';
 part '../bindings/event_binding.dart';
-part '../widget/event_display_widget.dart';
+part '../widget/event_card.dart';
 part '../widget/event_widget.dart';
 
 class EventView extends GetView<EventController> {
@@ -35,7 +34,9 @@ class EventView extends GetView<EventController> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(Routes.filter);
+            },
             icon: Icon(
               Icons.filter_list,
               color: Get.theme.colorScheme.tertiary,

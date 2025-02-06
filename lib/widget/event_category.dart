@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget eventCategory() {
-  var categories = ['Sport', 'Concert', 'Fashion'];
+  var context = Get.context;
+  if (context == null) {
+    return const SizedBox();
+  }
+  var categories = [
+    AppLocalizations.of(context)!.sport,
+    AppLocalizations.of(context)!.concert,
+    AppLocalizations.of(context)!.fashion,
+  ];
   return ListView.separated(
     scrollDirection: Axis.horizontal,
     itemBuilder: (context, index) {

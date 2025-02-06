@@ -6,5 +6,8 @@ class HomeBinding extends Bindings {
     Get.lazyPut(
       () => HomeController(),
     );
+    Get.lazyPut(
+      () => FilterController(),
+    );
   }
 }

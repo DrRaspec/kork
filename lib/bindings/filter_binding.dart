@@ -6,5 +6,8 @@ class FilterBinding extends Bindings {
     Get.lazyPut(
       () => FilterController(),
     );
+    Get.lazyPut(
+      () => FilterLocationController(),
+    );
   }
 }

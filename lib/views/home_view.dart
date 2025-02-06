@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/filter_view.dart';
 import 'package:kork/widget/event_category.dart';
 import 'package:kork/widget/get_free_voucher_widget.dart';
 import 'package:kork/widget/up_coming_widget.dart';

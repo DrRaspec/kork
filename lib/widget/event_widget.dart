@@ -36,9 +36,14 @@ Widget eventWidget() {
             ),
             const SizedBox(height: 24),
             SizedBox(
-              width: 380,
-              height: 311,
-              child: eventDisplayWidget(),
+              width: Get.width,
+              height: 174,
+              child: eventCard(),
+            ),
+            SizedBox(
+              width: Get.width,
+              height: 174,
+              child: eventCard(),
             ),
             const SizedBox(height: 16),
             Row(
@@ -68,9 +73,14 @@ Widget eventWidget() {
             ),
             const SizedBox(height: 24),
             SizedBox(
-              width: 380,
-              height: 311,
-              child: eventDisplayWidget(),
+              width: Get.width,
+              height: 174,
+              child: eventCard(),
+            ),
+            SizedBox(
+              width: Get.width,
+              height: 174,
+              child: eventCard(),
             ),
           ],
         )
