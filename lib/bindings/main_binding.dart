@@ -10,13 +10,13 @@ class MainBinding extends Bindings {
       () => HomeController(),
     );
     Get.lazyPut(
-      () => EventBinding(),
+      () => EventController(),
     );
     Get.lazyPut(
-      () => ProfileBinding(),
+      () => ProfileController(),
     );
     Get.lazyPut(
-      () => TicketBinding(),
+      () => TicketController(),
     );
   }
 }

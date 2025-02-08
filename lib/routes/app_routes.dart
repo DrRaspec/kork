@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/change_password_view.dart';
+import 'package:kork/views/event_detail.dart';
 import 'package:kork/views/event_view.dart';
 import 'package:kork/views/filter_location.dart';
 import 'package:kork/views/filter_view.dart';
@@ -73,5 +74,10 @@ var appRoutes = [
     name: Routes.filterLocation,
     page: () => const FilterLocation(),
     binding: FilterLocationBinding(),
+  ),
+  GetPage(
+    name: Routes.eventDetail,
+    page: () => const EventDetail(),
+    binding: EventDetailBinding(),
   ),
 ];

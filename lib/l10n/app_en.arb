@@ -642,5 +642,9 @@
     "cambodia": "Cambodia",
     "@cambodia": {
         "description": "Cambodia Kingdom of Wonder"
+    },
+    "event_detail": "Event Detail",
+    "@event_detail": {
+        "description": "Event Detail"
     }
 }

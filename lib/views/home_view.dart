@@ -63,7 +63,16 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         width: Get.width,
                         height: 238,
-                        child: upComingWidget(),
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final item = controller.dummyData[index];
+                            return upComingWidget(item);
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 24),
+                          itemCount: controller.dummyData.length,
+                        ),
                       ),
                       const SizedBox(height: 23),
                       getFreeVoucher(),
@@ -100,7 +109,16 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         width: Get.width,
                         height: 238,
-                        child: upComingWidget(),
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final item = controller.dummyData[index];
+                            return upComingWidget(item);
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 24),
+                          itemCount: controller.dummyData.length,
+                        ),
                       ),
                       const SizedBox(height: 24),
                       Padding(
@@ -135,7 +153,16 @@ class HomeView extends GetView<HomeController> {
                       SizedBox(
                         width: Get.width,
                         height: 238,
-                        child: upComingWidget(),
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final item = controller.dummyData[index];
+                            return upComingWidget(item);
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(width: 24),
+                          itemCount: controller.dummyData.length,
+                        ),
                       ),
                     ],
                   ),

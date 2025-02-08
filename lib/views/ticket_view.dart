@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/views/event_detail.dart';
 import 'package:kork/widget/booked_event_card.dart';
+import 'package:kork/widget/up_coming_widget.dart';
 
 part '../controllers/ticket_controller.dart';
 part '../bindings/ticket_binding.dart';
@@ -13,14 +15,14 @@ class TicketView extends GetView<TicketController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: Column(
-              children: [
-                Row(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Row(
                   children: [
                     Align(
                       alignment: Alignment.center,
@@ -52,8 +54,12 @@ class TicketView extends GetView<TicketController> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                Row(
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 24),
+              ),
+              SliverToBoxAdapter(
+                child: Row(
                   children: [
                     Text(
                       AppLocalizations.of(context)!.book_ticket,
@@ -81,14 +87,77 @@ class TicketView extends GetView<TicketController> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: Get.width,
-                  height: 95,
-                  child: bookedEventCard(),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 24),
+              ),
+              SliverList.separated(
+                itemBuilder: (context, index) {
+                  return bookedEventCard();
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 24,
                 ),
-              ],
-            ),
+                itemCount: 2,
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 24),
+              ),
+              SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.more_event,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      AppLocalizations.of(context)!.see_all,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 8,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ],
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 24,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 238,
+                  child: SingleChildScrollView(
+                    scrollDirection:
+                        Axis.horizontal, 
+                    child: Row(
+                      children: List.generate(
+                        controller.dummyData.length,
+                        (index) {
+                          final item = controller.dummyData[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                right: 24), // Spacing between items
+                            child: upComingWidget(item),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

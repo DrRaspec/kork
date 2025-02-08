@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/routes/routes.dart';
 
 Widget bookedEventCard() {
   var isSilence = false.obs;
@@ -11,7 +12,7 @@ Widget bookedEventCard() {
   }
   return Container(
     width: Get.width,
-    height: 95,
+    height: 100,
     clipBehavior: Clip.hardEdge,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -21,13 +22,13 @@ Widget bookedEventCard() {
         splashFactory: NoSplash.splashFactory,
         splashColor: Colors.transparent,
         onTap: () {
-          print('fck');
+          Get.toNamed(Routes.eventDetail);
         },
         child: Row(
           children: [
             Container(
               width: 110,
-              height: 95,
+              height: 100,
               alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -39,7 +40,7 @@ Widget bookedEventCard() {
               ),
               child: Container(
                 width: 38,
-                height: 95,
+                height: 100,
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                   color: Color(0xff333333),
@@ -60,7 +61,7 @@ Widget bookedEventCard() {
             ),
             Expanded(
               child: Container(
-                height: 95,
+                height: 100,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Get.theme.colorScheme.tertiary,

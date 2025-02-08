@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget upComingWidget() {
-  final homeController = Get.find<HomeController>();
-  return ListView.separated(
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (context, index) {
-      final item = homeController.dummyData[index];
-      return Container(
+Widget upComingWidget(Map<String, dynamic> item) {
+  var context = Get.context;
+  if (context == null) return const SizedBox();
+  return Material(
+    child: InkWell(
+      splashFactory: NoSplash.splashFactory,
+      // onTap: () => Get.toNamed(Routes.eventDetail),
+      child: Container(
         width: 198,
         height: 238,
         clipBehavior: Clip.hardEdge,
@@ -196,9 +196,7 @@ Widget upComingWidget() {
             ),
           ],
         ),
-      );
-    },
-    separatorBuilder: (context, index) => const SizedBox(width: 24),
-    itemCount: homeController.dummyData.length,
+      ),
+    ),
   );
 }

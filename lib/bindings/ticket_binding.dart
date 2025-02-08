@@ -6,5 +6,8 @@ class TicketBinding extends Bindings {
     Get.lazyPut(
       () => TicketController(),
     );
+    Get.lazyPut(
+      () => EventDetailController(),
+    );
   }
 }
