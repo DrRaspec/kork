@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/main_view.dart';
+import 'package:shimmer/shimmer.dart';
 
 part '../controllers/event_controller.dart';
 part '../bindings/event_binding.dart';

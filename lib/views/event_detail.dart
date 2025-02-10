@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/widget/ticket_type.dart';
 
 part '../controllers/event_detail_controller.dart';
 part '../bindings/event_detail_binding.dart';
@@ -253,6 +252,46 @@ class EventDetail extends GetView<EventDetailController> {
                                   color: Get.theme.colorScheme.surfaceTint,
                                 ),
                               ),
+                              const SizedBox(height: 24),
+                              Text(
+                                AppLocalizations.of(context)!.contact_organizer,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 24,
+                                    ),
+                                    child: Container(
+                                      width: 182,
+                                      height: 44,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          20,
+                                        ),
+                                        border: Border.all(
+                                          color: Get.theme.colorScheme.primary,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.contact,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -275,36 +314,18 @@ class EventDetail extends GetView<EventDetailController> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                width: 150,
-                                color: Colors.amberAccent,
+                              SizedBox(
+                                width: 76,
                                 child: Stack(
                                   children: [
-                                    Container(
-                                      width: 34,
-                                      height: double.infinity,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: const DecorationImage(
-                                          image: NetworkImage(
-                                            'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-                                          ),
-                                          fit: BoxFit.fitWidth,
-                                          alignment: Alignment.topCenter,
-                                        ),
-                                        border: Border.all(
-                                          width: 1.42,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
-                                      ),
-                                    ),
                                     Positioned(
+                                      left: 40,
                                       top: 0,
-                                      left: double.infinity * 0.5,
                                       child: Container(
                                         width: 34,
-                                        height: double.infinity,
+                                        height: 34,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: const DecorationImage(
@@ -322,9 +343,81 @@ class EventDetail extends GetView<EventDetailController> {
                                         ),
                                       ),
                                     ),
+                                    Positioned(
+                                      top: 0,
+                                      left: 20,
+                                      child: Container(
+                                        width: 34,
+                                        height: 34,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                              'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
+                                            ),
+                                            fit: BoxFit.fitWidth,
+                                            alignment: Alignment.topCenter,
+                                          ),
+                                          border: Border.all(
+                                            width: 1.42,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      child: Container(
+                                        width: 34,
+                                        height: 34,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                              'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
+                                            ),
+                                            fit: BoxFit.fitWidth,
+                                            alignment: Alignment.topCenter,
+                                          ),
+                                          border: Border.all(
+                                            width: 1.42,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              )
+                              ),
+                              Text(
+                                '+20 ${AppLocalizations.of(context)!.going}',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: 73,
+                                  height: 34,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Get.theme.colorScheme.primary,
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.see_all,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Get.theme.colorScheme.tertiary,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -379,6 +472,44 @@ class EventDetail extends GetView<EventDetailController> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget ticketType(String text) {
+    return Expanded(
+      child: Material(
+        child: Obx(
+          () => InkWell(
+            splashFactory: NoSplash.splashFactory,
+            onTap: () {
+              controller.selectedType.value = text;
+            },
+            child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(
+                vertical: 4,
+              ),
+              decoration: BoxDecoration(
+                color: Get.theme.colorScheme.primary,
+                border: Border.all(
+                  width: 2,
+                  color: controller.selectedType.value == text
+                      ? Get.theme.colorScheme.tertiary
+                      : Get.theme.colorScheme.primary,
+                ),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Get.theme.colorScheme.tertiary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

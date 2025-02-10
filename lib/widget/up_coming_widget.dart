@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/routes/routes.dart';
+import 'package:shimmer/shimmer.dart';
 
 Widget upComingWidget(Map<String, dynamic> item) {
   var context = Get.context;
@@ -9,7 +11,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
   return Material(
     child: InkWell(
       splashFactory: NoSplash.splashFactory,
-      // onTap: () => Get.toNamed(Routes.eventDetail),
+      onTap: () => Get.toNamed(Routes.eventDetail),
       child: Container(
         width: 198,
         height: 238,
@@ -29,81 +31,93 @@ Widget upComingWidget(Map<String, dynamic> item) {
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Image.network(
                       'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 8,
-                      left: 8,
-                      child: Container(
-                        width: 31,
-                        height: 29,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          gradient: LinearGradient(
-                            colors: [
-                              Get.theme.colorScheme.primary,
-                              const Color(0xff1C1818),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            // stops: [1,1]
-                          ),
-                        ),
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5,
-                            ),
-                            child: Text(
-                              item['date'],
-                              style: TextStyle(
-                                fontSize: 8,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                              softWrap: true,
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 8,
-                      right: 8,
-                      child: Container(
-                        width: 31,
-                        height: 29,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          gradient: LinearGradient(
-                            colors: [
-                              Get.theme.colorScheme.primary,
-                              const Color(0xff1C1818),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return buildPlaceholder();
+                      },
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        width: Get.width,
+                        height: Get.height,
+                        color: Get.theme.colorScheme.tertiary,
                         child: Center(
                           child: Icon(
-                            Icons.bookmark_border_rounded,
-                            color: Get.theme.colorScheme.tertiary,
+                            Icons.error,
+                            size: 24,
+                            color: Get.theme.colorScheme.secondary,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    left: 8,
+                    child: Container(
+                      width: 31,
+                      height: 29,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        gradient: LinearGradient(
+                          colors: [
+                            Get.theme.colorScheme.primary,
+                            const Color(0xff1C1818),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          // stops: [1,1]
+                        ),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 5,
+                          ),
+                          child: Text(
+                            item['date'],
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                            softWrap: true,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      width: 31,
+                      height: 29,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        gradient: LinearGradient(
+                          colors: [
+                            Get.theme.colorScheme.primary,
+                            const Color(0xff1C1818),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.bookmark_border_rounded,
+                          color: Get.theme.colorScheme.tertiary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -197,6 +211,18 @@ Widget upComingWidget(Map<String, dynamic> item) {
           ],
         ),
       ),
+    ),
+  );
+}
+
+Widget buildPlaceholder() {
+  return Shimmer.fromColors(
+    baseColor: const Color(0xffF5EFFF),
+    highlightColor: const Color(0xffE5D9F2),
+    child: Container(
+      width: Get.width,
+      height: Get.height,
+      color: const Color(0xFFCDC1FF),
     ),
   );
 }

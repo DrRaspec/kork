@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/views/main_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part '../controllers/profile_controller.dart';
 part '../bindings/profile_binding.dart';
@@ -24,6 +25,24 @@ class ProfileView extends GetView<ProfileController> {
             color: Theme.of(context).colorScheme.tertiary,
           ),
         ),
+        actions: [
+          Obx(
+            () => GestureDetector(
+              onTap: () {},
+              child: SvgPicture.asset(
+                controller.isDark.value
+                    ? 'assets/image/svg/sun.svg'
+                    : 'assets/image/svg/moon.svg',
+                width: 24,
+                height: 24,
+                colorFilter: ColorFilter.mode(
+                  Get.theme.colorScheme.tertiary,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

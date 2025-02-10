@@ -646,5 +646,17 @@
     "event_detail": "Event Detail",
     "@event_detail": {
         "description": "Event Detail"
+    },
+    "going": "Going",
+    "@going": {
+        "description": "Going"
+    },
+    "contact_organizer": "Contact Organizer",
+    "@contact_organizer": {
+        "description": "Contact Organizer"
+    },
+    "contact": "Contact",
+    "@contact": {
+        "description": "Contact"
     }
 }

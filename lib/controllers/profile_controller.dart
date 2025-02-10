@@ -3,6 +3,7 @@ part of '../views/profile_view.dart';
 class ProfileController extends GetxController {
   final languageController = Get.find<LanguageController>();
   var isEnglish = true.obs;
+  var isDark = false.obs;
 
   @override
   void onInit() {

@@ -11,5 +11,6 @@ class InitialBinding extends Bindings {
     Get.lazyPut(() => HomeController());
     Get.lazyPut(() => EventController());
     Get.lazyPut(() => ProfileController());
+    // Get.lazyPut(() => BookedEventDetailController());
   }
 }

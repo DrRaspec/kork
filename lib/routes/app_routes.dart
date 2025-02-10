@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/booked_event_detail_view.dart';
 import 'package:kork/views/change_password_view.dart';
 import 'package:kork/views/event_detail.dart';
 import 'package:kork/views/event_view.dart';
@@ -79,5 +80,10 @@ var appRoutes = [
     name: Routes.eventDetail,
     page: () => const EventDetail(),
     binding: EventDetailBinding(),
+  ),
+  GetPage(
+    name: Routes.bookedEvent,
+    page: () => const BookedEventDetailView(),
+    binding: BookedEventDetailBinding(),
   ),
 ];

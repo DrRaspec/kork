@@ -11,23 +11,45 @@ Widget eventCard() {
       Container(
         width: Get.width,
         height: 147,
+        clipBehavior: Clip.hardEdge,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: [
-              Get.theme.colorScheme.secondary,
-              const Color(0xff252525),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.1, 1],
-          ),
-          image: const DecorationImage(
-            image: NetworkImage(
-              'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
+        ),
+        child: Stack(
+          children: [
+            Container(
+              width: Get.width,
+              height: Get.height,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Get.theme.colorScheme.secondary,
+                    const Color(0xff252525),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0.1, 1],
+                ),
+              ),
             ),
-            fit: BoxFit.cover,
-          ),
+            Image.network(
+              'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
+              width: Get.width,
+              height: Get.height,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return buildPlaceholder();
+              },
+              errorBuilder: (context, error, stackTrace) => Center(
+                child: Icon(
+                  Icons.error,
+                  color: Get.theme.colorScheme.tertiary,
+                  size: 20,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       Container(
@@ -38,7 +60,7 @@ Widget eventCard() {
           gradient: LinearGradient(
             colors: [
               Get.theme.colorScheme.secondary.withOpacity(0),
-              const Color(0xff252525).withOpacity(0.9),
+              Get.theme.colorScheme.secondary.withOpacity(0.9),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -172,5 +194,17 @@ Widget eventCard() {
         ),
       ),
     ],
+  );
+}
+
+Widget buildPlaceholder() {
+  return Shimmer.fromColors(
+    baseColor: const Color(0xffF5EFFF),
+    highlightColor: const Color(0xffE5D9F2),
+    child: Container(
+      width: Get.width,
+      height: Get.height,
+      color: const Color(0xFFCDC1FF),
+    ),
   );
 }

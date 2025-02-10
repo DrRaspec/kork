@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/views/booked_event_detail_view.dart';
 import 'package:kork/views/event_detail.dart';
 import 'package:kork/widget/booked_event_card.dart';
 import 'package:kork/widget/up_coming_widget.dart';
@@ -91,14 +92,14 @@ class TicketView extends GetView<TicketController> {
               const SliverToBoxAdapter(
                 child: SizedBox(height: 24),
               ),
-              SliverList.separated(
-                itemBuilder: (context, index) {
-                  return bookedEventCard();
-                },
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 24,
-                ),
-                itemCount: 2,
+              SliverToBoxAdapter(
+                child: bookedEventCard(),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 24),
+              ),
+              SliverToBoxAdapter(
+                child: bookedEventCard(),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(height: 24),
@@ -139,8 +140,7 @@ class TicketView extends GetView<TicketController> {
                 child: SizedBox(
                   height: 238,
                   child: SingleChildScrollView(
-                    scrollDirection:
-                        Axis.horizontal, 
+                    scrollDirection: Axis.horizontal,
                     child: Row(
                       children: List.generate(
                         controller.dummyData.length,

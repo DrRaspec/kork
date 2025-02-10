@@ -22,7 +22,7 @@ Widget bookedEventCard() {
         splashFactory: NoSplash.splashFactory,
         splashColor: Colors.transparent,
         onTap: () {
-          Get.toNamed(Routes.eventDetail);
+          Get.toNamed(Routes.bookedEvent);
         },
         child: Row(
           children: [

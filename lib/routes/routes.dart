@@ -12,4 +12,5 @@ class Routes {
   static const String filterLocation = '/filter_location';
   static const String profile = '/profile_view';
   static const String eventDetail = '/event_detail';
+  static const String bookedEvent = '/booked_detail';
 }

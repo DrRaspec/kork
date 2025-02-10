@@ -6,6 +6,7 @@ import 'package:kork/routes/app_routes.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/views/booked_event_detail_view.dart';
 import 'package:kork/views/event_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/main_view.dart';

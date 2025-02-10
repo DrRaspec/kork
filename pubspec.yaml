@@ -17,6 +17,7 @@ dependencies:
   intl_utils: ^2.8.9
   flutter_switch: ^0.3.2
   shared_preferences: ^2.5.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
