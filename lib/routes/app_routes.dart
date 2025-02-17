@@ -7,6 +7,7 @@ import 'package:kork/views/event_view.dart';
 import 'package:kork/views/filter_location.dart';
 import 'package:kork/views/filter_view.dart';
 import 'package:kork/views/filtered_view.dart';
+import 'package:kork/views/first_signup_view.dart';
 import 'package:kork/views/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
@@ -20,6 +21,11 @@ var appRoutes = [
     name: Routes.login,
     page: () => const LoginView(),
     binding: LoginBinding(),
+  ),
+  GetPage(
+    name: Routes.firstSignup,
+    page: () => const FirstSignupView(),
+    binding: FirstSignupBinding(),
   ),
   GetPage(
     name: Routes.signup,

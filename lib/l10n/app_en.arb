@@ -11,6 +11,10 @@
     "@email": {
         "description": "Label for email input field"
     },
+    "email_username": "Email or Username",
+    "@email_username": {
+        "description": "Label for email input field"
+    },
     "edit": "Edit",
     "@edit": {
         "description": "edit"
@@ -63,9 +67,9 @@
     "@forget_password": {
         "description": "forget_password"
     },
-    "login": "Login",
-    "@login": {
-        "description": "login"
+    "signin": "Sign in",
+    "@signin": {
+        "description": "signin"
     },
     "sign_up_with": "or sign up with",
     "@sign_up_with": {
@@ -419,6 +423,10 @@
     "@name": {
         "description": "name"
     },
+    "fullname": "Full Name",
+    "@fullname": {
+        "description": "fullname"
+    },
     "your_event_name": "Your Event Name",
     "@your_event_name": {
         "description": "event name"
@@ -658,5 +666,61 @@
     "contact": "Contact",
     "@contact": {
         "description": "Contact"
+    },
+    "personal_information": "Personal information",
+    "@personal_information": {
+        "description": "Personal information"
+    },
+    "gender": "Gender",
+    "@gender": {
+        "description": "gender"
+    },
+    "male": "Male",
+    "@male": {
+        "description": "male"
+    },
+    "female": "Female",
+    "@female": {
+        "description": "female"
+    },
+    "other": "Other",
+    "@other": {
+        "description": "other"
+    },
+    "male_or_female": "Male or Female",
+    "@male_or_female": {
+        "description": "Male or Female"
+    },
+    "dob": "Date of Birth",
+    "@dob": {
+        "description": "dob"
+    },
+    "birthday": "Birthday",
+    "@birthday": {
+        "description": "birthday"
+    },
+    "phone_number": "Phone Number",
+    "@phone_number": {
+        "description": "Phone Number"
+    },
+    "nationality": "Nationality",
+    "@nationality": {
+        "description": "Nationality"
+    },
+    "province_City": "Province/City",
+    "@province_City": {
+        "description": "Province/City"
+    },
+    "district_khan": "District/Khan",
+    "@district_khan": {
+        "description": "District/Khan"
+    },
+    "commune_sangkat": "Commune/Sangkat",
+    "@commune_sangkat": {
+        "description": "Commune/Sangkat"
+    },
+    "search_country": "Search by Country Name",
+    "@search_country": {
+        "description": "Search by Country Name"
     }
 }

@@ -18,6 +18,7 @@ class EventView extends GetView<EventController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           AppLocalizations.of(context)!.events,
           style: TextStyle(
@@ -96,9 +97,9 @@ class EventView extends GetView<EventController> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     AppLocalizations.of(context)!.event,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
+                                      color: Color(0xffEAE9FC),
                                     ),
                                   ),
                                 ),
@@ -116,9 +117,9 @@ class EventView extends GetView<EventController> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     AppLocalizations.of(context)!.up_coming,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
+                                      color: Color(0xffEAE9FC),
                                     ),
                                   ),
                                 ),

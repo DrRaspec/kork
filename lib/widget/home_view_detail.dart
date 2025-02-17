@@ -11,9 +11,9 @@ Widget homeViewDetail() {
       children: [
         Container(
           height: 309,
-          decoration: const BoxDecoration(
-            color: Color(0xff252525),
-            borderRadius: BorderRadius.vertical(
+          decoration: BoxDecoration(
+            color: Get.theme.colorScheme.secondary,
+            borderRadius: const BorderRadius.vertical(
               bottom: Radius.circular(35),
             ),
           ),
@@ -35,33 +35,33 @@ Widget homeViewDetail() {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.current_location,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0x80EAE9FC),
                               ),
                             ),
                             const SizedBox(width: 1),
-                            Icon(
+                            const Icon(
                               Icons.arrow_drop_down,
                               size: 16,
-                              color: Get.theme.colorScheme.tertiary,
+                              color: Color(0x80EAE9FC),
                             ),
                           ],
                         ),
-                        Text(
+                        const Text(
                           'Phnom Penh',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Color(0xffEAE9FC),
                           ),
                         ),
                       ],
                     ),
                     Stack(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.notifications_none,
-                          color: Get.theme.colorScheme.tertiary,
+                          color: Color(0xffEAE9FC),
                           size: 24,
                         ),
                         Positioned(
@@ -70,12 +70,9 @@ Widget homeViewDetail() {
                           child: Container(
                             width: 8,
                             height: 8,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.red,
-                              border: Border.all(
-                                color: Colors.black,
-                              ),
                             ),
                           ),
                         ),
@@ -89,40 +86,50 @@ Widget homeViewDetail() {
                     Expanded(
                       child: SizedBox(
                         height: 30,
-                        child: TextField(
-                          textAlignVertical: TextAlignVertical.center,
-                          controller: TextEditingController(),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 0,
-                              horizontal: 16,
-                            ),
-                            prefixIconConstraints: const BoxConstraints(
-                              minWidth: 16,
-                              minHeight: 16,
-                            ),
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 16,
-                                right: 8,
+                        child: Center(
+                          child: TextField(
+                            textAlignVertical: TextAlignVertical.center,
+                            controller: TextEditingController(),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 0,
+                                horizontal: 16,
                               ),
-                              child: SvgPicture.asset(
-                                'assets/image/svg/search-normal.svg',
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                  Get.theme.colorScheme.tertiary,
-                                  BlendMode.srcIn,
+                              prefixIconConstraints: const BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 16,
+                                  right: 8,
+                                ),
+                                child: SvgPicture.asset(
+                                  'assets/image/svg/search-normal.svg',
+                                  fit: BoxFit.cover,
+                                  colorFilter: const ColorFilter.mode(
+                                    Color(0x80EAE9FC),
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
                               ),
-                            ),
-                            hintText:
-                                AppLocalizations.of(context)!.search_event,
-                            hintStyle: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
+                              hintText:
+                                  AppLocalizations.of(context)!.search_event,
+                              hintStyle: const TextStyle(
+                                fontSize: 12,
+                                color: Color(0x80EAE9FC),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                  color: Color(0xffEAE9FC),
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    const BorderSide(color: Color(0xffEAE9FC)),
+                              ),
                             ),
                           ),
                         ),
@@ -131,10 +138,10 @@ Widget homeViewDetail() {
                     const SizedBox(width: 19),
                     GestureDetector(
                       onTap: () => Get.toNamed(Routes.filter),
-                      child: Icon(
+                      child: const Icon(
                         Icons.filter_list,
                         size: 24,
-                        color: Get.theme.colorScheme.tertiary,
+                        color: Color(0xffEAE9FC),
                       ),
                     ),
                   ],
@@ -163,17 +170,17 @@ Widget homeViewDetail() {
                           children: [
                             Text(
                               AppLocalizations.of(context)!.welcome,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                             const SizedBox(height: 2),
-                            Text(
+                            const Text(
                               'Sam Sokunthea',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                             const Spacer(),
@@ -181,16 +188,16 @@ Widget homeViewDetail() {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.view_ticket,
-                                  style: TextStyle(
-                                    color: Get.theme.colorScheme.tertiary,
+                                  style: const TextStyle(
+                                    color: Color(0xffEAE9FC),
                                     fontSize: 12,
                                   ),
                                 ),
                                 const SizedBox(width: 2),
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward_ios_rounded,
-                                  color: Get.theme.colorScheme.tertiary,
-                                  size: 16,
+                                  color: Color(0xffEAE9FC),
+                                  size: 8,
                                 ),
                                 SizedBox(width: Get.width * 0.01),
                                 GestureDetector(
@@ -200,8 +207,8 @@ Widget homeViewDetail() {
                                       Text(
                                         AppLocalizations.of(context)!
                                             .view_profile,
-                                        style: TextStyle(
-                                          color: Get.theme.colorScheme.tertiary,
+                                        style: const TextStyle(
+                                          color: Color(0xffEAE9FC),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -209,7 +216,7 @@ Widget homeViewDetail() {
                                       Icon(
                                         Icons.arrow_forward_ios_rounded,
                                         color: Get.theme.colorScheme.tertiary,
-                                        size: 16,
+                                        size: 8,
                                       ),
                                     ],
                                   ),
@@ -227,9 +234,9 @@ Widget homeViewDetail() {
                             Container(
                               width: 85,
                               height: 85,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                             Container(

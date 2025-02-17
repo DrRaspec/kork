@@ -9,6 +9,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
   var context = Get.context;
   if (context == null) return const SizedBox();
   return Material(
+    color: Colors.transparent,
     child: InkWell(
       splashFactory: NoSplash.splashFactory,
       onTap: () => Get.toNamed(Routes.eventDetail),
@@ -44,7 +45,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
                       errorBuilder: (context, error, stackTrace) => Container(
                         width: Get.width,
                         height: Get.height,
-                        color: Get.theme.colorScheme.tertiary,
+                        color: const Color(0xffEAE9FC),
                         child: Center(
                           child: Icon(
                             Icons.error,
@@ -80,9 +81,9 @@ Widget upComingWidget(Map<String, dynamic> item) {
                           ),
                           child: Text(
                             item['date'],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 8,
-                              color: Get.theme.colorScheme.tertiary,
+                              color: Color(0xffEAE9FC),
                             ),
                             softWrap: true,
                             maxLines: 2,
@@ -109,10 +110,11 @@ Widget upComingWidget(Map<String, dynamic> item) {
                           end: Alignment.bottomCenter,
                         ),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.bookmark_border_rounded,
-                          color: Get.theme.colorScheme.tertiary,
+                          size: 18,
+                          color: Color(0xffEAE9FC),
                         ),
                       ),
                     ),
@@ -130,8 +132,8 @@ Widget upComingWidget(Map<String, dynamic> item) {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         item['title'],
-                        style: TextStyle(
-                          color: Get.theme.colorScheme.tertiary,
+                        style: const TextStyle(
+                          color: Color(0xffEAE9FC),
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
                         ),
@@ -141,17 +143,17 @@ Widget upComingWidget(Map<String, dynamic> item) {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on_outlined,
                           size: 10,
-                          color: Get.theme.colorScheme.tertiary,
+                          color: Color(0xffEAE9FC),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           item['location'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Color(0xffEAE9FC),
                           ),
                         ),
                       ],
@@ -162,17 +164,17 @@ Widget upComingWidget(Map<String, dynamic> item) {
                         SvgPicture.asset(
                           'assets/image/svg/pace.svg',
                           width: 10,
-                          colorFilter: ColorFilter.mode(
-                            Get.theme.colorScheme.tertiary,
+                          colorFilter: const ColorFilter.mode(
+                            Color(0xffEAE9FC),
                             BlendMode.srcIn,
                           ),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           item['time'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Color(0xffEAE9FC),
                           ),
                         ),
                       ],
@@ -187,17 +189,17 @@ Widget upComingWidget(Map<String, dynamic> item) {
                         children: [
                           Text(
                             AppLocalizations.of(context)!.view_detail,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 10,
-                              color: Get.theme.colorScheme.tertiary,
+                              color: Color(0xffEAE9FC),
                             ),
                           ),
                           const SizedBox(width: 2),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 1.5),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 1.5),
                             child: Icon(
                               Icons.arrow_forward_ios_outlined,
-                              color: Get.theme.colorScheme.tertiary,
+                              color: Color(0xffEAE9FC),
                               size: 8,
                             ),
                           ),

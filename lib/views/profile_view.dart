@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/views/main_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part '../controllers/profile_controller.dart';
 part '../bindings/profile_binding.dart';
@@ -27,10 +27,12 @@ class ProfileView extends GetView<ProfileController> {
         ),
         actions: [
           Obx(
-            () => GestureDetector(
-              onTap: () {},
-              child: SvgPicture.asset(
-                controller.isDark.value
+            () => IconButton(
+              onPressed: () {
+                Get.find<ThemeController>().toggleTheme();
+              },
+              icon: SvgPicture.asset(
+                Get.find<ThemeController>().currentThemeMode == ThemeMode.dark
                     ? 'assets/image/svg/sun.svg'
                     : 'assets/image/svg/moon.svg',
                 width: 24,
@@ -68,11 +70,13 @@ class ProfileView extends GetView<ProfileController> {
                     height: 131,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.onInverseSurface,
+                      // color: Theme.of(context).colorScheme.onInverseSurface,
                     ),
                     child: ClipOval(
                       child: Image.asset(
-                        'assets/image/Artboard 1 2.png',
+                        Get.isDarkMode
+                            ? 'assets/image/light-logo.png'
+                            : 'assets/image/logo.png',
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -140,6 +144,10 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     SvgPicture.asset(
                       'assets/image/svg/language-square.svg',
+                      colorFilter: ColorFilter.mode(
+                        Get.theme.colorScheme.tertiary,
+                        BlendMode.srcIn,
+                      ),
                       width: 16,
                       height: 16,
                       fit: BoxFit.cover,

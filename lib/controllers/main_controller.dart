@@ -7,5 +7,5 @@ class MainController extends GetxController {
     const EventView(),
     const TicketView(),
     const ProfileView(),
-  ];
+  ].obs;
 }

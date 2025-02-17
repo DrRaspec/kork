@@ -153,7 +153,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                               (route) => false,
                             ),
                             child: Text(
-                              AppLocalizations.of(context)!.login,
+                              AppLocalizations.of(context)!.signin,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xffC9131E),

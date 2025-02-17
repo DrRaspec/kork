@@ -29,9 +29,9 @@ Widget getFreeVoucher() {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.apply_code_to_get} ',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  color: Get.theme.colorScheme.tertiary,
+                  color: Color(0xffEAE9FC),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -50,7 +50,7 @@ Widget getFreeVoucher() {
             AppLocalizations.of(context)!.get_20,
             style: TextStyle(
               fontSize: 11,
-              color: Get.theme.colorScheme.surfaceTint,
+              color: Color(0xffEAE9FC).withOpacity(.5),
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -74,9 +74,9 @@ Widget getFreeVoucher() {
               child: Center(
                 child: Text(
                   AppLocalizations.of(context)!.enter_code,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10,
-                    color: Get.theme.colorScheme.tertiary,
+                    color: Color(0xffEAE9FC),
                     fontWeight: FontWeight.w500,
                   ),
                 ),

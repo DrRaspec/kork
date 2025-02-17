@@ -10,6 +10,8 @@ class FilterController extends GetxController {
   final double minPrice = 0;
   final double maxPrice = 200;
 
+  var filterItem = <String, dynamic>{}.obs;
+
   var selectedLocation = ''.obs;
 
   void updateSelectCategory(int index) {

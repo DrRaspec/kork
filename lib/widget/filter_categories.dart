@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/theme/theme.dart';
 import 'package:kork/views/filter_view.dart';
 
 var filterController = Get.find<FilterController>();
@@ -20,9 +21,12 @@ Widget filterCategories() {
     itemBuilder: (context, index) {
       return Obx(
         () => GestureDetector(
-          onTap: () => filterController.updateSelectCategory(
-            index + 1,
-          ),
+          onTap: () {
+            filterController.updateSelectCategory(
+              index + 1,
+            );
+            filterController.filterItem['categories'] = categories[index];
+          },
           child: Container(
             width: 133,
             height: 32,
@@ -30,7 +34,7 @@ Widget filterCategories() {
               borderRadius: BorderRadius.circular(20),
               color: filterController.selectCategory.value == index + 1
                   ? Get.theme.colorScheme.primary
-                  : const Color(0xff252525),
+                  : Get.theme.colorScheme.filterBackground,
               border: Border.all(
                 color: filterController.selectCategory.value == index + 1
                     ? Get.theme.colorScheme.primary
@@ -41,7 +45,9 @@ Widget filterCategories() {
               child: Text(
                 categories[index],
                 style: TextStyle(
-                  color: Get.theme.colorScheme.tertiary,
+                  color: filterController.selectCategory.value == index + 1
+                      ? const Color(0xffEAE9FC)
+                      : Get.theme.colorScheme.tertiary,
                   fontSize: 12,
                 ),
               ),

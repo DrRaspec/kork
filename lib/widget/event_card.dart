@@ -41,10 +41,10 @@ Widget eventCard() {
                 if (loadingProgress == null) return child;
                 return buildPlaceholder();
               },
-              errorBuilder: (context, error, stackTrace) => Center(
+              errorBuilder: (context, error, stackTrace) => const Center(
                 child: Icon(
                   Icons.error,
-                  color: Get.theme.colorScheme.tertiary,
+                  color: Color(0xffEAE9FC),
                   size: 20,
                 ),
               ),
@@ -91,12 +91,12 @@ Widget eventCard() {
                           end: Alignment.bottomCenter,
                         ),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           '14\nApr',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Color(0xffEAE9FC),
                           ),
                           softWrap: true,
                           maxLines: 2,
@@ -112,34 +112,35 @@ Widget eventCard() {
                         children: [
                           Text(
                             'Real Madrid ${AppLocalizations.of(context)!.vs} Barcelona',
-                            style: TextStyle(
-                              color: Get.theme.colorScheme.tertiary,
+                            style: const TextStyle(
+                              color: Color(0xffEAE9FC),
                               fontSize: 10,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          Text(
+                          const Text(
                             'Lorem ipsum dolor sit amet fried siLorem ipsum dolor sit amet fried si',
                             style: TextStyle(
-                              color: Get.theme.colorScheme.surfaceTint,
+                              color: Color(0xffEAE9FC),
                               fontSize: 8,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
+                          const SizedBox(height: 3),
                           Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.location_on_outlined,
                                 size: 10,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                               const SizedBox(width: 5),
-                              Text(
+                              const Text(
                                 'Camp nou',
                                 style: TextStyle(
-                                  color: Get.theme.colorScheme.surfaceTint,
+                                  color: Color(0xffEAE9FC),
                                   fontSize: 8,
                                 ),
                               ),
@@ -148,17 +149,17 @@ Widget eventCard() {
                                 'assets/image/svg/pace.svg',
                                 width: 8,
                                 height: 8,
-                                colorFilter: ColorFilter.mode(
-                                  Get.theme.colorScheme.tertiary,
+                                colorFilter: const ColorFilter.mode(
+                                  Color(0xffEAE9FC),
                                   BlendMode.srcIn,
                                 ),
                               ),
                               const SizedBox(width: 5),
-                              Text(
+                              const Text(
                                 '7PM',
                                 style: TextStyle(
                                   fontSize: 8,
-                                  color: Get.theme.colorScheme.surfaceTint,
+                                  color: Color(0xffEAE9FC),
                                 ),
                               ),
                             ],
@@ -176,14 +177,14 @@ Widget eventCard() {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.more_detial,
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.surfaceTint,
+                      style: const TextStyle(
+                        color: Color(0xffEAE9FC),
                         fontSize: 8,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.arrow_forward_ios_rounded,
-                      color: Get.theme.colorScheme.surfaceTint,
+                      color: Color(0xffEAE9FC),
                       size: 6,
                     ),
                   ],

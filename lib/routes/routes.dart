@@ -1,5 +1,6 @@
 class Routes {
   static const String login = '/login';
+  static const String firstSignup = '/first_signup';
   static const String signup = '/signup';
   static const String forgetPassword = '/forget_password';
   static const String verifyOtp = '/verify_opt';

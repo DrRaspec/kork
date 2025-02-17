@@ -13,39 +13,27 @@ class SignUpView extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.onInverseSurface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
-              vertical: 24,
+              // vertical: 17,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: 17),
                 Image.asset(
                   'assets/image/Artboard 1 2.png',
                   width: 70,
                   fit: BoxFit.cover,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
                   child: Text(
                     AppLocalizations.of(context)!.sign_up,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    AppLocalizations.of(context)!.create_account,
                     style: TextStyle(
                       fontSize: 16,
                       color: Get.theme.colorScheme.tertiary,
@@ -75,26 +63,27 @@ class SignUpView extends GetView<SignUpController> {
                           if (value!.isEmpty) {
                             return 'Email can\'t be empty';
                           } else if (!RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value)) {
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+                          ).hasMatch(value)) {
                             return 'Incorrect email';
                           }
                           return null;
                         },
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
+                            horizontal: 10,
+                            vertical: 12.5,
                           ),
                           hintText: 'example@gmail.com',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Get.theme.colorScheme.surfaceTint,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
                               color: Get.theme.colorScheme.tertiary,
                             ),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),
@@ -131,7 +120,8 @@ class SignUpView extends GetView<SignUpController> {
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Get.theme.colorScheme.tertiary),
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
                           ),
                         ),
                       ),
@@ -187,9 +177,9 @@ class SignUpView extends GetView<SignUpController> {
                           child: Center(
                             child: Text(
                               AppLocalizations.of(context)!.create_account,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                           ),
@@ -286,7 +276,7 @@ class SignUpView extends GetView<SignUpController> {
                               (route) => false,
                             ),
                             child: Text(
-                              AppLocalizations.of(context)!.login,
+                              AppLocalizations.of(context)!.signin,
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Color(0xffC9131E),

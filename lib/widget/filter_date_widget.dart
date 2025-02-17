@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/theme/theme.dart';
 import 'package:kork/views/filter_view.dart';
 
 Widget filterDateWidget(String text) {
@@ -11,15 +12,20 @@ Widget filterDateWidget(String text) {
   }
 
   return GestureDetector(
-    onTap: () => controller.updateSelectDate(text),
+    onTap: () {
+      controller.pickedDate.value = null;
+      controller.updateSelectDate(text);
+      controller.filterItem['time_date'] = text;
+    },
     child: Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 23,
         vertical: 8,
       ),
       decoration: BoxDecoration(
-        color:
-            isMatch ? Get.theme.colorScheme.primary : const Color(0xff252525),
+        color: isMatch
+            ? Get.theme.colorScheme.primary
+            : Get.theme.colorScheme.filterBackground,
         border: Border.all(
           color: isMatch
               ? Get.theme.colorScheme.primary
@@ -30,7 +36,9 @@ Widget filterDateWidget(String text) {
       child: Text(
         text,
         style: TextStyle(
-          color: Get.theme.colorScheme.tertiary,
+          color: isMatch
+              ? const Color(0xffEAE9FC)
+              : Get.theme.colorScheme.tertiary,
           fontSize: 15,
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
 import 'package:kork/views/filter_location.dart';
@@ -16,6 +17,7 @@ class FilterView extends GetView<FilterController> {
 
   @override
   Widget build(BuildContext context) {
+    // DateTime? pickedDate;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,29 +36,6 @@ class FilterView extends GetView<FilterController> {
             color: Get.theme.colorScheme.tertiary,
           ),
         ),
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 94,
-              height: 31,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Get.theme.colorScheme.primary,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                AppLocalizations.of(context)!.clear,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Get.theme.colorScheme.tertiary,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [
@@ -98,24 +77,36 @@ class FilterView extends GetView<FilterController> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Obx(
-                      () => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          filterDateWidget(AppLocalizations.of(context)!.today),
-                          filterDateWidget(
-                              AppLocalizations.of(context)!.tomorrow),
-                          filterDateWidget(
-                              AppLocalizations.of(context)!.this_weel),
-                        ],
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Obx(
+                          () => filterDateWidget(
+                            AppLocalizations.of(context)!.today,
+                          ),
+                        ),
+                        Obx(
+                          () => filterDateWidget(
+                            AppLocalizations.of(context)!.tomorrow,
+                          ),
+                        ),
+                        Obx(
+                          () => filterDateWidget(
+                            AppLocalizations.of(context)!.this_weel,
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 14),
                     Obx(
                       () => InkWell(
                         splashFactory: NoSplash.splashFactory,
                         onTap: () async {
-                          var date = await showDatePicker(
+                          if (controller.filterItem.containsKey('time_date')) {
+                            controller.pickedDate.value = DateTime.tryParse(
+                                controller.filterItem['time_date']);
+                          }
+                          controller.pickedDate.value = await showDatePicker(
                             context: context,
                             initialDate:
                                 controller.pickedDate.value ?? DateTime.now(),
@@ -128,7 +119,16 @@ class FilterView extends GetView<FilterController> {
                               );
                             },
                           );
-                          if (date != null) controller.pickedDate.value = date;
+                          if (controller.pickedDate.value != null) {
+                            controller.filterItem['time_date'] =
+                                DateFormat('yyyy-MM-dd').format(
+                              controller.pickedDate.value!,
+                            );
+                            controller.selectDate.value = '';
+                            print(
+                              controller.filterItem['time_date'],
+                            );
+                          }
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -140,7 +140,7 @@ class FilterView extends GetView<FilterController> {
                               color: Get.theme.colorScheme.tertiary,
                             ),
                             borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xff252525),
+                            color: Get.theme.colorScheme.filterBackground,
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,11 +178,14 @@ class FilterView extends GetView<FilterController> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    Text(
-                      AppLocalizations.of(context)!.location,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Get.theme.colorScheme.tertiary,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        AppLocalizations.of(context)!.location,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Get.theme.colorScheme.tertiary,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -201,7 +204,7 @@ class FilterView extends GetView<FilterController> {
                                 color: Get.theme.colorScheme.tertiary,
                               ),
                               borderRadius: BorderRadius.circular(15),
-                              color: const Color(0xff252525),
+                              color: Get.theme.colorScheme.filterBackground,
                             ),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -224,7 +227,10 @@ class FilterView extends GetView<FilterController> {
                                       width: 30,
                                       height: 30,
                                       decoration: BoxDecoration(
-                                        color: const Color(0xff252525),
+                                        color: Get.isDarkMode
+                                            ? Get.theme.colorScheme
+                                                .filterBackground
+                                            : const Color(0xffFAFAFA),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
@@ -323,25 +329,40 @@ class FilterView extends GetView<FilterController> {
               vertical: 13,
               horizontal: 16,
             ),
-            color: Get.theme.colorScheme.navbar,
+            color: const Color(0xFFFAFAFA),
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 34,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Get.theme.colorScheme.secondary,
+                  child: GestureDetector(
+                    onTap: () {
+                      controller.selectCategory.value = 0;
+                      controller.selectDate.value = '';
+
+                      controller.pickedDate.value = null;
+
+                      controller.currentRange.value =
+                          const RangeValues(80, 120);
+
+                      controller.filterItem.value = <String, dynamic>{};
+
+                      controller.selectedLocation.value = '';
+                    },
+                    child: Container(
+                      height: 34,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Get.theme.colorScheme.secondary,
+                        ),
                       ),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      AppLocalizations.of(context)!.reset,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Get.theme.colorScheme.secondary,
+                      alignment: Alignment.center,
+                      child: Text(
+                        AppLocalizations.of(context)!.reset,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Get.theme.colorScheme.secondary,
+                        ),
                       ),
                     ),
                   ),
@@ -362,10 +383,10 @@ class FilterView extends GetView<FilterController> {
                       alignment: Alignment.center,
                       child: Text(
                         AppLocalizations.of(context)!.apply,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Get.theme.colorScheme.tertiary,
+                          color: Color(0xffEAE9FC),
                         ),
                       ),
                     ),

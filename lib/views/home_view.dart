@@ -18,7 +18,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.onInverseSurface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

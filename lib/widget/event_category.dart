@@ -21,16 +21,16 @@ Widget eventCategory() {
         height: 32,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Get.theme.colorScheme.primary,
+          color: Get.theme.colorScheme.secondary,
           border: Border.all(
-            color: Get.theme.colorScheme.tertiary,
+            color: const Color(0xffEAE9FC),
           ),
         ),
         child: Center(
           child: Text(
             categories[index],
-            style: TextStyle(
-              color: Get.theme.colorScheme.tertiary,
+            style: const TextStyle(
+              color: Color(0xffEAE9FC),
               fontSize: 12,
             ),
           ),

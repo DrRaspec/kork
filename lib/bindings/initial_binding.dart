@@ -4,13 +4,15 @@ class InitialBinding extends Bindings {
   final SharedPreferences prefs;
 
   InitialBinding(this.prefs);
+
   @override
   void dependencies() {
-    Get.lazyPut(() => LanguageController(prefs));
-    Get.lazyPut(() => MainController());
-    Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => EventController());
-    Get.lazyPut(() => ProfileController());
-    // Get.lazyPut(() => BookedEventDetailController());
+    Get.put(ThemeController(prefs), permanent: true);
+    Get.lazyPut(() => LanguageController(prefs), fenix: true);
+    Get.lazyPut(() => MainController(), fenix: true);
+    Get.lazyPut(() => HomeController(), fenix: true);
+    Get.lazyPut(() => EventController(), fenix: true);
+    Get.lazyPut(() => ProfileController(), fenix: true);
+    Get.lazyPut(() => TicketController(), fenix: true);
   }
 }

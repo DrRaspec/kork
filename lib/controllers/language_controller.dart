@@ -1,22 +1,11 @@
 part of 'package:kork/main.dart';
 
-// for code language like km en ...
-// class LanguageController extends GetxController {
-//   var currentLocale = Get.deviceLocale ?? const Locale('en');
-
-//   void switchLanguage(String languageCode) {
-//     Locale locale = Locale(languageCode);
-//     currentLocale = locale;
-//     Get.updateLocale(locale);
-//   }
-// }
-
-// for boolean
 class LanguageController extends GetxController {
   static const LANGUAGE_KEY = 'selected_language';
 
   var currentLocale = Get.deviceLocale ?? const Locale('en');
   var isEnglish = true.obs;
+  var fontFamily = 'Poppins'.obs; // Default font family
 
   final SharedPreferences _prefs;
   LanguageController(this._prefs);
@@ -24,15 +13,16 @@ class LanguageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadSaveLanguage();
-    // Initialize isEnglish based on current locale
-    // isEnglish.value = currentLocale.languageCode == 'en';
+    loadSavedLanguage();
   }
 
-  void loadSaveLanguage() {
+  void loadSavedLanguage() {
     String savedLang = _prefs.getString(LANGUAGE_KEY) ?? 'en';
     isEnglish.value = savedLang == 'en';
     currentLocale = Locale(savedLang);
+    fontFamily.value =
+        savedLang == 'km' ? 'KantumruyPro' : 'Poppins'; // Update font
+
     Get.updateLocale(currentLocale);
   }
 
@@ -40,6 +30,8 @@ class LanguageController extends GetxController {
     isEnglish.value = value;
     String newLang = value ? 'en' : 'km';
     currentLocale = Locale(newLang);
+    fontFamily.value =
+        newLang == 'km' ? 'KantumruyPro' : 'Poppins'; // Change font
 
     await _prefs.setString(LANGUAGE_KEY, newLang);
     Get.updateLocale(currentLocale);

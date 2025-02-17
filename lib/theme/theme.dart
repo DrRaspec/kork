@@ -4,24 +4,30 @@ ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     primary: Color(0xffC9131E),
-    secondary: Color(0xff4B5563),
-    tertiary: Color(0xff9CA3AF),
-    surfaceTint: Color(0xffD1D5DB),
-    onInverseSurface: Color(0xffF7F8F9),
+    secondary: Color.fromRGBO(51, 51, 51, 1),
+    tertiary: Color(0xff404144),
+    surfaceTint: Color(0xA0404144),
+    onInverseSurface: Color(0xff1C1818),
   ),
-  scaffoldBackgroundColor: const Color(0xff1C1818),
+  // scaffoldBackgroundColor: const Color(0xffF7F8F9),?
+  appBarTheme: const AppBarTheme(
+    color: Color(0xffF7F8F9),
+  ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Color(0xffFAFAFA),
   ),
   datePickerTheme: DatePickerThemeData(
     dayForegroundColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return const Color(0xff9CA3AF).withOpacity(0.5); // passed dates
+        return const Color(0xff9CA3AF); // passed dates
       }
-      return const Color(0xff9CA3AF); // normal dates
+      if (states.contains(WidgetState.selected)) {
+        return Colors.white;
+      }
+      return const Color(0xff1C1818); // normal dates
     }),
     todayForegroundColor: WidgetStateProperty.all(
-      const Color(0xff9CA3AF),
+      const Color(0xff1C1818),
     ),
   ),
 );
@@ -36,6 +42,9 @@ ThemeData darkMode = ThemeData(
     onInverseSurface: Color(0xff1C1818),
   ),
   scaffoldBackgroundColor: const Color(0xff1C1818),
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Color(0xff1C1818),
+  ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Color(0xffFAFAFA),
   ),
@@ -51,7 +60,7 @@ ThemeData darkMode = ThemeData(
 );
 
 extension CustomColorScheme on ColorScheme {
-  Color get navbar => brightness == Brightness.dark
-      ? const Color(0xFFFAFAFA)
-      : const Color(0xFF333333);
+  Color get filterBackground => brightness == Brightness.dark
+      ? const Color(0x80404144)
+      : Colors.transparent;
 }

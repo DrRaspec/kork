@@ -120,14 +120,14 @@ class FilterLocation extends GetView<FilterLocationController> {
                   height: 18,
                 ),
               ),
-              Obx(
-                () => SliverList.separated(
-                  itemBuilder: (context, index) {
-                    final itemList = controller.searchLocation.entries.toList();
-                    if (index >= itemList.length) return const SizedBox();
-                    final location = itemList[index].value;
+              SliverList.separated(
+                itemBuilder: (context, index) {
+                  final itemList = controller.searchLocation.entries.toList();
+                  if (index >= itemList.length) return const SizedBox();
+                  final location = itemList[index].value;
 
-                    return InkWell(
+                  return Obx(
+                    () => InkWell(
                       splashFactory: NoSplash.splashFactory,
                       onTap: () {
                         if (controller.selectedValue.value == location) {
@@ -168,12 +168,12 @@ class FilterLocation extends GetView<FilterLocationController> {
                               : const SizedBox(),
                         ],
                       ),
-                    );
-                  },
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
-                  itemCount: controller.searchLocation.length,
-                ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
+                itemCount: controller.searchLocation.length,
               ),
             ],
           ),
