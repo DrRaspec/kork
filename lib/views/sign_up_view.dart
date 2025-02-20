@@ -80,38 +80,50 @@ class SignUpView extends GetView<SignUpController> {
                         sin(controller.emailShakeAnimation.value * pi * 2) * 5;
                     return Transform.translate(
                       offset: Offset(shakeOffset, 0),
-                      child: Obx(
-                        () => TextField(
-                          controller: controller.emailController,
-                          focusNode: controller.emailFocus,
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            alignLabelWithHint: true,
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            hintText: 'example@gmail.com',
-                            hintStyle: TextStyle(
+                      child: SizedBox(
+                        height: 40,
+                        child: Obx(
+                          () => TextField(
+                            controller: controller.emailController,
+                            focusNode: controller.emailFocus,
+                            textAlignVertical: TextAlignVertical.center,
+                            onChanged: (value) {
+                              controller.emailError.value = '';
+                            },
+                            style: TextStyle(
                               fontSize: 12,
-                              color: Get.theme.colorScheme.surfaceTint,
+                              color: Get.theme.colorScheme.tertiary,
                             ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
+                            decoration: InputDecoration(
+                              // alignLabelWithHint: true,
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
+                              hintText: 'example@gmail.com',
+                              hintStyle: TextStyle(
+                                fontSize: 12,
                                 color: controller.emailError.isNotEmpty
                                     ? Get.theme.colorScheme.primary
-                                    : Get.theme.colorScheme.tertiary,
+                                    : Get.theme.colorScheme.surfaceTint,
                               ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: controller.emailError.isNotEmpty
-                                    ? Get.theme.colorScheme.primary
-                                    : Get.theme.colorScheme.tertiary,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.emailError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
                               ),
-                              borderRadius: BorderRadius.circular(5),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.emailError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                           ),
                         ),
@@ -136,256 +148,210 @@ class SignUpView extends GetView<SignUpController> {
                     ),
                   ),
                 ),
-                Form(
-                  key: controller.formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.email,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        controller: controller.emailController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Email can\'t be empty';
-                          } else if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-                          ).hasMatch(value)) {
-                            return 'Incorrect email';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 12.5,
-                          ),
-                          hintText: 'example@gmail.com',
-                          hintStyle: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.password,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextFormField(
-                        controller: controller.passwordController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Password can\'t be empty';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                          hintText: 'e. g. yourpassword@123',
-                          hintStyle: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.confirm_password,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextFormField(
-                        controller: controller.conPasswordController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Confirm Password can\'t be empty';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                          hintText: 'e. g. yourpassword@123',
-                          hintStyle: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.surfaceTint,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {
-                          controller.validateInput();
-                          if (controller.emailError.isEmpty &&
-                              controller.passwordError.isEmpty &&
-                              controller.confirmPasswordError.isEmpty) {
-                            Get.snackbar('Sign up', 'Sign up successful');
-                          }
-                          // if (controller.formKey.currentState!.validate()) {
-                          //   Get.snackbar('Sign up', 'Sign up successful');
-                          // }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          // height: 37,
-                          padding: const EdgeInsets.symmetric(vertical: 9),
-                          color: Get.theme.colorScheme.primary,
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.create_account,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Color(0xffEAE9FC),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      Text(
-                        AppLocalizations.of(context)!.sign_up_with,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/image/svg/facebook_icon.svg',
-                                width: 24,
-                                height: 24,
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                AppLocalizations.of(context)!.sign_in_with_fb,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          width: double.infinity,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/image/svg/google_icon.svg',
-                                width: 24,
-                                height: 24,
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .sign_in_with_gmail,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.already_have_acc,
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.password,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                AnimatedBuilder(
+                  animation: controller.passwordShakeAnimation,
+                  builder: (context, child) {
+                    final double shakeOffset =
+                        sin(controller.passwordShakeAnimation.value * pi * 2) *
+                            5;
+                    return Transform.translate(
+                      offset: Offset(shakeOffset, 0),
+                      child: SizedBox(
+                        height: 40,
+                        child: Obx(
+                          () => TextField(
+                            controller: controller.passwordController,
+                            focusNode: controller.passwordFocus,
+                            textAlignVertical: TextAlignVertical.center,
+                            onChanged: (value) {
+                              controller.passwordError.value = '';
+                            },
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 12,
                               color: Get.theme.colorScheme.tertiary,
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: () => Get.offNamedUntil(
-                              Routes.login,
-                              (route) => false,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.signin,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Color(0xffC9131E),
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
+                              isDense: true,
+                              hintText: 'e. g. Yourpassword@123',
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                                color: controller.passwordError.isNotEmpty
+                                    ? Get.theme.colorScheme.primary
+                                    : Get.theme.colorScheme.surfaceTint,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.passwordError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.passwordError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ],
+                    );
+                  },
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: controller.passwordError.value.isNotEmpty,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 3),
+                        Text(
+                          controller.passwordError.value,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Get.theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.confirm_password,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                AnimatedBuilder(
+                  animation: controller.confirmPasswordShakeAnimation,
+                  builder: (context, child) {
+                    final double shakeOffset = sin(
+                            controller.confirmPasswordShakeAnimation.value *
+                                pi *
+                                2) *
+                        5;
+                    return Transform.translate(
+                      offset: Offset(shakeOffset, shakeOffset),
+                      child: SizedBox(
+                        height: 40,
+                        child: Obx(
+                          () => TextField(
+                            controller: controller.conPasswordController,
+                            focusNode: controller.confirmPasswordFocus,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                            onChanged: (value) {
+                              controller.confirmPasswordError.value = '';
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
+                              isDense: true,
+                              hintText: 'e. g. Yourpassword@123',
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                                color:
+                                    controller.confirmPasswordError.isNotEmpty
+                                        ? Get.theme.colorScheme.primary
+                                        : Get.theme.colorScheme.surfaceTint,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      controller.confirmPasswordError.isNotEmpty
+                                          ? Get.theme.colorScheme.primary
+                                          : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color:
+                                      controller.confirmPasswordError.isNotEmpty
+                                          ? Get.theme.colorScheme.primary
+                                          : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: controller.confirmPasswordError.value.isNotEmpty,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 3),
+                        Text(
+                          controller.confirmPasswordError.value,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Get.theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                GestureDetector(
+                  onTap: () {
+                    controller.validateInput();
+                    if (controller.emailError.isEmpty &&
+                        controller.passwordError.isEmpty &&
+                        controller.confirmPasswordError.isEmpty) {
+                      Get.snackbar('Sign up', 'Sign up successful');
+                    }
+                    // if (controller.formKey.currentState!.validate()) {
+                    //   Get.snackbar('Sign up', 'Sign up successful');
+                    // }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    // height: 37,
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    color: Get.theme.colorScheme.primary,
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.create_account,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Color(0xffEAE9FC),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],

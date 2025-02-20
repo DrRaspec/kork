@@ -93,11 +93,20 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   }
 
   void validateInput() {
+    emailError.value = '';
+    passwordError.value = '';
+    confirmPasswordError.value = '';
     bool hasError = false;
 
-    if (emailController.text.isEmpty) {
+    if (emailController.text.trim().isEmpty) {
       emailError.value =
           '${AppLocalizations.of(Get.context!)!.email}${AppLocalizations.of(Get.context!)!.cant_empty}';
+      triggerEmailShake();
+      hasError = true;
+    } else if (!RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(emailController.text.trim())) {
+      emailError.value = AppLocalizations.of(Get.context!)!.invalid_email;
       triggerEmailShake();
       hasError = true;
     }
@@ -107,12 +116,23 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
           '${AppLocalizations.of(Get.context!)!.password}${AppLocalizations.of(Get.context!)!.cant_empty}';
       trigglePasswordShake();
       hasError = true;
+    } else if (passwordController.text.length < 8 ||
+        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+            .hasMatch(passwordController.text)) {
+      passwordError.value = AppLocalizations.of(Get.context!)!.password_quide;
+      trigglePasswordShake();
+      hasError = true;
     }
 
     if (conPasswordController.text.isEmpty) {
       confirmPasswordError.value =
           '${AppLocalizations.of(Get.context!)!.confirm_password}${AppLocalizations.of(Get.context!)!.cant_empty}';
       triggleConfirmPasswordShake();
+      hasError = true;
+    } else if (conPasswordController.text != passwordController.text) {
+      confirmPasswordError.value =
+          AppLocalizations.of(Get.context!)!.password_not_match;
+      trigglePasswordShake();
       hasError = true;
     }
 

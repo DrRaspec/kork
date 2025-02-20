@@ -82,6 +82,9 @@ class FirstSignupController extends GetxController {
   void validateInputs() {
     bool hasError = false;
     firstNameError.value = '';
+    lastNameError.value = '';
+    genderError.value = '';
+    dobError.value = '';
 
     if (firstName.text.isEmpty) {
       firstNameError.value =

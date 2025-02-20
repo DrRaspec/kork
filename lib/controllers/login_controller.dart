@@ -67,11 +67,17 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
     emailError.value = '';
     passwordError.value = '';
 
-    if (emailController.text.isEmpty) {
+    if (emailController.text.trim().isEmpty) {
       emailError.value =
           '${AppLocalizations.of(Get.context!)!.email_username}${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       triggerEmailShake();
+    } else if (!RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+    ).hasMatch(emailController.text.trim())) {
+      emailError.value = AppLocalizations.of(Get.context!)!.invalid_email;
+      triggerEmailShake();
+      hasError = true;
     }
 
     if (passwordController.text.isEmpty) {
