@@ -12,6 +12,14 @@ class FirstSignupController extends GetxController {
   var communeSangkat = TextEditingController();
   var searchDialog = TextEditingController();
 
+  var firstNameError = ''.obs;
+  var lastNameError = ''.obs;
+  var genderError = ''.obs;
+  var dobError = ''.obs;
+
+  late FocusNode firstNameFocus;
+  late FocusNode lastNameFocus;
+
   var selectedGender = Rxn<String>();
   var pickedDate = Rxn<DateTime>();
 
@@ -24,15 +32,16 @@ class FirstSignupController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    firstNameFocus = FocusNode();
+    lastNameFocus = FocusNode();
     try {
       countries = await Countries.fetchCountries();
 
-      // Find Cambodia (KH), or set a default
       var filterCountry = countries.firstWhere(
         (c) => c.countryCode == 'KH',
         orElse: () => CountryInfo(
           name: 'Unknown',
-          flag: 'assets/image/flags/kh.png', // Fallback flag
+          flag: 'assets/image/flags/kh.png',
           phoneCode: '',
           countryCode: '',
         ),
@@ -45,12 +54,64 @@ class FirstSignupController extends GetxController {
     }
   }
 
+  @override
+  void onClose() {
+    firstName.dispose();
+    lastName.dispose();
+    dob.dispose();
+    phoneNumber.dispose();
+    nationality.dispose();
+    cityProvince.dispose();
+    districtKhan.dispose();
+    communeSangkat.dispose();
+    searchDialog.dispose();
+    firstNameFocus.dispose();
+    lastNameFocus.dispose();
+    super.onClose();
+  }
+
   void loadMore() {
     if (currentLenght.value < countries.length) {
       currentLenght.value = (currentLenght.value + 20).clamp(
         0,
         countries.length,
       );
+    }
+  }
+
+  void validateInputs() {
+    bool hasError = false;
+    firstNameError.value = '';
+
+    if (firstName.text.isEmpty) {
+      firstNameError.value =
+          '${AppLocalizations.of(Get.context!)!.first_name}${AppLocalizations.of(Get.context!)!.cant_empty}';
+      hasError = true;
+    }
+    if (lastName.text.isEmpty) {
+      lastNameError.value =
+          '${AppLocalizations.of(Get.context!)!.last_name}${AppLocalizations.of(Get.context!)!.cant_empty}';
+      hasError = true;
+    }
+    if (selectedGender.value == null || selectedGender.value!.isEmpty) {
+      genderError.value =
+          '${AppLocalizations.of(Get.context!)!.gender}${AppLocalizations.of(Get.context!)!.cant_empty}';
+      hasError = true;
+    }
+    if (dob.text.isEmpty) {
+      dobError.value =
+          '${AppLocalizations.of(Get.context!)!.dob}${AppLocalizations.of(Get.context!)!.cant_empty}';
+      hasError = true;
+    }
+
+    if (hasError) {
+      Future.delayed(Duration.zero, () {
+        if (firstNameError.isEmpty && lastNameError.isNotEmpty) {
+          lastNameFocus.requestFocus();
+        } else if (firstNameError.isNotEmpty) {
+          firstNameFocus.requestFocus();
+        }
+      });
     }
   }
 }

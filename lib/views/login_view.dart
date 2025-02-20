@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -43,151 +45,280 @@ class LoginView extends GetView<LoginController> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Form(
-                  key: controller.formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 25),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.email_username,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Container(
-                        // height: 40,
-                        constraints: const BoxConstraints(
-                          minHeight: 40,
-                        ),
-                        child: TextFormField(
-                          controller: controller.emailController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Email can\'t be empty';
-                            }
-                            return null;
-                          },
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            alignLabelWithHint: true,
-                            isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 12.5,
-                            ),
-                            constraints: const BoxConstraints(minHeight: 40),
-                            hintText: 'e. g. youremail@mail.com',
-                            hintStyle: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.surfaceTint,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.password,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Container(
-                        constraints: const BoxConstraints(
-                          minHeight: 40,
-                        ),
-                        child: TextFormField(
-                          controller: controller.passwordController,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Password can\'t be empty';
-                            }
-                            return null;
-                          },
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                          decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 12.5,
-                            ),
-                            isDense: true,
-                            constraints: const BoxConstraints(minHeight: 40),
-                            hintText: 'e. g. yourpassword@123',
-                            hintStyle: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.surfaceTint,
-                            ),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: GestureDetector(
-                          onTap: () => Get.toNamed(Routes.forgetPassword),
-                          child: Text(
-                            AppLocalizations.of(context)!.forget_password,
+                const SizedBox(height: 25),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.email,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                SizedBox(
+                  height: 40,
+                  child: AnimatedBuilder(
+                    animation: controller.emailShakeAnimation,
+                    builder: (context, child) {
+                      final double shakeOffset = sin(
+                            controller.emailShakeAnimation.value * 2 * pi,
+                          ) *
+                          5;
+                      return Transform.translate(
+                        offset: Offset(shakeOffset, 0),
+                        child: Obx(
+                          () => TextField(
+                            controller: controller.emailController,
+                            focusNode: controller.emailFocusNode,
                             style: TextStyle(
                               fontSize: 12,
                               color: Get.theme.colorScheme.tertiary,
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {
-                          if (controller.formKey.currentState!.validate()) {
-                            Get.snackbar('Sign up', 'Sign up successful');
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 40,
-                          padding: EdgeInsets.zero,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Get.theme.colorScheme.primary,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Text(
-                            AppLocalizations.of(context)!.signin,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xffEAE9FC),
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                controller.emailError.value = '';
+                              }
+                            },
+                            textAlignVertical: TextAlignVertical.center,
+                            decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              isDense: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12.5,
+                              ),
+                              // constraints: const BoxConstraints(minHeight: 40),
+                              hintText: 'e. g. youremail@mail.com',
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.surfaceTint,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                borderSide: BorderSide(
+                                  color: controller.emailError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.emailError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: Visibility(
+                                visible: controller.emailError.isNotEmpty,
+                                child: Icon(
+                                  Icons.error,
+                                  size: 20,
+                                  color: Get.theme.colorScheme.primary,
+                                ),
+                              ),
                             ),
                           ),
                         ),
+                      );
+                    },
+                  ),
+                ),
+                Obx(
+                  () => controller.emailError.isNotEmpty
+                      ? Column(
+                          children: [
+                            const SizedBox(height: 3),
+                            Text(
+                              controller.emailError.value,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Get.theme.colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.password,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  // constraints: const BoxConstraints(
+                  //   minHeight: 40,
+                  // ),
+                  height: 40,
+                  child: AnimatedBuilder(
+                    animation: controller.passwordShakeAnimation,
+                    builder: (context, child) {
+                      final double shakeOffset = sin(
+                            controller.passwordShakeAnimation.value * 2 * pi,
+                          ) *
+                          5;
+                      return Transform.translate(
+                        offset: Offset(
+                          shakeOffset,
+                          0,
+                        ),
+                        child: Obx(
+                          () => TextField(
+                            controller: controller.passwordController,
+                            focusNode: controller.passwordFocusNode,
+                            obscureText: controller.passwordObsecure.value,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                controller.passwordError.value = '';
+                              }
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12.5,
+                              ),
+                              isDense: true,
+                              // constraints: const BoxConstraints(minHeight: 40),
+                              hintText: 'e. g. yourpassword@123',
+                              hintStyle: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.surfaceTint,
+                              ),
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.passwordError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: controller.passwordError.isNotEmpty
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 11,
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.passwordObsecure.value =
+                                        !controller.passwordObsecure.value;
+                                  },
+                                  child: SizedBox(
+                                    child: SvgPicture.asset(
+                                      controller.passwordObsecure.value
+                                          ? 'assets/image/svg/eye.svg'
+                                          : 'assets/image/svg/eye-slash.svg',
+                                      fit: BoxFit.scaleDown,
+                                      colorFilter: ColorFilter.mode(
+                                        Get.theme.colorScheme.tertiary,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Obx(
+                  () => controller.passwordError.isNotEmpty
+                      ? Column(
+                          children: [
+                            const SizedBox(height: 3),
+                            Text(
+                              controller.passwordError.value,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Get.theme.colorScheme.primary,
+                              ),
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () => Get.toNamed(Routes.forgetPassword),
+                    child: Text(
+                      AppLocalizations.of(context)!.forget_password,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
-                      const SizedBox(height: 15),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                GestureDetector(
+                  onTap: () {
+                    controller.validateInputs();
+                    if (controller.emailError.isEmpty &&
+                        controller.passwordError.isEmpty) {
+                      Get.snackbar('Sign up', 'Sign up successful');
+                    }
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 40,
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Get.theme.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.signin,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Color(0xffEAE9FC),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                       Text(
                         AppLocalizations.of(context)!.sign_up_with,
                         style: TextStyle(
@@ -261,34 +392,34 @@ class LoginView extends GetView<LoginController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.dont_have_acc,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          GestureDetector(
-                            onTap: () => Get.toNamed(
-                              Routes.firstSignup,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.sign_up,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffC9131E),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.dont_have_acc,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(
+                        Routes.firstSignup,
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.sign_up,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xffC9131E),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

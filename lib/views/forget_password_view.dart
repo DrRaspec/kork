@@ -24,7 +24,9 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
-                  'assets/image/Artboard 1 2.png',
+                  Get.isDarkMode
+                      ? 'assets/image/logo.png'
+                      : 'assets/image/light-logo.png',
                   width: 70,
                   fit: BoxFit.cover,
                 ),
@@ -58,101 +60,88 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                     ),
                   ),
                 ),
-                Form(
-                  key: controller.formKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 8),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          AppLocalizations.of(context)!.email,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.email_username,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  controller: controller.emailController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Email can\'t be empty';
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    hintText: 'example@gmail.com',
+                    hintStyle: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Get.theme.colorScheme.tertiary),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.back_to_signin,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    GestureDetector(
+                      onTap: () => Get.offNamedUntil(
+                        Routes.login,
+                        (route) => false,
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.signin,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xffC9131E),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      TextFormField(
-                        controller: controller.emailController,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Email can\'t be empty';
-                          } else if (!RegExp(
-                                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value)) {
-                            return 'Incorrect email';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 10,
-                          ),
-                          hintText: 'example@gmail.com',
-                          hintStyle: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Get.theme.colorScheme.tertiary),
-                          ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 24),
+                GestureDetector(
+                  onTap: () {
+                    Get.toNamed(Routes.verifyOtp);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    // height: 37,
+                    padding: const EdgeInsets.symmetric(vertical: 9),
+                    color: Get.theme.colorScheme.primary,
+                    child: Center(
+                      child: Text(
+                        AppLocalizations.of(context)!.next,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.back_to_login,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          GestureDetector(
-                            onTap: () => Get.offNamedUntil(
-                              Routes.login,
-                              (route) => false,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.signin,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xffC9131E),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(height: 24),
-                      GestureDetector(
-                        onTap: () {
-                          if (controller.formKey.currentState!.validate()) {
-                            Get.toNamed(Routes.verifyOtp);
-                          }
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          // height: 37,
-                          padding: const EdgeInsets.symmetric(vertical: 9),
-                          color: Get.theme.colorScheme.primary,
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.next,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ],

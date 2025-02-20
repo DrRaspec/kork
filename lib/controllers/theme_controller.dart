@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/main.dart';
+import 'package:kork/theme/theme.dart';
 import 'package:kork/views/main_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +11,7 @@ class ThemeController extends GetxController {
   ThemeController(this.prefs);
 
   final Rx<ThemeMode> themeMode = ThemeMode.light.obs;
+  var fontFamily = 'Poppins'.obs;
 
   ThemeMode get currentThemeMode => themeMode.value;
 
@@ -21,6 +24,9 @@ class ThemeController extends GetxController {
   void _loadThemeFromPrefs() {
     bool isDarkMode = prefs.getBool("isDarkMode") ?? false;
     themeMode.value = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+
+    String savedLang = prefs.getString(LanguageController.LANGUAGE_KEY) ?? 'en';
+    fontFamily.value = savedLang == 'en' ? 'Poppins' : 'KantumruyPro';
   }
 
   void toggleTheme() {
@@ -34,5 +40,19 @@ class ThemeController extends GetxController {
     Future.delayed(const Duration(milliseconds: 200), () {
       Get.offAll(() => const MainView());
     });
+  }
+
+  void updateFontFamily(String language) {
+    fontFamily.value = language == 'en' ? 'Poppins' : 'KantumruyPro';
+
+    ThemeData newTheme = Get.isDarkMode
+        ? darkMode.copyWith(
+            textTheme: darkMode.textTheme.apply(fontFamily: fontFamily.value),
+          )
+        : lightMode.copyWith(
+            textTheme: lightMode.textTheme.apply(fontFamily: fontFamily.value),
+          );
+
+    Get.changeTheme(newTheme);
   }
 }

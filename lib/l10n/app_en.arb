@@ -115,9 +115,13 @@
     "@forget_your_password_guide": {
         "description": "forget_password_guide"
     },
-    "back_to_login": "Back to Login,",
-    "@back_to_login": {
+    "back_to_signin": "Back to Sign in,",
+    "@back_to_signin": {
         "description": "back_to_login"
+    },
+    "back": "Back",
+    "@back": {
+        "description": "back"
     },
     "next": "Next",
     "@next": {
@@ -722,5 +726,9 @@
     "search_country": "Search by Country Name",
     "@search_country": {
         "description": "Search by Country Name"
+    },
+    "cant_empty": "can't be empty",
+    "@cant_empty": {
+        "description": "idk"
     }
 }

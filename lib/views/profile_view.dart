@@ -22,7 +22,7 @@ class ProfileView extends GetView<ProfileController> {
           AppLocalizations.of(context)!.profile,
           style: TextStyle(
             fontSize: 20,
-            color: Theme.of(context).colorScheme.tertiary,
+            color: Get.theme.colorScheme.tertiary,
           ),
         ),
         actions: [
@@ -62,15 +62,15 @@ class ProfileView extends GetView<ProfileController> {
                     height: 136,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   Container(
                     width: 131,
                     height: 131,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      // color: Theme.of(context).colorScheme.onInverseSurface,
+                      // color: Get.theme.colorScheme.onInverseSurface,
                     ),
                     child: ClipOval(
                       child: Image.asset(
@@ -88,7 +88,7 @@ class ProfileView extends GetView<ProfileController> {
                 AppLocalizations.of(context)!.username,
                 style: TextStyle(
                   fontSize: 20,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: Get.theme.colorScheme.tertiary,
                 ),
               ),
               const SizedBox(height: 16),
@@ -99,7 +99,7 @@ class ProfileView extends GetView<ProfileController> {
                   height: 44,
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -110,13 +110,13 @@ class ProfileView extends GetView<ProfileController> {
                       Icon(
                         Icons.edit,
                         size: 16,
-                        color: Theme.of(context).colorScheme.tertiary,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                       const SizedBox(width: 16),
                       Text(
                         AppLocalizations.of(context)!.edit,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.tertiary,
+                          color: Get.theme.colorScheme.tertiary,
                           fontSize: 20,
                         ),
                       ),
@@ -134,7 +134,7 @@ class ProfileView extends GetView<ProfileController> {
                       AppLocalizations.of(context)!.dlanguage,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Theme.of(context).colorScheme.tertiary,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -158,7 +158,7 @@ class ProfileView extends GetView<ProfileController> {
                         AppLocalizations.of(context)!.language,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Theme.of(context).colorScheme.tertiary,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                     ),
@@ -186,7 +186,7 @@ class ProfileView extends GetView<ProfileController> {
                   'Setting',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Theme.of(context).colorScheme.tertiary,
+                    color: Get.theme.colorScheme.tertiary,
                   ),
                 ),
               ),

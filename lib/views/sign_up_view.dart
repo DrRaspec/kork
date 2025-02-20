@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,10 +26,27 @@ class SignUpView extends GetView<SignUpController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 17),
-                Image.asset(
-                  'assets/image/Artboard 1 2.png',
-                  width: 70,
-                  fit: BoxFit.cover,
+                Row(
+                  children: [
+                    Image.asset(
+                      Get.isDarkMode
+                          ? 'assets/image/logo.png'
+                          : 'assets/image/light-logo.png',
+                      width: 70,
+                      fit: BoxFit.cover,
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Text(
+                        AppLocalizations.of(context)!.back,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Get.theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
@@ -35,17 +54,93 @@ class SignUpView extends GetView<SignUpController> {
                   child: Text(
                     AppLocalizations.of(context)!.sign_up,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
                       color: Get.theme.colorScheme.tertiary,
                     ),
                     textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.email,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                AnimatedBuilder(
+                  animation: controller.emailShakeAnimation,
+                  builder: (context, child) {
+                    final double shakeOffset =
+                        sin(controller.emailShakeAnimation.value * pi * 2) * 5;
+                    return Transform.translate(
+                      offset: Offset(shakeOffset, 0),
+                      child: Obx(
+                        () => TextField(
+                          controller: controller.emailController,
+                          focusNode: controller.emailFocus,
+                          textAlignVertical: TextAlignVertical.center,
+                          decoration: InputDecoration(
+                            alignLabelWithHint: true,
+                            isDense: true,
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
+                            hintText: 'example@gmail.com',
+                            hintStyle: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.surfaceTint,
+                            ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: controller.emailError.isNotEmpty
+                                    ? Get.theme.colorScheme.primary
+                                    : Get.theme.colorScheme.tertiary,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: controller.emailError.isNotEmpty
+                                    ? Get.theme.colorScheme.primary
+                                    : Get.theme.colorScheme.tertiary,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: controller.emailError.value.isNotEmpty,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 3),
+                        Text(
+                          controller.emailError.value,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Get.theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Form(
                   key: controller.formKey,
                   child: Column(
                     children: [
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 10),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -56,7 +151,7 @@ class SignUpView extends GetView<SignUpController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 5),
                       TextFormField(
                         controller: controller.emailController,
                         validator: (value) {
@@ -112,11 +207,10 @@ class SignUpView extends GetView<SignUpController> {
                             horizontal: 16,
                             vertical: 10,
                           ),
-                          hintText:
-                              AppLocalizations.of(context)!.password_quide,
+                          hintText: 'e. g. yourpassword@123',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Get.theme.colorScheme.surfaceTint,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -150,24 +244,30 @@ class SignUpView extends GetView<SignUpController> {
                             horizontal: 16,
                             vertical: 10,
                           ),
-                          hintText: AppLocalizations.of(context)!
-                              .confirm_new_password,
+                          hintText: 'e. g. yourpassword@123',
                           hintStyle: TextStyle(
                             fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Get.theme.colorScheme.surfaceTint,
                           ),
                           border: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: Get.theme.colorScheme.tertiary),
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 24),
                       GestureDetector(
                         onTap: () {
-                          if (controller.formKey.currentState!.validate()) {
+                          controller.validateInput();
+                          if (controller.emailError.isEmpty &&
+                              controller.passwordError.isEmpty &&
+                              controller.confirmPasswordError.isEmpty) {
                             Get.snackbar('Sign up', 'Sign up successful');
                           }
+                          // if (controller.formKey.currentState!.validate()) {
+                          //   Get.snackbar('Sign up', 'Sign up successful');
+                          // }
                         },
                         child: Container(
                           width: double.infinity,

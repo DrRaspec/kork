@@ -5,7 +5,6 @@ class LanguageController extends GetxController {
 
   var currentLocale = Get.deviceLocale ?? const Locale('en');
   var isEnglish = true.obs;
-  var fontFamily = 'Poppins'.obs; // Default font family
 
   final SharedPreferences _prefs;
   LanguageController(this._prefs);
@@ -20,9 +19,6 @@ class LanguageController extends GetxController {
     String savedLang = _prefs.getString(LANGUAGE_KEY) ?? 'en';
     isEnglish.value = savedLang == 'en';
     currentLocale = Locale(savedLang);
-    fontFamily.value =
-        savedLang == 'km' ? 'KantumruyPro' : 'Poppins'; // Update font
-
     Get.updateLocale(currentLocale);
   }
 
@@ -30,10 +26,15 @@ class LanguageController extends GetxController {
     isEnglish.value = value;
     String newLang = value ? 'en' : 'km';
     currentLocale = Locale(newLang);
-    fontFamily.value =
-        newLang == 'km' ? 'KantumruyPro' : 'Poppins'; // Change font
 
     await _prefs.setString(LANGUAGE_KEY, newLang);
     Get.updateLocale(currentLocale);
+
+    // Get.forceAppUpdate();
+    Get.find<ThemeController>().updateFontFamily(newLang);
+
+    Future.delayed(const Duration(milliseconds: 200), () {
+      Get.offAll(() => const MainView());
+    });
   }
 }

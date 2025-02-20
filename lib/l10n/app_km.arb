@@ -28,7 +28,8 @@
     "already_have_acc": "មានគណនីរួចហើយ?",
     "forget_your_password": "ភ្លេចពាក្យសម្ងាត់របស់អ្នក",
     "forget_your_password_guide": "សូមបញ្ចូលអាសយដ្ឋានអ៊ីមែលរបស់អ្នកដើម្បីផ្ទៀងផ្ទាត់",
-    "back_to_login": "ត្រឡប់ទៅ Login វិញ",
+    "back_to_signin": "ត្រឡប់ទៅ sign in វិញ",
+    "back": "ថយក្រោយ",
     "next": "បន្ទាប់",
     "verify": "ផ្ទៀងផ្ទាត់",
     "verify_guide": "យើងបានផ្ញើអ៊ីមែលទៅអ្នកហើយ សូមពិនិត្យអ៊ីមែលរបស់អ្នកដើម្បីផ្ទៀងផ្ទាត់",
@@ -179,5 +180,6 @@
     "province_City": "ខេត្ត/ក្រុង",
     "district_khan": "ស្រុក/ខណ្ឌ",
     "commune_sangkat": "ឃុំ/សង្កាត់",
-    "search_country": "ស្វែងរកតាមរយៈ"
+    "search_country": "ស្វែងរកតាមរយៈ",
+    "cant_empty": "មិនអាចទទេរ"
 }

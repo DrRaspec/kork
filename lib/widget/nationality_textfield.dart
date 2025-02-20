@@ -15,7 +15,7 @@ Widget naionalityTextfield() {
     child: Container(
       height: 39,
       padding: const EdgeInsets.symmetric(
-        horizontal: 16,
+        horizontal: 10,
       ),
       decoration: BoxDecoration(
         border: Border.all(

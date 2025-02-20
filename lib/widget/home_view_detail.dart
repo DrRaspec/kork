@@ -26,7 +26,9 @@ Widget homeViewDetail() {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Image.asset(
-                      'assets/image/Artboard 1 2.png',
+                      Get.isDarkMode
+                          ? 'assets/image/logo.png'
+                          : 'assets/image/light-logo.png',
                       width: 32,
                     ),
                     Column(
@@ -250,7 +252,9 @@ Widget homeViewDetail() {
                               ),
                               child: ClipOval(
                                 child: Image.asset(
-                                  'assets/image/Artboard 1 2.png',
+                                  Get.isDarkMode
+                                      ? 'assets/image/logo.png'
+                                      : 'assets/image/light-logo.png',
                                   fit: BoxFit.cover,
                                 ),
                               ),

@@ -24,7 +24,9 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
-                  'assets/image/Artboard 1 2.png',
+                  Get.isDarkMode
+                      ? 'assets/image/logo.png'
+                      : 'assets/image/light-logo.png',
                   width: 70,
                   fit: BoxFit.cover,
                 ),
@@ -140,7 +142,7 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            AppLocalizations.of(context)!.back_to_login,
+                            AppLocalizations.of(context)!.back_to_signin,
                             style: TextStyle(
                               fontSize: 14,
                               color: Get.theme.colorScheme.tertiary,

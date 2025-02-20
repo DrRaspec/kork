@@ -16,6 +16,7 @@ class MainView extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
+    print(Get.textTheme.bodyLarge!.fontFamily);
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       body: Obx(

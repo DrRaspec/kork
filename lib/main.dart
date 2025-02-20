@@ -55,13 +55,17 @@ class MainApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         theme: lightMode.copyWith(
-          textTheme: lightMode.textTheme.apply(fontFamily: 'Poppins'),
+          textTheme: lightMode.textTheme.apply(
+            fontFamily: themeController.fontFamily.value,
+          ),
         ),
         darkTheme: darkMode.copyWith(
-          textTheme: darkMode.textTheme.apply(fontFamily: 'Poppins'),
+          textTheme: darkMode.textTheme.apply(
+            fontFamily: themeController.fontFamily.value,
+          ),
         ),
         getPages: appRoutes,
-        initialRoute: Routes.login,
+        initialRoute: Routes.signup,
       ),
     );
   }
