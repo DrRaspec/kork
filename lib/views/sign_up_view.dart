@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 
@@ -332,7 +331,7 @@ class SignUpView extends GetView<SignUpController> {
                     if (controller.emailError.isEmpty &&
                         controller.passwordError.isEmpty &&
                         controller.confirmPasswordError.isEmpty) {
-                      Get.snackbar('Sign up', 'Sign up successful');
+                      Get.toNamed(Routes.selectProfile);
                     }
                     // if (controller.formKey.currentState!.validate()) {
                     //   Get.snackbar('Sign up', 'Sign up successful');

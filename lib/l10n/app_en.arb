@@ -738,5 +738,37 @@
     "password_not_match": "Confirm password not match",
     "@password_not_match": {
         "description": "idk"
+    },
+    "choose_profile": "Choose profile picture",
+    "@choose_profile": {
+        "description": "idk"
+    },
+    "choose_image": "Choose image",
+    "@choose_image": {
+        "description": "idk"
+    },
+    "skip": "Skip",
+    "@skip": {
+        "description": "idk"
+    },
+    "select_current_location": "select your current location on Map",
+    "@select_current_location": {
+        "description": "idk"
+    },
+    "choose_on_map": "Choose on Map",
+    "@choose_on_map": {
+        "description": "idk"
+    },
+    "search_location": "Search Location",
+    "@search_location": {
+        "description": "idk"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "description": "idk"
+    },
+    "please_choose_location": "Please choose your location to explore events around you",
+    "@please_choose_location": {
+        "description": "idk"
     }
 }

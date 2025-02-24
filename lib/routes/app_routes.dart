@@ -12,7 +12,10 @@ import 'package:kork/views/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
 import 'package:kork/views/login_view.dart';
 import 'package:kork/views/main_view.dart';
+import 'package:kork/views/map_view.dart';
 import 'package:kork/views/profile_view.dart';
+import 'package:kork/views/select_location_view.dart';
+import 'package:kork/views/select_profile_view.dart';
 import 'package:kork/views/sign_up_view.dart';
 import 'package:kork/views/verify_otp_view.dart';
 
@@ -91,5 +94,20 @@ var appRoutes = [
     name: Routes.bookedEvent,
     page: () => const BookedEventDetailView(),
     binding: BookedEventDetailBinding(),
+  ),
+  GetPage(
+    name: Routes.selectProfile,
+    page: () => const SelectProfileView(),
+    binding: SelectProfileBinding(),
+  ),
+  GetPage(
+    name: Routes.selectLocation,
+    page: () => const SelectLocationView(),
+    binding: SelectLocationBinding(),
+  ),
+  GetPage(
+    name: Routes.mapView,
+    page: () => const MapView(),
+    binding: MapBinding(),
   ),
 ];

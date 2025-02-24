@@ -14,4 +14,7 @@ class Routes {
   static const String profile = '/profile_view';
   static const String eventDetail = '/event_detail';
   static const String bookedEvent = '/booked_detail';
+  static const String selectProfile = '/select_profile';
+  static const String selectLocation = '/select_location';
+  static const String mapView = '/map_view';
 }
