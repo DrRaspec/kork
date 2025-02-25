@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kork/routes/routes.dart';
 
-part '../controllers/select_profile_controller.dart';
-part '../bindings/select_profile_binding.dart';
+part '../../controllers/select_profile_controller.dart';
+part '../../bindings/select_profile_binding.dart';
 
 class SelectProfileView extends GetView<SelectProfileController> {
   const SelectProfileView({super.key});
@@ -21,6 +21,7 @@ class SelectProfileView extends GetView<SelectProfileController> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 17),
                 Row(
@@ -55,16 +56,16 @@ class SelectProfileView extends GetView<SelectProfileController> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 32),
                 ClipOval(
                   child: Image.asset(
-                    'assets/image/defualt_profile.png',
+                    'assets/image/profile.png',
                     width: 120,
                     height: 120,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 18),
+                const SizedBox(height: 25),
                 GestureDetector(
                   onTap: () {},
                   child: Container(
@@ -86,9 +87,9 @@ class SelectProfileView extends GetView<SelectProfileController> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: controller._showDialog,
                   child: Container(
                     width: double.infinity,
                     height: 40,

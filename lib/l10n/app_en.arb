@@ -770,5 +770,13 @@
     "please_choose_location": "Please choose your location to explore events around you",
     "@please_choose_location": {
         "description": "idk"
+    },
+    "camera": "Camera",
+    "@camera": {
+        "description": "idk"
+    },
+    "gallery": "Gallery",
+    "@gallery": {
+        "description": "idk"
     }
 }

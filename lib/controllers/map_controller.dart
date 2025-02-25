@@ -1,4 +1,4 @@
-part of '../views/map_view.dart';
+part of '../views/sign_up_view/map_view.dart';
 
 class MapController extends GetxController {
   var initialCameraPosition = const CameraPosition(
@@ -141,12 +141,13 @@ class MapController extends GetxController {
     }
   }
 
-  void handleTap(LatLng tappedPoint) {
+  void handleTap(LatLng tappedPoint) async {
     markers.clear();
     markers.add(
       Marker(
         markerId: MarkerId(tappedPoint.toString()),
         position: tappedPoint,
+        // icon: customIcon,
         infoWindow: const InfoWindow(title: 'Selected Location'),
       ),
     );

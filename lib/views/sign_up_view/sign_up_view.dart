@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 
-part '../controllers/sign_up_controller.dart';
-part '../bindings/sign_up_binding.dart';
+part '../../controllers/sign_up_controller.dart';
+part '../../bindings/sign_up_binding.dart';
 
 class SignUpView extends GetView<SignUpController> {
   const SignUpView({super.key});
@@ -173,6 +173,7 @@ class SignUpView extends GetView<SignUpController> {
                           () => TextField(
                             controller: controller.passwordController,
                             focusNode: controller.passwordFocus,
+                            obscureText: controller.passwordVisible.value,
                             textAlignVertical: TextAlignVertical.center,
                             onChanged: (value) {
                               controller.passwordError.value = '';
@@ -193,6 +194,25 @@ class SignUpView extends GetView<SignUpController> {
                                 color: controller.passwordError.isNotEmpty
                                     ? Get.theme.colorScheme.primary
                                     : Get.theme.colorScheme.surfaceTint,
+                              ),
+                              suffixIcon: Obx(
+                                () => GestureDetector(
+                                  onTap: () {
+                                    controller.passwordVisible.value =
+                                        !controller.passwordVisible.value;
+                                  },
+                                  child: controller.passwordVisible.value
+                                      ? Icon(
+                                          Icons.visibility_outlined,
+                                          color: Get.theme.colorScheme.tertiary,
+                                          size: 18,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off_outlined,
+                                          color: Get.theme.colorScheme.tertiary,
+                                          size: 18,
+                                        ),
+                                ),
                               ),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -281,6 +301,26 @@ class SignUpView extends GetView<SignUpController> {
                                     controller.confirmPasswordError.isNotEmpty
                                         ? Get.theme.colorScheme.primary
                                         : Get.theme.colorScheme.surfaceTint,
+                              ),
+                              suffixIcon: Obx(
+                                () => GestureDetector(
+                                  onTap: () {
+                                    controller.confirmPasswordVisible.value =
+                                        !controller
+                                            .confirmPasswordVisible.value;
+                                  },
+                                  child: controller.confirmPasswordVisible.value
+                                      ? Icon(
+                                          Icons.visibility_outlined,
+                                          color: Get.theme.colorScheme.tertiary,
+                                          size: 18,
+                                        )
+                                      : Icon(
+                                          Icons.visibility_off_outlined,
+                                          color: Get.theme.colorScheme.tertiary,
+                                          size: 18,
+                                        ),
+                                ),
                               ),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(

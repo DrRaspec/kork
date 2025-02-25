@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 
-part '../controllers/select_location_controller.dart';
-part '../bindings/select_location_binding.dart';
+part '../../controllers/select_location_controller.dart';
+part '../../bindings/select_location_binding.dart';
 
 class SelectLocationView extends GetView<SelectLocationController> {
   const SelectLocationView({super.key});
@@ -67,9 +66,18 @@ class SelectLocationView extends GetView<SelectLocationController> {
                   width: 315,
                   height: 252,
                 ),
-                Text(
-                  AppLocalizations.of(context)!.please_choose_location,
-                ),
+                LayoutBuilder(builder: (context, constraits) {
+                  return SizedBox(
+                    width: constraits.maxWidth * 0.7,
+                    child: Text(
+                      AppLocalizations.of(context)!.please_choose_location,
+                      style: TextStyle(
+                        color: Get.theme.colorScheme.surfaceTint,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }),
                 const SizedBox(height: 24),
                 GestureDetector(
                   onTap: () => Get.toNamed(Routes.mapView),

@@ -10,8 +10,8 @@ import 'package:kork/widget/gender_dropdown.dart';
 import 'package:kork/widget/nationality_textfield.dart';
 import 'package:kork/widget/phone_number_textfield.dart';
 
-part '../controllers/first_signup_controller.dart';
-part '../bindings/first_signup_binding.dart';
+part '../../controllers/first_signup_controller.dart';
+part '../../bindings/first_signup_binding.dart';
 
 class FirstSignupView extends GetView<FirstSignupController> {
   const FirstSignupView({super.key});
@@ -414,138 +414,6 @@ class FirstSignupView extends GetView<FirstSignupController> {
                 const SizedBox(height: 5),
                 Obx(
                   () => naionalityTextfield(),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.province_City,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          SizedBox(
-                            height: 40,
-                            child: TextFormField(
-                              controller: controller.cityProvince,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  borderSide: BorderSide(
-                                    color: Get.theme.colorScheme.tertiary,
-                                  ),
-                                ),
-                                hintText:
-                                    AppLocalizations.of(context)!.province_City,
-                                hintStyle: TextStyle(
-                                  color: Get.theme.colorScheme.surfaceTint,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.district_khan,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          SizedBox(
-                            height: 40,
-                            child: TextFormField(
-                              controller: controller.districtKhan,
-                              textAlignVertical: TextAlignVertical.center,
-                              style: const TextStyle(
-                                fontSize: 12,
-                              ),
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5),
-                                  borderSide: BorderSide(
-                                    color: Get.theme.colorScheme.tertiary,
-                                  ),
-                                ),
-                                hintText:
-                                    AppLocalizations.of(context)!.province_City,
-                                hintStyle: TextStyle(
-                                  color: Get.theme.colorScheme.surfaceTint,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    AppLocalizations.of(context)!.commune_sangkat,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 5),
-                SizedBox(
-                  height: 40,
-                  child: TextFormField(
-                    controller: controller.communeSangkat,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: const TextStyle(
-                      fontSize: 12,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: BorderSide(
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                      hintText: AppLocalizations.of(context)!.province_City,
-                      hintStyle: TextStyle(
-                        color: Get.theme.colorScheme.surfaceTint,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
                 ),
                 const SizedBox(height: 25),
                 GestureDetector(

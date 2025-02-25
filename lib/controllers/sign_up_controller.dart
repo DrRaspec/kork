@@ -1,4 +1,4 @@
-part of '../views/sign_up_view.dart';
+part of '../views/sign_up_view/sign_up_view.dart';
 
 class SignUpController extends GetxController with GetTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
@@ -9,6 +9,9 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   var emailError = ''.obs;
   var passwordError = ''.obs;
   var confirmPasswordError = ''.obs;
+
+  var passwordVisible = true.obs;
+  var confirmPasswordVisible = true.obs;
 
   late FocusNode emailFocus;
   late FocusNode passwordFocus;
@@ -21,9 +24,6 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> emailShakeAnimation;
   late Animation<double> passwordShakeAnimation;
   late Animation<double> confirmPasswordShakeAnimation;
-
-  var passwordObsecure = true.obs;
-  var confirmPasswordObsecure = true.obs;
 
   @override
   void onInit() {
@@ -100,7 +100,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
 
     if (emailController.text.trim().isEmpty) {
       emailError.value =
-          '${AppLocalizations.of(Get.context!)!.email}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.email} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       triggerEmailShake();
       hasError = true;
     } else if (!RegExp(

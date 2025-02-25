@@ -1,4 +1,4 @@
-part of '../views/select_profile_view.dart';
+part of '../views/sign_up_view/select_profile_view.dart';
 
 class SelectProfileBinding extends Bindings {
   @override

@@ -5,11 +5,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kork/theme/theme.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-part '../controllers/map_controller.dart';
-part '../bindings/map_binding.dart';
+part '../../controllers/map_controller.dart';
+part '../../bindings/map_binding.dart';
 
 class MapView extends GetView<MapController> {
   const MapView({super.key});
@@ -25,15 +26,17 @@ class MapView extends GetView<MapController> {
             Expanded(
               child: Stack(
                 children: [
-                  GoogleMap(
-                    initialCameraPosition: controller.initialCameraPosition,
-                    markers: Set<Marker>.from(controller.markers),
-                    onTap: controller.handleTap,
-                    onMapCreated: (mapCtrl) =>
-                        controller.googleMapController = mapCtrl,
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
+                  Obx(
+                    () => GoogleMap(
+                      initialCameraPosition: controller.initialCameraPosition,
+                      markers: Set<Marker>.from(controller.markers),
+                      onTap: controller.handleTap,
+                      onMapCreated: (mapCtrl) =>
+                          controller.googleMapController = mapCtrl,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
+                      zoomControlsEnabled: false,
+                    ),
                   ),
                   Positioned(
                     top: 16,
@@ -108,10 +111,10 @@ class MapView extends GetView<MapController> {
                           shape: BoxShape.circle,
                           color: Get.theme.colorScheme.primary,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.my_location_outlined,
                           size: 24,
-                          color: Get.theme.bottomAppBarTheme.color,
+                          color: Color(0xffEAE9FC),
                         ),
                       ),
                     ),
@@ -139,6 +142,10 @@ class MapView extends GetView<MapController> {
                   alignment: Alignment.center,
                   child: Text(
                     AppLocalizations.of(context)!.confirm,
+                    style: const TextStyle(
+                      color: Color(0xffEAE9FC),
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),

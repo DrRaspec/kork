@@ -1,4 +1,4 @@
-part of '../views/first_signup_view.dart';
+part of '../views/sign_up_view/first_signup_view.dart';
 
 class FirstSignupBinding extends Bindings {
   @override

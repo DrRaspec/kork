@@ -2,7 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/views/first_signup_view.dart';
+import 'package:kork/views/sign_up_view/first_signup_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Widget cityDropdown() {

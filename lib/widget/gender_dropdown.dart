@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/first_signup_view.dart';
+import 'package:kork/views/sign_up_view/first_signup_view.dart';
 
 Widget genderDropdown() {
   var controller = Get.find<FirstSignupController>();

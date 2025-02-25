@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/first_signup_view.dart';
+import 'package:kork/views/sign_up_view/first_signup_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void showCountriesDialog(bool isPhone) {
