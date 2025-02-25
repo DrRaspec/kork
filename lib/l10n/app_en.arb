@@ -1,0 +1,782 @@
+{
+    "dlanguage": "Language",
+    "@dlanguage": {
+        "description": "Language"
+    },
+    "language": "English",
+    "@language": {
+        "description": "The current Language"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Label for email input field"
+    },
+    "email_username": "Email or Username",
+    "@email_username": {
+        "description": "Label for email input field"
+    },
+    "edit": "Edit",
+    "@edit": {
+        "description": "edit"
+    },
+    "profile": "Profile",
+    "@profile": {
+        "description": "User profile"
+    },
+    "username": "Username",
+    "@username": {
+        "description": "username"
+    },
+    "setting": "Setting",
+    "@setting": {
+        "description": "setting"
+    },
+    "bookmark": "Bookmark",
+    "@bookmark": {
+        "description": "bookmark"
+    },
+    "notification": "Notification",
+    "@notification": {
+        "description": "notification"
+    },
+    "payment_method": "Payment Method",
+    "@payment_method": {
+        "description": "payment_method"
+    },
+    "contact_us": "Contact Us",
+    "@contact_us": {
+        "description": "contact_us"
+    },
+    "about_us": "About Us",
+    "@about_us": {
+        "description": "about_us"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "password"
+    },
+    "password_quide": "Password must be at least 8 characters, with uppercase, lowercase, a number, and a special character",
+    "@password_quide": {
+        "description": "password_quide"
+    },
+    "remember_me": "Rememmber me",
+    "@remember_me": {
+        "description": "remember_me"
+    },
+    "forget_password": "Forget Password?",
+    "@forget_password": {
+        "description": "forget_password"
+    },
+    "signin": "Sign in",
+    "@signin": {
+        "description": "signin"
+    },
+    "sign_up_with": "or sign up with",
+    "@sign_up_with": {
+        "description": "sign_up_with"
+    },
+    "dont_have_acc": "Don’t have any account?",
+    "@dont_have_acc": {
+        "description": "dont_have_acc"
+    },
+    "sign_up": "Sign up",
+    "@sign_up": {
+        "description": "sign_up"
+    },
+    "create_account": "Create account",
+    "@create_account": {
+        "description": "create_acc"
+    },
+    "confirm_password": "Confirm Password",
+    "@confirm_password": {
+        "description": "confirm_password"
+    },
+    "confirm_password_guide": "Please re-enter your password",
+    "@confirm_password_guide": {
+        "description": "please_re_enter_password"
+    },
+    "sign_in_with_fb": "sign in with facebook",
+    "@sign_in_with_fb": {
+        "description": "sign_in_with_fb"
+    },
+    "sign_in_with_gmail": "sign in with gmail",
+    "@sign_in_with_gmail": {
+        "description": "sign_in_with_gmail"
+    },
+    "already_have_acc": "Already have an account?",
+    "@already_have_acc": {
+        "description": "already_have_acc"
+    },
+    "forget_your_password": "Forget Your Password",
+    "@forget_your_password": {
+        "description": "forget_your_password"
+    },
+    "forget_your_password_guide": "Please enter your email address to verify",
+    "@forget_your_password_guide": {
+        "description": "forget_password_guide"
+    },
+    "back_to_signin": "Back to Sign in,",
+    "@back_to_signin": {
+        "description": "back_to_login"
+    },
+    "back": "Back",
+    "@back": {
+        "description": "back"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "next"
+    },
+    "verify": "Verify",
+    "@verify": {
+        "description": "verify"
+    },
+    "verify_guide": "We've sent you the email, please check your Email to verify",
+    "@verify_guide": {
+        "description": "verify_guide"
+    },
+    "not_receive_code": "If you don't receive the code,",
+    "@not_receive_code": {
+        "description": "not_receive_cde"
+    },
+    "resend": "Resend",
+    "@resend": {
+        "description": "resend"
+    },
+    "change_password": "Change Password",
+    "@change_password": {
+        "description": "change_password"
+    },
+    "change_password_guide": "Please enter your new password and confirm password",
+    "@change_password_guide": {
+        "description": "change_password_guide"
+    },
+    "new_password": "New password",
+    "@new_password": {
+        "description": "New password"
+    },
+    "confirm_new_password": "Re-enter your password",
+    "@confirm_new_password": {
+        "description": "confirm_new_password"
+    },
+    "current_location": "Current Location",
+    "@current_location": {
+        "description": "current_location"
+    },
+    "search_event": "Search Event",
+    "@search_event": {
+        "description": "search_event"
+    },
+    "welcome": "Welcome!",
+    "@welcome": {
+        "description": "welcome"
+    },
+    "view_ticket": "View Ticket",
+    "@view_ticket": {
+        "description": "view_ticket"
+    },
+    "view_profile": "View Profile",
+    "@view_profile": {
+        "description": "view_profile"
+    },
+    "sport": "Sport",
+    "@sport": {
+        "description": "sport"
+    },
+    "concert": "Concert",
+    "@concert": {
+        "description": "concert"
+    },
+    "fashion": "Fashion",
+    "@fashion": {
+        "description": "fashion"
+    },
+    "upcoming_event": "Upcoming Event",
+    "@upcoming_event": {
+        "description": "upcoming_event"
+    },
+    "see_all": "See all",
+    "@see_all": {
+        "description": "see_all"
+    },
+    "view_detail": "view detail",
+    "@view_detail": {
+        "description": "view_detail"
+    },
+    "apply_code_to_get": "Apply code to get",
+    "@apply_code_to_get": {
+        "description": "apply_code_to_get"
+    },
+    "free_voucher": "Free voucher",
+    "@free_voucher": {
+        "description": "free_voucher"
+    },
+    "get_20": "Get 20$ Free",
+    "@get_20": {
+        "description": "get_20"
+    },
+    "enter_code": "Enter Code",
+    "@enter_code": {
+        "description": "enter_code"
+    },
+    "nearby_you": "Nearby you",
+    "@nearby_you": {
+        "description": "nearby_you"
+    },
+    "showing": "Showing",
+    "@showing": {
+        "description": "showing"
+    },
+    "events": "Events",
+    "@events": {
+        "description": "events"
+    },
+    "event": "Event",
+    "@event": {
+        "description": "event"
+    },
+    "up_coming": "Up Coming",
+    "@up_coming": {
+        "description": "up_coming"
+    },
+    "sports": "Sports",
+    "@sports": {
+        "description": "sports"
+    },
+    "vs": "Vs",
+    "@vs": {
+        "description": "Versus"
+    },
+    "more_detial": "More Detail",
+    "@more_detial": {
+        "description": "more_detial"
+    },
+    "filter": "Filter",
+    "@filter": {
+        "description": "filter"
+    },
+    "categories": "Categories",
+    "@categories": {
+        "description": "categories"
+    },
+    "time_date": "Time & Date",
+    "@time_date": {
+        "description": "time_date"
+    },
+    "today": "Today",
+    "@today": {
+        "description": "today"
+    },
+    "tomorrow": "Tomorrow",
+    "@tomorrow": {
+        "description": "tomorrow"
+    },
+    "this_weel": "This week",
+    "@this_weel": {
+        "description": "this_weel"
+    },
+    "choose_from_calender": "Choose from calender",
+    "@choose_from_calender": {
+        "description": "choose_from_calender"
+    },
+    "choose_location": "Choose Locations",
+    "@choose_location": {
+        "description": "choose_location"
+    },
+    "location": "Location",
+    "@location": {
+        "description": "location"
+    },
+    "select_price_range": "Select price range",
+    "@select_price_range": {
+        "description": "select_price_range"
+    },
+    "reset": "Reset",
+    "@reset": {
+        "description": "reset"
+    },
+    "apply": "Apply",
+    "@apply": {
+        "description": "apply"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "home"
+    },
+    "ticket": "Ticket",
+    "@ticket": {
+        "description": "ticket"
+    },
+    "book_ticket": "Booked Ticket",
+    "@book_ticket": {
+        "description": "book ticket"
+    },
+    "booked": "Booked",
+    "@booked": {
+        "description": "booked"
+    },
+    "more_event": "More Event",
+    "@more_event": {
+        "description": "more event"
+    },
+    "ticket_type": "Ticket Type",
+    "@ticket_type": {
+        "description": "ticket type"
+    },
+    "normal": "Normal",
+    "@normal": {
+        "description": "normal"
+    },
+    "standard": "Standard",
+    "@standard": {
+        "description": "standard"
+    },
+    "about_event": "About Event",
+    "@about_event": {
+        "description": "about event"
+    },
+    "price": "Price",
+    "@price": {
+        "description": "price"
+    },
+    "buy_now": "Buy Now",
+    "@buy_now": {
+        "description": "buy now"
+    },
+    "check_out": "Check Out",
+    "@check_out": {
+        "description": "check out"
+    },
+    "quantity": "Quantity",
+    "@quantity": {
+        "description": "quantity"
+    },
+    "payment_detail": "Payment Detail",
+    "@payment_detail": {
+        "description": "payment detail"
+    },
+    "select_payment_method": "Select Payment Method",
+    "@select_payment_method": {
+        "description": "payment"
+    },
+    "apply_voucher": "Apply Voucher",
+    "@apply_voucher": {
+        "description": "apply voucher"
+    },
+    "total": "Total",
+    "@total": {
+        "description": "total"
+    },
+    "see_detail": "See Detail",
+    "@see_detail": {
+        "description": "see detail"
+    },
+    "confirm_pay": "Confirm and pay",
+    "@confirm_pay": {
+        "description": "confirm and pay"
+    },
+    "remove": "Remove",
+    "@remove": {
+        "description": "remove"
+    },
+    "voucher": "Voucher",
+    "@voucher": {
+        "description": "voucher"
+    },
+    "fee": "Fee",
+    "@fee": {
+        "description": "fee"
+    },
+    "online_payment_option": "Online payment option",
+    "@online_payment_option": {
+        "description": "online payment"
+    },
+    "available_voucher": "Available Voucher",
+    "@available_voucher": {
+        "description": "available voucher"
+    },
+    "claim_ticket": "Claim Ticket",
+    "@claim_ticket": {
+        "description": "claim ticket"
+    },
+    "get_your_ticket_here": "Get Your Ticket Here",
+    "@get_your_ticket_here": {
+        "description": "get ticket"
+    },
+    "get_your_ticket_here_guide": "Please kindly save your Ticket here, make sure not to lose it.",
+    "@get_your_ticket_here_guide": {
+        "description": "get ticket guide"
+    },
+    "download": "Download",
+    "@download": {
+        "description": "download"
+    },
+    "screenshot": "Screenshot",
+    "@screenshot": {
+        "description": "screenshot"
+    },
+    "add_event": "Add Event",
+    "@add_event": {
+        "description": "add event"
+    },
+    "event_information": "Event Information",
+    "@event_information": {
+        "description": "event information"
+    },
+    "name": "Name",
+    "@name": {
+        "description": "name"
+    },
+    "fullname": "Full Name",
+    "@fullname": {
+        "description": "fullname"
+    },
+    "your_event_name": "Your Event Name",
+    "@your_event_name": {
+        "description": "event name"
+    },
+    "your_location": "Your Event Location",
+    "@your_location": {
+        "description": "event location"
+    },
+    "category": "Category",
+    "@category": {
+        "description": "category"
+    },
+    "your_event_category": "Your Event Category",
+    "@your_event_category": {
+        "description": "event category"
+    },
+    "date": "Date",
+    "@date": {
+        "description": "date"
+    },
+    "your_event_date": "Your Event Date",
+    "@your_event_date": {
+        "description": "event date"
+    },
+    "time": "Time",
+    "@time": {
+        "description": "time"
+    },
+    "start_time": "Start Time",
+    "@start_time": {
+        "description": "start time"
+    },
+    "end_time": "End Time",
+    "@end_time": {
+        "description": "end time"
+    },
+    "detail": "Detail",
+    "@detail": {
+        "description": "detail"
+    },
+    "detail_guide": "Describe about your event",
+    "@detail_guide": {
+        "description": "describe about event"
+    },
+    "ticket_information": "Ticket Information",
+    "@ticket_information": {
+        "description": "ticket info"
+    },
+    "ticket_amount": "Ticket Amount",
+    "@ticket_amount": {
+        "description": "ticket amount"
+    },
+    "ticket_price": "Ticket Price",
+    "@ticket_price": {
+        "description": "ticket price"
+    },
+    "organizer_information": "Organizer Information",
+    "@organizer_information": {
+        "description": "org information"
+    },
+    "first_name": "First Name",
+    "@first_name": {
+        "description": "first name"
+    },
+    "last_name": "Last Name",
+    "@last_name": {
+        "description": "last name"
+    },
+    "publish": "Publish",
+    "@publish": {
+        "description": "publish"
+    },
+    "publish_share": "Publish and share",
+    "@publish_share": {
+        "description": "publish share"
+    },
+    "read": "Read",
+    "@read": {
+        "description": "read"
+    },
+    "my_event": "My Event",
+    "@my_event": {
+        "description": "my event"
+    },
+    "available": "Available",
+    "@available": {
+        "description": "available"
+    },
+    "sold": "Sold",
+    "@sold": {
+        "description": "sold"
+    },
+    "no_notification": "No Notifications",
+    "@no_notification": {
+        "description": "no notification"
+    },
+    "no_notification_guide": "No notification",
+    "@no_notification_guide": {
+        "description": "no notification"
+    },
+    "contact_us_via": "Contact us via",
+    "@contact_us_via": {
+        "description": "contact us"
+    },
+    "people_who_buy": "People who buy",
+    "@people_who_buy": {
+        "description": "people who buy"
+    },
+    "clear": "Clear",
+    "@clear": {
+        "description": "Clear"
+    },
+    "select_map": "Select Map",
+    "@select_map": {
+        "description": "Select Map"
+    },
+    "browsing_in": "Browsing in",
+    "@browsing_in": {
+        "description": "Browsing in"
+    },
+    "phnom_penh": "Phnom Penh",
+    "@phnom_penh": {
+        "description": "Capital city of Cambodia"
+    },
+    "banteay_meanchey": "Banteay Meanchey",
+    "@banteay_meanchey": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "battambang": "Battambang",
+    "@battambang": {
+        "description": "Province in western Cambodia"
+    },
+    "kampong_cham": "Kampong Cham",
+    "@kampong_cham": {
+        "description": "Province in central Cambodia"
+    },
+    "kampong_chhnang": "Kampong Chhnang",
+    "@kampong_chhnang": {
+        "description": "Province in central Cambodia"
+    },
+    "kampong_speu": "Kampong Speu",
+    "@kampong_speu": {
+        "description": "Province in southern Cambodia"
+    },
+    "kampong_thom": "Kampong Thom",
+    "@kampong_thom": {
+        "description": "Province in central Cambodia"
+    },
+    "kampot": "Kampot",
+    "@kampot": {
+        "description": "Province in southern Cambodia"
+    },
+    "kandal": "Kandal",
+    "@kandal": {
+        "description": "Province surrounding Phnom Penh"
+    },
+    "koh_kong": "Koh Kong",
+    "@koh_kong": {
+        "description": "Province in southwestern Cambodia"
+    },
+    "kratie": "Kratie",
+    "@kratie": {
+        "description": "Province in eastern Cambodia"
+    },
+    "mondulkiri": "Mondulkiri",
+    "@mondulkiri": {
+        "description": "Province in eastern Cambodia"
+    },
+    "preah_vihear": "Preah Vihear",
+    "@preah_vihear": {
+        "description": "Province in northern Cambodia"
+    },
+    "prey_veng": "Prey Veng",
+    "@prey_veng": {
+        "description": "Province in southeastern Cambodia"
+    },
+    "pursat": "Pursat",
+    "@pursat": {
+        "description": "Province in western Cambodia"
+    },
+    "rattanakiri": "Rattanakiri",
+    "@rattanakiri": {
+        "description": "Province in northeastern Cambodia"
+    },
+    "siem_reap": "Siem Reap",
+    "@siem_reap": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "preah_sihanouk": "Preah Sihanouk",
+    "@preah_sihanouk": {
+        "description": "Province in southern Cambodia"
+    },
+    "stung_treng": "Stung Treng",
+    "@stung_treng": {
+        "description": "Province in northern Cambodia"
+    },
+    "svay_rieng": "Svay Rieng",
+    "@svay_rieng": {
+        "description": "Province in southeastern Cambodia"
+    },
+    "takeo": "Takeo",
+    "@takeo": {
+        "description": "Province in southern Cambodia"
+    },
+    "oddar_meanchey": "Oddar Meanchey",
+    "@oddar_meanchey": {
+        "description": "Province in northwestern Cambodia"
+    },
+    "kep": "Kep",
+    "@kep": {
+        "description": "Province in southern Cambodia"
+    },
+    "pailin": "Pailin",
+    "@pailin": {
+        "description": "Province in western Cambodia"
+    },
+    "tboung_khmum": "Tboung Khmum",
+    "@tboung_khmum": {
+        "description": "Province in eastern Cambodia"
+    },
+    "cambodia": "Cambodia",
+    "@cambodia": {
+        "description": "Cambodia Kingdom of Wonder"
+    },
+    "event_detail": "Event Detail",
+    "@event_detail": {
+        "description": "Event Detail"
+    },
+    "going": "Going",
+    "@going": {
+        "description": "Going"
+    },
+    "contact_organizer": "Contact Organizer",
+    "@contact_organizer": {
+        "description": "Contact Organizer"
+    },
+    "contact": "Contact",
+    "@contact": {
+        "description": "Contact"
+    },
+    "personal_information": "Personal information",
+    "@personal_information": {
+        "description": "Personal information"
+    },
+    "gender": "Gender",
+    "@gender": {
+        "description": "gender"
+    },
+    "male": "Male",
+    "@male": {
+        "description": "male"
+    },
+    "female": "Female",
+    "@female": {
+        "description": "female"
+    },
+    "other": "Other",
+    "@other": {
+        "description": "other"
+    },
+    "male_or_female": "Male or Female",
+    "@male_or_female": {
+        "description": "Male or Female"
+    },
+    "dob": "Date of Birth",
+    "@dob": {
+        "description": "dob"
+    },
+    "birthday": "Birthday",
+    "@birthday": {
+        "description": "birthday"
+    },
+    "phone_number": "Phone Number",
+    "@phone_number": {
+        "description": "Phone Number"
+    },
+    "nationality": "Nationality",
+    "@nationality": {
+        "description": "Nationality"
+    },
+    "province_City": "Province/City",
+    "@province_City": {
+        "description": "Province/City"
+    },
+    "district_khan": "District/Khan",
+    "@district_khan": {
+        "description": "District/Khan"
+    },
+    "commune_sangkat": "Commune/Sangkat",
+    "@commune_sangkat": {
+        "description": "Commune/Sangkat"
+    },
+    "search_country": "Search by Country Name",
+    "@search_country": {
+        "description": "Search by Country Name"
+    },
+    "cant_empty": "can't be empty",
+    "@cant_empty": {
+        "description": "idk"
+    },
+    "invalid_email": "Invalid Email",
+    "@invalid_email": {
+        "description": "idk"
+    },
+    "password_not_match": "Confirm password not match",
+    "@password_not_match": {
+        "description": "idk"
+    },
+    "choose_profile": "Choose profile picture",
+    "@choose_profile": {
+        "description": "idk"
+    },
+    "choose_image": "Choose image",
+    "@choose_image": {
+        "description": "idk"
+    },
+    "skip": "Skip",
+    "@skip": {
+        "description": "idk"
+    },
+    "select_current_location": "select your current location on Map",
+    "@select_current_location": {
+        "description": "idk"
+    },
+    "choose_on_map": "Choose on Map",
+    "@choose_on_map": {
+        "description": "idk"
+    },
+    "search_location": "Search Location",
+    "@search_location": {
+        "description": "idk"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "description": "idk"
+    },
+    "please_choose_location": "Please choose your location to explore events around you",
+    "@please_choose_location": {
+        "description": "idk"
+    },
+    "camera": "Camera",
+    "@camera": {
+        "description": "idk"
+    },
+    "gallery": "Gallery",
+    "@gallery": {
+        "description": "idk"
+    }
+}
