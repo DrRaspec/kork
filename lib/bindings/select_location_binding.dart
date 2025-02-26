@@ -6,5 +6,8 @@ class SelectLocationBinding extends Bindings {
     Get.lazyPut(
       () => SelectLocationController(),
     );
+    Get.lazyPut(
+      () => MapController(),
+    );
   }
 }

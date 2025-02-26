@@ -8,8 +8,8 @@ class MapController extends GetxController {
 
   GoogleMapController? googleMapController;
 
-  Map<String, LatLng> searchCache = {};
-  Timer? _debounce;
+  var selectedLocation = const LatLng(0, 0).obs;
+  // Timer? _debounce;
 
   var searchController = TextEditingController();
   var address = 'Click on map to select location'.obs;
@@ -21,17 +21,17 @@ class MapController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _checkRequestPermission();
+    checkRequestPermission();
   }
 
   @override
-  onClose() {
+  void onClose() {
     searchController.dispose();
     _timer?.cancel();
     super.onClose();
   }
 
-  Future<void> _checkRequestPermission() async {
+  Future<void> checkRequestPermission() async {
     final status = await Permission.location.status;
 
     if (status.isDenied || status.isPermanentlyDenied) {
@@ -77,6 +77,7 @@ class MapController extends GetxController {
     try {
       final position = await _getCurrentPosition();
       final LatLng latLng = LatLng(position.latitude, position.longitude);
+      selectedLocation.value = latLng;
 
       markers.clear();
       markers.add(
@@ -122,6 +123,7 @@ class MapController extends GetxController {
         location.latitude,
         location.longitude,
       );
+      selectedLocation.value = location;
 
       if (placemarks.isNotEmpty) {
         final mark = placemarks.first;

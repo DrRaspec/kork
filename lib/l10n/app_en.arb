@@ -131,7 +131,7 @@
     "@verify": {
         "description": "verify"
     },
-    "verify_guide": "We've sent you the email, please check your Email to verify",
+    "verify_guide": "We’ve sent you the code through email. Please check your email to verify. ",
     "@verify_guide": {
         "description": "verify_guide"
     },
@@ -777,6 +777,22 @@
     },
     "gallery": "Gallery",
     "@gallery": {
+        "description": "idk"
+    },
+    "select_location_on_map": "Select location on map",
+    "@select_location_on_map": {
+        "description": "idk"
+    },
+    "get_current_location": "Get current location",
+    "@get_current_location": {
+        "description": "idk"
+    },
+    "or": "or",
+    "@or": {
+        "description": "idk"
+    },
+    "loading": "Loading",
+    "@loading": {
         "description": "idk"
     }
 }

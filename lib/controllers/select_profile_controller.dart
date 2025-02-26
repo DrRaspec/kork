@@ -3,7 +3,6 @@ part of '../views/sign_up_view/select_profile_view.dart';
 class SelectProfileController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   var selectedImage = Rx<File?>(null);
-  var isClick = false.obs;
 
   Future<void> pickImage(ImageSource source) async {
     final XFile? image = await _picker.pickImage(source: source);
@@ -25,80 +24,91 @@ class SelectProfileController extends GetxController {
       builder: (context) {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          height: 134,
+          height: 106,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             // crossAxisAlignment: CrossAxisAlignment.end,
-            spacing: 56,
+            spacing: 16,
             children: [
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  margin: const EdgeInsets.only(top: 10),
-                  height: 100,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    spacing: 3,
-                    children: [
-                      Image.asset(
-                        Platform.isAndroid
-                            ? 'assets/image/android_gallery.png'
-                            : 'assets/image/ios_gallery.png',
-                        width: 64,
+              Expanded(
+                child: SizedBox(
+                  width: 74,
+                  height: 90,
+                  child: GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.gallery);
+                      Get.back();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        spacing: 3,
+                        children: [
+                          Image.asset(
+                            Platform.isAndroid
+                                ? 'assets/image/android_gallery.png'
+                                : 'assets/image/ios_gallery.png',
+                            width: 48,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.gallery,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xffEAE9FC),
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.gallery,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xffEAE9FC),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
               Container(
-                height: 48,
+                height: 32,
                 width: 1,
-                margin: const EdgeInsets.only(bottom: 14),
+                margin: const EdgeInsets.only(bottom: 10),
                 color: const Color(0x80EAE9FC),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                spacing: 3,
-                children: [
-                  Image.asset(
-                    Platform.isAndroid
-                        ? 'assets/image/android_camera.png'
-                        : 'assets/image/ios_camera.png',
-                    width: 64,
-                  ),
-                  Text(
-                    AppLocalizations.of(context)!.camera,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xffEAE9FC),
+              Expanded(
+                child: SizedBox(
+                  width: 74,
+                  height: 90,
+                  child: GestureDetector(
+                    onTap: () {
+                      pickImage(ImageSource.camera);
+                      Get.back();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        spacing: 3,
+                        children: [
+                          Image.asset(
+                            Platform.isAndroid
+                                ? 'assets/image/android_camera.png'
+                                : 'assets/image/ios_camera.png',
+                            width: 48,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.gallery,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Color(0xffEAE9FC),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                ],
+                ),
               ),
             ],
           ),
         );
       },
     );
-  }
-
-  void onPress() {
-    isClick.value = true;
-
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (Get.isRegistered<SelectProfileController>()) {
-        isClick.value = false;
-      }
-    });
   }
 }
 

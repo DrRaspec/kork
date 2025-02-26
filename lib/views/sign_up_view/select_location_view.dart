@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/sign_up_view/map_view.dart';
 
 part '../../controllers/select_location_controller.dart';
 part '../../bindings/select_location_binding.dart';
@@ -31,9 +35,9 @@ class SelectLocationView extends GetView<SelectLocationController> {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: Get.back,
                       child: Text(
-                        AppLocalizations.of(context)!.skip,
+                        AppLocalizations.of(context)!.back,
                         style: TextStyle(
                           fontSize: 14,
                           color: Get.theme.colorScheme.primary,
@@ -78,7 +82,7 @@ class SelectLocationView extends GetView<SelectLocationController> {
                     ),
                   );
                 }),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 GestureDetector(
                   onTap: () => Get.toNamed(Routes.mapView),
                   child: Container(
@@ -90,10 +94,43 @@ class SelectLocationView extends GetView<SelectLocationController> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      AppLocalizations.of(context)!.next,
+                      AppLocalizations.of(context)!.select_location_on_map,
                       style: const TextStyle(
                         fontSize: 16,
                         color: Color(0xffEAE9FC),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  AppLocalizations.of(context)!.or,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Get.theme.colorScheme.tertiary,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: controller.getCurrentLocation,
+                  child: Container(
+                    width: double.infinity,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Get.theme.colorScheme.tertiary),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    alignment: Alignment.center,
+                    child: Obx(
+                      () => Text(
+                        controller.isLoading.value
+                            ? controller.loadingText.value
+                            : AppLocalizations.of(context)!
+                                .get_current_location,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Get.theme.colorScheme.tertiary,
+                        ),
                       ),
                     ),
                   ),

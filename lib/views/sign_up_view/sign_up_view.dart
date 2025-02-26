@@ -373,15 +373,14 @@ class SignUpView extends GetView<SignUpController> {
                         controller.confirmPasswordError.isEmpty) {
                       Get.toNamed(Routes.selectProfile);
                     }
-                    // if (controller.formKey.currentState!.validate()) {
-                    //   Get.snackbar('Sign up', 'Sign up successful');
-                    // }
                   },
                   child: Container(
                     width: double.infinity,
-                    // height: 37,
-                    padding: const EdgeInsets.symmetric(vertical: 9),
-                    color: Get.theme.colorScheme.primary,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Get.theme.colorScheme.primary,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                     child: Center(
                       child: Text(
                         AppLocalizations.of(context)!.create_account,

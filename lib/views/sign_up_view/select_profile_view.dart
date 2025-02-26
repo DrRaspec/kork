@@ -35,9 +35,9 @@ class SelectProfileView extends GetView<SelectProfileController> {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () => Get.toNamed(Routes.selectLocation),
+                      onTap: () => Get.back(),
                       child: Text(
-                        AppLocalizations.of(context)!.skip,
+                        AppLocalizations.of(context)!.back,
                         style: TextStyle(
                           fontSize: 14,
                           color: Get.theme.colorScheme.primary,
@@ -58,16 +58,25 @@ class SelectProfileView extends GetView<SelectProfileController> {
                 ),
                 const SizedBox(height: 32),
                 ClipOval(
-                  child: Image.asset(
-                    'assets/image/profile.png',
-                    width: 120,
-                    height: 120,
-                    fit: BoxFit.cover,
+                  child: Obx(
+                    () => controller.selectedImage.value == null
+                        ? Image.asset(
+                            'assets/image/profile.png',
+                            width: 120,
+                            height: 120,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(controller.selectedImage.value!.path),
+                            width: 120,
+                            height: 120,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 const SizedBox(height: 25),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: controller._showDialog,
                   child: Container(
                     width: 200,
                     height: 40,
@@ -89,7 +98,7 @@ class SelectProfileView extends GetView<SelectProfileController> {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: controller._showDialog,
+                  onTap: () => Get.toNamed(Routes.selectLocation),
                   child: Container(
                     width: double.infinity,
                     height: 40,

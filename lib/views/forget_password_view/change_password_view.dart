@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 
-part '../controllers/change_password_controller.dart';
-part '../bindings/change_password_binding.dart';
+part '../../controllers/change_password_controller.dart';
+part '../../bindings/change_password_binding.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
   const ChangePasswordView({super.key});
@@ -12,23 +12,37 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.theme.colorScheme.onInverseSurface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
-              vertical: 24,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  Get.isDarkMode
-                      ? 'assets/image/logo.png'
-                      : 'assets/image/light-logo.png',
-                  width: 70,
-                  fit: BoxFit.cover,
+                const SizedBox(height: 17),
+                Row(
+                  children: [
+                    Image.asset(
+                      Get.isDarkMode
+                          ? 'assets/image/logo.png'
+                          : 'assets/image/light-logo.png',
+                      width: 70,
+                      fit: BoxFit.cover,
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () => Get.back(),
+                      child: Text(
+                        AppLocalizations.of(context)!.back,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Get.theme.colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 24),
                 Align(
