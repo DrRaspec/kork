@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/views/booked_event_detail_view.dart';
 import 'package:kork/views/event_detail.dart';
 import 'package:kork/widget/booked_event_card.dart';
 import 'package:kork/widget/up_coming_widget.dart';
