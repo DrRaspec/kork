@@ -34,7 +34,6 @@ class LoginView extends GetView<LoginController> {
                 ),
                 const SizedBox(height: 15),
                 SizedBox(
-                  height: 40,
                   width: double.infinity,
                   child: Text(
                     AppLocalizations.of(context)!.signin,
