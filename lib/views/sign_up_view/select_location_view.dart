@@ -7,8 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/sign_up_view/map_view.dart';
 
-part '../../controllers/select_location_controller.dart';
-part '../../bindings/select_location_binding.dart';
+part '../../controllers/sign_up/select_location_controller.dart';
+part '../../bindings/sign_up/select_location_binding.dart';
 
 class SelectLocationView extends GetView<SelectLocationController> {
   const SelectLocationView({super.key});

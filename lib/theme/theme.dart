@@ -41,7 +41,7 @@ ThemeData darkMode = ThemeData(
     surfaceTint: Color(0x80EAE9FC),
     onInverseSurface: Color(0xff1C1818),
   ),
-  scaffoldBackgroundColor: const Color(0xff1C1818),
+  scaffoldBackgroundColor: const Color(0xff252525),
   appBarTheme: const AppBarTheme(
     backgroundColor: Color(0xff1C1818),
   ),

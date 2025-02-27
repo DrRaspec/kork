@@ -1,4 +1,4 @@
-part of '../views/forget_password_view/verify_otp_view.dart';
+part of '../../views/forget_password_view/verify_otp_view.dart';
 
 class VerifyOtpController extends GetxController {
   final textFieldOne = TextEditingController();

@@ -7,6 +7,7 @@ import 'package:kork/views/event_view.dart';
 import 'package:kork/views/filter_location.dart';
 import 'package:kork/views/filter_view.dart';
 import 'package:kork/views/filtered_view.dart';
+import 'package:kork/views/search_event.dart';
 import 'package:kork/views/sign_up_view/first_signup_view.dart';
 import 'package:kork/views/forget_password_view/forget_password_view.dart';
 import 'package:kork/views/home_view.dart';
@@ -44,16 +45,19 @@ var appRoutes = [
     name: Routes.forgetPassword,
     page: () => const ForgetPasswordView(),
     binding: ForgetPasswordBinding(),
+    transition: Transition.cupertino,
   ),
   GetPage(
     name: Routes.verifyOtp,
     page: () => const VerifyOtpView(),
     binding: VerifyOtpBinding(),
+    transition: Transition.cupertino,
   ),
   GetPage(
     name: Routes.changePassword,
     page: () => const ChangePasswordView(),
     binding: ChangePasswordBinding(),
+    transition: Transition.cupertino,
   ),
   GetPage(
     name: Routes.main,
@@ -64,11 +68,13 @@ var appRoutes = [
     name: Routes.home,
     page: () => const HomeView(),
     binding: HomeBinding(),
+    transition: Transition.leftToRight,
   ),
   GetPage(
     name: Routes.eventScreen,
     page: () => const EventView(),
     binding: EventBinding(),
+    transition: Transition.leftToRight,
   ),
   GetPage(
     name: Routes.filter,
@@ -109,5 +115,10 @@ var appRoutes = [
     name: Routes.mapView,
     page: () => const MapView(),
     binding: MapBinding(),
+  ),
+  GetPage(
+    name: Routes.searchEvent,
+    page: () => const SearchEvent(),
+    binding: SearchEventBinding(),
   ),
 ];

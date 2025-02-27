@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
+import 'package:kork/theme/theme.dart';
 import 'package:kork/views/sign_up_view/first_signup_view.dart';
 
 Widget genderDropdown() {
@@ -83,7 +84,9 @@ Widget genderDropdown() {
     dropdownStyleData: DropdownStyleData(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Get.theme.colorScheme.secondary,
+        color: Get.isDarkMode
+            ? Get.theme.colorScheme.secondary
+            : Get.theme.appBarTheme.backgroundColor,
       ),
       maxHeight: 100,
       elevation: 2,

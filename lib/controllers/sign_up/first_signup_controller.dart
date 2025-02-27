@@ -1,4 +1,4 @@
-part of '../views/sign_up_view/first_signup_view.dart';
+part of '../../views/sign_up_view/first_signup_view.dart';
 
 class FirstSignupController extends GetxController {
   final formKey = GlobalKey<FormState>();
@@ -88,22 +88,22 @@ class FirstSignupController extends GetxController {
 
     if (firstName.text.isEmpty) {
       firstNameError.value =
-          '${AppLocalizations.of(Get.context!)!.first_name}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.first_name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
     }
     if (lastName.text.isEmpty) {
       lastNameError.value =
-          '${AppLocalizations.of(Get.context!)!.last_name}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.last_name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
     }
     if (selectedGender.value == null || selectedGender.value!.isEmpty) {
       genderError.value =
-          '${AppLocalizations.of(Get.context!)!.gender}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.gender} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
     }
     if (dob.text.isEmpty) {
       dobError.value =
-          '${AppLocalizations.of(Get.context!)!.dob}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.dob} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
     }
 

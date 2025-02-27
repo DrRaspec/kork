@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/views/event_view.dart';
 import 'package:kork/views/home_view.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/views/profile_view.dart';
 import 'package:kork/views/ticket_view.dart';
+import 'package:kork/widget/buttom_navigationbar.dart';
 
 part '../bindings/main_binding.dart';
 part '../controllers/main_controller.dart';
-part '../widget/my_bottom_navigation.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({super.key});
@@ -18,42 +18,85 @@ class MainView extends GetView<MainController> {
   Widget build(BuildContext context) {
     print(Get.textTheme.bodyLarge!.fontFamily);
     return Scaffold(
-      backgroundColor: const Color(0xFFFAFAFA),
-      body: Obx(
-        () => IndexedStack(
-          index: controller.currentIndex.value,
-          children: controller.screen,
-        ),
-      ),
-      bottomNavigationBar: myBottomNavigation(),
-      floatingActionButton: GestureDetector(
-        onTap: () {},
-        child: Container(
-          width: 57,
-          height: 57,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Get.theme.colorScheme.onInverseSurface,
-                Get.theme.colorScheme.primary,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: const [.05, 1],
-            ),
-            shape: BoxShape.circle,
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: Center(
-            child: Icon(
-              Icons.add_circle_outline_sharp,
-              color: Get.theme.colorScheme.tertiary,
-              size: 26,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Obx(
+              () => IndexedStack(
+                index: controller.currentIndex.value,
+                children: controller.screen,
+              ),
             ),
           ),
-        ),
+          Positioned(
+            left: 0,
+            bottom: 0,
+            child: SizedBox(
+                width: Get.width,
+                height: 80,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        width: Get.width,
+                        height: 65,
+                        color:
+                            Get.theme.bottomNavigationBarTheme.backgroundColor,
+                        child: Obx(
+                          () => buttomNavigationbar(),
+                        ),
+                      ),
+                    ),
+                    // CustomPaint(
+                    //   size: Size(Get.width, 80),
+                    //   painter: MyPainter(),
+                    // ),
+                    Center(
+                      heightFactor: 0.8,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          width: 56,
+                          height: 56,
+                          clipBehavior: Clip.hardEdge,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              colors: [
+                                Get.theme.colorScheme.secondary,
+                                Get.theme.colorScheme.primary,
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              // stops: const [0.1, .50],
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.3),
+                                blurRadius: 10,
+                                spreadRadius: 2,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/image/svg/add_circle.svg',
+                            width: 24,
+                            colorFilter: const ColorFilter.mode(
+                              Color(0xffEAE9FC),
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

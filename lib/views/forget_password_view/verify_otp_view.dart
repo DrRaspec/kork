@@ -3,10 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/forget_password_view/forget_password_view.dart';
 import 'package:kork/widget/otp_textfield.dart';
 
-part '../../controllers/verify_otp_controller.dart';
-part '../../bindings/verify_otp_binding.dart';
+part '../../controllers/forget_password/verify_otp_controller.dart';
+part '../../bindings/forget_password/verify_otp_binding.dart';
 
 class VerifyOtpView extends GetView<VerifyOtpController> {
   const VerifyOtpView({super.key});
@@ -14,8 +15,10 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity! > 0) {
+      behavior: HitTestBehavior.translucent,
+      onTap: () => FocusScope.of(context).unfocus(),
+      onHorizontalDragUpdate: (details) {
+        if (details.delta.dx > 10) {
           Get.back();
         }
       },
@@ -172,9 +175,11 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                     },
                     child: Container(
                       width: double.infinity,
-                      // height: 37,
-                      padding: const EdgeInsets.symmetric(vertical: 9),
-                      color: Get.theme.colorScheme.primary,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.next,

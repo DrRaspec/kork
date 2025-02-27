@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kork/routes/routes.dart';
 
-part '../../controllers/select_profile_controller.dart';
-part '../../bindings/select_profile_binding.dart';
+part '../../controllers/sign_up/select_profile_controller.dart';
+part '../../bindings/sign_up/select_profile_binding.dart';
 
 class SelectProfileView extends GetView<SelectProfileController> {
   const SelectProfileView({super.key});

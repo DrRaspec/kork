@@ -14,8 +14,8 @@ Widget getFreeVoucher() {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
       image: const DecorationImage(
-        image: NetworkImage(
-          'https://mir-s3-cdn-cf.behance.net/project_modules/disp/77e0a716402941.562ab386e05b6.png',
+        image: AssetImage(
+          'assets/image/voucher.png',
         ),
         fit: BoxFit.cover,
       ),

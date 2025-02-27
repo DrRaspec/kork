@@ -1,4 +1,4 @@
-part of '../views/sign_up_view/sign_up_view.dart';
+part of '../../views/sign_up_view/sign_up_view.dart';
 
 class SignUpController extends GetxController with GetTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();

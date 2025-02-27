@@ -8,8 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-part '../../controllers/map_controller.dart';
-part '../../bindings/map_binding.dart';
+part '../../controllers/sign_up/map_controller.dart';
+part '../../bindings/sign_up/map_binding.dart';
 
 class MapView extends GetView<MapController> {
   const MapView({super.key});

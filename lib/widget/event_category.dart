@@ -16,7 +16,7 @@ Widget eventCategory() {
     scrollDirection: Axis.horizontal,
     itemBuilder: (context, index) {
       return Container(
-        margin: EdgeInsets.only(left: index == 0 ? 36 : 0),
+        margin: EdgeInsets.only(left: index == 0 ? 16 : 0),
         width: 133,
         height: 32,
         decoration: BoxDecoration(

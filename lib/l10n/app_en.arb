@@ -147,7 +147,7 @@
     "@change_password": {
         "description": "change_password"
     },
-    "change_password_guide": "Please enter your new password and confirm password",
+    "change_password_guide": "To change password, please enter your new password",
     "@change_password_guide": {
         "description": "change_password_guide"
     },
@@ -793,6 +793,22 @@
     },
     "loading": "Loading",
     "@loading": {
+        "description": "idk"
+    },
+    "done": "Done",
+    "@done": {
+        "description": "idk"
+    },
+    "enter_new_passowrd": "Please enter your new password",
+    "@enter_new_passowrd": {
+        "description": "idk"
+    },
+    "confirm_new_passowrd": "Please re-enter your new password",
+    "@confirm_new_passowrd": {
+        "description": "idk"
+    },
+    "recent": "Recent",
+    "@recent": {
         "description": "idk"
     }
 }
