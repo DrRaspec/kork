@@ -25,7 +25,7 @@ class HomeView extends GetView<HomeController> {
             behavior: HitTestBehavior.translucent,
             onTap: () => FocusScope.of(context).unfocus(),
             onHorizontalDragUpdate: (details) {
-              if (details.delta.dx < 10) {
+              if (details.delta.dx < -10) {
                 controller.mainControler.currentIndex.value = 1;
               }
             },
