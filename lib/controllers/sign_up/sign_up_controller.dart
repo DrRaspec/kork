@@ -25,6 +25,8 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> passwordShakeAnimation;
   late Animation<double> confirmPasswordShakeAnimation;
 
+  // var isNew = Get.find<VerifyOtpView>().controller.isNew;
+
   @override
   void onInit() {
     super.onInit();

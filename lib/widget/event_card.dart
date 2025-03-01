@@ -1,4 +1,4 @@
-part of '../views/event_view.dart';
+part of '../views/main_view/event_view.dart';
 
 Widget eventCard() {
   var context = Get.context;

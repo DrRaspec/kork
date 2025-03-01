@@ -9,7 +9,7 @@ Widget getFreeVoucher() {
   }
   return Container(
     height: 107,
-    width: Get.width,
+    width: double.infinity,
     clipBehavior: Clip.hardEdge,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
@@ -29,16 +29,16 @@ Widget getFreeVoucher() {
             children: [
               Text(
                 '${AppLocalizations.of(context)!.apply_code_to_get} ',
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xffEAE9FC),
+                style: TextStyle(
+                  fontSize: Get.width <= 360 ? 14 : 16,
+                  color: const Color(0xffEAE9FC),
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
                 '${AppLocalizations.of(context)!.free_voucher} ',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: Get.width <= 360 ? 14 : 16,
                   color: Get.theme.colorScheme.primary,
                   fontWeight: FontWeight.w500,
                 ),

@@ -458,8 +458,8 @@ class FirstSignupView extends GetView<FirstSignupController> {
     controller.pickedDate.value = await showDatePicker(
       context: Get.context!,
       initialDate: controller.pickedDate.value ?? DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2026, 1, 1),
+      firstDate: DateTime(1900, 1, 1),
+      lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
           data: Get.isDarkMode ? darkMode : lightMode,

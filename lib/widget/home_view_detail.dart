@@ -1,4 +1,4 @@
-part of '../views/home_view.dart';
+part of '../views/main_view/home_view.dart';
 
 Widget homeViewDetail() {
   var context = Get.context;
@@ -9,7 +9,7 @@ Widget homeViewDetail() {
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Column(
       children: [
-        const SizedBox(height: 24),
+        const SizedBox(height: 17),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

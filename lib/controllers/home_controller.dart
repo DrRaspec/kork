@@ -1,4 +1,4 @@
-part of '../views/home_view.dart';
+part of '../views/main_view/home_view.dart';
 
 class HomeController extends GetxController {
   final searchController = TextEditingController();

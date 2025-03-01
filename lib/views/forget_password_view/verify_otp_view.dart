@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/views/forget_password_view/forget_password_view.dart';
 import 'package:kork/widget/otp_textfield.dart';
+import 'package:kork/widget/underline_text.dart';
 
 part '../../controllers/forget_password/verify_otp_controller.dart';
 part '../../bindings/forget_password/verify_otp_binding.dart';
@@ -139,37 +140,57 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.not_receive_code,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      GestureDetector(
-                        onTap: () => Get.offNamedUntil(
-                          Routes.login,
-                          (route) => false,
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.resend,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xffC9131E),
+                  controller.isNew
+                      ? GestureDetector(
+                          onTap: () => Get.toNamed(Routes.signup),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: CustomPaint(
+                              painter: UnderlineText(),
+                              child: Text(
+                                AppLocalizations.of(context)!.change_email,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ),
                           ),
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.not_receive_code,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            GestureDetector(
+                              onTap: () => Get.offNamedUntil(
+                                Routes.login,
+                                (route) => false,
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context)!.resend,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xffC9131E),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 24),
                   GestureDetector(
                     onTap: () {
                       controller.validateInput();
                       if (controller.isEmpty.value) {
+                        if (controller.isNew) {
+                          Get.toNamed(Routes.selectProfile);
+                        }
                         Get.toNamed(Routes.changePassword);
                       }
                     },
@@ -182,7 +203,9 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                       ),
                       child: Center(
                         child: Text(
-                          AppLocalizations.of(context)!.next,
+                          controller.isNew
+                              ? AppLocalizations.of(context)!.confirm
+                              : AppLocalizations.of(context)!.next,
                           style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xffEAE9FC),

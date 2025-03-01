@@ -810,5 +810,9 @@
     "recent": "Recent",
     "@recent": {
         "description": "idk"
+    },
+    "change_email": "Change Email",
+    "@change_email": {
+        "description": "idk"
     }
 }

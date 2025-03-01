@@ -7,11 +7,11 @@ import 'package:kork/routes/app_routes.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/views/event_view.dart';
-import 'package:kork/views/home_view.dart';
+import 'package:kork/views/main_view/event_view.dart';
+import 'package:kork/views/main_view/home_view.dart';
 import 'package:kork/views/main_view.dart';
-import 'package:kork/views/profile_view.dart';
-import 'package:kork/views/ticket_view.dart';
+import 'package:kork/views/main_view/profile_view.dart';
+import 'package:kork/views/main_view/ticket_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'bindings/initial_binding.dart';

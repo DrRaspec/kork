@@ -1,6 +1,8 @@
 part of '../../views/forget_password_view/verify_otp_view.dart';
 
 class VerifyOtpController extends GetxController {
+  var isNew = Get.arguments as bool;
+
   final textFieldOne = TextEditingController();
   final textFieldTwo = TextEditingController();
   final textFieldThree = TextEditingController();

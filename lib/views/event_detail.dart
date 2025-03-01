@@ -34,7 +34,9 @@ class EventDetail extends GetView<EventDetailController> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 13),
+                              horizontal: 16,
+                              vertical: 13,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -61,10 +63,10 @@ class EventDetail extends GetView<EventDetailController> {
                                     color: Get.theme.colorScheme.secondary,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.bookmark_border_outlined,
                                     size: 21,
-                                    color: Get.theme.colorScheme.tertiary,
+                                    color: Color(0xffEAE9FC),
                                   ),
                                 ),
                               ],
@@ -80,7 +82,7 @@ class EventDetail extends GetView<EventDetailController> {
                               Text(
                                 'Khmer New Year 2025',
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   color: Get.theme.colorScheme.tertiary,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -96,10 +98,10 @@ class EventDetail extends GetView<EventDetailController> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     alignment: Alignment.center,
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.location_on_outlined,
                                       size: 20,
-                                      color: Get.theme.colorScheme.tertiary,
+                                      color: Color(0xffEAE9FC),
                                     ),
                                   ),
                                   const SizedBox(width: 25),
@@ -110,7 +112,7 @@ class EventDetail extends GetView<EventDetailController> {
                                       Text(
                                         'Wat Phnom',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -138,10 +140,10 @@ class EventDetail extends GetView<EventDetailController> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     alignment: Alignment.center,
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.calendar_month_outlined,
                                       size: 20,
-                                      color: Get.theme.colorScheme.tertiary,
+                                      color: Color(0xffEAE9FC),
                                     ),
                                   ),
                                   const SizedBox(width: 25),
@@ -152,7 +154,7 @@ class EventDetail extends GetView<EventDetailController> {
                                       Text(
                                         '14 April 2025',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -194,7 +196,7 @@ class EventDetail extends GetView<EventDetailController> {
                                       Text(
                                         'Ashfak Sayem',
                                         style: TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
                                           fontWeight: FontWeight.w700,
                                         ),
@@ -247,7 +249,7 @@ class EventDetail extends GetView<EventDetailController> {
                               Text(
                                 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                   color: Get.theme.colorScheme.surfaceTint,
                                 ),
@@ -394,9 +396,9 @@ class EventDetail extends GetView<EventDetailController> {
                               ),
                               Text(
                                 '+20 ${AppLocalizations.of(context)!.going}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 15,
-                                  color: Get.theme.colorScheme.tertiary,
+                                  color: Color(0xffEAE9FC),
                                 ),
                               ),
                               GestureDetector(
@@ -411,9 +413,9 @@ class EventDetail extends GetView<EventDetailController> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     AppLocalizations.of(context)!.see_all,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 15,
-                                      color: Get.theme.colorScheme.tertiary,
+                                      color: Color(0xffEAE9FC),
                                     ),
                                   ),
                                 ),
@@ -502,9 +504,9 @@ class EventDetail extends GetView<EventDetailController> {
               ),
               child: Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
-                  color: Get.theme.colorScheme.tertiary,
+                  color: Color(0xffEAE9FC),
                   fontWeight: FontWeight.w500,
                 ),
               ),

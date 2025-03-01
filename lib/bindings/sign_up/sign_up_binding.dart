@@ -6,5 +6,8 @@ class SignUpBinding extends Bindings {
     Get.lazyPut(
       () => SignUpController(),
     );
+    // Get.lazyPut(
+    //   () => VerifyOtpController(),
+    // );
   }
 }

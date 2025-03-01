@@ -9,12 +9,12 @@ ThemeData lightMode = ThemeData(
     surfaceTint: Color(0xA0404144),
     onInverseSurface: Color(0xff1C1818),
   ),
-  // scaffoldBackgroundColor: const Color(0xffF7F8F9),?
+  scaffoldBackgroundColor: const Color(0xffF7F8F9),
   appBarTheme: const AppBarTheme(
     color: Color(0xffF7F8F9),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Color(0xffFAFAFA),
+    backgroundColor: Color(0xffF2F0F0),
   ),
   datePickerTheme: DatePickerThemeData(
     dayForegroundColor: WidgetStateProperty.resolveWith((states) {
@@ -43,10 +43,10 @@ ThemeData darkMode = ThemeData(
   ),
   scaffoldBackgroundColor: const Color(0xff252525),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Color(0xff1C1818),
+    backgroundColor: Color(0xff252525),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    backgroundColor: Color(0xffFAFAFA),
+    backgroundColor: Color(0xff444444),
   ),
   datePickerTheme: DatePickerThemeData(
     dayForegroundColor: WidgetStateProperty.resolveWith((states) {

@@ -110,10 +110,10 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               alignment: Alignment.center,
-                              child: Icon(
+                              child: const Icon(
                                 Icons.location_on_outlined,
                                 size: 20,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                             const SizedBox(width: 25),
@@ -150,10 +150,10 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               alignment: Alignment.center,
-                              child: Icon(
+                              child: const Icon(
                                 Icons.calendar_month_outlined,
                                 size: 20,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                             const SizedBox(width: 25),
@@ -398,9 +398,9 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                         ),
                         Text(
                           '+20 ${AppLocalizations.of(context)!.going}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
-                            color: Get.theme.colorScheme.tertiary,
+                            color: Color(0xffEAE9FC),
                           ),
                         ),
                         GestureDetector(
@@ -415,9 +415,9 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                             alignment: Alignment.center,
                             child: Text(
                               AppLocalizations.of(context)!.see_all,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 15,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                               ),
                             ),
                           ),
@@ -459,9 +459,9 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
               ),
               child: Text(
                 text,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
-                  color: Get.theme.colorScheme.tertiary,
+                  color: Color(0xffEAE9FC),
                   fontWeight: FontWeight.w500,
                 ),
               ),

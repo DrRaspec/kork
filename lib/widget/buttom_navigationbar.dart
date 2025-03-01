@@ -31,7 +31,7 @@ Widget buttomNavigationbar() {
                 colorFilter: ColorFilter.mode(
                   _mainController.currentIndex.value == 0
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -41,7 +41,7 @@ Widget buttomNavigationbar() {
                   fontSize: 10,
                   color: _mainController.currentIndex.value == 0
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                 ),
               ),
             ],
@@ -64,7 +64,7 @@ Widget buttomNavigationbar() {
                 colorFilter: ColorFilter.mode(
                   _mainController.currentIndex.value == 1
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -74,7 +74,7 @@ Widget buttomNavigationbar() {
                   fontSize: 10,
                   color: _mainController.currentIndex.value == 1
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                 ),
               ),
             ],
@@ -101,7 +101,7 @@ Widget buttomNavigationbar() {
                 colorFilter: ColorFilter.mode(
                   _mainController.currentIndex.value == 2
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -111,7 +111,7 @@ Widget buttomNavigationbar() {
                   fontSize: 10,
                   color: _mainController.currentIndex.value == 2
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                 ),
               ),
             ],
@@ -134,7 +134,7 @@ Widget buttomNavigationbar() {
                 colorFilter: ColorFilter.mode(
                   _mainController.currentIndex.value == 3
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                   BlendMode.srcIn,
                 ),
               ),
@@ -144,7 +144,7 @@ Widget buttomNavigationbar() {
                   fontSize: 10,
                   color: _mainController.currentIndex.value == 3
                       ? Get.theme.colorScheme.primary
-                      : const Color(0xff404144),
+                      : Get.theme.colorScheme.tertiary,
                 ),
               ),
             ],

@@ -189,7 +189,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                     onTap: () {
                       controller.validateInput();
                       if (controller.emailError.value.isEmpty) {
-                        Get.toNamed(Routes.verifyOtp);
+                        Get.toNamed(Routes.verifyOtp, arguments: false);
                       }
                     },
                     child: Container(

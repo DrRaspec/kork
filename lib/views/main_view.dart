@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/event_view.dart';
-import 'package:kork/views/home_view.dart';
+import 'package:kork/views/main_view/event_view.dart';
+import 'package:kork/views/main_view/home_view.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/views/profile_view.dart';
-import 'package:kork/views/ticket_view.dart';
+import 'package:kork/views/main_view/profile_view.dart';
+import 'package:kork/views/main_view/ticket_view.dart';
 import 'package:kork/widget/buttom_navigationbar.dart';
 
 part '../bindings/main_binding.dart';
-part '../controllers/main_controller.dart';
+part '../controllers/main_controller/main_controller.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({super.key});

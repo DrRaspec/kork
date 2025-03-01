@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/views/forget_password_view/verify_otp_view.dart';
 
 part '../../controllers/sign_up/sign_up_controller.dart';
 part '../../bindings/sign_up/sign_up_binding.dart';
@@ -287,6 +288,8 @@ class SignUpView extends GetView<SignUpController> {
                             () => TextField(
                               controller: controller.conPasswordController,
                               focusNode: controller.confirmPasswordFocus,
+                              obscureText:
+                                  controller.confirmPasswordVisible.value,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.tertiary,
@@ -376,7 +379,7 @@ class SignUpView extends GetView<SignUpController> {
                       if (controller.emailError.isEmpty &&
                           controller.passwordError.isEmpty &&
                           controller.confirmPasswordError.isEmpty) {
-                        Get.toNamed(Routes.selectProfile);
+                        Get.toNamed(Routes.verifyOtp, arguments: true);
                       }
                     },
                     child: Container(
