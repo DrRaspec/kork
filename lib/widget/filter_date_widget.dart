@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/views/filter_views/filter_view.dart';
+import 'package:kork/screens/filter_screens/filter/filter_view.dart';
 
 Widget filterDateWidget(String text) {
   var controller = Get.find<FilterController>();

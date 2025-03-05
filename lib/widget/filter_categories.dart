@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/views/filter_views/filter_view.dart';
+import 'package:kork/screens/filter_screens/filter/filter_view.dart';
 
 var filterController = Get.find<FilterController>();
 

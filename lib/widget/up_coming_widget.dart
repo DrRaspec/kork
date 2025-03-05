@@ -1,18 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/models/event_detail_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:shimmer/shimmer.dart';
 
-Widget upComingWidget(Map<String, dynamic> item) {
+var _location = ''.obs;
+
+String extractTime(String time) {
+  List<String> parts = time.split(' ');
+  parts.removeAt(0);
+  return parts.join(' ');
+}
+
+void getLocationAddress(String street) async {
+  try {
+    List<String> parts = street.split(',');
+    double latitude = double.parse(parts[0].trim());
+    double longitude = double.parse(parts[1].trim());
+
+    final placemarks = await placemarkFromCoordinates(
+      latitude,
+      longitude,
+    );
+
+    if (placemarks.isNotEmpty) {
+      final mark = placemarks.last;
+      _location.value = mark.subLocality ??
+          mark.subAdministrativeArea ??
+          mark.administrativeArea ??
+          mark.locality ??
+          mark.country ??
+          'Unknown _location';
+      // print(display_location.value);
+      print("location: ${_location.value}");
+    } else {
+      _location.value = 'Address not found';
+    }
+  } catch (e) {
+    print('Error fetching address: $e');
+  }
+}
+
+Widget upComingWidget(Map<String, dynamic> items) {
   var context = Get.context;
   if (context == null) return const SizedBox();
+  var item = EventDetailModel.fromMap(items);
+  getLocationAddress(item.street);
   return Material(
     color: Colors.transparent,
     child: InkWell(
       splashFactory: NoSplash.splashFactory,
-      onTap: () => Get.toNamed(Routes.eventDetail),
+      onTap: () => Get.toNamed(Routes.eventDetail, arguments: item),
       child: Container(
         width: 198,
         height: 238,
@@ -36,8 +77,9 @@ Widget upComingWidget(Map<String, dynamic> item) {
                 children: [
                   Positioned.fill(
                     child: Image.network(
-                      'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
+                      item.image,
                       fit: BoxFit.cover,
+                      alignment: Alignment(0, -0.3),
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return buildPlaceholder();
@@ -80,7 +122,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
                             horizontal: 5,
                           ),
                           child: Text(
-                            item['date'],
+                            item.date.substring(0, item.date.length - 5),
                             style: const TextStyle(
                               fontSize: 8,
                               color: Color(0xffEAE9FC),
@@ -131,7 +173,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        item['title'],
+                        item.title,
                         style: const TextStyle(
                           color: Color(0xffEAE9FC),
                           fontSize: 12,
@@ -149,11 +191,13 @@ Widget upComingWidget(Map<String, dynamic> item) {
                           color: Color(0xffEAE9FC),
                         ),
                         const SizedBox(width: 8),
-                        Text(
-                          item['location'],
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Color(0xffEAE9FC),
+                        Obx(
+                          () => Text(
+                            _location.value,
+                            style: const TextStyle(
+                              fontSize: 10,
+                              color: Color(0xffEAE9FC),
+                            ),
                           ),
                         ),
                       ],
@@ -171,7 +215,7 @@ Widget upComingWidget(Map<String, dynamic> item) {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          item['time'],
+                          extractTime(item.time),
                           style: const TextStyle(
                             fontSize: 10,
                             color: Color(0xffEAE9FC),

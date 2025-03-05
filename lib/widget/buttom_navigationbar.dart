@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/main_view.dart';
+import 'package:kork/screens/main/main_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 var _mainController = Get.find<MainController>();

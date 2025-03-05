@@ -814,5 +814,17 @@
     "change_email": "Change Email",
     "@change_email": {
         "description": "idk"
+    },
+    "report": "Report",
+    "@report": {
+        "description": "report pervert person"
+    },
+    "show_less": "Show less",
+    "@show_less": {
+        "description": "see less detail"
+    },
+    "show_detail": "Show detail",
+    "@show_detail": {
+        "description": "see less detail"
     }
 }

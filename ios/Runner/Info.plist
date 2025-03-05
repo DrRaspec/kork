@@ -53,5 +53,10 @@
 
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>App needs permission to save images</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>https</string>
+		<string>comgooglemaps</string>
+	</array>
 </dict>
 </plist>

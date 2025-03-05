@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kork/main.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/views/main_view.dart';
+import 'package:kork/screens/main/main_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeController extends GetxController {
@@ -10,7 +10,7 @@ class ThemeController extends GetxController {
 
   ThemeController(this.prefs);
 
-  final Rx<ThemeMode> themeMode = ThemeMode.light.obs;
+  final Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
   var fontFamily = 'Poppins'.obs;
 
   ThemeMode get currentThemeMode => themeMode.value;
@@ -22,7 +22,7 @@ class ThemeController extends GetxController {
   }
 
   void _loadThemeFromPrefs() {
-    bool isDarkMode = prefs.getBool("isDarkMode") ?? false;
+    bool isDarkMode = prefs.getBool("isDarkMode") ?? true;
     themeMode.value = isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
     String savedLang = prefs.getString(LanguageController.LANGUAGE_KEY) ?? 'en';

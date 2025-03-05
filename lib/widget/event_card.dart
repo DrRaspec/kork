@@ -1,4 +1,4 @@
-part of '../views/main_view/event_view.dart';
+part of '../screens/main_screens/event/event_view.dart';
 
 Widget eventCard() {
   var context = Get.context;
@@ -33,10 +33,12 @@ Widget eventCard() {
               ),
             ),
             Image.network(
-              'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
+              // 'https://scontent-bkk1-1.xx.fbcdn.net/v/t39.30808-6/476237547_1169887787823699_6753392613596753970_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHQ1hMzCbLaVxy3F_opiCruR0o03Au51_9HSjTcC7nX_2be11gMPaOKWfk6RCcfnmSVtkijdOIaet2GViMXwDs6&_nc_ohc=7s9lZfRzsRcQ7kNvgHljbEx&_nc_oc=AdgnFKG-I3ygUamkIyK3-A7IrcriBlivsIAX7nLQuHb1uxCm4PbKSk1h8DfjfUzmrcE&_nc_zt=23&_nc_ht=scontent-bkk1-1.xx&_nc_gid=AVivFekG7Rp0aPU4SKoHwTC&oh=00_AYAauIR_RGlS82Z81mQjD6ySNQPRy3rZ6x8ZHJLA-zfaUg&oe=67CCF74C',
+              'https://d2vr64fd62ajh5.cloudfront.net/images/cat/posters-big-2021040614.webp',
               width: Get.width,
               height: Get.height,
               fit: BoxFit.cover,
+              alignment: Alignment(0, -0.3),
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
                 return buildPlaceholder();

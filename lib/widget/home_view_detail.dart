@@ -1,6 +1,7 @@
-part of '../views/main_view/home_view.dart';
+part of '../screens/main_screens/home/home_view.dart';
 
 Widget homeViewDetail() {
+  var controller = Get.find<HomeController>();
   var context = Get.context;
   if (context == null) {
     return const SizedBox();
@@ -182,7 +183,7 @@ Widget homeViewDetail() {
                         ),
                         SizedBox(width: Get.width * 0.01),
                         GestureDetector(
-                          onTap: () => Get.toNamed(Routes.profile),
+                          onTap: () => controller.updateScreen(3),
                           child: Row(
                             children: [
                               Text(
@@ -193,9 +194,9 @@ Widget homeViewDetail() {
                                 ),
                               ),
                               const SizedBox(width: 2),
-                              Icon(
+                              const Icon(
                                 Icons.arrow_forward_ios_rounded,
-                                color: Get.theme.colorScheme.tertiary,
+                                color: Color(0xffEAE9FC),
                                 size: 8,
                               ),
                             ],
@@ -207,7 +208,7 @@ Widget homeViewDetail() {
                 ),
               ),
               GestureDetector(
-                onTap: () => Get.toNamed(Routes.profile),
+                onTap: () => controller.updateScreen(3),
                 child: Stack(
                   alignment: Alignment.center,
                   children: [

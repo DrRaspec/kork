@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/views/sign_up_view/first_signup_view.dart';
+import 'package:kork/screens/sign_up_view/first_signup/first_signup_view.dart';
 import 'package:kork/widget/phone_number_validation.dart';
 import 'package:kork/widget/show_countries_dialog.dart';
 

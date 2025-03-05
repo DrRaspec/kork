@@ -18,4 +18,5 @@ class Routes {
   static const String selectLocation = '/select_location';
   static const String mapView = '/map_view';
   static const String searchEvent = '/search_event';
+  static const String checkout = '/checkout';
 }
