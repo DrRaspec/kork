@@ -4,14 +4,14 @@ class EventDetailController extends GetxController {
   late EventDetailModel eventData;
   Rx<String> displayLocation = ''.obs;
   Rx<String> location = ''.obs;
-  var price = 0.obs;
+  var going = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
     eventData = Get.arguments as EventDetailModel;
     getLocationAddress(eventData.street);
-    price.value = roundDown(eventData.member);
+    going.value = roundDown(eventData.member);
   }
 
   int roundDown(int number) {

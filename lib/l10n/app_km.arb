@@ -205,5 +205,11 @@
     "change_email": "ផ្លាស់ប្ដូរអ៊ីម៉ែល",
     "report": "រាយការណ៍",
     "show_less": "បង្ហាញតិច",
-    "show_detail": "បង្ហាញលម្អិត"
+    "show_detail": "បង្ហាញលម្អិត",
+    "people_going": "អ្នកចូលរួម",
+    "all_member": "អ្នកចូលរួមទាំងអស់",
+    "about_kork": "អំពីកម្មវិធី Kork",
+    "your_name": "ឈ្មោះរបស់អ្នក",
+    "message": "សារ",
+    "your_message": "សាររបស់អ្នក"
 }

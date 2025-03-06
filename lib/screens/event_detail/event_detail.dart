@@ -17,6 +17,7 @@ class EventDetail extends GetView<EventDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: Column(
           children: [
             Expanded(
@@ -48,31 +49,35 @@ class EventDetail extends GetView<EventDetailController> {
                               children: [
                                 GestureDetector(
                                   onTap: Get.back,
-                                  child: Icon(
-                                    Icons.arrow_back_ios_new_outlined,
-                                    size: 20,
-                                    color: Get.theme.colorScheme.secondary,
+                                  child: Container(
+                                    width: 32,
+                                    height: 32,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Get.theme.colorScheme.secondary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.arrow_back_ios_new_outlined,
+                                      size: 20,
+                                      color: Color(0xffEAE9FC),
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  AppLocalizations.of(context)!.event_detail,
-                                  style: TextStyle(
-                                    color: Get.theme.colorScheme.secondary,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Container(
-                                  width: 32,
-                                  height: 32,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Get.theme.colorScheme.secondary,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Icon(
-                                    Icons.bookmark_border_outlined,
-                                    size: 21,
-                                    color: Color(0xffEAE9FC),
+                                GestureDetector(
+                                  child: Container(
+                                    width: 32,
+                                    height: 32,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Get.theme.colorScheme.secondary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.bookmark_border_outlined,
+                                      size: 21,
+                                      color: Color(0xffEAE9FC),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -436,8 +441,8 @@ class EventDetail extends GetView<EventDetailController> {
                               ),
                               Obx(
                                 () => Text(
-                                  controller.price.value != 0
-                                      ? '${controller.price}+ ${AppLocalizations.of(context)!.going}'
+                                  controller.going.value != 0
+                                      ? '${controller.going}+ ${AppLocalizations.of(context)!.going}'
                                       : '.....',
                                   style: const TextStyle(
                                     fontSize: 15,
@@ -447,7 +452,7 @@ class EventDetail extends GetView<EventDetailController> {
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () => Get.toNamed(Routes.eventMember),
                                 child: Container(
                                   width: 73,
                                   height: 34,
@@ -476,23 +481,20 @@ class EventDetail extends GetView<EventDetailController> {
             ),
             Container(
               width: Get.width,
-              height: 57,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 9,
-              ),
-              decoration: const BoxDecoration(
-                color: Color(0xfffafafa),
+              // height: 57,
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              decoration: BoxDecoration(
+                color: Get.theme.bottomNavigationBarTheme.backgroundColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     '${AppLocalizations.of(context)!.price}: ${controller.eventData.price}\$',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Get.theme.colorScheme.secondary,
+                      color: Color(0xffEAE9FC),
                     ),
                   ),
                   GestureDetector(

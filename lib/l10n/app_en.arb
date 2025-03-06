@@ -826,5 +826,29 @@
     "show_detail": "Show detail",
     "@show_detail": {
         "description": "see less detail"
+    },
+    "people_going": "People Who Going",
+    "@people_going": {
+        "description": "People Who Going to that event"
+    },
+    "all_member": "All member",
+    "@all_member": {
+        "description": "All member"
+    },
+    "about_kork": "About Kork app",
+    "@about_kork": {
+        "description": "About Kork apps"
+    },
+    "your_name": "Your Name",
+    "@your_name": {
+        "description": "About Kork apps"
+    },
+    "message": "Message",
+    "@message": {
+        "description": "message"
+    },
+    "your_message": "Your Message",
+    "@your_message": {
+        "description": "Your Message"
     }
 }
