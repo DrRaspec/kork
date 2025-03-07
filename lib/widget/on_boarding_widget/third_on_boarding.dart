@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
-Widget firstOnBoarding(BuildContext context) {
+Widget thirdOnBoarding(BuildContext context) {
   return Column(
     children: [
       Image.asset(
-        'assets/image/onboarding_image.png',
+        'assets/image/third_on_boarding.png',
         width: 344,
         height: 344,
         fit: BoxFit.cover,
       ),
       const SizedBox(height: 16),
       Text(
-        AppLocalizations.of(context)!.book_your_idol_event,
+        AppLocalizations.of(context)!.faster_than_other,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 24,
@@ -23,9 +23,9 @@ Widget firstOnBoarding(BuildContext context) {
       ),
       const SizedBox(height: 8),
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
-          AppLocalizations.of(context)!.book_meet_your_idol,
+          AppLocalizations.of(context)!.experience_booking_like_never,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,

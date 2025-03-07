@@ -383,7 +383,7 @@ class SignUpView extends GetView<SignUpController> {
                       }
                     },
                     child: buttonDesign(
-                      AppLocalizations.of(context)!.create_account,
+                      text: AppLocalizations.of(context)!.create_account,
                     ),
                   ),
                 ],

@@ -866,5 +866,33 @@
     "book_meet_your_idol": "Book your idol event now and meet your favorite star!",
     "@book_meet_your_idol": {
         "description": "Book your idol event now and meet your favorite star!"
+    },
+    "easy_and_confident": "Easy And Confident",
+    "@easy_and_confident": {
+        "description": "Easy And Confident"
+    },
+    "book_confident": "Book your event easily and confidently!",
+    "@book_confident": {
+        "description": "Book your event easily and confidently!"
+    },
+    "faster_than_other": "Faster Than Other",
+    "@faster_than_other": {
+        "description": "Faster Than Other"
+    },
+    "experience_booking_like_never": "Experience booking like never before – faster and more efficient than ever!",
+    "@experience_booking_like_never": {
+        "description": "Experience booking like never before – faster and more efficient than ever!"
+    },
+    "choose_your_language": "Choose your language",
+    "@choose_your_language": {
+        "description": "Choose your language"
+    },
+    "please_choose_your_language": "Please choose your language to use for your app",
+    "@please_choose_your_language": {
+        "description": "Please choose your language to use for your app"
+    },
+    "get_started": "Get Started",
+    "@get_started": {
+        "description": "Get Started"
     }
 }

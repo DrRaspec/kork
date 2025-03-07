@@ -1,4 +1,5 @@
 class Routes {
+  Routes._();
   static const String login = '/login';
   static const String firstSignup = '/first_signup';
   static const String signup = '/signup';
@@ -22,4 +23,5 @@ class Routes {
   static const String contactOrganizer = '/contact_orgainzer';
   static const String eventMember = '/event_member';
   static const String firstOnBoarding = '/first_onboarding';
+  static const String chooseLanguage = '/choose_language';
 }
