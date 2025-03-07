@@ -4,6 +4,7 @@ import 'package:kork/screens/checkout/checkout_view.dart';
 import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
 import 'package:kork/screens/event_detail/booked_event/booked_event_detail_view.dart';
 import 'package:kork/screens/event_member/event_member_view.dart';
+import 'package:kork/screens/on_boarding/first_onboarding/first_onboarding_view.dart';
 import 'package:kork/screens/update_password/change_password/change_password_view.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
 import 'package:kork/screens/main_screens/event/event_view.dart';
@@ -133,5 +134,15 @@ var appRoutes = [
     name: Routes.eventMember,
     page: () => EventMemberView(),
     binding: EventMemberViewBinding(),
+  ),
+  GetPage(
+    name: Routes.contactOrganizer,
+    page: () => ContactOrganizerView(),
+    binding: ContactOrganizerBinding(),
+  ),
+  GetPage(
+    name: Routes.firstOnBoarding,
+    page: () => FirstOnboardingView(),
+    binding: FirstOnboardingBinding(),
   ),
 ];

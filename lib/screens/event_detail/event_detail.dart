@@ -278,42 +278,56 @@ class EventDetail extends GetView<EventDetailController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: [
-                                  Container(
-                                    width: 140,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Get.theme.colorScheme.primary,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
+                                  GestureDetector(
+                                    onTap: () => Get.toNamed(
+                                      Routes.contactOrganizer,
+                                      arguments: false,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.contact,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Get.theme.colorScheme.tertiary,
+                                    child: Container(
+                                      width: 140,
+                                      height: 44,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Get.theme.colorScheme.primary,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          AppLocalizations.of(context)!.contact,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    width: 140,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Get.theme.colorScheme.primary,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
+                                  GestureDetector(
+                                    onTap: () => Get.toNamed(
+                                      Routes.contactOrganizer,
+                                      arguments: true,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.report,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Get.theme.colorScheme.tertiary,
+                                    child: Container(
+                                      width: 140,
+                                      height: 44,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Get.theme.colorScheme.primary,
+                                        ),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          AppLocalizations.of(context)!.report,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
                                         ),
                                       ),
                                     ),

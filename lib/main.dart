@@ -21,8 +21,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
 
-  Get.put(ThemeController(prefs));
   Get.put<SharedPreferences>(prefs);
+  Get.put(ThemeController(prefs));
   Get.put(LanguageController(prefs));
   Get.put(MainController());
 
@@ -65,7 +65,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
         getPages: appRoutes,
-        initialRoute: Routes.main,
+        initialRoute: Routes.firstOnBoarding,
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/update_password/verify_otp/verify_otp_view.dart';
+import 'package:kork/widget/button_design.dart';
 
 part 'sign_up_controller.dart';
 part 'sign_up_binding.dart';
@@ -382,22 +382,8 @@ class SignUpView extends GetView<SignUpController> {
                         Get.toNamed(Routes.verifyOtp, arguments: true);
                       }
                     },
-                    child: Container(
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.create_account,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xffEAE9FC),
-                          ),
-                        ),
-                      ),
+                    child: buttonDesign(
+                      AppLocalizations.of(context)!.create_account,
                     ),
                   ),
                 ],

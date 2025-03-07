@@ -21,4 +21,5 @@ class Routes {
   static const String checkout = '/checkout';
   static const String contactOrganizer = '/contact_orgainzer';
   static const String eventMember = '/event_member';
+  static const String firstOnBoarding = '/first_onboarding';
 }

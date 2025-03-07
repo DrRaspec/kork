@@ -850,5 +850,21 @@
     "your_message": "Your Message",
     "@your_message": {
         "description": "Your Message"
+    },
+    "report_orgnizer": "Report Organizer",
+    "@report_orgnizer": {
+        "description": "Report Organizer"
+    },
+    "send": "Send",
+    "@send": {
+        "description": "Send"
+    },
+    "book_your_idol_event": "Book Your Idol Event Here",
+    "@book_your_idol_event": {
+        "description": "Book Your Idol Event Here"
+    },
+    "book_meet_your_idol": "Book your idol event now and meet your favorite star!",
+    "@book_meet_your_idol": {
+        "description": "Book your idol event now and meet your favorite star!"
     }
 }
