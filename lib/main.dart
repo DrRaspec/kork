@@ -65,7 +65,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
         getPages: appRoutes,
-        initialRoute: Routes.firstOnBoarding,
+        initialRoute: Routes.main,
       ),
     );
   }

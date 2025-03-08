@@ -4,7 +4,7 @@ class FirstOnboardingController extends GetxController {
   var indexScreen = 0.obs;
   var pageController = PageController();
 
-  void nextPage() {
+  void nextPage() async {
     if (indexScreen.value < 2) {
       pageController.animateToPage(
         indexScreen.value + 1,
@@ -12,7 +12,9 @@ class FirstOnboardingController extends GetxController {
         curve: Curves.easeInOut,
       );
     } else {
-      Get.toNamed(Routes.chooseLanguage);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('login', true);
+      Get.toNamed(Routes.login);
     }
   }
 

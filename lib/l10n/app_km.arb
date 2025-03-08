@@ -85,7 +85,7 @@
     "about_event": "អំពីព្រឹត្តិការណ៍",
     "price": "តម្លៃ",
     "buy_now": "ទិញឥឡូវនេះ",
-    "check_out": "ពិនិត្យចេញ",
+    "check_out": "ទូទាត់ប្រាក់",
     "quantity": "ចំនួន",
     "payment_detail": "ព័ត៌មានលម្អិតអំពីការទូទាត់",
     "select_payment_method": "ជ្រើសរើសវិធីទូទាត់",
@@ -222,5 +222,13 @@
     "experience_booking_like_never": "បទពិសោធន៍នៃការកក់ដែលមិនធ្លាប់មានពីមុនមក – លឿន និងមានប្រសិទ្ធភាពជាងពេលណាទាំងអស់!",
     "choose_your_language": "ជ្រើសរើសភាសារបស់អ្នក",
     "please_choose_your_language": "សូមជ្រើសរើសភាសារបស់អ្នកដើម្បីប្រើសម្រាប់កម្មវិធី",
-    "get_started": "ចាប់ផ្ដើម"
+    "get_started": "ចាប់ផ្ដើម",
+    "add_new_payment": "បន្ថែមការទូទាត់ថ្មី",
+    "new_card": "កាតថ្មី",
+    "card_information": "ព័ត៌មានកាត",
+    "card_number": "លេខកាត",
+    "card_holder_name": "ឈ្មោះអ្នកកាន់កាត",
+    "expire_date": "ថ្ងៃផុតកំណត់",
+    "ccv": "CCV",
+    "add_card": "បន្ថែមកាត"
 }

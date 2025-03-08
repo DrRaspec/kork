@@ -8,7 +8,7 @@ import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/main/main_view.dart';
-import 'package:kork/widget/setting_list.dart';
+import 'package:kork/screens/widget/setting_list.dart';
 
 part 'profile_controller.dart';
 part 'profile_binding.dart';

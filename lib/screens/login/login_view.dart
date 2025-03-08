@@ -282,6 +282,7 @@ class LoginView extends GetView<LoginController> {
                   if (controller.emailError.isEmpty &&
                       controller.passwordError.isEmpty) {
                     Get.snackbar('Sign up', 'Sign up successful');
+                    Get.toNamed(Routes.main);
                   }
                 },
                 child: Container(

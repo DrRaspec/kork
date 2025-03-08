@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/screens/sign_up_view/first_signup/first_signup_view.dart';
-import 'package:kork/widget/phone_number_validation.dart';
-import 'package:kork/widget/show_countries_dialog.dart';
+import 'package:kork/screens/widget/phone_number_validation.dart';
+import 'package:kork/screens/widget/show_countries_dialog.dart';
 
 Widget phoneNumberTextfield() {
   var controller = Get.find<FirstSignupController>();

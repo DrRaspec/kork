@@ -24,4 +24,6 @@ class Routes {
   static const String eventMember = '/event_member';
   static const String firstOnBoarding = '/first_onboarding';
   static const String chooseLanguage = '/choose_language';
+  static const String splashScreen = '/splash_screen';
+  static const String paymentMethod = '/payment_method';
 }

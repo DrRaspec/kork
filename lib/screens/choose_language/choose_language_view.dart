@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/widget/button_design.dart';
+import 'package:kork/main.dart';
+import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/widget/button_design.dart';
 
 part 'choose_language_binding.dart';
 part 'choose_language_controller.dart';
 
 class ChooseLanguageView extends GetView<ChooseLanguageViewController> {
+  const ChooseLanguageView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +46,13 @@ class ChooseLanguageView extends GetView<ChooseLanguageViewController> {
                   height: 250,
                 ),
                 const SizedBox(height: 22),
-                buttonDesign(text: 'ខ្មែរ', image: 'assets/image/flags/kh.svg'),
+                GestureDetector(
+                  onTap: () => controller.changeLanguage(false),
+                  child: buttonDesign(
+                    text: 'ភាសាខ្មែរ',
+                    image: 'assets/image/flags/kh.svg',
+                  ),
+                ),
                 const SizedBox(height: 16),
                 Text(
                   AppLocalizations.of(context)!.or,
@@ -52,9 +62,12 @@ class ChooseLanguageView extends GetView<ChooseLanguageViewController> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                buttonDesign(
-                  text: 'English',
-                  image: 'assets/image/flags/gb.svg',
+                GestureDetector(
+                  onTap: () => controller.changeLanguage(true),
+                  child: buttonDesign(
+                    text: 'English',
+                    image: 'assets/image/flags/gb.svg',
+                  ),
                 ),
               ],
             ),

@@ -3,8 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/models/event_detail_model.dart';
-import 'package:kork/widget/build_placeholder.dart';
-import 'package:kork/widget/custom_expansion.dart';
+import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/widget/build_placeholder.dart';
+import 'package:kork/screens/widget/appBarHelper.dart';
+import 'package:kork/screens/widget/custom_expansion.dart';
 
 part 'checkout_binding.dart';
 part 'checkout_controller.dart';
@@ -16,21 +18,10 @@ class CheckoutView extends GetView<CheckoutController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: Get.back,
-          child: Icon(
-            Icons.arrow_back_ios_new_outlined,
-            size: 20,
-            color: Get.theme.colorScheme.tertiary,
-          ),
-        ),
+        leading: buttonBack(),
         centerTitle: true,
-        title: Text(
+        title: appbarTitle(
           AppLocalizations.of(context)!.check_out,
-          style: TextStyle(
-            color: Get.theme.colorScheme.secondary,
-            fontSize: 20,
-          ),
         ),
       ),
       body: GestureDetector(
@@ -86,45 +77,48 @@ class CheckoutView extends GetView<CheckoutController> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      Container(
-                        height: 42,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Get.theme.colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 16,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/image/svg/discount-shape.svg',
-                              width: 24,
-                              height: 24,
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Get.theme.colorScheme.primary,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .select_payment_method,
-                                style: const TextStyle(
-                                  color: Color(0xffEAE9FC),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.paymentMethod),
+                        child: Container(
+                          height: 42,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Get.theme.colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 16,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/image/svg/discount-shape.svg',
+                                width: 24,
+                                height: 24,
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                  Get.theme.colorScheme.primary,
+                                  BlendMode.srcIn,
                                 ),
                               ),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 16,
-                              color: Color(0xffEAE9FC),
-                            ),
-                          ],
+                              Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .select_payment_method,
+                                  style: const TextStyle(
+                                    color: Color(0xffEAE9FC),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 16,
+                                color: Color(0xffEAE9FC),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 6),

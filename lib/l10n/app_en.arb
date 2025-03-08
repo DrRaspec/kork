@@ -894,5 +894,37 @@
     "get_started": "Get Started",
     "@get_started": {
         "description": "Get Started"
+    },
+    "add_new_payment": "Add new payment",
+    "@add_new_payment": {
+        "description": "Add new payment"
+    },
+    "new_card": "New Card",
+    "@new_card": {
+        "description": "New Card"
+    },
+    "card_information": "Card Information",
+    "@card_information": {
+        "description": "Card Information"
+    },
+    "card_number": "Card Number",
+    "@card_number": {
+        "description": "Card Number"
+    },
+    "card_holder_name": "Card holder name",
+    "@card_holder_name": {
+        "description": "Card holder name"
+    },
+    "expire_date": "Expire Date",
+    "@expire_date": {
+        "description": "Expire Date"
+    },
+    "ccv": "CCV",
+    "@ccv": {
+        "description": "CCV"
+    },
+    "add_card": "Add Card",
+    "@add_card": {
+        "description": "Add Card"
     }
 }

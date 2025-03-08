@@ -1,4 +1,4 @@
-part of '../screens/main_screens/home/home_view.dart';
+part of '../main_screens/home/home_view.dart';
 
 Widget homeViewDetail() {
   var controller = Get.find<HomeController>();

@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
 import 'package:kork/screens/filter_screens/filter_location/filter_location.dart';
-import 'package:kork/widget/filter_categories.dart';
-import 'package:kork/widget/filter_date_widget.dart';
+import 'package:kork/screens/widget/filter_categories.dart';
+import 'package:kork/screens/widget/filter_date_widget.dart';
 
 part 'filter_controller.dart';
 part 'filter_binding.dart';

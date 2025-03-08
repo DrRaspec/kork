@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/widget/event_recent_search.dart';
+import 'package:kork/screens/widget/event_recent_search.dart';
 
 part 'search_event_binding.dart';
 part 'search_event_controller.dart';

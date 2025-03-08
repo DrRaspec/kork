@@ -30,14 +30,12 @@ class ProfileController extends GetxController {
     super.onInit();
     isEnglish.value = languageController.isEnglish.value;
 
-    // Add this to keep the switch in sync with the actual language state
     languageController.isEnglish.listen((value) {
       isEnglish.value = value;
     });
   }
 
   void switchLanguage(bool value) {
-    // Only call the language controller if the value actually changed
     if (isEnglish.value != value) {
       languageController.switchLanguage(value);
     }

@@ -67,6 +67,29 @@ class LanguageController extends GetxController {
     Get.updateLocale(currentLocale);
   }
 
+  // Future<void> switchLanguage(bool value) async {
+  //   // Prevent multiple rapid changes
+  //   if (isProcessing.value) return;
+  //   isProcessing.value = true;
+
+  //   isEnglish.value = value;
+  //   String newLang = value ? 'en' : 'km';
+  //   currentLocale = Locale(newLang);
+
+  //   await _prefs.setString(LANGUAGE_KEY, newLang);
+  //   Get.updateLocale(currentLocale);
+
+  //   // Update font family
+  //   Get.find<ThemeController>().updateFontFamily(newLang);
+
+  //   // Force a complete UI rebuild
+  //   await Future.delayed(const Duration(milliseconds: 300));
+  //   Get.offAll(() => const MainView());
+
+  //   // Release the lock after navigation completes
+  //   isProcessing.value = false;
+  // }
+
   Future<void> switchLanguage(bool value) async {
     // Prevent multiple rapid changes
     if (isProcessing.value) return;
@@ -82,11 +105,10 @@ class LanguageController extends GetxController {
     // Update font family
     Get.find<ThemeController>().updateFontFamily(newLang);
 
-    // Force a complete UI rebuild
+    // Force a UI rebuild but don't navigate
     await Future.delayed(const Duration(milliseconds: 300));
-    Get.offAll(() => const MainView());
 
-    // Release the lock after navigation completes
+    // Release the lock
     isProcessing.value = false;
   }
 }

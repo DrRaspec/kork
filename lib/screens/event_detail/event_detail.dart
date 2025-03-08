@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/models/event_detail_model.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/widget/build_placeholder.dart';
+import 'package:kork/screens/widget/build_placeholder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'event_detail_controller.dart';
@@ -54,8 +54,15 @@ class EventDetail extends GetView<EventDetailController> {
                                     height: 32,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.secondary,
                                       borderRadius: BorderRadius.circular(12),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Get.theme.colorScheme.secondary,
+                                          Get.theme.colorScheme.primary
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                     child: const Icon(
                                       Icons.arrow_back_ios_new_outlined,
@@ -70,8 +77,15 @@ class EventDetail extends GetView<EventDetailController> {
                                     height: 32,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.secondary,
                                       borderRadius: BorderRadius.circular(12),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Get.theme.colorScheme.secondary,
+                                          Get.theme.colorScheme.primary
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                     child: const Icon(
                                       Icons.bookmark_border_outlined,
@@ -276,32 +290,19 @@ class EventDetail extends GetView<EventDetailController> {
                               const SizedBox(height: 24),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
                                     onTap: () => Get.toNamed(
                                       Routes.contactOrganizer,
                                       arguments: false,
                                     ),
-                                    child: Container(
-                                      width: 140,
-                                      height: 44,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Get.theme.colorScheme.primary,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          AppLocalizations.of(context)!.contact,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.contact,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Get.theme.colorScheme.tertiary,
                                       ),
                                     ),
                                   ),
@@ -310,25 +311,12 @@ class EventDetail extends GetView<EventDetailController> {
                                       Routes.contactOrganizer,
                                       arguments: true,
                                     ),
-                                    child: Container(
-                                      width: 140,
-                                      height: 44,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: Get.theme.colorScheme.primary,
-                                        ),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          AppLocalizations.of(context)!.report,
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.report,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Get.theme.colorScheme.tertiary,
                                       ),
                                     ),
                                   ),
@@ -554,6 +542,7 @@ class EventDetail extends GetView<EventDetailController> {
             color: Get.theme.colorScheme.primary,
             width: 2,
           ),
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Center(
           child: Text(

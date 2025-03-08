@@ -6,6 +6,8 @@ import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
 import 'package:kork/screens/event_detail/booked_event/booked_event_detail_view.dart';
 import 'package:kork/screens/event_member/event_member_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
+import 'package:kork/screens/payment_methods/payment_methods_view.dart';
+import 'package:kork/screens/splash_screen/splash_screen_view.dart';
 import 'package:kork/screens/update_password/change_password/change_password_view.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
 import 'package:kork/screens/main_screens/event/event_view.dart';
@@ -148,7 +150,17 @@ var appRoutes = [
   ),
   GetPage(
     name: Routes.chooseLanguage,
-    page: () => ChooseLanguageView(),
+    page: () => const ChooseLanguageView(),
     binding: ChooseLanguageViewBinding(),
+  ),
+  GetPage(
+    name: Routes.splashScreen,
+    page: () => SplashScreenView(),
+    binding: SplashScreenViewBinding(),
+  ),
+  GetPage(
+    name: Routes.paymentMethod,
+    page: () => PaymentMethodsView(),
+    binding: PaymentMethodsViewBinding(),
   ),
 ];

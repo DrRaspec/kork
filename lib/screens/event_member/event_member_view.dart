@@ -52,14 +52,13 @@ class EventMemberView extends GetView<EventMemberController> {
                     Container(
                       width: 40,
                       height: 40,
+                      clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: NetworkImage(
-                            'https://hips.hearstapps.com/hmg-prod/images/wiz_khalifa_photo_by_phil_blatch_newspix_getty_461033569.jpg?crop=1xw:1.0xh;center,top&resize=640:*',
-                          ),
-                          fit: BoxFit.cover,
-                        ),
+                      ),
+                      child: Image.network(
+                        'https://hips.hearstapps.com/hmg-prod/images/wiz_khalifa_photo_by_phil_blatch_newspix_getty_461033569.jpg?crop=1xw:1.0xh;center,top&resize=640:*',
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(width: 16),
