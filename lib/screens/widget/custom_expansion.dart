@@ -14,42 +14,44 @@ Widget customExpansion() {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(height: 8),
-        Obx(() {
-          return TweenAnimationBuilder<double>(
-            duration: const Duration(milliseconds: 300),
-            tween: Tween<double>(
-                begin: 0.0, end: controller.isExpand.value ? 1.0 : 0.0),
-            builder: (context, value, child) {
-              return ClipRect(
-                child: Align(
-                  heightFactor: value,
-                  alignment: Alignment.bottomCenter,
-                  child: child,
+        Obx(
+          () {
+            return TweenAnimationBuilder<double>(
+              duration: const Duration(milliseconds: 300),
+              tween: Tween<double>(
+                  begin: 0.0, end: controller.isExpand.value ? 1.0 : 0.0),
+              builder: (context, value, child) {
+                return ClipRect(
+                  child: Align(
+                    heightFactor: value,
+                    alignment: Alignment.bottomCenter,
+                    child: child,
+                  ),
+                );
+              },
+              child: Container(
+                color: Get.theme.colorScheme.secondary,
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildDetailRow(
+                      context,
+                      AppLocalizations.of(context)!.voucher,
+                      '${controller.discount.toStringAsFixed(2)}\$',
+                    ),
+                    const Divider(color: Color(0x80EAE9FC)),
+                    _buildDetailRow(
+                      context,
+                      AppLocalizations.of(context)!.fee,
+                      '${controller.discount.toStringAsFixed(2)}\$',
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Container(
-              color: Get.theme.colorScheme.secondary,
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildDetailRow(
-                    context,
-                    AppLocalizations.of(context)!.voucher,
-                    '${controller.discount.toStringAsFixed(2)}\$',
-                  ),
-                  const Divider(color: Color(0x80EAE9FC)),
-                  _buildDetailRow(
-                    context,
-                    AppLocalizations.of(context)!.voucher,
-                    '${controller.discount.toStringAsFixed(2)}\$',
-                  ),
-                ],
               ),
-            ),
-          );
-        }),
+            );
+          },
+        ),
         GestureDetector(
           onTap: () => controller.toggleExpand(),
           child: Container(
@@ -65,7 +67,7 @@ Widget customExpansion() {
                           : AppLocalizations.of(context)!.show_detail,
                       textAlign: TextAlign.left,
                       style: const TextStyle(
-                        fontSize: 10,
+                        fontSize: 12,
                         color: Color(0xffEAE9FC),
                       ),
                     ),
@@ -74,7 +76,7 @@ Widget customExpansion() {
                       controller.isExpand.value
                           ? Icons.keyboard_arrow_down_outlined
                           : Icons.keyboard_arrow_up_outlined,
-                      size: 14,
+                      size: 18,
                       color: const Color(0xffEAE9FC),
                     ),
                   ],
@@ -93,7 +95,7 @@ Widget _buildDetailRow(BuildContext context, String label, String value) {
         label,
         style: const TextStyle(
           color: Color(0x80EAE9FC),
-          fontSize: 8,
+          fontSize: 10,
         ),
       ),
       const Spacer(),
@@ -101,7 +103,7 @@ Widget _buildDetailRow(BuildContext context, String label, String value) {
         value,
         style: const TextStyle(
           color: Color(0x80EAE9FC),
-          fontSize: 8,
+          fontSize: 10,
         ),
       ),
     ],

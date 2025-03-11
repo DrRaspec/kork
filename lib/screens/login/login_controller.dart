@@ -69,7 +69,7 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
     if (emailController.text.trim().isEmpty) {
       emailError.value =
-          '${AppLocalizations.of(Get.context!)!.email_username}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.email_username} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       triggerEmailShake();
     } else if (!RegExp(
@@ -82,7 +82,7 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
     if (passwordController.text.isEmpty) {
       passwordError.value =
-          '${AppLocalizations.of(Get.context!)!.password}${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.password} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       triggerPasswordShake();
     }

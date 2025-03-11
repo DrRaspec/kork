@@ -10,7 +10,7 @@ class HomeController extends GetxController {
       'title': 'Khmer New Year 2025',
       'time': 'Sunday 10:00AM - 11:30PM',
       'image':
-          'https://scontent-bkk1-1.xx.fbcdn.net/v/t39.30808-6/477724281_1173354900810321_4556768304329423266_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH6Gy68eAtWizWZ-dKl2wCkeGCgagcq6dZ4YKBqByrp1nklxBOhi12slQJpDSRcdsQLDJmpFgKBN6UDN_zAsaYI&_nc_ohc=xaY3WhYyp58Q7kNvgERVR3K&_nc_oc=AdiPBG9ynRLo2i9vOuobcwXBwMYASy-Kdhvkh4L-ZRq-bBqRjgdxp1_eQ8f59q3gzPs&_nc_zt=23&_nc_ht=scontent-bkk1-1.xx&_nc_gid=AOyTCZzzF3UCdSPi4Aw2B6_&oh=00_AYCznj-ejsAlFzgeA1C72gNkAN1qNQ7IV3sqFVomHVQe9Q&oe=67CCE1F3',
+          'https://marketplace.canva.com/EAGMfKHvKo0/1/0/1131w/canva-colorful-watercolor-paint-school-college-art-fair-event-poster-ZGG78kx7RcY.jpg',
       'member': 69,
       'firstMember':
           'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
@@ -51,7 +51,7 @@ class HomeController extends GetxController {
       'title': 'Chinese New Year 2025',
       'time': 'Saturday 10:00AM - 11:30PM',
       'image':
-          'https://scontent-bkk1-1.xx.fbcdn.net/v/t39.30808-6/476237547_1169887787823699_6753392613596753970_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHQ1hMzCbLaVxy3F_opiCruR0o03Au51_9HSjTcC7nX_2be11gMPaOKWfk6RCcfnmSVtkijdOIaet2GViMXwDs6&_nc_ohc=7s9lZfRzsRcQ7kNvgHljbEx&_nc_oc=AdgnFKG-I3ygUamkIyK3-A7IrcriBlivsIAX7nLQuHb1uxCm4PbKSk1h8DfjfUzmrcE&_nc_zt=23&_nc_ht=scontent-bkk1-1.xx&_nc_gid=AVivFekG7Rp0aPU4SKoHwTC&oh=00_AYAauIR_RGlS82Z81mQjD6ySNQPRy3rZ6x8ZHJLA-zfaUg&oe=67CCF74C',
+          'https://marketplace.canva.com/EAGGgEduzvc/1/0/1131w/canva-colorful-illustrative-retro-party-event-poster-Tcxz91akUYI.jpg',
       'member': 20,
       'firstMember':
           'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',

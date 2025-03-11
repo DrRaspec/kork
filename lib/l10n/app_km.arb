@@ -230,5 +230,9 @@
     "card_holder_name": "ឈ្មោះអ្នកកាន់កាត",
     "expire_date": "ថ្ងៃផុតកំណត់",
     "ccv": "CCV",
-    "add_card": "បន្ថែមកាត"
+    "add_card": "បន្ថែមកាត",
+    "invalid_card_number": "លេខកាតមិនត្រឹមត្រូវ",
+    "invalid_card_holder": "ឈ្មោះអ្នកកាន់កាតមិនត្រឹមត្រូវ",
+    "search_coupon": "ស្វែងរកគូប៉ុង",
+    "your_ticket": "សំបុត្ររបស់អ្នក"
 }

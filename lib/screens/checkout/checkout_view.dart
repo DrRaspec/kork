@@ -78,7 +78,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                       const SizedBox(height: 24),
                       GestureDetector(
-                        onTap: () => Get.toNamed(Routes.paymentMethod),
+                        onTap: () => Get.toNamed(Routes.applyCoupon),
                         child: Container(
                           height: 42,
                           width: double.infinity,
@@ -122,45 +122,48 @@ class CheckoutView extends GetView<CheckoutController> {
                         ),
                       ),
                       const SizedBox(height: 6),
-                      Container(
-                        height: 42,
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Get.theme.colorScheme.secondary,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          spacing: 16,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/image/svg/card.svg',
-                              width: 24,
-                              height: 24,
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                Get.theme.colorScheme.primary,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .select_payment_method,
-                                style: const TextStyle(
-                                  color: Color(0xffEAE9FC),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.paymentMethod),
+                        child: Container(
+                          height: 42,
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Get.theme.colorScheme.secondary,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            spacing: 16,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/image/svg/card.svg',
+                                width: 24,
+                                height: 24,
+                                fit: BoxFit.cover,
+                                colorFilter: ColorFilter.mode(
+                                  Get.theme.colorScheme.primary,
+                                  BlendMode.srcIn,
                                 ),
                               ),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 16,
-                              color: Color(0xffEAE9FC),
-                            ),
-                          ],
+                              Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .select_payment_method,
+                                  style: const TextStyle(
+                                    color: Color(0xffEAE9FC),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 16,
+                                color: Color(0xffEAE9FC),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -189,20 +192,26 @@ class CheckoutView extends GetView<CheckoutController> {
                             ),
                           ),
                           const Spacer(),
-                          Container(
-                            width: 152,
-                            height: 34,
-                            decoration: BoxDecoration(
-                              color: Get.theme.colorScheme.primary,
-                              borderRadius: BorderRadius.circular(20),
+                          GestureDetector(
+                            onTap: () => Get.toNamed(
+                              Routes.yourTicket,
+                              arguments: controller.data,
                             ),
-                            child: Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.confirm_pay,
-                                style: const TextStyle(
-                                  color: Color(0xffEAE9FC),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                            child: Container(
+                              width: 152,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                color: Get.theme.colorScheme.primary,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!.confirm_pay,
+                                  style: const TextStyle(
+                                    color: Color(0xffEAE9FC),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ),
@@ -235,6 +244,7 @@ class CheckoutView extends GetView<CheckoutController> {
         children: [
           Container(
             height: Get.height,
+            width: 60,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
@@ -245,7 +255,7 @@ class CheckoutView extends GetView<CheckoutController> {
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress != null) {
-                  return buildPlaceholder();
+                  return buildPlaceholder(width: 60);
                 }
                 return child;
               },

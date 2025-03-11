@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/helper/card_helper.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -41,7 +42,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
-              onTap: () {},
+              onTap: () => Get.toNamed(Routes.addNewPayment),
               child: Container(
                 height: 40,
                 width: double.infinity,
@@ -53,18 +54,18 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.add,
                       size: 24,
-                      color: Get.theme.colorScheme.tertiary,
+                      color: Color(0xffEAE9FC),
                     ),
                     const SizedBox(width: 16),
                     Text(
                       AppLocalizations.of(context)!.add_new_payment,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
-                        color: Get.theme.colorScheme.tertiary,
+                        color: Color(0xffEAE9FC),
                       ),
                     ),
                   ],
@@ -100,10 +101,10 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
             const SizedBox(width: 16),
             Text(
               maskCardNumber(cardNumber),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: Get.theme.colorScheme.tertiary,
+                color: Color(0xffEAE9FC),
               ),
             ),
           ],

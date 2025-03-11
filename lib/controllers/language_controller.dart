@@ -48,8 +48,7 @@ class LanguageController extends GetxController {
 
   var currentLocale = Get.deviceLocale ?? const Locale('en');
   var isEnglish = true.obs;
-  var isProcessing =
-      false.obs; // Add this flag to prevent multiple rapid changes
+  var isProcessing = false.obs;
 
   final SharedPreferences _prefs;
   LanguageController(this._prefs);

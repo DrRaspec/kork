@@ -926,5 +926,29 @@
     "add_card": "Add Card",
     "@add_card": {
         "description": "Add Card"
+    },
+    "invalid_card_number": "invalid card number",
+    "@invalid_card_number": {
+        "description": "invalid card number"
+    },
+    "invalid_card_holder": "invalid card holder name",
+    "@invalid_card_holder": {
+        "description": "invalid card number"
+    },
+    "search_coupon": "Search Coupon",
+    "@search_coupon": {
+        "description": "Search Coupon"
+    },
+    "your_ticket": "Your Ticket",
+    "@your_ticket": {
+        "description": "Your Ticket"
+    },
+    "save_ticket": "Save Your Ticket Here",
+    "@save_ticket": {
+        "description": "Get Your Ticket Here"
+    },
+    "please_kindly_save": "Please kindly save your Ticket here.",
+    "@please_kindly_save": {
+        "description": "Please kindly save your Ticket here."
     }
 }

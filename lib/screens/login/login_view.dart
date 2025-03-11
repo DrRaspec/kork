@@ -417,3 +417,14 @@ class LoginView extends GetView<LoginController> {
     );
   }
 }
+
+// Obx(
+//                       () => shakeTextfield(
+//                         shakeAnimation: controller.cardNumberShakeAnimation,
+//                         textfieldCtrl: controller.cardNumberController,
+//                         shakeController: controller.cardNumberShakeController,
+//                         focusnode: controller.cardNumberFocus,
+//                         hintext: AppLocalizations.of(context)!.card_number,
+//                         errorMessage: controller.cardNumberError.value,
+//                       ),
+//                     ),

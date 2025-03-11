@@ -26,4 +26,7 @@ class Routes {
   static const String chooseLanguage = '/choose_language';
   static const String splashScreen = '/splash_screen';
   static const String paymentMethod = '/payment_method';
+  static const String addNewPayment = '/add_new_payment';
+  static const String applyCoupon = '/apply_coupon';
+  static const String yourTicket = '/your_ticket';
 }

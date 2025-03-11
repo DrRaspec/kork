@@ -51,9 +51,9 @@ ThemeData darkMode = ThemeData(
   datePickerTheme: DatePickerThemeData(
     dayForegroundColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return const Color(0xffEAE9FC).withOpacity(0.5); // passed dates
+        return const Color(0xffEAE9FC).withOpacity(0.5);
       }
-      return const Color(0xffEAE9FC); // normal dates
+      return const Color(0xffEAE9FC);
     }),
     todayForegroundColor: WidgetStateProperty.all(const Color(0xffEAE9FC)),
   ),
