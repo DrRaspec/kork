@@ -982,5 +982,45 @@
     "upload_event_poster": "Upload Your Event Poster",
     "@upload_event_poster": {
         "description": "Upload Your Event Poster"
+    },
+    "ticket_tye": "Ticket Type",
+    "@ticket_tye": {
+        "description": "Ticket Type"
+    },
+    "one_ticket_tye": "1 Ticket Type",
+    "@one_ticket_tye": {
+        "description": "1 Ticket Type"
+    },
+    "two_ticket_tye": "2 Ticket Type",
+    "@two_ticket_tye": {
+        "description": "2 Ticket Type"
+    },
+    "three_ticket_tye": "3 Ticket Type",
+    "@three_ticket_tye": {
+        "description": "3 Ticket Type"
+    },
+    "four_ticket_tye": "4 Ticket Type",
+    "@four_ticket_tye": {
+        "description": "4 Ticket Type"
+    },
+    "hosted_event": "Hosted Event",
+    "@hosted_event": {
+        "description": "Hosted Event"
+    },
+    "total_amount": "Total Amount",
+    "@total_amount": {
+        "description": "Total Amount"
+    },
+    "manage_event": "Manage Event",
+    "@manage_event": {
+        "description": "Manage Event"
+    },
+    "update_event": "Update Event",
+    "@update_event": {
+        "description": "Update Event"
+    },
+    "remove_event": "Remove Event",
+    "@remove_event": {
+        "description": "Remove Event"
     }
 }

@@ -8,6 +8,8 @@ import 'package:kork/screens/choose_language/choose_language_view.dart';
 import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
 import 'package:kork/screens/event_detail/booked_event/booked_event_detail_view.dart';
 import 'package:kork/screens/event_member/event_member_view.dart';
+import 'package:kork/screens/my_event/my_event_view.dart';
+import 'package:kork/screens/my_event_detail/my_event_detail_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
 import 'package:kork/screens/payment_methods/payment_methods_view.dart';
 import 'package:kork/screens/splash_screen/splash_screen_view.dart';
@@ -186,5 +188,15 @@ var appRoutes = [
     name: Routes.addEvent,
     page: () => AddEventView(),
     binding: AddEventViewBinding(),
+  ),
+  GetPage(
+    name: Routes.myEvent,
+    page: () => MyEventView(),
+    binding: MyEventViewBinding(),
+  ),
+  GetPage(
+    name: Routes.myEventDetail,
+    page: () => MyEventDetailView(),
+    binding: MyEventDetailViewBinding(),
   ),
 ];

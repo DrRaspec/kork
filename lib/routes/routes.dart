@@ -30,4 +30,6 @@ class Routes {
   static const String applyCoupon = '/apply_coupon';
   static const String yourTicket = '/your_ticket';
   static const String addEvent = '/add_event';
+  static const String myEvent = '/my_event';
+  static const String myEventDetail = '/my_event_detail';
 }

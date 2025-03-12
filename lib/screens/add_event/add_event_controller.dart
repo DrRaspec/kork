@@ -1,6 +1,7 @@
 part of 'add_event_view.dart';
 
 class AddEventViewController extends GetxController {
+  var ticketType = 4.obs;
   var nameController = TextEditingController();
   var focusName = FocusNode();
   var nameError = ''.obs;

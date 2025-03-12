@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:intl/intl.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/sign_up_view/map/map_view.dart';
@@ -22,7 +19,7 @@ class AddEventView extends GetView<AddEventViewController> {
         centerTitle: true,
         title: appbarTitle(AppLocalizations.of(context)!.my_event),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -340,9 +337,76 @@ class AddEventView extends GetView<AddEventViewController> {
               errorMessage: controller.companyNameError.value,
               hintText: AppLocalizations.of(context)!.company_name,
               textFocus: controller.focusCompanyName,
-              svgIcon: 'assets/image/svg/timer-start.svg',
               isEnable: false,
-            )
+            ),
+            const SizedBox(height: 24),
+            DropdownButton(
+              items: [
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text(
+                    AppLocalizations.of(context)!.one_ticket_tye,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  child: Text(
+                    AppLocalizations.of(context)!.two_ticket_tye,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  child: Text(
+                    AppLocalizations.of(context)!.three_ticket_tye,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 4,
+                  child: Text(
+                    AppLocalizations.of(context)!.four_ticket_tye,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                if (value != null) {
+                  controller.ticketType.value = value;
+                }
+              },
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.ticket_information,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Get.theme.colorScheme.tertiary,
+                  ),
+                ),
+                Icon(
+                  Icons.keyboard_arrow_down_outlined,
+                  size: 16,
+                  color: Get.theme.colorScheme.tertiary,
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
           ],
         ),
       ),
