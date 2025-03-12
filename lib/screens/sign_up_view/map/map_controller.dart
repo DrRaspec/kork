@@ -328,4 +328,16 @@ class MapController extends GetxController {
       isSearching.value = false;
     }
   }
+
+  void saveLocation() {
+    if (address.value != 'Error searching location' ||
+        address.value != 'No results found' ||
+        address.value != 'Loading...' ||
+        address.value != 'Processing input...' ||
+        address.value != 'Could not find location' ||
+        address.value != 'Error processing input' ||
+        address.value != 'Searching...') {
+      Get.back();
+    }
+  }
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/widget/button_design.dart';
-import 'package:kork/screens/widget/on_boarding_widget/first_on_boarding.dart';
-import 'package:kork/screens/widget/on_boarding_widget/second_on_boarding.dart';
-import 'package:kork/screens/widget/on_boarding_widget/third_on_boarding.dart';
+import 'package:kork/widget/button_design.dart';
+import 'package:kork/widget/on_boarding_widget/first_on_boarding.dart';
+import 'package:kork/widget/on_boarding_widget/second_on_boarding.dart';
+import 'package:kork/widget/on_boarding_widget/third_on_boarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'first_onboarding_binding.dart';

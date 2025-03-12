@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_controller.dart';
 part 'login_binding.dart';
@@ -277,14 +278,7 @@ class LoginView extends GetView<LoginController> {
               ),
               const SizedBox(height: 24),
               GestureDetector(
-                onTap: () {
-                  controller.validateInputs();
-                  if (controller.emailError.isEmpty &&
-                      controller.passwordError.isEmpty) {
-                    Get.snackbar('Sign up', 'Sign up successful');
-                    Get.toNamed(Routes.main);
-                  }
-                },
+                onTap: controller.loginOntap,
                 child: Container(
                   width: double.infinity,
                   height: 40,

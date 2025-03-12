@@ -2,15 +2,26 @@ part of 'splash_screen_view.dart';
 
 class SplashScreenViewController extends GetxController {
   late final SharedPreferences prefs;
-  bool showMain = false;
-  @override
-  void onInit() async {
-    super.onInit();
-    await initialPrefs();
+  bool isLoggedIn = false;
+
+  void initialNavigation() {
+    Future.delayed(
+      const Duration(seconds: 2),
+      () => navigateToNextScreen(),
+    );
   }
 
-  Future<void> initialPrefs() async {
+  Future<void> navigateToNextScreen() async {
     prefs = await SharedPreferences.getInstance();
-    showMain = prefs.getBool('login') ?? false;
+    isLoggedIn = prefs.getBool('isLoggin') ?? false;
+    final bool hasCompletedOnboarding =
+        prefs.getBool('hasCompletedOnboarding') ?? false;
+    if (!hasCompletedOnboarding) {
+      Get.offAllNamed(Routes.firstOnBoarding);
+    } else if (isLoggedIn) {
+      Get.offAllNamed(Routes.main);
+    } else {
+      Get.offAllNamed(Routes.login);
+    }
   }
 }

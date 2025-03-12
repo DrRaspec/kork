@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/main.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/widget/button_design.dart';
+import 'package:kork/widget/button_design.dart';
 
 part 'choose_language_binding.dart';
 part 'choose_language_controller.dart';

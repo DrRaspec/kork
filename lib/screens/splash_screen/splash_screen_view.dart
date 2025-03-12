@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,7 @@ part 'splash_screen_controller.dart';
 class SplashScreenView extends GetView<SplashScreenViewController> {
   @override
   Widget build(BuildContext context) {
+    controller.initialNavigation();
     return Scaffold(
       body: Center(
         child: Column(
@@ -24,7 +26,9 @@ class SplashScreenView extends GetView<SplashScreenViewController> {
             ),
             const SizedBox(height: 10),
             LottieBuilder.asset(
-              'assets/animation/splash_screen.json',
+              'assets/animation/animation_splash_screen.json',
+              width: 64,
+              height: 64,
             ),
           ],
         ),

@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/update_password/forget_password/forget_password_view.dart';
-import 'package:kork/screens/widget/otp_textfield.dart';
-import 'package:kork/screens/widget/underline_text.dart';
+import 'package:kork/widget/otp_textfield.dart';
+import 'package:kork/widget/underline_text.dart';
 
 part 'verify_otp_controller.dart';
 part 'verify_otp_binding.dart';

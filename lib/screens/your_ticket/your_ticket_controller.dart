@@ -10,8 +10,14 @@ class YourTicketViewController extends GetxController {
     imageList = List.generate(
       3,
       (index) {
-        return 'assets/images/anime_cover.jpg';
+        return argument.image;
       },
     );
+  }
+
+  void seeAllBookedEvent() {
+    var mainIndex = Get.find<MainController>().currentIndex;
+    mainIndex.value = 2;
+    Get.offAllNamed(Routes.main);
   }
 }

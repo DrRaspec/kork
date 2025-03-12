@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/models/event_detail_model.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/widget/build_placeholder.dart';
-import 'package:kork/screens/widget/appBarHelper.dart';
-import 'package:kork/screens/widget/custom_expansion.dart';
+import 'package:kork/widget/build_placeholder.dart';
+import 'package:kork/widget/appBarHelper.dart';
+import 'package:kork/widget/custom_expansion.dart';
 
 part 'checkout_binding.dart';
 part 'checkout_controller.dart';

@@ -9,8 +9,8 @@ import 'dart:math' as math;
 
 part 'event_controller.dart';
 part 'event_binding.dart';
-part '../../widget/event_card.dart';
-part '../../widget/event_widget.dart';
+part '../../../widget/event_card.dart';
+part '../../../widget/event_widget.dart';
 
 class EventView extends GetView<EventController> {
   const EventView({super.key});

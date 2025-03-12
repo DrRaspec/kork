@@ -5,13 +5,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/filter_screens/filter/filter_view.dart';
 import 'package:kork/screens/main/main_view.dart';
-import 'package:kork/screens/widget/event_category.dart';
-import 'package:kork/screens/widget/get_free_voucher_widget.dart';
-import 'package:kork/screens/widget/up_coming_widget.dart';
+import 'package:kork/widget/event_category.dart';
+import 'package:kork/widget/get_free_voucher_widget.dart';
+import 'package:kork/widget/up_coming_widget.dart';
 
 part 'home_controller.dart';
 part 'home_binding.dart';
-part '../../widget/home_view_detail.dart';
+part '../../../widget/home_view_detail.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});

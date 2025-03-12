@@ -8,7 +8,7 @@ import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/main/main_view.dart';
-import 'package:kork/screens/widget/setting_list.dart';
+import 'package:kork/widget/setting_list.dart';
 
 part 'profile_controller.dart';
 part 'profile_binding.dart';
@@ -42,11 +42,15 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ),
                             Positioned.fill(
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                                child: Container(
-                                  color: Colors.black.withOpacity(0.1),
+                              child: RepaintBoundary(
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                    sigmaX: 10.0,
+                                    sigmaY: 10.0,
+                                  ),
+                                  child: Container(
+                                    color: Colors.white.withOpacity(0.0),
+                                  ),
                                 ),
                               ),
                             ),
@@ -189,45 +193,40 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 16),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'Setting',
+                                AppLocalizations.of(context)!.setting,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Get.theme.colorScheme.tertiary,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 8),
                             settingList(
                               path: 'assets/image/svg/archive-minus.svg',
                               text: AppLocalizations.of(context)!.bookmark,
                             ),
-                            const SizedBox(height: 19),
                             settingList(
                               path: 'assets/image/svg/notification.svg',
                               text: AppLocalizations.of(context)!.notification,
                               notificationNum: 100,
                             ),
-                            const SizedBox(height: 19),
                             settingList(
                               path: 'assets/image/svg/card.svg',
                               text:
                                   AppLocalizations.of(context)!.payment_method,
                             ),
-                            const SizedBox(height: 24),
                             settingList(
                               path: 'assets/image/svg/ticket-star.svg',
                               text: AppLocalizations.of(context)!.my_event,
                             ),
-                            const SizedBox(height: 24),
                             settingList(
                               path: 'assets/image/svg/copyright.svg',
                               text: AppLocalizations.of(context)!.contact_us,
                             ),
-                            const SizedBox(height: 24),
                             settingList(
                               path: 'assets/image/svg/user.svg',
                               text: AppLocalizations.of(context)!.about_us,

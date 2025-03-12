@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/models/event_detail_model.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/widget/build_placeholder.dart';
+import 'package:kork/widget/build_placeholder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'event_detail_controller.dart';

@@ -29,4 +29,5 @@ class Routes {
   static const String addNewPayment = '/add_new_payment';
   static const String applyCoupon = '/apply_coupon';
   static const String yourTicket = '/your_ticket';
+  static const String addEvent = '/add_event';
 }

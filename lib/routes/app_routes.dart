@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/add_event/add_event_view.dart';
 import 'package:kork/screens/add_new_payment/add_new_payment_view.dart';
 import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
 import 'package:kork/screens/checkout/checkout_view.dart';
@@ -28,7 +29,7 @@ import 'package:kork/screens/sign_up_view/select_location/select_location_view.d
 import 'package:kork/screens/sign_up_view/select_profile/select_profile_view.dart';
 import 'package:kork/screens/sign_up_view/signup/sign_up_view.dart';
 import 'package:kork/screens/update_password/verify_otp/verify_otp_view.dart';
-import 'package:kork/screens/yout_ticket/your_ticket_view.dart';
+import 'package:kork/screens/your_ticket/your_ticket_view.dart';
 
 var appRoutes = [
   GetPage(
@@ -180,5 +181,10 @@ var appRoutes = [
     name: Routes.yourTicket,
     page: () => YourTicketView(),
     binding: YourTicketViewBinding(),
+  ),
+  GetPage(
+    name: Routes.addEvent,
+    page: () => AddEventView(),
+    binding: AddEventViewBinding(),
   ),
 ];

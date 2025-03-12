@@ -6,7 +6,7 @@ import 'package:kork/screens/main_screens/home/home_view.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/main_screens/profile/profile_view.dart';
 import 'package:kork/screens/main_screens/ticket/ticket_view.dart';
-import 'package:kork/screens/widget/buttom_navigationbar.dart';
+import 'package:kork/widget/buttom_navigationbar.dart';
 
 part 'main_binding.dart';
 part 'main_controller.dart';

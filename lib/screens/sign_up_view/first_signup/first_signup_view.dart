@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:kork/models/countries.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/screens/widget/gender_dropdown.dart';
-import 'package:kork/screens/widget/nationality_textfield.dart';
-import 'package:kork/screens/widget/phone_number_textfield.dart';
+import 'package:kork/widget/gender_dropdown.dart';
+import 'package:kork/widget/nationality_textfield.dart';
+import 'package:kork/widget/phone_number_textfield.dart';
 
 part 'first_signup_controller.dart';
 part 'first_signup_binding.dart';

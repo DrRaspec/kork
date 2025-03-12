@@ -431,20 +431,20 @@
     "@fullname": {
         "description": "fullname"
     },
-    "your_event_name": "Your Event Name",
-    "@your_event_name": {
-        "description": "event name"
+    "event_title": "Event title",
+    "@event_title": {
+        "description": "event title"
     },
-    "your_location": "Your Event Location",
-    "@your_location": {
+    "event_location": "Event Location",
+    "@event_location": {
         "description": "event location"
     },
     "category": "Category",
     "@category": {
         "description": "category"
     },
-    "your_event_category": "Your Event Category",
-    "@your_event_category": {
+    "event_category": "Event Category",
+    "@event_category": {
         "description": "event category"
     },
     "date": "Date",
@@ -466,6 +466,14 @@
     "end_time": "End Time",
     "@end_time": {
         "description": "end time"
+    },
+    "start_date": "Start Date",
+    "@start_date": {
+        "description": "start Date"
+    },
+    "end_date": "End Date",
+    "@end_date": {
+        "description": "end Date"
     },
     "detail": "Detail",
     "@detail": {
@@ -950,5 +958,29 @@
     "please_kindly_save": "Please kindly save your Ticket here.",
     "@please_kindly_save": {
         "description": "Please kindly save your Ticket here."
+    },
+    "company": "Company",
+    "@company": {
+        "description": "Company"
+    },
+    "company_name": "Company Name",
+    "@company_name": {
+        "description": "Company Name"
+    },
+    "ticket_ammout": "Ticket Amount",
+    "@ticket_ammout": {
+        "description": "Ticket Amount"
+    },
+    "event_poster": "Event Poster",
+    "@event_poster": {
+        "description": "Event Poster"
+    },
+    "publish_event": "Publish Event",
+    "@publish_event": {
+        "description": "Publish Event"
+    },
+    "upload_event_poster": "Upload Your Event Poster",
+    "@upload_event_poster": {
+        "description": "Upload Your Event Poster"
     }
 }

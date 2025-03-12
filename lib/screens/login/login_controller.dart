@@ -15,6 +15,8 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> emailShakeAnimation;
   late Animation<double> passwordShakeAnimation;
 
+  late SharedPreferences prefs;
+
   var passwordObsecure = true.obs;
 
   @override
@@ -42,12 +44,11 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
         .animate(passwordShakeController);
   }
 
-  void triggerEmailShake() {
-    emailShakeController.forward(from: 0);
-  }
-
-  void triggerPasswordShake() {
-    passwordShakeController.forward(from: 0);
+// In GetX, onReady() is a lifecycle method in GetxController that gets called after the widget has been rendered on the screen.
+  @override
+  void onReady() async {
+    super.onReady();
+    prefs = await SharedPreferences.getInstance();
   }
 
   @override
@@ -59,6 +60,14 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
     super.onClose();
+  }
+
+  void triggerEmailShake() {
+    emailShakeController.forward(from: 0);
+  }
+
+  void triggerPasswordShake() {
+    passwordShakeController.forward(from: 0);
   }
 
   void validateInputs() {
@@ -95,6 +104,15 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
           emailFocusNode.requestFocus();
         }
       });
+    }
+  }
+
+  void loginOntap() {
+    validateInputs();
+    if (emailError.isEmpty && passwordError.isEmpty) {
+      Get.snackbar('Sign up', 'Sign up successful');
+      Get.toNamed(Routes.main);
+      prefs.setBool('isLoggin', true);
     }
   }
 }

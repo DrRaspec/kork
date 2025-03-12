@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
-import 'package:kork/screens/widget/booked_event_card.dart';
-import 'package:kork/screens/widget/up_coming_widget.dart';
+import 'package:kork/widget/booked_event_card.dart';
+import 'package:kork/widget/up_coming_widget.dart';
 
 part 'ticket_controller.dart';
 part 'ticket_binding.dart';
@@ -52,39 +52,6 @@ class TicketView extends GetView<TicketController> {
                       child: Icon(
                         Icons.filter_list,
                         size: 24,
-                        color: Get.theme.colorScheme.tertiary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 24),
-              ),
-              SliverToBoxAdapter(
-                child: Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.book_ticket,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Get.theme.colorScheme.tertiary,
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      AppLocalizations.of(context)!.see_all,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Get.theme.colorScheme.tertiary,
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        size: 8,
                         color: Get.theme.colorScheme.tertiary,
                       ),
                     ),
