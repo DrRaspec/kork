@@ -1022,5 +1022,17 @@
     "remove_event": "Remove Event",
     "@remove_event": {
         "description": "Remove Event"
+    },
+    "ticket_available": "Ticket Available",
+    "@ticket_available": {
+        "description": "Ticket Available"
+    },
+    "sold_out": "Sold out",
+    "@sold_out": {
+        "description": "Sold out"
+    },
+    "about_us_detail": "Welcome to Kork App, the ultimate event booking platform designed for fans who want a seamless way to connect with their favorite idols! With Kork App, you can effortlessly browse, book, and attend exclusive events featuring your idols. Whether it's fan meetings, concerts, or private meet-and-greets, our app ensures a smooth and hassle-free booking experience. We are committed to making every fan’s dream come true by providing a reliable, user-friendly platform that brings idols and their supporters closer than ever. Join us today and never miss a moment with your favorite stars!",
+    "@about_us_detail": {
+        "description": "Sold out"
     }
 }

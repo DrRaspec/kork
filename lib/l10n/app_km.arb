@@ -254,5 +254,7 @@
     "total_amount": "ចំនួនសរុប",
     "manage_event": "គ្រប់គ្រងព្រឹត្តិការណ៍",
     "update_event": "ធ្វើបច្ចុប្បន្នភាពព្រឹត្តិការណ៍",
-    "remove_event": "លុបព្រឹត្តិការណ៍"
+    "remove_event": "លុបព្រឹត្តិការណ៍",
+    "ticket_available": "សំបុត្រដែលនៅសល់",
+    "about_us_detail": ""
 }

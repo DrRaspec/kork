@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/my_event_option.dart';
@@ -21,9 +22,12 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            myEventOption(
-              text: AppLocalizations.of(context)!.ticket,
-              icon: 'assets/image/svg/ticket.svg',
+            GestureDetector(
+              onTap: () => Get.toNamed(Routes.myEventTicketDetail),
+              child: myEventOption(
+                text: AppLocalizations.of(context)!.ticket,
+                icon: 'assets/image/svg/ticket.svg',
+              ),
             ),
             const SizedBox(height: 8),
             myEventOption(

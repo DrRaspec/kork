@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/widget/setting_list.dart';
 
@@ -223,13 +224,19 @@ class ProfileView extends GetView<ProfileController> {
                               path: 'assets/image/svg/ticket-star.svg',
                               text: AppLocalizations.of(context)!.my_event,
                             ),
-                            settingList(
-                              path: 'assets/image/svg/copyright.svg',
-                              text: AppLocalizations.of(context)!.contact_us,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.contactUs),
+                              child: settingList(
+                                path: 'assets/image/svg/copyright.svg',
+                                text: AppLocalizations.of(context)!.contact_us,
+                              ),
                             ),
-                            settingList(
-                              path: 'assets/image/svg/user.svg',
-                              text: AppLocalizations.of(context)!.about_us,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.aboutUs),
+                              child: settingList(
+                                path: 'assets/image/svg/user.svg',
+                                text: AppLocalizations.of(context)!.about_us,
+                              ),
                             ),
                             const SizedBox(height: 70),
                           ],
