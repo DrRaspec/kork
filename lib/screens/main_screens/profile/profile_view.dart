@@ -80,7 +80,8 @@ class ProfileView extends GetView<ProfileController> {
                                     right: 0,
                                     bottom: 10,
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () =>
+                                          Get.toNamed(Routes.editProfile),
                                       child: Container(
                                         width: 32,
                                         height: 32,
@@ -220,9 +221,12 @@ class ProfileView extends GetView<ProfileController> {
                               text:
                                   AppLocalizations.of(context)!.payment_method,
                             ),
-                            settingList(
-                              path: 'assets/image/svg/ticket-star.svg',
-                              text: AppLocalizations.of(context)!.my_event,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.myEvent),
+                              child: settingList(
+                                path: 'assets/image/svg/ticket-star.svg',
+                                text: AppLocalizations.of(context)!.my_event,
+                              ),
                             ),
                             GestureDetector(
                               onTap: () => Get.toNamed(Routes.contactUs),

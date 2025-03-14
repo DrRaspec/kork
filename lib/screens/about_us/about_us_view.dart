@@ -19,15 +19,25 @@ class AboutUsView extends GetView<AboutUsViewController> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                AppLocalizations.of(context)!.about_kork,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Get.theme.colorScheme.tertiary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             Text(
-              AppLocalizations.of(context)!.about_kork,
+              AppLocalizations.of(context)!.about_us_detail,
               style: TextStyle(
                 fontSize: 12,
                 color: Get.theme.colorScheme.tertiary,
-                fontWeight: FontWeight.bold,
               ),
             ),
-            Text()
           ],
         ),
       ),

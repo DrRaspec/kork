@@ -35,4 +35,5 @@ class Routes {
   static const String myEventTicketDetail = '/my_event_ticket_detail';
   static const String contactUs = '/contact_us';
   static const String aboutUs = '/about_us';
+  static const String editProfile = '/edit_profile';
 }

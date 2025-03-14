@@ -135,25 +135,35 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                ticketAvailable(
-                  ticketType: AppLocalizations.of(context)!.normal,
-                  ticketQty: 26,
+                ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => ticketAvailable(
+                    ticketType: controller.eventTicketType[index],
+                    ticketQty: index == 3 ? 0 : 4,
+                  ),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 8),
+                  itemCount: controller.eventTicketType.length,
                 ),
-                const SizedBox(height: 8),
-                ticketAvailable(
-                  ticketType: AppLocalizations.of(context)!.standard,
-                  ticketQty: 4,
-                ),
-                const SizedBox(height: 8),
-                ticketAvailable(
-                  ticketType: 'VIP',
-                  ticketQty: 4,
-                ),
-                const SizedBox(height: 8),
-                ticketAvailable(
-                  ticketType: 'VVIP',
-                  ticketQty: 0,
-                )
+                // ticketAvailable(
+                //   ticketType: AppLocalizations.of(context)!.normal,
+                //   ticketQty: 26,
+                // ),
+                // const SizedBox(height: 8),
+                // ticketAvailable(
+                //   ticketType: AppLocalizations.of(context)!.standard,
+                //   ticketQty: 4,
+                // ),
+                // const SizedBox(height: 8),
+                // ticketAvailable(
+                //   ticketType: 'VIP',
+                //   ticketQty: 4,
+                // ),
+                // const SizedBox(height: 8),
+                // ticketAvailable(
+                //   ticketType: 'VVIP',
+                //   ticketQty: 0,
+                // )
               ],
             ),
           )),

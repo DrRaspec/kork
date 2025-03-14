@@ -256,5 +256,9 @@
     "update_event": "ធ្វើបច្ចុប្បន្នភាពព្រឹត្តិការណ៍",
     "remove_event": "លុបព្រឹត្តិការណ៍",
     "ticket_available": "សំបុត្រដែលនៅសល់",
-    "about_us_detail": ""
+    "sold_out": "លក់អស់",
+    "about_us_detail": "Welcome to Kork App, the ultimate event booking platform designed for fans who want a seamless way to connect with their favorite idols! With Kork App, you can effortlessly browse, book, and attend exclusive events featuring your idols. Whether it's fan meetings, concerts, or private meet-and-greets, our app ensures a smooth and hassle-free booking experience. We are committed to making every fan’s dream come true by providing a reliable, user-friendly platform that brings idols and their supporters closer than ever. Join us today and never miss a moment with your favorite stars!",
+    "save": "រក្សាទុក",
+    "edit_profile": "កែសម្រួលប្រវត្តិរូប",
+    "password_security": "ពាក្យសម្ងាត់ និងសុវត្ថិភាព"
 }

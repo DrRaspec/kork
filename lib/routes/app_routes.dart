@@ -8,6 +8,7 @@ import 'package:kork/screens/checkout/checkout_view.dart';
 import 'package:kork/screens/choose_language/choose_language_view.dart';
 import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
 import 'package:kork/screens/contact_us/contact_us_view.dart';
+import 'package:kork/screens/edit_profile/edit_profile_view.dart';
 import 'package:kork/screens/event_detail/booked_event/booked_event_detail_view.dart';
 import 'package:kork/screens/event_member/event_member_view.dart';
 import 'package:kork/screens/my_event/my_event_view.dart';
@@ -216,5 +217,10 @@ var appRoutes = [
     name: Routes.aboutUs,
     page: () => AboutUsView(),
     binding: AboutUsViewBinding(),
+  ),
+  GetPage(
+    name: Routes.editProfile,
+    page: () => EditProfileView(),
+    binding: EditProfileViewBinding(),
   ),
 ];
