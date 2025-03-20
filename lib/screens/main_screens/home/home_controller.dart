@@ -3,6 +3,73 @@ part of 'home_view.dart';
 class HomeController extends GetxController {
   final searchController = TextEditingController();
   var mainControler = Get.find<MainController>();
+  Rx<UserAccounts?> userData = Rx<UserAccounts?>(null);
+  late Timer timer;
+  var dotCount = 1.obs;
+  var location = ''.obs;
+  var isValueAdded = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    print('home controller init');
+    if (mainControler.userDataReady.value) {
+      processUserData();
+    }
+
+    ever(mainControler.userDataReady, (isReady) {
+      if (isReady) {
+        processUserData();
+        isValueAdded.value = true;
+      }
+    });
+
+    timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
+      dotCount.value = (dotCount % 3) + 1 as int;
+    });
+  }
+
+  void processUserData() {
+    try {
+      userData.value = UserAccounts.fromMap(mainControler.userData.value!);
+      convertLocation();
+    } catch (e) {
+      print('Error processing user data: $e');
+    }
+  }
+
+  void convertLocation() async {
+    if (userData.value == null || userData.value!.location.isEmpty) {
+      location.value = 'unknown';
+      return;
+    }
+    var stringLatlng = userData.value!.location.obs;
+    print('latlong $stringLatlng');
+    List<String> split = stringLatlng.value.split(',');
+
+    if (split.length < 2) {
+      location.value = 'unknown';
+      return;
+    }
+
+    try {
+      double lat = double.parse(split[0].trim());
+      double lng = double.parse(split[1].trim());
+
+      var latlng = LatLng(lat, lng);
+      var placemark =
+          await placemarkFromCoordinates(latlng.latitude, latlng.longitude);
+
+      if (placemark.isNotEmpty) {
+        var mark = placemark.first;
+        location.value = mark.administrativeArea ?? mark.locality ?? 'unknown';
+      }
+    } catch (e) {
+      print("Error converting location: $e");
+      location.value = 'unknown';
+    }
+  }
+
   var dummyData = <Map<String, dynamic>>[
     {
       'id': '123',

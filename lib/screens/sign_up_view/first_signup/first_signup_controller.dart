@@ -28,8 +28,6 @@ class FirstSignupController extends GetxController {
   var selectedNationality = ''.obs;
   var currentLenght = 20.obs;
 
-  final dio = Dio();
-
   @override
   Future<void> onInit() async {
     super.onInit();

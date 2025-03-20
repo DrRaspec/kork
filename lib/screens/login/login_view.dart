@@ -1,10 +1,12 @@
 import 'dart:math';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_controller.dart';
@@ -117,7 +119,7 @@ class LoginView extends GetView<LoginController> {
                               child: Icon(
                                 Icons.error,
                                 size: 20,
-                                color: Get.theme.colorScheme.primary,
+                                color: Get.theme.colorScheme.tertiary,
                               ),
                             ),
                           ),

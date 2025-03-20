@@ -10,6 +10,7 @@ class UserAccounts {
   String profileUrl;
   String location;
   String? paymentMethod;
+  String? token;
 
   UserAccounts({
     required this.id,
@@ -23,6 +24,7 @@ class UserAccounts {
     required this.profileUrl,
     required this.location,
     this.paymentMethod,
+    this.token,
   });
 
   factory UserAccounts.fromMap(Map<String, dynamic> map) {
@@ -38,6 +40,7 @@ class UserAccounts {
       nationality: map['nationality'],
       paymentMethod: map['payment_method'],
       phoneNumber: map['phone_number'],
+      token: map['token'],
     );
   }
 }

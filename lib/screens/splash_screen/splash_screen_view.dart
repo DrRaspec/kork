@@ -10,7 +10,6 @@ part 'splash_screen_controller.dart';
 class SplashScreenView extends GetView<SplashScreenViewController> {
   @override
   Widget build(BuildContext context) {
-    controller.initialNavigation();
     return Scaffold(
       body: Center(
         child: Column(

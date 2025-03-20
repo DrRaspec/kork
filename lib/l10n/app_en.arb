@@ -1046,5 +1046,17 @@
     "password_security": "Password and security",
     "@password_security": {
         "description": "Password and security"
+    },
+    "email_already_registered": "Email is already registered",
+    "@email_already_registered": {
+        "description": "This email is already registered"
+    },
+    "incorrect_email_password": "Incorrect email or password. Please try again.",
+    "@incorrect_email_password": {
+        "description": "Incorrect email or password. Please try again."
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "Logout"
     }
 }

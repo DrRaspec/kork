@@ -1,15 +1,19 @@
-import 'dart:ui';
-
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/models/user_accounts.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/screens/main_screens/event/event_view.dart';
+import 'package:kork/screens/main_screens/home/home_view.dart';
 import 'package:kork/widget/setting_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'profile_controller.dart';
 part 'profile_binding.dart';
@@ -36,23 +40,28 @@ class ProfileView extends GetView<ProfileController> {
                           fit: StackFit.expand,
                           children: [
                             Positioned.fill(
-                              child: Image.asset(
-                                'assets/image/cambodia.png',
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            ),
-                            Positioned.fill(
-                              child: RepaintBoundary(
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                    sigmaX: 10.0,
-                                    sigmaY: 10.0,
-                                  ),
-                                  child: Container(
-                                    color: Colors.white.withOpacity(0.0),
-                                  ),
-                                ),
+                              child: Obx(
+                                () {
+                                  return controller.image.value == null
+                                      ? buildPlaceholder()
+                                      : Image.network(
+                                          controller.image.value!,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                          filterQuality: FilterQuality.high,
+                                          loadingBuilder: (context, child,
+                                              loadingProgress) {
+                                            if (loadingProgress != null) {
+                                              return buildPlaceholder();
+                                            }
+                                            return child;
+                                          },
+                                        ).blurred(
+                                          colorOpacity: 0.35,
+                                          blurColor: Colors.black,
+                                          blur: 10,
+                                        );
+                                },
                               ),
                             ),
                             Center(
@@ -68,11 +77,38 @@ class ProfileView extends GetView<ProfileController> {
                                         color: const Color(0xffEAE9FC),
                                         width: 3,
                                       ),
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                          'assets/image/cambodia.png',
-                                        ),
-                                        fit: BoxFit.cover,
+                                    ),
+                                    child: ClipOval(
+                                      child: Obx(
+                                        () {
+                                          print(
+                                              'profile image value ${controller.image.value}');
+                                          return controller.image.value == null
+                                              ? buildPlaceholder()
+                                              : Image.network(
+                                                  controller.image.value!,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                  filterQuality:
+                                                      FilterQuality.high,
+                                                  loadingBuilder: (context,
+                                                      child, loadingProgress) {
+                                                    if (loadingProgress !=
+                                                        null) {
+                                                      return buildPlaceholder();
+                                                    }
+                                                    return child;
+                                                  },
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      const Center(
+                                                    child: Icon(
+                                                      Icons.error,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -116,11 +152,13 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           children: [
                             const SizedBox(height: 18),
-                            Text(
-                              AppLocalizations.of(context)!.username,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Get.theme.colorScheme.tertiary,
+                            Obx(
+                              () => Text(
+                                controller.fullName.value,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 36),
@@ -242,6 +280,31 @@ class ProfileView extends GetView<ProfileController> {
                                 text: AppLocalizations.of(context)!.about_us,
                               ),
                             ),
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: controller.logout,
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/image/svg/logout.svg',
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: ColorFilter.mode(
+                                      Get.theme.colorScheme.tertiary,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    AppLocalizations.of(context)!.logout,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Get.theme.colorScheme.tertiary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             const SizedBox(height: 70),
                           ],
                         ),
@@ -257,16 +320,6 @@ class ProfileView extends GetView<ProfileController> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalizations.of(context)!.profile,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xffEAE9FC),
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Obx(

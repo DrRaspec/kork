@@ -1,6 +1,7 @@
 part of 'map_view.dart';
 
 class MapController extends GetxController {
+  String? argument = Get.arguments ?? Routes.main;
   var initialCameraPosition = const CameraPosition(
     target: LatLng(11.572543, 104.893275),
     zoom: 21,
@@ -18,7 +19,7 @@ class MapController extends GetxController {
   var isSearching = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     checkRequestPermission();
   }
@@ -244,8 +245,6 @@ class MapController extends GetxController {
         }
       }
 
-      // If we couldn't extract coordinates, try to geocode the URL as an address
-      // This is a fallback approach if the URL doesn't contain direct coordinates
       List<Location> locations = await locationFromAddress(url);
       if (locations.isNotEmpty) {
         Location location = locations.first;
@@ -267,7 +266,7 @@ class MapController extends GetxController {
       Marker(
         markerId: MarkerId(latLng.toString()),
         position: latLng,
-        infoWindow: InfoWindow(title: 'Selected Location'),
+        infoWindow: const InfoWindow(title: 'Selected Location'),
       ),
     );
 
@@ -277,15 +276,12 @@ class MapController extends GetxController {
       ),
     );
 
-    // Get address for the location
     delayToGetAddress(latLng);
 
-    // Clear search field and remove focus
     searchController.clear();
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  // Original search method - keeping for backward compatibility
   Future<void> searchLocation() async {
     if (searchController.text.isEmpty) return;
 
@@ -329,15 +325,36 @@ class MapController extends GetxController {
     }
   }
 
-  void saveLocation() {
-    if (address.value != 'Error searching location' ||
-        address.value != 'No results found' ||
-        address.value != 'Loading...' ||
-        address.value != 'Processing input...' ||
-        address.value != 'Could not find location' ||
-        address.value != 'Error processing input' ||
-        address.value != 'Searching...') {
-      Get.back();
+  void saveLocation() async {
+    var selectLocationController = Get.find<SelectLocationController>();
+    if (address.value.isEmpty ||
+        _invalidAddressMessages.contains(address.value)) {
+      Get.snackbar("Error", "Invalid location. Please select a valid place.",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    if (selectedLocation.value.latitude == 0 &&
+        selectedLocation.value.longitude == 0) {
+      Get.snackbar("Error", "Please select a location before saving.",
+          snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    selectLocationController.saveSignUp(selectedLocation.value);
+
+    if (argument != null) {
+      Get.toNamed(argument!);
     }
   }
+
+  final Set<String> _invalidAddressMessages = {
+    'Error searching location',
+    'No results found',
+    'Loading...',
+    'Processing input...',
+    'Could not find location',
+    'Error processing input',
+    'Searching...'
+  };
 }

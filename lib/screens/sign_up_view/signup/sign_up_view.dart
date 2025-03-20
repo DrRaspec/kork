@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/button_design.dart';
 
 part 'sign_up_controller.dart';
@@ -209,7 +212,7 @@ class SignUpView extends GetView<SignUpController> {
                                         vertical: 11,
                                       ),
                                       child: SvgPicture.asset(
-                                        controller.passwordVisible.value
+                                        !controller.passwordVisible.value
                                             ? 'assets/image/svg/eye.svg'
                                             : 'assets/image/svg/eye-slash.svg',
                                         fit: BoxFit.scaleDown,
@@ -318,7 +321,7 @@ class SignUpView extends GetView<SignUpController> {
                                           vertical: 11,
                                         ),
                                         child: SvgPicture.asset(
-                                          controller
+                                          !controller
                                                   .confirmPasswordVisible.value
                                               ? 'assets/image/svg/eye.svg'
                                               : 'assets/image/svg/eye-slash.svg',
@@ -374,14 +377,7 @@ class SignUpView extends GetView<SignUpController> {
                   ),
                   const SizedBox(height: 25),
                   GestureDetector(
-                    onTap: () {
-                      controller.validateInput();
-                      if (controller.emailError.isEmpty &&
-                          controller.passwordError.isEmpty &&
-                          controller.confirmPasswordError.isEmpty) {
-                        Get.toNamed(Routes.verifyOtp, arguments: true);
-                      }
-                    },
+                    onTap: controller.onTap,
                     child: buttonDesign(
                       text: AppLocalizations.of(context)!.create_account,
                     ),

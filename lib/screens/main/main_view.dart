@@ -1,11 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main_screens/event/event_view.dart';
 import 'package:kork/screens/main_screens/home/home_view.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/main_screens/profile/profile_view.dart';
 import 'package:kork/screens/main_screens/ticket/ticket_view.dart';
+import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/buttom_navigationbar.dart';
 
 part 'main_binding.dart';
@@ -24,7 +29,7 @@ class MainView extends GetView<MainController> {
             child: Obx(
               () => IndexedStack(
                 index: controller.currentIndex.value,
-                children: controller.screen,
+                children: controller.screens,
               ),
             ),
           ),

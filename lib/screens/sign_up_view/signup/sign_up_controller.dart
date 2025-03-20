@@ -25,7 +25,11 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> passwordShakeAnimation;
   late Animation<double> confirmPasswordShakeAnimation;
 
+  Timer? debounce;
+
   // var isNew = Get.find<VerifyOtpView>().controller.isNew;
+
+  final dio = Dio();
 
   @override
   void onInit() {
@@ -94,11 +98,24 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     super.onClose();
   }
 
-  void validateInput() {
+  Future<void> validateInput() async {
     emailError.value = '';
     passwordError.value = '';
     confirmPasswordError.value = '';
     bool hasError = false;
+    dio.interceptors.add(AppLogInterceptor());
+    var response = await dio.post(
+      'http://10.0.2.2:8000/api/check-email',
+      data: {'email': emailController.text},
+      options: Options(
+        headers: {'content-type': 'application/json'},
+        validateStatus: (status) {
+          return status != null && status >= 200 && status <= 409;
+        },
+      ),
+    );
+
+    var result = response.data as Map<String, dynamic>;
 
     if (emailController.text.trim().isEmpty) {
       emailError.value =
@@ -109,6 +126,11 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     ).hasMatch(emailController.text.trim())) {
       emailError.value = AppLocalizations.of(Get.context!)!.invalid_email;
+      triggerEmailShake();
+      hasError = true;
+    } else if (result['email'] == 'Email already exists') {
+      emailError.value =
+          AppLocalizations.of(Get.context!)!.email_already_registered;
       triggerEmailShake();
       hasError = true;
     }
@@ -153,4 +175,21 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       );
     }
   }
+
+  void onTap() async {
+    await validateInput();
+    if (emailError.isEmpty &&
+        passwordError.isEmpty &&
+        confirmPasswordError.isEmpty) {
+      Get.toNamed(Routes.verifyOtp, arguments: true);
+    }
+  }
+
+  // void onChange(String value) {
+  //   if (debounce?.isActive ?? false) debounce?.cancel();
+  //   debounce = Timer(
+  //     const Duration(milliseconds: 200),
+  //     () => checkUniqueEmail(),
+  //   );
+  // }
 }

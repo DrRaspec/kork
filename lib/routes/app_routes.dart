@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/about_us/about_us_view.dart';
 import 'package:kork/screens/add_event/add_event_view.dart';
@@ -42,6 +43,7 @@ var appRoutes = [
     name: Routes.login,
     page: () => const LoginView(),
     binding: LoginBinding(),
+    middlewares: [NoAuthMiddleware()],
   ),
   GetPage(
     name: Routes.firstSignup,
@@ -80,6 +82,7 @@ var appRoutes = [
     name: Routes.main,
     page: () => const MainView(),
     binding: MainBinding(),
+    middlewares: [AuthMiddleware()],
   ),
   GetPage(
     name: Routes.home,
@@ -157,6 +160,7 @@ var appRoutes = [
     name: Routes.firstOnBoarding,
     page: () => FirstOnboardingView(),
     binding: FirstOnboardingBinding(),
+    middlewares: [OnBoardingMiddleware()],
   ),
   GetPage(
     name: Routes.chooseLanguage,

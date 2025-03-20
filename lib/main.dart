@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/l10n/l10n.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/routes/app_routes.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/theme/theme.dart';
@@ -21,10 +23,23 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
 
-  Get.put<SharedPreferences>(prefs);
-  Get.put(ThemeController(prefs));
-  Get.put(LanguageController(prefs));
-  Get.put(MainController());
+  // Get.lazyPut(() => MainController());
+  // Get.lazyPut<SharedPreferences>(() => prefs);
+  // Get.lazyPut(() => ThemeController(prefs));
+  // Get.lazyPut(() => LanguageController(prefs));
+
+  // Get.put<SharedPreferences>(prefs);
+  // Get.put(ThemeController(prefs));
+  // Get.put(LanguageController(prefs));
+  // Get.put(MainController());
+
+  Get.put<SharedPreferences>(prefs, permanent: true);
+  Get.put(ThemeController(prefs), permanent: true);
+  Get.put(LanguageController(prefs), permanent: true);
+  Get.put(AuthService(), permanent: true);
+  Get.put<ApiService>(ApiService(), permanent: true);
+  Get.put(const FlutterSecureStorage());
+  Get.put(MainController(), permanent: true);
 
   runApp(MainApp(prefs: prefs));
 }
@@ -65,7 +80,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
         getPages: appRoutes,
-        initialRoute: Routes.firstSignup,
+        initialRoute: Routes.splashScreen,
       ),
     );
   }
