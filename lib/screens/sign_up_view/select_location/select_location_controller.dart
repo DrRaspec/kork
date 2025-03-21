@@ -34,8 +34,8 @@ class SelectLocationController extends GetxController {
     _timer?.cancel();
 
     _timer = Timer.periodic(
-      const Duration(milliseconds: 500),
-      (timer) {
+      const Duration(milliseconds: 1000),
+      (timer){
         if (loadingText.value == AppLocalizations.of(Get.context!)!.loading) {
           loadingText.value = '${AppLocalizations.of(Get.context!)!.loading}.';
         } else if (loadingText.value ==
@@ -183,8 +183,8 @@ class SelectLocationController extends GetxController {
 
       dio.interceptors.add(AppLogInterceptor());
       dio.options.baseUrl = 'http://10.0.2.2:8000/api';
-      dio.options.connectTimeout = const Duration(seconds: 5);
-      dio.options.receiveTimeout = const Duration(seconds: 3);
+      dio.options.connectTimeout = const Duration(seconds: 10);
+      dio.options.receiveTimeout = const Duration(seconds: 10);
 
       var response = await dio.post(
         '/register',

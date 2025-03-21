@@ -1058,5 +1058,13 @@
     "logout": "Logout",
     "@logout": {
         "description": "Logout"
+    },
+    "kork": "Kork",
+    "@kork": {
+        "description": "Kork"
+    },
+    "app": "App",
+    "@app": {
+        "description": "App"
     }
 }

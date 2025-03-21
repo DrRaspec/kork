@@ -263,5 +263,7 @@
     "password_security": "ពាក្យសម្ងាត់ និងសុវត្ថិភាព",
     "email_already_registered": "អ៊ីមែលនេះត្រូវបានចុះឈ្មោះរួចហើយ",
     "incorrect_email_password": "អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
-    "logout": "ចាកចេញ"
+    "logout": "ចាកចេញ",
+    "app": "កម្មវិធី",
+    "kork": "កក់"
 }

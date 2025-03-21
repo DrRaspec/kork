@@ -20,6 +20,7 @@ import 'package:kork/screens/my_event_ticket/my_event_ticket_view.dart';
 import 'package:kork/screens/notification/notification_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
 import 'package:kork/screens/payment_methods/payment_methods_view.dart';
+import 'package:kork/screens/profile_change_password/profile_change_password_view.dart';
 import 'package:kork/screens/splash_screen/splash_screen_view.dart';
 import 'package:kork/screens/update_event/update_event_view.dart';
 import 'package:kork/screens/update_password/change_password/change_password_view.dart';
@@ -250,5 +251,10 @@ var appRoutes = [
     name: Routes.myEventMember,
     page: () => MyEventMemberView(),
     binding: MyEventMemberViewBinding(),
+  ),
+  GetPage(
+    name: Routes.profileChangePassword,
+    page: () => ProfileChangePasswordView(),
+    binding: ProfileChangePasswordViewBinding(),
   ),
 ];

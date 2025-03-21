@@ -35,4 +35,8 @@ class MainController extends GetxController {
       print('Error fetching user data: $e');
     }
   }
+
+  void changeTabIndex(int index) {
+    currentIndex.value = index;
+  }
 }
