@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
 import 'package:shimmer/shimmer.dart';
+import 'dart:math' as math;
 
 part 'event_controller.dart';
 part 'event_binding.dart';
@@ -67,7 +68,7 @@ class EventView extends GetView<EventController> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.searchEvent),
                     child: Icon(
                       Icons.search,
                       color: Get.theme.colorScheme.tertiary,
@@ -118,7 +119,7 @@ class EventView extends GetView<EventController> {
                                 duration: const Duration(milliseconds: 200),
                                 curve: Curves.easeInOut,
                                 child: Container(
-                                  width: Get.width * 0.5 - 20,
+                                  width: math.max(Get.width * 0.5 - 20, 0),
                                   height: 35,
                                   decoration: BoxDecoration(
                                     color: Get.theme.colorScheme.primary,

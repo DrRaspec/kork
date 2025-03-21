@@ -3,9 +3,12 @@ part of '../screens/main_screens/home/home_view.dart';
 Widget homeViewDetail() {
   var controller = Get.find<HomeController>();
   var context = Get.context;
+
   if (context == null) {
     return const SizedBox();
   }
+
+  var loadingText = AppLocalizations.of(context)!.loading.obs;
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Column(
@@ -23,6 +26,7 @@ Widget homeViewDetail() {
             Column(
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.current_location,
@@ -39,11 +43,15 @@ Widget homeViewDetail() {
                     ),
                   ],
                 ),
-                Text(
-                  'Phnom Penh',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Get.theme.colorScheme.tertiary,
+                Obx(
+                  () => Text(
+                    controller.location.value.isNotEmpty
+                        ? controller.location.value
+                        : '${loadingText.value}${'.' * controller.dotCount.value}',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
                   ),
                 ),
               ],
@@ -158,11 +166,16 @@ Widget homeViewDetail() {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    const Text(
-                      'Sam Sokunthea',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xffEAE9FC),
+                    Obx(
+                      () => Text(
+                        controller.userData.value == null
+                            ? '${loadingText.value}${'.' * controller.dotCount.value}'
+                            : '${controller.userData.value!.firstName} ${controller.userData.value!.lastName}',
+                        // '',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Color(0xffEAE9FC),
+                        ),
                       ),
                     ),
                     const Spacer(),
@@ -227,12 +240,33 @@ Widget homeViewDetail() {
                         shape: BoxShape.circle,
                         color: Theme.of(context).colorScheme.onInverseSurface,
                       ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          Get.isDarkMode
-                              ? 'assets/image/logo.png'
-                              : 'assets/image/light-logo.png',
-                          fit: BoxFit.cover,
+                      child: Obx(
+                        () => ClipOval(
+                          child: controller.userData.value == null
+                              ? buildPlaceholder()
+                              : Image.network(
+                                  controller.userData.value!.profileUrl,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress != null) {
+                                      return buildPlaceholder();
+                                    }
+                                    return child;
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    print(error);
+                                    return Container(
+                                      color: Get.theme.colorScheme.tertiary,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.error,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
                         ),
                       ),
                     ),

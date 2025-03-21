@@ -190,8 +190,9 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                       if (controller.isEmpty.value) {
                         if (controller.isNew) {
                           Get.toNamed(Routes.selectProfile);
+                        } else {
+                          Get.toNamed(Routes.changePassword);
                         }
-                        Get.toNamed(Routes.changePassword);
                       }
                     },
                     child: Container(

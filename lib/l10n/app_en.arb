@@ -431,20 +431,20 @@
     "@fullname": {
         "description": "fullname"
     },
-    "your_event_name": "Your Event Name",
-    "@your_event_name": {
-        "description": "event name"
+    "event_title": "Event title",
+    "@event_title": {
+        "description": "event title"
     },
-    "your_location": "Your Event Location",
-    "@your_location": {
+    "event_location": "Event Location",
+    "@event_location": {
         "description": "event location"
     },
     "category": "Category",
     "@category": {
         "description": "category"
     },
-    "your_event_category": "Your Event Category",
-    "@your_event_category": {
+    "event_category": "Event Category",
+    "@event_category": {
         "description": "event category"
     },
     "date": "Date",
@@ -466,6 +466,14 @@
     "end_time": "End Time",
     "@end_time": {
         "description": "end time"
+    },
+    "start_date": "Start Date",
+    "@start_date": {
+        "description": "start Date"
+    },
+    "end_date": "End Date",
+    "@end_date": {
+        "description": "end Date"
     },
     "detail": "Detail",
     "@detail": {
@@ -850,5 +858,205 @@
     "your_message": "Your Message",
     "@your_message": {
         "description": "Your Message"
+    },
+    "report_orgnizer": "Report Organizer",
+    "@report_orgnizer": {
+        "description": "Report Organizer"
+    },
+    "send": "Send",
+    "@send": {
+        "description": "Send"
+    },
+    "book_your_idol_event": "Book Your Idol Event Here",
+    "@book_your_idol_event": {
+        "description": "Book Your Idol Event Here"
+    },
+    "book_meet_your_idol": "Book your idol event now and meet your favorite star!",
+    "@book_meet_your_idol": {
+        "description": "Book your idol event now and meet your favorite star!"
+    },
+    "easy_and_confident": "Easy And Confident",
+    "@easy_and_confident": {
+        "description": "Easy And Confident"
+    },
+    "book_confident": "Book your event easily and confidently!",
+    "@book_confident": {
+        "description": "Book your event easily and confidently!"
+    },
+    "faster_than_other": "Faster Than Other",
+    "@faster_than_other": {
+        "description": "Faster Than Other"
+    },
+    "experience_booking_like_never": "Experience booking like never before – faster and more efficient than ever!",
+    "@experience_booking_like_never": {
+        "description": "Experience booking like never before – faster and more efficient than ever!"
+    },
+    "choose_your_language": "Choose your language",
+    "@choose_your_language": {
+        "description": "Choose your language"
+    },
+    "please_choose_your_language": "Please choose your language to use for your app",
+    "@please_choose_your_language": {
+        "description": "Please choose your language to use for your app"
+    },
+    "get_started": "Get Started",
+    "@get_started": {
+        "description": "Get Started"
+    },
+    "add_new_payment": "Add new payment",
+    "@add_new_payment": {
+        "description": "Add new payment"
+    },
+    "new_card": "New Card",
+    "@new_card": {
+        "description": "New Card"
+    },
+    "card_information": "Card Information",
+    "@card_information": {
+        "description": "Card Information"
+    },
+    "card_number": "Card Number",
+    "@card_number": {
+        "description": "Card Number"
+    },
+    "card_holder_name": "Card holder name",
+    "@card_holder_name": {
+        "description": "Card holder name"
+    },
+    "expire_date": "Expire Date",
+    "@expire_date": {
+        "description": "Expire Date"
+    },
+    "ccv": "CCV",
+    "@ccv": {
+        "description": "CCV"
+    },
+    "add_card": "Add Card",
+    "@add_card": {
+        "description": "Add Card"
+    },
+    "invalid_card_number": "invalid card number",
+    "@invalid_card_number": {
+        "description": "invalid card number"
+    },
+    "invalid_card_holder": "invalid card holder name",
+    "@invalid_card_holder": {
+        "description": "invalid card number"
+    },
+    "search_coupon": "Search Coupon",
+    "@search_coupon": {
+        "description": "Search Coupon"
+    },
+    "your_ticket": "Your Ticket",
+    "@your_ticket": {
+        "description": "Your Ticket"
+    },
+    "save_ticket": "Save Your Ticket Here",
+    "@save_ticket": {
+        "description": "Get Your Ticket Here"
+    },
+    "please_kindly_save": "Please kindly save your Ticket here.",
+    "@please_kindly_save": {
+        "description": "Please kindly save your Ticket here."
+    },
+    "company": "Company",
+    "@company": {
+        "description": "Company"
+    },
+    "company_name": "Company Name",
+    "@company_name": {
+        "description": "Company Name"
+    },
+    "ticket_ammout": "Ticket Amount",
+    "@ticket_ammout": {
+        "description": "Ticket Amount"
+    },
+    "event_poster": "Event Poster",
+    "@event_poster": {
+        "description": "Event Poster"
+    },
+    "publish_event": "Publish Event",
+    "@publish_event": {
+        "description": "Publish Event"
+    },
+    "upload_event_poster": "Upload Your Event Poster",
+    "@upload_event_poster": {
+        "description": "Upload Your Event Poster"
+    },
+    "ticket_tye": "Ticket Type",
+    "@ticket_tye": {
+        "description": "Ticket Type"
+    },
+    "one_ticket_tye": "1 Ticket Type",
+    "@one_ticket_tye": {
+        "description": "1 Ticket Type"
+    },
+    "two_ticket_tye": "2 Ticket Type",
+    "@two_ticket_tye": {
+        "description": "2 Ticket Type"
+    },
+    "three_ticket_tye": "3 Ticket Type",
+    "@three_ticket_tye": {
+        "description": "3 Ticket Type"
+    },
+    "four_ticket_tye": "4 Ticket Type",
+    "@four_ticket_tye": {
+        "description": "4 Ticket Type"
+    },
+    "hosted_event": "Hosted Event",
+    "@hosted_event": {
+        "description": "Hosted Event"
+    },
+    "total_amount": "Total Amount",
+    "@total_amount": {
+        "description": "Total Amount"
+    },
+    "manage_event": "Manage Event",
+    "@manage_event": {
+        "description": "Manage Event"
+    },
+    "update_event": "Update Event",
+    "@update_event": {
+        "description": "Update Event"
+    },
+    "remove_event": "Remove Event",
+    "@remove_event": {
+        "description": "Remove Event"
+    },
+    "ticket_available": "Ticket Available",
+    "@ticket_available": {
+        "description": "Ticket Available"
+    },
+    "sold_out": "Sold out",
+    "@sold_out": {
+        "description": "Sold out"
+    },
+    "about_us_detail": "Welcome to Kork App, the ultimate event booking platform designed for fans who want a seamless way to connect with their favorite idols! With Kork App, you can effortlessly browse, book, and attend exclusive events featuring your idols. Whether it's fan meetings, concerts, or private meet-and-greets, our app ensures a smooth and hassle-free booking experience. We are committed to making every fan’s dream come true by providing a reliable, user-friendly platform that brings idols and their supporters closer than ever. Join us today and never miss a moment with your favorite stars!",
+    "@about_us_detail": {
+        "description": "Sold out"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "Save"
+    },
+    "edit_profile": "Edit Profile",
+    "@edit_profile": {
+        "description": "Edit Profile"
+    },
+    "password_security": "Password and security",
+    "@password_security": {
+        "description": "Password and security"
+    },
+    "email_already_registered": "Email is already registered",
+    "@email_already_registered": {
+        "description": "This email is already registered"
+    },
+    "incorrect_email_password": "Incorrect email or password. Please try again.",
+    "@incorrect_email_password": {
+        "description": "Incorrect email or password. Please try again."
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "Logout"
     }
 }

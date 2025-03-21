@@ -1,14 +1,18 @@
-import 'dart:ui';
-
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kork/controllers/theme_controller.dart';
 import 'package:kork/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/models/user_accounts.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/screens/main_screens/event/event_view.dart';
 import 'package:kork/widget/setting_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'profile_controller.dart';
 part 'profile_binding.dart';
@@ -35,19 +39,28 @@ class ProfileView extends GetView<ProfileController> {
                           fit: StackFit.expand,
                           children: [
                             Positioned.fill(
-                              child: Image.asset(
-                                'assets/image/cambodia.png',
-                                fit: BoxFit.cover,
-                                filterQuality: FilterQuality.high,
-                              ),
-                            ),
-                            Positioned.fill(
-                              child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
-                                child: Container(
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
+                              child: Obx(
+                                () {
+                                  return controller.image.value == null
+                                      ? buildPlaceholder()
+                                      : Image.network(
+                                          controller.image.value!,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                          filterQuality: FilterQuality.high,
+                                          loadingBuilder: (context, child,
+                                              loadingProgress) {
+                                            if (loadingProgress != null) {
+                                              return buildPlaceholder();
+                                            }
+                                            return child;
+                                          },
+                                        ).blurred(
+                                          colorOpacity: 0.35,
+                                          blurColor: Colors.black,
+                                          blur: 10,
+                                        );
+                                },
                               ),
                             ),
                             Center(
@@ -63,11 +76,36 @@ class ProfileView extends GetView<ProfileController> {
                                         color: const Color(0xffEAE9FC),
                                         width: 3,
                                       ),
-                                      image: const DecorationImage(
-                                        image: AssetImage(
-                                          'assets/image/cambodia.png',
-                                        ),
-                                        fit: BoxFit.cover,
+                                    ),
+                                    child: ClipOval(
+                                      child: Obx(
+                                        () {
+                                          return controller.image.value == null
+                                              ? buildPlaceholder()
+                                              : Image.network(
+                                                  controller.image.value!,
+                                                  width: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                  filterQuality:
+                                                      FilterQuality.high,
+                                                  loadingBuilder: (context,
+                                                      child, loadingProgress) {
+                                                    if (loadingProgress !=
+                                                        null) {
+                                                      return buildPlaceholder();
+                                                    }
+                                                    return child;
+                                                  },
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      const Center(
+                                                    child: Icon(
+                                                      Icons.error,
+                                                      size: 20,
+                                                    ),
+                                                  ),
+                                                );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -75,7 +113,8 @@ class ProfileView extends GetView<ProfileController> {
                                     right: 0,
                                     bottom: 10,
                                     child: GestureDetector(
-                                      onTap: () {},
+                                      onTap: () =>
+                                          Get.toNamed(Routes.editProfile),
                                       child: Container(
                                         width: 32,
                                         height: 32,
@@ -110,11 +149,13 @@ class ProfileView extends GetView<ProfileController> {
                         child: Column(
                           children: [
                             const SizedBox(height: 18),
-                            Text(
-                              AppLocalizations.of(context)!.username,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Get.theme.colorScheme.tertiary,
+                            Obx(
+                              () => Text(
+                                controller.fullName.value,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
                               ),
                             ),
                             const SizedBox(height: 36),
@@ -189,48 +230,87 @@ class ProfileView extends GetView<ProfileController> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            const SizedBox(height: 16),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'Setting',
+                                AppLocalizations.of(context)!.setting,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Get.theme.colorScheme.tertiary,
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            settingList(
-                              path: 'assets/image/svg/archive-minus.svg',
-                              text: AppLocalizations.of(context)!.bookmark,
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.bookmark),
+                              child: settingList(
+                                path: 'assets/image/svg/archive-minus.svg',
+                                text: AppLocalizations.of(context)!.bookmark,
+                              ),
                             ),
-                            const SizedBox(height: 19),
-                            settingList(
-                              path: 'assets/image/svg/notification.svg',
-                              text: AppLocalizations.of(context)!.notification,
-                              notificationNum: 100,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.notification),
+                              child: settingList(
+                                path: 'assets/image/svg/notification.svg',
+                                text:
+                                    AppLocalizations.of(context)!.notification,
+                                notificationNum: 100,
+                              ),
                             ),
-                            const SizedBox(height: 19),
-                            settingList(
-                              path: 'assets/image/svg/card.svg',
-                              text:
-                                  AppLocalizations.of(context)!.payment_method,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.paymentMethod),
+                              child: settingList(
+                                path: 'assets/image/svg/card.svg',
+                                text: AppLocalizations.of(context)!
+                                    .payment_method,
+                              ),
                             ),
-                            const SizedBox(height: 24),
-                            settingList(
-                              path: 'assets/image/svg/ticket-star.svg',
-                              text: AppLocalizations.of(context)!.my_event,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.myEvent),
+                              child: settingList(
+                                path: 'assets/image/svg/ticket-star.svg',
+                                text: AppLocalizations.of(context)!.my_event,
+                              ),
                             ),
-                            const SizedBox(height: 24),
-                            settingList(
-                              path: 'assets/image/svg/copyright.svg',
-                              text: AppLocalizations.of(context)!.contact_us,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.contactUs),
+                              child: settingList(
+                                path: 'assets/image/svg/copyright.svg',
+                                text: AppLocalizations.of(context)!.contact_us,
+                              ),
                             ),
-                            const SizedBox(height: 24),
-                            settingList(
-                              path: 'assets/image/svg/user.svg',
-                              text: AppLocalizations.of(context)!.about_us,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.aboutUs),
+                              child: settingList(
+                                path: 'assets/image/svg/user.svg',
+                                text: AppLocalizations.of(context)!.about_us,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: controller.logout,
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/image/svg/logout.svg',
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: ColorFilter.mode(
+                                      Get.theme.colorScheme.tertiary,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    AppLocalizations.of(context)!.logout,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Get.theme.colorScheme.tertiary,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             const SizedBox(height: 70),
                           ],
@@ -247,16 +327,6 @@ class ProfileView extends GetView<ProfileController> {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        AppLocalizations.of(context)!.profile,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xffEAE9FC),
-                        ),
-                      ),
-                    ),
                     Align(
                       alignment: Alignment.centerRight,
                       child: Obx(

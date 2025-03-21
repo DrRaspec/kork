@@ -54,8 +54,15 @@ class EventDetail extends GetView<EventDetailController> {
                                     height: 32,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.secondary,
                                       borderRadius: BorderRadius.circular(12),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Get.theme.colorScheme.secondary,
+                                          Get.theme.colorScheme.primary
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                     child: const Icon(
                                       Icons.arrow_back_ios_new_outlined,
@@ -70,8 +77,15 @@ class EventDetail extends GetView<EventDetailController> {
                                     height: 32,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.secondary,
                                       borderRadius: BorderRadius.circular(12),
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Get.theme.colorScheme.secondary,
+                                          Get.theme.colorScheme.primary
+                                        ],
+                                        begin: Alignment.topCenter,
+                                        end: Alignment.bottomCenter,
+                                      ),
                                     ),
                                     child: const Icon(
                                       Icons.bookmark_border_outlined,
@@ -276,45 +290,33 @@ class EventDetail extends GetView<EventDetailController> {
                               const SizedBox(height: 24),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Container(
-                                    width: 140,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Get.theme.colorScheme.primary,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
+                                  GestureDetector(
+                                    onTap: () => Get.toNamed(
+                                      Routes.contactOrganizer,
+                                      arguments: false,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.contact,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.contact,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Get.theme.colorScheme.tertiary,
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    width: 140,
-                                    height: 44,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Get.theme.colorScheme.primary,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
+                                  GestureDetector(
+                                    onTap: () => Get.toNamed(
+                                      Routes.contactOrganizer,
+                                      arguments: true,
                                     ),
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.report,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.report,
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Get.theme.colorScheme.tertiary,
                                       ),
                                     ),
                                   ),
@@ -540,6 +542,7 @@ class EventDetail extends GetView<EventDetailController> {
             color: Get.theme.colorScheme.primary,
             width: 2,
           ),
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Center(
           child: Text(

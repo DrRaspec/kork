@@ -24,7 +24,6 @@ class FirstSignupController extends GetxController {
   var pickedDate = Rxn<DateTime>();
 
   List<dynamic> countries = [];
-  // String? selectedCountry;
   var country = Rxn<CountryInfo>();
   var selectedNationality = ''.obs;
   var currentLenght = 20.obs;

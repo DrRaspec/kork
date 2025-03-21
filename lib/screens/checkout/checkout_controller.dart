@@ -39,4 +39,8 @@ class CheckoutController extends GetxController {
   void toggleExpand() {
     isExpand.toggle();
   }
+
+  void calculateDiscount() {
+    
+  }
 }

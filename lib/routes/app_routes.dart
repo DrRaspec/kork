@@ -1,9 +1,25 @@
 import 'package:get/get.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/about_us/about_us_view.dart';
+import 'package:kork/screens/add_event/add_event_view.dart';
+import 'package:kork/screens/add_new_payment/add_new_payment_view.dart';
+import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
+import 'package:kork/screens/bookmark/bookmark_view.dart';
 import 'package:kork/screens/checkout/checkout_view.dart';
+import 'package:kork/screens/choose_language/choose_language_view.dart';
 import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
+import 'package:kork/screens/contact_us/contact_us_view.dart';
+import 'package:kork/screens/edit_profile/edit_profile_view.dart';
 import 'package:kork/screens/event_detail/booked_event/booked_event_detail_view.dart';
 import 'package:kork/screens/event_member/event_member_view.dart';
+import 'package:kork/screens/my_event/my_event_view.dart';
+import 'package:kork/screens/my_event_detail/my_event_detail_view.dart';
+import 'package:kork/screens/my_event_ticket/my_event_ticket_view.dart';
+import 'package:kork/screens/notification/notification_view.dart';
+import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
+import 'package:kork/screens/payment_methods/payment_methods_view.dart';
+import 'package:kork/screens/splash_screen/splash_screen_view.dart';
 import 'package:kork/screens/update_password/change_password/change_password_view.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
 import 'package:kork/screens/main_screens/event/event_view.dart';
@@ -22,12 +38,14 @@ import 'package:kork/screens/sign_up_view/select_location/select_location_view.d
 import 'package:kork/screens/sign_up_view/select_profile/select_profile_view.dart';
 import 'package:kork/screens/sign_up_view/signup/sign_up_view.dart';
 import 'package:kork/screens/update_password/verify_otp/verify_otp_view.dart';
+import 'package:kork/screens/your_ticket/your_ticket_view.dart';
 
 var appRoutes = [
   GetPage(
     name: Routes.login,
     page: () => const LoginView(),
     binding: LoginBinding(),
+    middlewares: [NoAuthMiddleware()],
   ),
   GetPage(
     name: Routes.firstSignup,
@@ -66,6 +84,7 @@ var appRoutes = [
     name: Routes.main,
     page: () => const MainView(),
     binding: MainBinding(),
+    middlewares: [AuthMiddleware()],
   ),
   GetPage(
     name: Routes.home,
@@ -133,5 +152,91 @@ var appRoutes = [
     name: Routes.eventMember,
     page: () => EventMemberView(),
     binding: EventMemberViewBinding(),
+  ),
+  GetPage(
+    name: Routes.contactOrganizer,
+    page: () => ContactOrganizerView(),
+    binding: ContactOrganizerBinding(),
+  ),
+  GetPage(
+    name: Routes.firstOnBoarding,
+    page: () => FirstOnboardingView(),
+    binding: FirstOnboardingBinding(),
+    middlewares: [OnBoardingMiddleware()],
+  ),
+  GetPage(
+    name: Routes.chooseLanguage,
+    page: () => const ChooseLanguageView(),
+    binding: ChooseLanguageViewBinding(),
+  ),
+  GetPage(
+    name: Routes.splashScreen,
+    page: () => SplashScreenView(),
+    binding: SplashScreenViewBinding(),
+  ),
+  GetPage(
+    name: Routes.paymentMethod,
+    page: () => PaymentMethodsView(),
+    binding: PaymentMethodsViewBinding(),
+  ),
+  GetPage(
+    name: Routes.addNewPayment,
+    page: () => AddNewPaymentView(),
+    binding: AddNewPaymentViewBinding(),
+  ),
+  GetPage(
+    name: Routes.applyCoupon,
+    page: () => ApplyCouponView(),
+    binding: ApplyCouponViewBinding(),
+  ),
+  GetPage(
+    name: Routes.yourTicket,
+    page: () => YourTicketView(),
+    binding: YourTicketViewBinding(),
+  ),
+  GetPage(
+    name: Routes.addEvent,
+    page: () => AddEventView(),
+    binding: AddEventViewBinding(),
+  ),
+  GetPage(
+    name: Routes.myEvent,
+    page: () => MyEventView(),
+    binding: MyEventViewBinding(),
+  ),
+  GetPage(
+    name: Routes.myEventDetail,
+    page: () => MyEventDetailView(),
+    binding: MyEventDetailViewBinding(),
+  ),
+  GetPage(
+    name: Routes.myEventTicketDetail,
+    page: () => MyEventTicketView(),
+    binding: MyEventTicketViewBinding(),
+  ),
+  GetPage(
+    name: Routes.contactUs,
+    page: () => ContactUsView(),
+    binding: ContactUsViewBinding(),
+  ),
+  GetPage(
+    name: Routes.aboutUs,
+    page: () => AboutUsView(),
+    binding: AboutUsViewBinding(),
+  ),
+  GetPage(
+    name: Routes.editProfile,
+    page: () => EditProfileView(),
+    binding: EditProfileViewBinding(),
+  ),
+  GetPage(
+    name: Routes.bookmark,
+    page: () => BookmarkView(),
+    binding: BookmarkViewBinding(),
+  ),
+  GetPage(
+    name: Routes.notification,
+    page: () => NotificationView(),
+    binding: NotificationViewBinding(),
   ),
 ];

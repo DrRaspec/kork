@@ -1,10 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/sign_up_view/select_location/select_location_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -41,61 +44,78 @@ class MapView extends GetView<MapController> {
                     top: 16,
                     left: 16,
                     right: 16,
-                    child: Container(
-                      height: 40,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextField(
-                        controller: controller.searchController,
-                        textAlignVertical: TextAlignVertical.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                        decoration: InputDecoration(
-                          isDense: true,
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 8,
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: Get.back,
+                          child: const Icon(
+                            Icons.arrow_back_ios_new_outlined,
+                            size: 24,
+                            color: Color(0xffEAE9FC),
                           ),
-                          prefixIcon: controller.isSearching.value
-                              ? const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child:
-                                      CircularProgressIndicator(strokeWidth: 2),
-                                )
-                              : Icon(
-                                  Icons.search,
-                                  color: Get.theme.colorScheme.surfaceTint,
-                                  size: 24,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Container(
+                            height: 40,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: TextField(
+                              controller: controller.searchController,
+                              textAlignVertical: TextAlignVertical.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
                                 ),
-                          suffixIcon: controller
-                                  .searchController.text.isNotEmpty
-                              ? GestureDetector(
-                                  onTap: () {
-                                    controller.searchController.clear();
-                                    controller.address.value =
-                                        'Click on map to select location';
-                                  },
-                                  child: Icon(Icons.close,
-                                      color: Get.theme.colorScheme.surfaceTint),
-                                )
-                              : const SizedBox.shrink(),
-                          hintText:
-                              AppLocalizations.of(context)!.search_location,
-                          hintStyle: TextStyle(
-                            fontSize: 16,
-                            color: Get.theme.colorScheme.surfaceTint,
+                                prefixIcon: controller.isSearching.value
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: CircularProgressIndicator(
+                                            strokeWidth: 2),
+                                      )
+                                    : Icon(
+                                        Icons.search,
+                                        color:
+                                            Get.theme.colorScheme.surfaceTint,
+                                        size: 24,
+                                      ),
+                                suffixIcon: controller
+                                        .searchController.text.isNotEmpty
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          controller.searchController.clear();
+                                          controller.address.value =
+                                              'Click on map to select location';
+                                        },
+                                        child: Icon(Icons.close,
+                                            color: Get
+                                                .theme.colorScheme.surfaceTint),
+                                      )
+                                    : const SizedBox.shrink(),
+                                hintText: AppLocalizations.of(context)!
+                                    .search_location,
+                                hintStyle: TextStyle(
+                                  fontSize: 16,
+                                  color: Get.theme.colorScheme.surfaceTint,
+                                ),
+                                filled: true,
+                                fillColor: Get
+                                    .theme.navigationBarTheme.backgroundColor,
+                                border: InputBorder.none,
+                              ),
+                              onSubmitted: (_) => controller.searchLocation(),
+                            ),
                           ),
-                          filled: true,
-                          fillColor:
-                              Get.theme.navigationBarTheme.backgroundColor,
-                          border: InputBorder.none,
                         ),
-                        onSubmitted: (_) => controller.searchLocation(),
-                      ),
+                      ],
                     ),
                   ),
                   Positioned(
@@ -131,7 +151,7 @@ class MapView extends GetView<MapController> {
               ),
             ),
             GestureDetector(
-              onTap: Get.back,
+              onTap: controller.saveLocation,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Container(

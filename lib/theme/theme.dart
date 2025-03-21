@@ -48,12 +48,24 @@ ThemeData darkMode = ThemeData(
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Color(0xff444444),
   ),
+  timePickerTheme: TimePickerThemeData(
+    hourMinuteTextColor: WidgetStateColor.resolveWith(
+      (states) {
+        return const Color(0xffEAE9FC);
+      },
+    ),
+    dialTextColor: WidgetStateColor.resolveWith(
+      (states) {
+        return const Color(0xffEAE9FC);
+      },
+    ),
+  ),
   datePickerTheme: DatePickerThemeData(
     dayForegroundColor: WidgetStateProperty.resolveWith((states) {
       if (states.contains(WidgetState.disabled)) {
-        return const Color(0xffEAE9FC).withOpacity(0.5); // passed dates
+        return const Color(0xffEAE9FC).withOpacity(0.5);
       }
-      return const Color(0xffEAE9FC); // normal dates
+      return const Color(0xffEAE9FC);
     }),
     todayForegroundColor: WidgetStateProperty.all(const Color(0xffEAE9FC)),
   ),

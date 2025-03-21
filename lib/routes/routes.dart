@@ -1,4 +1,5 @@
 class Routes {
+  Routes._();
   static const String login = '/login';
   static const String firstSignup = '/first_signup';
   static const String signup = '/signup';
@@ -21,4 +22,20 @@ class Routes {
   static const String checkout = '/checkout';
   static const String contactOrganizer = '/contact_orgainzer';
   static const String eventMember = '/event_member';
+  static const String firstOnBoarding = '/first_onboarding';
+  static const String chooseLanguage = '/choose_language';
+  static const String splashScreen = '/splash_screen';
+  static const String paymentMethod = '/payment_method';
+  static const String addNewPayment = '/add_new_payment';
+  static const String applyCoupon = '/apply_coupon';
+  static const String yourTicket = '/your_ticket';
+  static const String addEvent = '/add_event';
+  static const String myEvent = '/my_event';
+  static const String myEventDetail = '/my_event_detail';
+  static const String myEventTicketDetail = '/my_event_ticket_detail';
+  static const String contactUs = '/contact_us';
+  static const String aboutUs = '/about_us';
+  static const String editProfile = '/edit_profile';
+  static const String bookmark = '/bookmark';
+  static const String notification = '/notification';
 }
