@@ -16,24 +16,6 @@ class MyEventView extends GetView<MyEventViewController> {
         leading: buttonBack(),
         centerTitle: true,
         title: appbarTitle(AppLocalizations.of(context)!.my_event),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search_outlined,
-              size: 20,
-              color: Get.theme.colorScheme.tertiary,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.filter_list,
-              size: 20,
-              color: Get.theme.colorScheme.tertiary,
-            ),
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

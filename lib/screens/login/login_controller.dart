@@ -161,9 +161,9 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
   void loginOntap() async {
     await validateInputs();
     if (emailError.isEmpty && passwordError.isEmpty) {
-      Get.snackbar('Sign up', 'Sign up successful');
-      Get.toNamed(Routes.main);
       prefs.setBool('isLoggin', true);
+      Get.offAllNamed(Routes.main);
+      Get.snackbar('Sign up', 'Sign up successful');
     }
   }
 }

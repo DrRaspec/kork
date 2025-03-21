@@ -38,4 +38,6 @@ class Routes {
   static const String editProfile = '/edit_profile';
   static const String bookmark = '/bookmark';
   static const String notification = '/notification';
+  static const String updateEvent = '/update_event';
+  static const String myEventMember = '/my_event_member';
 }

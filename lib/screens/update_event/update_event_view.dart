@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kork/helper/card_helper.dart';
@@ -13,17 +12,17 @@ import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/event_textfield.dart';
 
-part 'add_event_binding.dart';
-part 'add_event_controller.dart';
+part 'update_event_binding.dart';
+part 'update_event_controller.dart';
 
-class AddEventView extends GetView<AddEventViewController> {
+class UpdateEventView extends GetView<UpdateEventViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: buttonBack(),
         centerTitle: true,
-        title: appbarTitle(AppLocalizations.of(context)!.my_event),
+        title: appbarTitle(AppLocalizations.of(context)!.update_event),
       ),
       body: Stack(
         children: [

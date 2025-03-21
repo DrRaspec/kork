@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +9,6 @@ import 'package:kork/screens/main_screens/home/home_view.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/screens/main_screens/profile/profile_view.dart';
 import 'package:kork/screens/main_screens/ticket/ticket_view.dart';
-import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/buttom_navigationbar.dart';
 
 part 'main_binding.dart';
