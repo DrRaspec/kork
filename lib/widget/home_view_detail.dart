@@ -245,7 +245,7 @@ Widget homeViewDetail() {
                           child: controller.userData.value == null
                               ? buildPlaceholder()
                               : Image.network(
-                                  '${controller.userData.value!.profileUrl}1',
+                                  controller.userData.value!.profileUrl,
                                   fit: BoxFit.cover,
                                   loadingBuilder:
                                       (context, child, loadingProgress) {
@@ -254,16 +254,18 @@ Widget homeViewDetail() {
                                     }
                                     return child;
                                   },
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                    color: Get.theme.colorScheme.tertiary,
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.error,
-                                        size: 20,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    print(error);
+                                    return Container(
+                                      color: Get.theme.colorScheme.tertiary,
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.error,
+                                          size: 20,
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  },
                                 ),
                         ),
                       ),

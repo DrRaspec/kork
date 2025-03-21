@@ -68,7 +68,7 @@ class EventView extends GetView<EventController> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => Get.toNamed(Routes.searchEvent),
                     child: Icon(
                       Icons.search,
                       color: Get.theme.colorScheme.tertiary,

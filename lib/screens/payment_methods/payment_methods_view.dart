@@ -77,39 +77,39 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
       ),
     );
   }
+}
 
-  Widget cardWiget(String cardNumber) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 40,
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Get.theme.colorScheme.secondary,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              getCardType(cardNumber) == 'Visa'
-                  ? 'assets/image/svg/Visa.svg'
-                  : 'assets/image/svg/MasterCard.svg',
-              width: 38,
-            ),
-            const SizedBox(width: 16),
-            Text(
-              maskCardNumber(cardNumber),
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Color(0xffEAE9FC),
-              ),
-            ),
-          ],
-        ),
+Widget cardWiget(String cardNumber) {
+  return GestureDetector(
+    onTap: () => Get.back(),
+    child: Container(
+      height: 40,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Get.theme.colorScheme.secondary,
       ),
-    );
-  }
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            getCardType(cardNumber) == 'Visa'
+                ? 'assets/image/svg/Visa.svg'
+                : 'assets/image/svg/MasterCard.svg',
+            width: 38,
+          ),
+          const SizedBox(width: 16),
+          Text(
+            maskCardNumber(cardNumber),
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xffEAE9FC),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

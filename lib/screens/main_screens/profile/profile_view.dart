@@ -11,7 +11,6 @@ import 'package:kork/models/user_accounts.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/screens/main_screens/event/event_view.dart';
-import 'package:kork/screens/main_screens/home/home_view.dart';
 import 'package:kork/widget/setting_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,8 +80,6 @@ class ProfileView extends GetView<ProfileController> {
                                     child: ClipOval(
                                       child: Obx(
                                         () {
-                                          print(
-                                              'profile image value ${controller.image.value}');
                                           return controller.image.value == null
                                               ? buildPlaceholder()
                                               : Image.network(
@@ -245,19 +242,29 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            settingList(
-                              path: 'assets/image/svg/archive-minus.svg',
-                              text: AppLocalizations.of(context)!.bookmark,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.bookmark),
+                              child: settingList(
+                                path: 'assets/image/svg/archive-minus.svg',
+                                text: AppLocalizations.of(context)!.bookmark,
+                              ),
                             ),
-                            settingList(
-                              path: 'assets/image/svg/notification.svg',
-                              text: AppLocalizations.of(context)!.notification,
-                              notificationNum: 100,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.notification),
+                              child: settingList(
+                                path: 'assets/image/svg/notification.svg',
+                                text:
+                                    AppLocalizations.of(context)!.notification,
+                                notificationNum: 100,
+                              ),
                             ),
-                            settingList(
-                              path: 'assets/image/svg/card.svg',
-                              text:
-                                  AppLocalizations.of(context)!.payment_method,
+                            GestureDetector(
+                              onTap: () => Get.toNamed(Routes.paymentMethod),
+                              child: settingList(
+                                path: 'assets/image/svg/card.svg',
+                                text: AppLocalizations.of(context)!
+                                    .payment_method,
+                              ),
                             ),
                             GestureDetector(
                               onTap: () => Get.toNamed(Routes.myEvent),

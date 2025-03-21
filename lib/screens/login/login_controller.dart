@@ -120,6 +120,8 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
   Future<bool> checkValidEmail() async {
     try {
       dio.interceptors.add(AppLogInterceptor());
+      dio.options.connectTimeout = const Duration(seconds: 15);
+      dio.options.receiveTimeout = const Duration(seconds: 15);
       var response = await dio.post(
         'http://10.0.2.2:8000/api/login',
         data: {

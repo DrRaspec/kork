@@ -3,9 +3,8 @@ part of 'edit_profile_view.dart';
 class EditProfileViewController extends GetxController {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
-  // var profileController = Get.find<ProfileController>();
   var mainController = Get.find<MainController>();
-  late Rx<UserAccounts> userData;
+  Rx<UserAccounts?> userData = Rx<UserAccounts?>(null);
   final storage = const FlutterSecureStorage();
   Rx<String> fullName = ''.obs;
 
@@ -28,14 +27,15 @@ class EditProfileViewController extends GetxController {
   }
 
   void loadProfile(Map<String, dynamic> data) {
-    userData.value = UserAccounts.fromMap(mainController.userData.value!);
-    firstNameController.text = userData.value.firstName;
-    lastNameController.text = userData.value.lastName;
-    fullName.value = '${firstNameController.text} ${lastNameController.text}';
+    if (mainController.userData.value != null) {
+      userData.value = UserAccounts.fromMap(mainController.userData.value!);
+      firstNameController.text = userData.value!.firstName;
+      lastNameController.text = userData.value!.lastName;
+      fullName.value = '${firstNameController.text} ${lastNameController.text}';
+    }
   }
 
   void saveChangeName() async {
-    print('fullname ${firstNameController.text} ${lastNameController.text}');
     var id = await storage.read(key: 'id');
     var token = await storage.read(key: 'token');
 
@@ -45,9 +45,9 @@ class EditProfileViewController extends GetxController {
     }
 
     if ((firstNameController.text.isNotEmpty &&
-            firstNameController.text != userData.value.firstName) ||
+            firstNameController.text != userData.value!.firstName) ||
         (lastNameController.text.isNotEmpty &&
-            lastNameController.text != userData.value.lastName)) {
+            lastNameController.text != userData.value!.lastName)) {
       final dio = Dio()
         ..interceptors.add(AppLogInterceptor())
         ..options.baseUrl = 'http://10.0.2.2:8000/api'
@@ -60,18 +60,20 @@ class EditProfileViewController extends GetxController {
         ..options.receiveTimeout = const Duration(seconds: 5);
 
       var formData = FormData.fromMap({
+        '_method': 'PUT',
         'first_name': firstNameController.text,
         'last_name': lastNameController.text,
       });
 
-      print('fullname ${firstNameController.text} ${lastNameController.text}');
-
       try {
-        var response = await dio.put('/users/$id', data: formData);
+        var response = await dio.post('/users/$id', data: formData);
         if (response.statusCode == 200) {
           var data = response.data as Map<String, dynamic>;
           if (data.isNotEmpty) {
             mainController.userData.value = data;
+            userData.value = UserAccounts.fromMap(data);
+            firstNameController.text = userData.value!.firstName;
+            lastNameController.text = userData.value!.lastName;
           }
         }
       } on DioException catch (e) {

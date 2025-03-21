@@ -14,24 +14,6 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
         leading: buttonBack(),
         centerTitle: true,
         title: appbarTitle('Event Name'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search_outlined,
-              size: 20,
-              color: Get.theme.colorScheme.tertiary,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.filter_list,
-              size: 20,
-              color: Get.theme.colorScheme.tertiary,
-            ),
-          ),
-        ],
       ),
       body: Column(
         children: [

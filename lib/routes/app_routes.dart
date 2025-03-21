@@ -5,6 +5,7 @@ import 'package:kork/screens/about_us/about_us_view.dart';
 import 'package:kork/screens/add_event/add_event_view.dart';
 import 'package:kork/screens/add_new_payment/add_new_payment_view.dart';
 import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
+import 'package:kork/screens/bookmark/bookmark_view.dart';
 import 'package:kork/screens/checkout/checkout_view.dart';
 import 'package:kork/screens/choose_language/choose_language_view.dart';
 import 'package:kork/screens/contact_organizer/contact_organizer_view.dart';
@@ -15,6 +16,7 @@ import 'package:kork/screens/event_member/event_member_view.dart';
 import 'package:kork/screens/my_event/my_event_view.dart';
 import 'package:kork/screens/my_event_detail/my_event_detail_view.dart';
 import 'package:kork/screens/my_event_ticket/my_event_ticket_view.dart';
+import 'package:kork/screens/notification/notification_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
 import 'package:kork/screens/payment_methods/payment_methods_view.dart';
 import 'package:kork/screens/splash_screen/splash_screen_view.dart';
@@ -226,5 +228,15 @@ var appRoutes = [
     name: Routes.editProfile,
     page: () => EditProfileView(),
     binding: EditProfileViewBinding(),
+  ),
+  GetPage(
+    name: Routes.bookmark,
+    page: () => BookmarkView(),
+    binding: BookmarkViewBinding(),
+  ),
+  GetPage(
+    name: Routes.notification,
+    page: () => NotificationView(),
+    binding: NotificationViewBinding(),
   ),
 ];

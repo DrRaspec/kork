@@ -1,7 +1,15 @@
 part of 'add_event_view.dart';
 
 class AddEventViewController extends GetxController {
-  var ticketType = 4.obs;
+  // var ticketType = 4.obs;
+  List<String> ticketTypes = ["1 Type", "2 Types", "3 Types", "4 Types"].obs;
+  List<String> types = ["Standard", "Normal", "VIP", "VVIP"].obs;
+  var ticketController = <TextEditingController>[].obs;
+  var ticketPriceController = <TextEditingController>[].obs;
+  var selectedValue = Rx<String?>("4 Type");
+  final ImagePicker _picker = ImagePicker();
+  var selectedImage = Rx<File?>(null);
+
   var nameController = TextEditingController();
   var focusName = FocusNode();
   var nameError = ''.obs;
@@ -38,9 +46,69 @@ class AddEventViewController extends GetxController {
   var focusCompanyName = FocusNode();
   var companyNameError = ''.obs;
 
+  var cardNumberController = TextEditingController();
+  var cardNumberError = false.obs;
+  late FocusNode cardNumberFocus;
+
+  var cardHolderController = TextEditingController();
+  var cardHolderError = false.obs;
+  late FocusNode cardHolderFocus;
+
+  var ccvController = TextEditingController();
+  var ccvError = false.obs;
+  late FocusNode ccvFocus;
+
+  var expireDateController = TextEditingController();
+  var expireDateError = false.obs;
+  late FocusNode expireDateFocus;
+
+  var cardType = 'Visa'.obs;
+  Timer? _debounceTimer;
+
   @override
   void onInit() {
     super.onInit();
+    updateControllers(selectedValue.value);
+    cardNumberFocus = FocusNode();
+    cardHolderFocus = FocusNode();
+    ccvFocus = FocusNode();
+    expireDateFocus = FocusNode();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    cardNumberController.dispose();
+    cardNumberFocus.dispose();
+
+    cardHolderController.dispose();
+    cardHolderFocus.dispose();
+
+    ccvController.dispose();
+    ccvFocus.dispose();
+
+    expireDateController.dispose();
+    expireDateFocus.dispose();
+
+    _debounceTimer?.cancel();
+  }
+
+  void updateControllers(String? value) {
+    int count = int.tryParse(value?.split(" ")[0] ?? "0") ?? 0;
+
+    for (var controller in ticketController) {
+      controller.dispose();
+    }
+    ticketController.clear();
+    for (var controller in ticketPriceController) {
+      controller.dispose();
+    }
+    ticketPriceController.clear();
+
+    for (int i = 0; i < count; i++) {
+      ticketController.add(TextEditingController());
+      ticketPriceController.add(TextEditingController());
+    }
   }
 
   void validateInput() {
@@ -103,6 +171,90 @@ class AddEventViewController extends GetxController {
       } else {
         endTimeController.text = formattedTime;
       }
+    }
+  }
+
+  void checkValidation() {
+    bool hasError = false;
+    cardNumberError.value = false;
+    cardType.value = getCardType(cardNumberController.text.trim());
+    if (cardNumberController.text.trim().isEmpty) {
+      cardNumberError.value = true;
+      hasError = true;
+    } else if (RegExp(r'^[0-9]+$').hasMatch(cardNumberController.text) ||
+        cardType.value == 'Unknown') {
+      cardNumberError.value = true;
+      hasError = true;
+    }
+
+    if (cardHolderController.text.isEmpty) {
+      cardHolderError.value = true;
+      hasError = true;
+    } else if (RegExp(r'^[a-zA-Z]+$').hasMatch(cardHolderController.text)) {
+      cardHolderError.value = true;
+      hasError = true;
+    }
+
+    if (expireDateController.text.trim().isEmpty) {
+      expireDateError.value = true;
+      hasError = true;
+    } else if (RegExp(r'^[0-9]+$').hasMatch(expireDateController.text)) {
+      expireDateError.value = true;
+      hasError = true;
+    }
+
+    if (hasError) {
+      Future.delayed(Duration.zero, () {
+        if (cardNumberError.value == true) {
+          cardNumberFocus.requestFocus();
+        } else if (cardNumberError.value == false &&
+            cardHolderError.value == true) {
+          cardNumberFocus.requestFocus();
+        }
+      });
+      cardType.value = 'Visa';
+    }
+  }
+
+  void onCardNumberChange() {
+    if (_debounceTimer?.isActive ?? false) _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(
+      const Duration(milliseconds: 300),
+      () {
+        cardType.value = getCardType(cardNumberController.text.trim());
+      },
+    );
+  }
+
+  void onExpireDateChange() {
+    if (_debounceTimer?.isActive ?? false) _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(
+      const Duration(milliseconds: 300),
+      () {
+        var formatedDate = formatDate(expireDateController.text);
+        expireDateController.text = formatedDate;
+      },
+    );
+  }
+
+  String formatDate(String input) {
+    input = input.replaceAll(RegExp(r'\D'), '');
+    if (input.length > 4) {
+      input = input.substring(0, 4);
+    }
+
+    String month = input.substring(0, 2);
+    String year = input.substring(2, 4);
+
+    return "$month/$year";
+  }
+
+  Future<void> pickImage(ImageSource source) async {
+    final XFile? image = await _picker.pickImage(source: source);
+    if (image != null) {
+      selectedImage.value = File(image.path);
     }
   }
 }
