@@ -51,48 +51,7 @@ class SelectLocationController extends GetxController {
       },
     );
   }
-
-  // Future<void> getCurrentLocation() async {
-  //   if (isLoading.value) return;
-  //   isLoading.value = true;
-  //   startLoading();
-
-  //   try {
-  //     mapController.checkRequestPermission();
-
-  //     mapController.goToCurrentLocation();
-
-  //     await Future.delayed(const Duration(seconds: 1));
-  //     LatLng? location = mapController.selectedLocation.value;
-
-  //     currentLocation.value = location;
-
-  //     await Future.delayed(const Duration(milliseconds: 200));
-
-  //     if (currentLocation.value.latitude == 0 &&
-  //         currentLocation.value.longitude == 0) {
-  //       Get.snackbar(
-  //           "Error", "Failed to retrieve your location. Please try again.");
-  //       isLoading.value = false;
-  //       return;
-  //     } else {
-  //       bool isSuccess = await saveSignUp(currentLocation.value);
-  //       if (isSuccess) {
-  //         if (Get.currentRoute != Routes.main) {
-  //           Get.toNamed(Routes.main);
-  //         }
-  //       } else {
-  //         Get.snackbar("Error", "Failed to save location. Please try again.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     Get.snackbar("Error", "Failed to get location: $error");
-  //     print("Failed to get location: $error");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
+  
   Future<void> getCurrentLocation() async {
     if (isLoading.value) return;
     isLoading.value = true;

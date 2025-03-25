@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -21,17 +22,8 @@ part 'controllers/language_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await loadEnvironment();
   final prefs = await SharedPreferences.getInstance();
-
-  // Get.lazyPut(() => MainController());
-  // Get.lazyPut<SharedPreferences>(() => prefs);
-  // Get.lazyPut(() => ThemeController(prefs));
-  // Get.lazyPut(() => LanguageController(prefs));
-
-  // Get.put<SharedPreferences>(prefs);
-  // Get.put(ThemeController(prefs));
-  // Get.put(LanguageController(prefs));
-  // Get.put(MainController());
 
   Get.put<SharedPreferences>(prefs, permanent: true);
   Get.put(ThemeController(prefs), permanent: true);
@@ -83,5 +75,15 @@ class MainApp extends StatelessWidget {
         initialRoute: Routes.splashScreen,
       ),
     );
+  }
+}
+
+Future<void> loadEnvironment() async {
+  try {
+    await dotenv.load(fileName: ".env");
+    print("API_URL: ${dotenv.env['API_URL'] ?? 'Not found'}");
+  } catch (e) {
+    print("Error loading .env file: $e");
+    dotenv.env['API_URL'] = 'http://10.0.2.2:8000/api';
   }
 }

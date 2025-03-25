@@ -1066,5 +1066,29 @@
     "app": "App",
     "@app": {
         "description": "App"
+    },
+    "current_password": "Current password",
+    "@current_password": {
+        "description": "Current password"
+    },
+    "re_enter_your_password": "Re-enter your password",
+    "@re_enter_your_password": {
+        "description": "Re-enter your password"
+    },
+    "error_current_password": "Current password is incorrect",
+    "@error_current_password": {
+        "description": "Current password is incorrect"
+    },
+    "innovation": "Innovation",
+    "@innovation": {
+        "description": "Innovation"
+    },
+    "game": "Game",
+    "@game": {
+        "description": "Game"
+    },
+    "incorrect_passowrd": "Incorrect password",
+    "@incorrect_passowrd": {
+        "description": "Incorrect password"
     }
 }

@@ -17,23 +17,30 @@ class EditProfileViewController extends GetxController {
   }
 
   void init() {
-    mainController.userData.listen((data) {
-      if (data != null) {
-        loadProfile(data);
+    ever(mainController.userDataReady, (isReady) {
+      if (isReady && mainController.userData.value != null) {
+        loadProfile();
       }
     });
 
-    if (mainController.userData.value != null) {
-      loadProfile(mainController.userData.value!);
+    if (mainController.userDataReady.value &&
+        mainController.userData.value != null) {
+      loadProfile();
     }
   }
 
-  void loadProfile(Map<String, dynamic> data) {
+  void loadProfile() {
     if (mainController.userData.value != null) {
-      userData.value = UserAccounts.fromMap(mainController.userData.value!);
-      firstNameController.text = userData.value!.firstName;
-      lastNameController.text = userData.value!.lastName;
-      fullName.value = '${firstNameController.text} ${lastNameController.text}';
+      final userMap = mainController.userData.value;
+
+      if (userMap != null) {
+        userData.value = userData.value = UserAccounts.fromMap(userMap);
+
+        firstNameController.text = userData.value!.firstName;
+        lastNameController.text = userData.value!.lastName;
+        fullName.value =
+            '${firstNameController.text} ${lastNameController.text}';
+      }
     }
   }
 
@@ -67,8 +74,8 @@ class EditProfileViewController extends GetxController {
           'X-Requested-With': 'XMLHttpRequest',
           'Authorization': 'Bearer $token',
         }
-        ..options.connectTimeout = const Duration(seconds: 5)
-        ..options.receiveTimeout = const Duration(seconds: 5);
+        ..options.connectTimeout = const Duration(seconds: 15)
+        ..options.receiveTimeout = const Duration(seconds: 15);
 
       var formData = FormData.fromMap({
         '_method': 'PUT',
@@ -87,9 +94,13 @@ class EditProfileViewController extends GetxController {
           var data = response.data as Map<String, dynamic>;
           if (data.isNotEmpty) {
             mainController.userData.value = data;
+
             userData.value = UserAccounts.fromMap(data);
             firstNameController.text = userData.value!.firstName;
             lastNameController.text = userData.value!.lastName;
+            print('edit profile user data ${json.encode(userData.toJson())}');
+            mainController.userData.value = response.data;
+            Get.snackbar('Success', 'Update Change Successfully');
           }
         }
       } on DioException catch (e) {

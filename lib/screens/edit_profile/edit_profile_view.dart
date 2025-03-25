@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -29,9 +30,6 @@ class EditProfileView extends GetView<EditProfileViewController> {
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () => FocusScope.of(context).unfocus(),
-        onHorizontalDragUpdate: (details) {
-          Get.back();
-        },
         child: SizedBox(
           height: double.infinity,
           child: Stack(
@@ -63,6 +61,14 @@ class EditProfileView extends GetView<EditProfileViewController> {
                                         width: 116,
                                         height: 116,
                                         fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                const Center(
+                                          child: Icon(
+                                            Icons.error,
+                                            size: 30,
+                                          ),
+                                        ),
                                       )
                                     : Image.file(
                                         controller.selectedImage.value!,

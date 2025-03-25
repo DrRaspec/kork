@@ -1,8 +1,8 @@
 part of 'your_ticket_view.dart';
 
 class YourTicketViewController extends GetxController {
-  var argument = Get.arguments as EventDetailModel;
-  var _currentIndex = 0.obs;
+  var argument = Get.arguments as Event;
+  final _currentIndex = 0.obs;
   late final List<String> imageList;
   @override
   void onInit() {
@@ -10,7 +10,7 @@ class YourTicketViewController extends GetxController {
     imageList = List.generate(
       3,
       (index) {
-        return argument.image;
+        return argument.posterUrl;
       },
     );
   }

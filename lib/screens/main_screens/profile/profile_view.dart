@@ -10,7 +10,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/models/user_accounts.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
-import 'package:kork/screens/main_screens/event/event_view.dart';
+import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/setting_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -289,7 +289,7 @@ class ProfileView extends GetView<ProfileController> {
                             ),
                             const SizedBox(height: 8),
                             GestureDetector(
-                              onTap: controller.logout,
+                              onTap: () => controller.logout(),
                               child: Row(
                                 children: [
                                   SvgPicture.asset(

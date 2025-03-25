@@ -1,162 +1,46 @@
 part of 'ticket_view.dart';
 
 class TicketController extends GetxController {
-  var dummyData = <Map<String, dynamic>>[
-    {
-      'id': '123',
-      'date': '14 April 2025',
-      'title': 'Khmer New Year 2025',
-      'time': 'Sunday 10:00AM - 11:30PM',
-      'image':
-          'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
-      'member': 69,
-      'firstMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-      'secondMember':
-          'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-      'thirdMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-      'street': '11.568895488974254, 104.8931566395971',
-      'organizer': 'neakreach 7 por',
-      'organizer_profile':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdBWB76EZKUgHdARYa-XNyIzoiJiUiyKiFrg&s',
-      'event_type': [
-        {
-          'type': 'Normal',
-          'price': 5.00,
-        },
-        {
-          'type': 'Standard',
-          'price': 10.00,
-        },
-        {
-          'type': 'VIP',
-          'price': 15.00,
-        },
-        {
-          'type': 'VVIP',
-          'price': 20.00,
-        },
-      ],
-      'contact': '012345678',
-      'about_event':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      'price': '20',
-    },
-    {
-      'id': '123',
-      'date': '14 April 2025',
-      'title': 'Chinese New Year 2025',
-      'time': 'Saturday 10:00AM - 11:30PM',
-      'image':
-          'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
-      'member': 20,
-      'firstMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-      'secondMember':
-          'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-      'thirdMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-      'street': '11.572470871830166, 104.8933381480577',
-      'organizer': 'neakreach 7 por',
-      'organizer_profile':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdBWB76EZKUgHdARYa-XNyIzoiJiUiyKiFrg&s',
-      'event_type': [
-        {
-          'type': 'Normal',
-          'price': 5.00,
-        },
-        {
-          'type': 'Standard',
-          'price': 10.00,
-        },
-      ],
-      'contact': '012345678',
-      'about_event':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      'price': '20',
-    },
-    {
-      'id': '123',
-      'date': '14 April 2025',
-      'title': 'Khmer New Year 2025',
-      'time': 'Sunday 10:00AM - 11:30PM',
-      'image':
-          'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
-      'member': 69,
-      'firstMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-      'secondMember':
-          'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-      'thirdMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-      'street': '11.572470871830166, 104.8933381480577',
-      'organizer': 'neakreach 7 por',
-      'organizer_profile':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdBWB76EZKUgHdARYa-XNyIzoiJiUiyKiFrg&s',
-      'event_type': [
-        {
-          'type': 'Normal',
-          'price': 5.00,
-        },
-        {
-          'type': 'Standard',
-          'price': 10.00,
-        },
-        {
-          'type': 'VIP',
-          'price': 15.00,
-        },
-        {
-          'type': 'VVIP',
-          'price': 20.00,
-        },
-      ],
-      'contact': '012345678',
-      'about_event':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      'price': '20',
-    },
-    {
-      'id': '123',
-      'date': '14 April 2025',
-      'title': 'Khmer New Year 2025',
-      'time': 'Sunday 10:00AM - 11:30PM',
-      'image':
-          'https://noorhanenterprise.com/wp-content/uploads/2022/06/Noorhan-Tham-1.jpg',
-      'member': 69,
-      'firstMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-      'secondMember':
-          'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-      'thirdMember':
-          'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-      'street': '11.572470871830166, 104.8933381480577',
-      'organizer': 'neakreach 7 por',
-      'organizer_profile':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdBWB76EZKUgHdARYa-XNyIzoiJiUiyKiFrg&s',
-      'event_type': [
-        {
-          'type': 'Normal',
-          'price': 5.00,
-        },
-        {
-          'type': 'Standard',
-          'price': 10.00,
-        },
-        {
-          'type': 'VIP',
-          'price': 15.00,
-        },
-        {
-          'type': 'VVIP',
-          'price': 20.00,
-        },
-      ],
-      'contact': '012345678',
-      'about_event':
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-      'price': '20',
-    },
-  ];
+  final dio = Dio();
+  final storage = const FlutterSecureStorage();
+  late String url;
+
+  var buyedTickets = <dynamic>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    url = dotenv.maybeGet('API_URL') ?? 'Not Found';
+    init();
+  }
+
+  void init() async {
+    var token = await storage.read(key: 'token');
+    var id = await storage.read(key: 'id');
+    if (token == null || id == null) await Get.find<AuthService>().logout();
+    try {
+      dio.interceptors.add(AppLogInterceptor());
+      dio.options.baseUrl = url;
+      dio.options.headers = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer $token',
+      };
+      dio.options.connectTimeout = const Duration(seconds: 15);
+      dio.options.receiveTimeout = const Duration(seconds: 15);
+
+      var response = await dio.get('/users/$id/buy-tickets');
+      var result = response.data as Map<String, dynamic>;
+      if (response.statusCode == 200 && result.containsKey("data")) {
+        buyedTickets.value = result['data'];
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        var response = e.response;
+        print('error status code: ${response!.statusCode}');
+        print('error status message: ${response.statusMessage}');
+        print('error: ${e.error}');
+        print('message: ${e.message}');
+      }
+    }
+  }
 }

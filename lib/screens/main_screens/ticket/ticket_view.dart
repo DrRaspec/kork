@@ -1,7 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
+import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/booked_event_card.dart';
 import 'package:kork/widget/up_coming_widget.dart';
 
@@ -39,7 +46,7 @@ class TicketView extends GetView<TicketController> {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.searchEvent),
                       child: Icon(
                         Icons.search,
                         size: 24,
@@ -112,12 +119,14 @@ class TicketView extends GetView<TicketController> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: List.generate(
-                        controller.dummyData.length,
+                        controller.buyedTickets.length,
                         (index) {
-                          final item = controller.dummyData[index];
+                          final item =
+                              Event.fromJson(controller.buyedTickets[index]);
                           return Padding(
                             padding: const EdgeInsets.only(
-                                right: 24), // Spacing between items
+                              right: 24,
+                            ),
                             child: upComingWidget(item),
                           );
                         },

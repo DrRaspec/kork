@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/models/event_detail_model.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/appBarHelper.dart';
@@ -62,7 +62,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           itemBuilder: (context, index) => ticketCard(index),
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 8),
-                          itemCount: controller.data.ticket.length,
+                          itemCount: controller.data.tickets.length,
                         ),
                       ),
                       Align(
@@ -251,7 +251,7 @@ class CheckoutView extends GetView<CheckoutController> {
               color: const Color(0xffE5D9F2),
             ),
             child: Image.network(
-              controller.data.image,
+              controller.data.posterUrl,
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress != null) {
@@ -266,7 +266,7 @@ class CheckoutView extends GetView<CheckoutController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${controller.data.title} | ${controller.data.ticket[index]['type']}',
+                  '${controller.data.eventName} | ${controller.data.tickets[index].ticketType}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xffEAE9FC),
@@ -274,7 +274,7 @@ class CheckoutView extends GetView<CheckoutController> {
                   ),
                 ),
                 Text(
-                  '${(controller.data.ticket[index]['price'] as num).toStringAsFixed(2)}\$',
+                  '${(controller.data.tickets[index].price as num).toStringAsFixed(2)}\$',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xffEAE9FC),

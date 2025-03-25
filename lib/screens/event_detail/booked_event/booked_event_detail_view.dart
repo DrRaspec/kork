@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/build_placeholder.dart';
@@ -65,18 +66,21 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                                   fontSize: 20,
                                 ),
                               ),
-                              Container(
-                                width: 32,
-                                height: 32,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Get.theme.colorScheme.secondary,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Icon(
-                                  Icons.bookmark_border_outlined,
-                                  size: 21,
-                                  color: Get.theme.colorScheme.tertiary,
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: 32,
+                                  height: 32,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Get.theme.colorScheme.secondary,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    Icons.bookmark_border_outlined,
+                                    size: 21,
+                                    color: Get.theme.colorScheme.tertiary,
+                                  ),
                                 ),
                               ),
                             ],

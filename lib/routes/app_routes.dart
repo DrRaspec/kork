@@ -21,6 +21,7 @@ import 'package:kork/screens/notification/notification_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
 import 'package:kork/screens/payment_methods/payment_methods_view.dart';
 import 'package:kork/screens/profile_change_password/profile_change_password_view.dart';
+import 'package:kork/screens/see_all/see_all_view.dart';
 import 'package:kork/screens/splash_screen/splash_screen_view.dart';
 import 'package:kork/screens/update_event/update_event_view.dart';
 import 'package:kork/screens/update_password/change_password/change_password_view.dart';
@@ -49,6 +50,7 @@ var appRoutes = [
     page: () => const LoginView(),
     binding: LoginBinding(),
     middlewares: [NoAuthMiddleware()],
+    preventDuplicates: true,
   ),
   GetPage(
     name: Routes.firstSignup,
@@ -256,5 +258,10 @@ var appRoutes = [
     name: Routes.profileChangePassword,
     page: () => ProfileChangePasswordView(),
     binding: ProfileChangePasswordViewBinding(),
+  ),
+  GetPage(
+    name: Routes.seeAll,
+    page: () => SeeAllView(),
+    binding: SeeAllViewBinding(),
   ),
 ];

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/main_screens/event/event_view.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -48,7 +47,15 @@ class BookmarkView extends GetView<BookmarkViewController> {
             shrinkWrap: true,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {},
-              child: eventCard(),
+              // child: eventCard(), //will use when have data
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Text('No Data'),
+              ),
             ),
             separatorBuilder: (context, index) => const SizedBox(height: 8),
             itemCount: 3,

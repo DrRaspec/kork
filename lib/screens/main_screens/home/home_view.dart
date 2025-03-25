@@ -1,15 +1,19 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/models/user_accounts.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/filter_screens/filter/filter_view.dart';
 import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/screens/main_screens/event/event_view.dart';
 import 'package:kork/widget/event_category.dart';
 import 'package:kork/widget/get_free_voucher_widget.dart';
 import 'package:kork/widget/up_coming_widget.dart';
@@ -50,96 +54,107 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
-                        child: Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.upcoming_event,
-                              style: TextStyle(
-                                fontSize: 12,
+                        child: GestureDetector(
+                          onTap: controller.categoryScreen,
+                          child: Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.upcoming_event,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                AppLocalizations.of(context)!.see_all,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 8,
                                 color: Get.theme.colorScheme.tertiary,
                               ),
-                            ),
-                            const Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.see_all,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 8,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 238,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final item = controller.dummyData[index];
-                            return upComingWidget(item);
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 24),
-                          itemCount: controller.dummyData.length,
-                        ),
-                      ),
-                      const SizedBox(height: 23),
+                      // SizedBox(
+                      //   width: double.infinity,
+                      //   height: 238,
+                      //   child: ListView.separated(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemBuilder: (context, index) {
+                      //       final item =
+                      //           controller.categories['upcoming']![index];
+                      //       return upComingWidget(item);
+                      //     },
+                      //     separatorBuilder: (context, index) =>
+                      //         const SizedBox(width: 24),
+                      //     itemCount: controller.categories['upcoming']!.length,
+                      //   ),
+                      // ),
+                      Obx(() => showItem('upcoming')),
+                      const SizedBox(height: 24),
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: getFreeVoucher(),
                       ),
-                      const SizedBox(height: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.nearby_you,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            const Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.see_all,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 8,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      SizedBox(
-                        width: Get.width,
-                        height: 238,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final item = controller.dummyData[index];
-                            return upComingWidget(item);
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 24),
-                          itemCount: controller.dummyData.length,
-                        ),
-                      ),
+                      // const SizedBox(height: 24),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(right: 16),
+                      //   child: GestureDetector(
+                      //     onTap: () => Get.toNamed(
+                      //       Routes.seeAll,
+                      //       arguments: AppLocalizations.of(context)!.nearby_you,
+                      //     ),
+                      //     child: Row(
+                      //       children: [
+                      //         Text(
+                      //           AppLocalizations.of(context)!.nearby_you,
+                      //           style: TextStyle(
+                      //             fontSize: 12,
+                      //             color: Get.theme.colorScheme.tertiary,
+                      //           ),
+                      //         ),
+                      //         const Spacer(),
+                      //         Text(
+                      //           AppLocalizations.of(context)!.see_all,
+                      //           style: TextStyle(
+                      //             fontSize: 12,
+                      //             color: Get.theme.colorScheme.tertiary,
+                      //           ),
+                      //         ),
+                      //         const SizedBox(width: 6),
+                      //         Icon(
+                      //           Icons.arrow_forward_ios_outlined,
+                      //           size: 8,
+                      //           color: Get.theme.colorScheme.tertiary,
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 24),
+                      // SizedBox(
+                      //   width: Get.width,
+                      //   height: 238,
+                      //   child: ListView.separated(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemBuilder: (context, index) {
+                      //       final item = controller.dummyData[index];
+                      //       return upComingWidget(item);
+                      //     },
+                      //     separatorBuilder: (context, index) =>
+                      //         const SizedBox(width: 24),
+                      //     itemCount: controller.dummyData.length,
+                      //   ),
+                      // ),
                       const SizedBox(height: 24),
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
@@ -170,20 +185,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      SizedBox(
-                        width: Get.width,
-                        height: 238,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final item = controller.dummyData[index];
-                            return upComingWidget(item);
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 24),
-                          itemCount: controller.dummyData.length,
-                        ),
-                      ),
+                      Obx(() => showItem('showing')),
                     ],
                   ),
                 ),
@@ -192,6 +194,26 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget showItem(String key) {
+    if (controller.categories[key] == null ||
+        controller.categories[key]!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return SizedBox(
+      width: double.infinity,
+      height: 238,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final item = controller.categories[key]![index];
+          return upComingWidget(item);
+        },
+        separatorBuilder: (context, index) => const SizedBox(width: 24),
+        itemCount: controller.categories[key]!.length,
       ),
     );
   }

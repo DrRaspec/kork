@@ -1,7 +1,7 @@
 part of 'checkout_view.dart';
 
 class CheckoutController extends GetxController {
-  var data = Get.arguments as EventDetailModel;
+  var data = Get.arguments as Event;
   var ticketQuantity = <int>[].obs;
   var total = 0.0.obs;
   var isExpand = false.obs;
@@ -10,7 +10,7 @@ class CheckoutController extends GetxController {
   @override
   void onInit() {
     ticketQuantity.assignAll(List.generate(
-      data.ticket.length,
+      data.tickets.length,
       (index) => 0,
     ));
     super.onInit();
@@ -31,7 +31,7 @@ class CheckoutController extends GetxController {
   void calculateTotal() {
     total(0);
     for (int i = 0; i < ticketQuantity.length; i++) {
-      total.value += (ticketQuantity[i] * data.ticket[i]['price']);
+      total.value += (ticketQuantity[i] * data.tickets[i].price);
     }
     print('total is: ${total.value}');
   }
@@ -40,7 +40,5 @@ class CheckoutController extends GetxController {
     isExpand.toggle();
   }
 
-  void calculateDiscount() {
-    
-  }
+  void calculateDiscount() {}
 }

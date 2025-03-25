@@ -1,32 +1,54 @@
 part of 'event_detail.dart';
 
 class EventDetailController extends GetxController {
-  late EventDetailModel eventData;
+  late Event eventData;
   Rx<String> displayLocation = ''.obs;
   Rx<String> location = ''.obs;
   var going = 0.obs;
+  late String startDate;
+  late String startDay;
+  var storage = const FlutterSecureStorage();
+  late SharedPreferences prefs;
+  var isMarked = false.obs;
+  late String id;
+  final List<String> weekdays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
 
   @override
   void onInit() {
     super.onInit();
-    eventData = Get.arguments as EventDetailModel;
-    getLocationAddress(eventData.street);
-    going.value = roundDown(eventData.member);
+    init();
+  }
+
+  void init() async {
+    eventData = Get.arguments as Event;
+    getLocationAddress(eventData.location);
+    going.value = roundDown(56);
+    startDay = weekdays[eventData.startDate.weekday - 1];
+    startDate = DateFormat('dd MMM yyyy').format(eventData.startDate);
+    prefs = await SharedPreferences.getInstance();
+    var tempID = await storage.read(key: 'id');
+    if (tempID == null) Get.find<AuthService>().logout;
+    id = tempID!;
+    isMarked.value = prefs.getBool('${eventData.id}$id') ?? false;
   }
 
   int roundDown(int number) {
     return (number ~/ 10) * 10;
   }
 
-  void getLocationAddress(String street) async {
+  void getLocationAddress(LatLng address) async {
     try {
-      List<String> parts = street.split(',');
-      double latitude = double.parse(parts[0].trim());
-      double longitude = double.parse(parts[1].trim());
-
       final placemarks = await placemarkFromCoordinates(
-        latitude,
-        longitude,
+        address.latitude,
+        address.longitude,
       );
 
       if (placemarks.isNotEmpty) {
@@ -63,9 +85,8 @@ class EventDetailController extends GetxController {
 
   void openInGoogleMaps() async {
     try {
-      List<String> parts = eventData.street.split(',');
-      double latitude = double.parse(parts[0].trim());
-      double longitude = double.parse(parts[1].trim());
+      double latitude = eventData.location.latitude;
+      double longitude = eventData.location.longitude;
 
       final Uri googleMapsUrl = Uri.parse(
           'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
@@ -95,5 +116,12 @@ class EventDetailController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+  }
+
+  void markEvent() {
+    prefs.setBool(
+      '${eventData.id}$id',
+      !isMarked.value,
+    );
   }
 }

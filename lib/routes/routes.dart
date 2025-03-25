@@ -41,4 +41,5 @@ class Routes {
   static const String updateEvent = '/update_event';
   static const String myEventMember = '/my_event_member';
   static const String profileChangePassword = '/profile_change_password';
+  static const String seeAll = '/see_all';
 }

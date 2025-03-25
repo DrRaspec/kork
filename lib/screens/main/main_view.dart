@@ -56,7 +56,7 @@ class MainView extends GetView<MainController> {
                     BlendMode.srcIn,
                   ),
                 ),
-                label: AppLocalizations.of(context)!.home,
+                label: AppLocalizations.of(context)!.event,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
