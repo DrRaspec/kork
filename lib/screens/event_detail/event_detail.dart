@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:kork/helper/bookmark_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';

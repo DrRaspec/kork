@@ -37,7 +37,8 @@ class EventDetailController extends GetxController {
     var tempID = await storage.read(key: 'id');
     if (tempID == null) Get.find<AuthService>().logout;
     id = tempID!;
-    isMarked.value = prefs.getBool('${eventData.id}$id') ?? false;
+    var userId = await storage.read(key: 'id');
+    isMarked.value = prefs.getBool('${userId}_${eventData.id}') ?? false;
   }
 
   int roundDown(int number) {
@@ -118,10 +119,28 @@ class EventDetailController extends GetxController {
     }
   }
 
-  void markEvent() {
-    prefs.setBool(
-      '${eventData.id}$id',
-      !isMarked.value,
-    );
+  void markEvent() async {
+    var token = await storage.read(key: 'token');
+    var userId = await storage.read(key: 'id');
+    var endPoint = '/users/$userId/bookmarks';
+
+    BookmarkHelper.setToken(token!);
+    String bookmarkKey = '${userId}_${eventData.id}';
+
+    if (!isMarked.value) {
+      var response = await BookmarkHelper.post(endPoint,
+          data: {'event_id': eventData.id}, isFormData: true);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        prefs.setBool(bookmarkKey, true);
+        isMarked.value = true;
+      }
+    } else {
+      var deleteEndPoint = '$endPoint/${eventData.id}';
+      var response = await BookmarkHelper.delete(deleteEndPoint);
+      if (response.statusCode == 204) {
+        prefs.setBool(bookmarkKey, false);
+        isMarked.value = false;
+      }
+    }
   }
 }

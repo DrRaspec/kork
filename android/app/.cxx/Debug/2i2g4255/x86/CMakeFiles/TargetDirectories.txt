@@ -1,0 +1,2 @@
+D:/ANT ScholarshipCourse/kork_app/android/app/.cxx/Debug/2i2g4255/x86/CMakeFiles/edit_cache.dir
+D:/ANT ScholarshipCourse/kork_app/android/app/.cxx/Debug/2i2g4255/x86/CMakeFiles/rebuild_cache.dir
