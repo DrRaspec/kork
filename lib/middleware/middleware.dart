@@ -36,13 +36,19 @@ class OnBoardingMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     final prefs = Get.find<SharedPreferences>();
+
+    final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
+    if (!hasSelectedLanguage) {
+      return const RouteSettings(name: Routes.chooseLanguage);
+    }
+
     final hasCompletedOnboarding =
         prefs.getBool('hasCompletedOnboarding') ?? false;
-
     if (hasCompletedOnboarding) {
       final isLoggedIn = prefs.getBool('isLoggin') ?? false;
       return RouteSettings(name: isLoggedIn ? Routes.main : Routes.login);
     }
+
     return null;
   }
 }

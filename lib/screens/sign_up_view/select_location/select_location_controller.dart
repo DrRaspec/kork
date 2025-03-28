@@ -35,7 +35,7 @@ class SelectLocationController extends GetxController {
 
     _timer = Timer.periodic(
       const Duration(milliseconds: 1000),
-      (timer){
+      (timer) {
         if (loadingText.value == AppLocalizations.of(Get.context!)!.loading) {
           loadingText.value = '${AppLocalizations.of(Get.context!)!.loading}.';
         } else if (loadingText.value ==
@@ -51,7 +51,7 @@ class SelectLocationController extends GetxController {
       },
     );
   }
-  
+
   Future<void> getCurrentLocation() async {
     if (isLoading.value) return;
     isLoading.value = true;
@@ -99,7 +99,7 @@ class SelectLocationController extends GetxController {
         bool isSuccess = await saveSignUp(currentLocation.value);
         if (isSuccess) {
           if (Get.currentRoute != Routes.main) {
-            Get.toNamed(Routes.main);
+            Get.toNamed(Routes.login);
           }
         } else {
           Get.snackbar("Error", "Failed to save location. Please try again.");

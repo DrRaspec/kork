@@ -1,7 +1,7 @@
 part of 'sign_up_view.dart';
 
 class SignUpController extends GetxController with GetTickerProviderStateMixin {
-  // final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController conPasswordController = TextEditingController();

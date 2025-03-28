@@ -105,10 +105,6 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
       triggerPasswordShake();
     }
 
-    // if (!hasError) {
-    //   hasError = await checkValidEmail();
-    // }
-
     if (hasError) {
       Future.delayed(
         Duration.zero,
@@ -132,9 +128,9 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
       await validateInputs();
       if (emailError.isEmpty && passwordError.isEmpty) {
         final authService = Get.find<AuthService>();
+        final mainController = Get.find<MainController>();
 
         try {
-          // Directly call login method from checkValidEmail
           var response = await dio.post(
             'http://10.0.2.2:8000/api/login',
             data: {
@@ -149,11 +145,14 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
           var userData = response.data as Map<String, dynamic>;
 
-          // Directly login using AuthService
+          // Login and fetch user data
           await authService.login(
             token: userData['token'],
             id: userData['id'].toString(),
           );
+
+          // Explicitly fetch user data
+          await mainController.fetchData();
 
           // Navigate to main screen
           Get.offAllNamed(Routes.main);

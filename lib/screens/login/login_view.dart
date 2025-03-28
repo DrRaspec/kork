@@ -7,7 +7,7 @@ import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/utils/app_log_interceptor.dart';
+import 'package:kork/screens/main/main_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_controller.dart';

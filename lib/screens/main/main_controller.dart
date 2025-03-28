@@ -42,11 +42,24 @@ class MainController extends GetxController {
 
       userData.value = await apiService.getUserData(id);
       print('User data: ${userData.value}');
+      userDataReady.value = true;
     } catch (e) {
       print('Error fetching user data: $e');
       Get.snackbar('Error', 'Failed to load user data');
+      userDataReady.value = false;
+    }
+  }
+
+  Future<void> refreshUserData() async {
+    try {
+      isLoading.value = true;
+      userDataReady.value = false;
+      await fetchData();
+    } catch (e) {
+      print('Error refreshing user data: $e');
+      Get.snackbar('Error', 'Failed to refresh user data');
     } finally {
-      userDataReady.value = true;
+      isLoading.value = false;
     }
   }
 

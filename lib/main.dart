@@ -36,6 +36,8 @@ void main() async {
   runApp(MainApp(prefs: prefs));
 }
 
+class DefaultFirebaseOptions {}
+
 class MainApp extends StatelessWidget {
   const MainApp({
     super.key,

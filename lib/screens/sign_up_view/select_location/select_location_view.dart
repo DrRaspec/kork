@@ -96,7 +96,7 @@ class SelectLocationView extends GetView<SelectLocationController> {
                 GestureDetector(
                   onTap: () => Get.toNamed(
                     Routes.mapView,
-                    arguments: Routes.main,
+                    arguments: Routes.login,
                   ),
                   child: Container(
                     width: double.infinity,

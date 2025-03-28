@@ -93,50 +93,30 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                     onKeyEvent: (event) {
                       if (event is KeyDownEvent &&
                           event.logicalKey == LogicalKeyboardKey.backspace) {
-                        final currentFocus = FocusManager.instance.primaryFocus;
-
-                        if (controller.textFieldFour.text.isEmpty &&
-                            currentFocus == controller.focusNodeFour) {
-                          FocusScope.of(context).previousFocus();
-                        } else if (controller.textFieldThree.text.isEmpty &&
-                            currentFocus == controller.focusNodeThree) {
-                          FocusScope.of(context).previousFocus();
-                        } else if (controller.textFieldTwo.text.isEmpty &&
-                            currentFocus == controller.focusNodeTwo) {
-                          FocusScope.of(context).previousFocus();
+                        for (int i = controller.otpControllers.length - 1;
+                            i >= 0;
+                            i--) {
+                          if (controller.otpControllers[i].text.isNotEmpty) {
+                            controller.otpControllers[i].clear();
+                            controller.otpFocusNodes[i].requestFocus();
+                            break;
+                          } else if (i > 0) {
+                            controller.otpFocusNodes[i - 1].requestFocus();
+                          }
                         }
                       }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        otpTextField(
-                          controller.textFieldOne,
-                          controller.focusNodeOne,
+                      children: List.generate(4, (index) {
+                        return otpTextField(
+                          controller.otpControllers[index],
+                          controller.otpFocusNodes[index],
                           context,
-                          next: true,
-                        ),
-                        otpTextField(
-                          controller.textFieldTwo,
-                          controller.focusNodeTwo,
-                          context,
-                          next: true,
-                          previous: true,
-                        ),
-                        otpTextField(
-                          controller.textFieldThree,
-                          controller.focusNodeThree,
-                          context,
-                          next: true,
-                          previous: true,
-                        ),
-                        otpTextField(
-                          controller.textFieldFour,
-                          controller.focusNodeFour,
-                          context,
-                          previous: true,
-                        ),
-                      ],
+                          next: index < 3,
+                          previous: index > 0,
+                        );
+                      }),
                     ),
                   ),
                   const SizedBox(height: 24),
