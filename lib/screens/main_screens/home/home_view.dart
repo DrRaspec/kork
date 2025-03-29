@@ -29,168 +29,123 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: GestureDetector(
-            behavior: HitTestBehavior.translucent,
-            onTap: () => FocusScope.of(context).unfocus(),
-            onHorizontalDragUpdate: (details) {
-              if (details.delta.dx < -10) {
-                controller.updateScreen(1);
-              }
-            },
-            child: Column(
-              children: [
-                homeViewDetail(),
-                const SizedBox(height: 24),
-                SizedBox(
-                  height: 32,
-                  width: Get.width,
-                  child: eventCategory(),
-                ),
-                const SizedBox(height: 28),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: GestureDetector(
-                          onTap: controller.categoryScreen,
-                          child: Row(
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.upcoming_event,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                              const Spacer(),
-                              Text(
-                                AppLocalizations.of(context)!.see_all,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                size: 8,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      // SizedBox(
-                      //   width: double.infinity,
-                      //   height: 238,
-                      //   child: ListView.separated(
-                      //     scrollDirection: Axis.horizontal,
-                      //     itemBuilder: (context, index) {
-                      //       final item =
-                      //           controller.categories['upcoming']![index];
-                      //       return upComingWidget(item);
-                      //     },
-                      //     separatorBuilder: (context, index) =>
-                      //         const SizedBox(width: 24),
-                      //     itemCount: controller.categories['upcoming']!.length,
-                      //   ),
-                      // ),
-                      Obx(() => showItem('upcoming')),
-                      const SizedBox(height: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: getFreeVoucher(),
-                      ),
-                      // const SizedBox(height: 24),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 16),
-                      //   child: GestureDetector(
-                      //     onTap: () => Get.toNamed(
-                      //       Routes.seeAll,
-                      //       arguments: AppLocalizations.of(context)!.nearby_you,
-                      //     ),
-                      //     child: Row(
-                      //       children: [
-                      //         Text(
-                      //           AppLocalizations.of(context)!.nearby_you,
-                      //           style: TextStyle(
-                      //             fontSize: 12,
-                      //             color: Get.theme.colorScheme.tertiary,
-                      //           ),
-                      //         ),
-                      //         const Spacer(),
-                      //         Text(
-                      //           AppLocalizations.of(context)!.see_all,
-                      //           style: TextStyle(
-                      //             fontSize: 12,
-                      //             color: Get.theme.colorScheme.tertiary,
-                      //           ),
-                      //         ),
-                      //         const SizedBox(width: 6),
-                      //         Icon(
-                      //           Icons.arrow_forward_ios_outlined,
-                      //           size: 8,
-                      //           color: Get.theme.colorScheme.tertiary,
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                      // const SizedBox(height: 24),
-                      // SizedBox(
-                      //   width: Get.width,
-                      //   height: 238,
-                      //   child: ListView.separated(
-                      //     scrollDirection: Axis.horizontal,
-                      //     itemBuilder: (context, index) {
-                      //       final item = controller.dummyData[index];
-                      //       return upComingWidget(item);
-                      //     },
-                      //     separatorBuilder: (context, index) =>
-                      //         const SizedBox(width: 24),
-                      //     itemCount: controller.dummyData.length,
-                      //   ),
-                      // ),
-                      const SizedBox(height: 24),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: Row(
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.showing,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            const Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.see_all,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            const SizedBox(width: 6),
-                            Icon(
-                              Icons.arrow_forward_ios_outlined,
-                              size: 8,
-                              color: Get.theme.colorScheme.tertiary,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      Obx(() => showItem('showing')),
-                    ],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.processUserData();
+            controller.fetchUpComingData();
+            controller.fetchShowingData();
+          },
+          child: SingleChildScrollView(
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => FocusScope.of(context).unfocus(),
+              onHorizontalDragUpdate: (details) {
+                if (details.delta.dx < -10) {
+                  controller.updateScreen(1);
+                }
+              },
+              child: Column(
+                children: [
+                  homeViewDetail(),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    height: 32,
+                    width: Get.width,
+                    child: eventCategory(),
                   ),
-                ),
-                const SizedBox(height: 70),
-              ],
+                  const SizedBox(height: 28),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: Column(
+                      children: [
+                        Obx(
+                          () => controller.categories['showing'] == null ||
+                                  controller.categories['showing']!.isEmpty
+                              ? const SizedBox.shrink()
+                              : Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: GestureDetector(
+                                    onTap: controller.categoryScreen,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .upcoming_event,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          AppLocalizations.of(context)!.see_all,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 6),
+                                        Icon(
+                                          Icons.arrow_forward_ios_outlined,
+                                          size: 8,
+                                          color: Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                        ),
+                        const SizedBox(height: 24),
+                        Obx(() => showItem('upcoming')),
+                        const SizedBox(height: 24),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16),
+                          child: getFreeVoucher(),
+                        ),
+                        const SizedBox(height: 24),
+                        Obx(
+                          () => controller.categories['showing'] == null ||
+                                  controller.categories['showing']!.isEmpty
+                              ? const SizedBox.shrink()
+                              : Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!.showing,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      Text(
+                                        AppLocalizations.of(context)!.see_all,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        size: 8,
+                                        color: Get.theme.colorScheme.tertiary,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ),
+                        const SizedBox(height: 24),
+                        Obx(() => showItem('showing')),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 70),
+                ],
+              ),
             ),
           ),
         ),

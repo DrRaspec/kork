@@ -194,28 +194,28 @@ class EditProfileView extends GetView<EditProfileViewController> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.phone_number,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            SvgPicture.asset(
-                              'assets/image/svg/arrow-right.svg',
-                              width: 16,
-                              height: 16,
-                              colorFilter: ColorFilter.mode(
-                                Get.theme.colorScheme.tertiary,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // const SizedBox(height: 8),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Text(
+                        //       AppLocalizations.of(context)!.phone_number,
+                        //       style: TextStyle(
+                        //         fontSize: 12,
+                        //         color: Get.theme.colorScheme.tertiary,
+                        //       ),
+                        //     ),
+                        //     SvgPicture.asset(
+                        //       'assets/image/svg/arrow-right.svg',
+                        //       width: 16,
+                        //       height: 16,
+                        //       colorFilter: ColorFilter.mode(
+                        //         Get.theme.colorScheme.tertiary,
+                        //         BlendMode.srcIn,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

@@ -4,19 +4,23 @@ class TicketController extends GetxController {
   final dio = Dio();
   final storage = const FlutterSecureStorage();
   late String url;
+  String? token;
+  String? id;
 
   var buyedTickets = <dynamic>[].obs;
+  var lastEvent = <dynamic>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     url = dotenv.maybeGet('API_URL') ?? 'Not Found';
     init();
+    fetchLastData();
   }
 
   void init() async {
-    var token = await storage.read(key: 'token');
-    var id = await storage.read(key: 'id');
+    token = await storage.read(key: 'token');
+    id = await storage.read(key: 'id');
     if (token == null || id == null) await Get.find<AuthService>().logout();
     try {
       dio.interceptors.add(AppLogInterceptor());
@@ -41,6 +45,23 @@ class TicketController extends GetxController {
         print('error: ${e.error}');
         print('message: ${e.message}');
       }
+    }
+  }
+
+  void fetchLastData() async {
+    var params = {'date': 'today', 'per_page': 5};
+    try {
+      var response = await EventApiHelper.get('/events', params: params);
+      print('response ticket data ${response.data}');
+      if (response.statusCode == 200 && response.data != null) {
+        lastEvent.assignAll(response.data['data']);
+      }
+    } on DioException catch (e) {
+      var response = e.response;
+      print('error status code: ${response!.statusCode}');
+      print('error status message: ${response.statusMessage}');
+      print('error: ${e.error}');
+      print('message: ${e.message}');
     }
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/models/event_model.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/utils/status.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:kork/widget/event_card.dart';
@@ -22,56 +23,39 @@ class SeeAllView extends GetView<SeeAllViewController> {
           controller.title,
         ),
       ),
-      body: Obx(() {
-        if (controller.status.value == Status.loading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (controller.status.value == Status.loadingMore) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (controller.status.value == Status.error) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/image/svg/error.svg',
-                  width: 100,
-                  height: 100,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'An error occurred. Please try again.',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () {
-                    controller.fetchData();
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
-          );
-        } else if (controller.status.value == Status.noData) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/image/svg/no_data.svg',
-                  width: 100,
-                  height: 100,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'No upcoming events',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          );
-        } else if (controller.status.value == Status.success) {
-          if (controller.eventData.isEmpty) {
+      body: Obx(
+        () {
+          if (controller.status.value == Status.loading &&
+              controller.eventData.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (controller.status.value == Status.error &&
+              controller.eventData.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset(
+                    'assets/image/svg/error.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'An error occurred. Please try again.',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      controller.fetchData();
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          } else if (controller.status.value == Status.noData &&
+              controller.eventData.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -83,33 +67,42 @@ class SeeAllView extends GetView<SeeAllViewController> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'No Upcoming events',
+                    'No upcoming events',
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
             );
-          }
-
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: ListView.separated(
-              shrinkWrap: true,
+          } else {
+            return ListView.builder(
+              padding: const EdgeInsets.all(16),
+              controller: controller.scrollController,
               itemBuilder: (context, index) {
-                var eventData = Event.fromJson(controller.eventData[index]);
-                return eventCard(eventData);
+                // Show items
+                if (index < controller.eventData.length) {
+                  var eventData = Event.fromJson(controller.eventData[index]);
+                  return GestureDetector(
+                    onTap: () =>
+                        Get.toNamed(Routes.eventDetail, arguments: eventData),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: eventCard(eventData),
+                    ),
+                  );
+                } else if (controller.status.value == Status.loadingMore) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+                return null;
               },
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 8,
-              ),
-              itemCount: controller.eventData.length,
-            ),
-          );
-        } else {
-          // Default case: loading state
-          return const Center(child: CircularProgressIndicator());
-        }
-      }),
+              itemCount: controller.eventData.length +
+                  (controller.status.value == Status.loadingMore ? 1 : 0),
+            );
+          } 
+        },
+      ),
     );
   }
 }

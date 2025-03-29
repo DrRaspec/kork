@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:kork/utils/app_log_interceptor.dart';
 
 class EventApiHelper {
-  static String url = dotenv.maybeGet('API_URL') ?? 'Not Found';
+  static String url = dotenv.maybeGet('API_URL') ?? 'http://10.0.2.2:8000/api';
   static final Dio _dio = Dio()
-    ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true))
+    ..interceptors.add(AppLogInterceptor())
     ..options = BaseOptions(
       baseUrl: url,
       connectTimeout: const Duration(seconds: 15),

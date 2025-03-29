@@ -1,16 +1,20 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:kork/helper/card_helper.dart';
+import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/sign_up_view/map/map_view.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/widget/categories_dropdown.dart';
 import 'package:kork/widget/event_textfield.dart';
 
 part 'add_event_binding.dart';
@@ -141,14 +145,7 @@ class AddEventView extends GetView<AddEventViewController> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            eventTextField(
-                              textController: controller.nameController,
-                              errorMessage: controller.nameError.value,
-                              hintText:
-                                  AppLocalizations.of(context)!.event_category,
-                              textFocus: controller.focusName,
-                              svgIcon: 'assets/image/svg/category-2.svg',
-                            ),
+                            categoriesDropdown(),
                           ],
                         ),
                       ),
@@ -344,22 +341,6 @@ class AddEventView extends GetView<AddEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  Text(
-                    AppLocalizations.of(context)!.company,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  eventTextField(
-                    textController: controller.companyNameController,
-                    errorMessage: controller.companyNameError.value,
-                    hintText: AppLocalizations.of(context)!.company_name,
-                    textFocus: controller.focusCompanyName,
-                    isEnable: false,
-                  ),
-                  const SizedBox(height: 24),
                   DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       // value: AppLocalizations.of(context)!.ticket_information,
@@ -430,8 +411,8 @@ class AddEventView extends GetView<AddEventViewController> {
                           (index) {
                             if (index % 2 == 0) {
                               var itemIndex = index ~/ 2;
-                              var ticketController =
-                                  controller.ticketController[itemIndex];
+                              var ticketController = controller
+                                  .ticketQuantityController[itemIndex];
                               var type = controller.types[itemIndex];
 
                               return Expanded(
@@ -798,9 +779,10 @@ class AddEventView extends GetView<AddEventViewController> {
                   const SizedBox(height: 16),
                   Obx(
                     () => GestureDetector(
-                      onTap: () => controller.pickImage,
+                      onTap: () => controller.pickImage(),
                       child: Container(
                         height: 114,
+                        width: double.infinity,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Get.theme.colorScheme.tertiary,
@@ -832,7 +814,7 @@ class AddEventView extends GetView<AddEventViewController> {
                               )
                             : Image.file(
                                 controller.selectedImage.value!,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                               ),
                       ),
                     ),
@@ -847,7 +829,7 @@ class AddEventView extends GetView<AddEventViewController> {
             left: 0,
             right: 0,
             child: GestureDetector(
-              onTap: () => Get.back(),
+              onTap: controller.onSubmit,
               child: Container(
                 color: Get.theme.bottomNavigationBarTheme.backgroundColor,
                 padding: const EdgeInsets.symmetric(
@@ -865,21 +847,24 @@ class AddEventView extends GetView<AddEventViewController> {
                         color: Get.theme.colorScheme.tertiary,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!.publish_event,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xffEAE9FC),
+                    GestureDetector(
+                      onTap: controller.onSubmit,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Get.theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          AppLocalizations.of(context)!.publish_event,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffEAE9FC),
+                          ),
                         ),
                       ),
                     ),

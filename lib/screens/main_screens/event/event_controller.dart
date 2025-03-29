@@ -5,11 +5,13 @@ class EventController extends GetxController {
   var isLoading = true.obs;
 
   final eventsByCategory = RxMap<String, List<Event>>({});
+  var upComingEvent = <dynamic>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchAllCategoryEvents();
+    fetchUpComingEvent();
   }
 
   Future<void> fetchAllCategoryEvents() async {
@@ -51,5 +53,23 @@ class EventController extends GetxController {
 
   bool hasEventsForCategory(EventCategories category) {
     return (eventsByCategory[category.name]?.isNotEmpty ?? false);
+  }
+
+  void fetchUpComingEvent() async {
+    var param = {'date': 'tomorrow'};
+    try {
+      var response = await EventApiHelper.get('/events', params: param);
+      if (response.statusCode! < 300) {
+        print('response data ${response.data}');
+        print('response data type ${response.data.runtimeType}');
+        upComingEvent.value = response.data['data'] as List<dynamic>;
+      }
+    } on DioException catch (e) {
+      var response = e.response;
+      print('e message ${e.message}');
+      print('e error ${e.error}');
+      print('status code ${response?.statusCode}');
+      print('data ${response?.data}');
+    }
   }
 }

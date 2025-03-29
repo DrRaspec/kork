@@ -1090,5 +1090,17 @@
     "incorrect_passowrd": "Incorrect password",
     "@incorrect_passowrd": {
         "description": "Incorrect password"
+    },
+    "description": "Description",
+    "@description": {
+        "description": "ការពិពណ៌នា"
+    },
+    "success": "Successful",
+    "@success": {
+        "description": "Successful"
+    },
+    "register_event_success": "Register event successfully",
+    "@register_event_success": {
+        "description": "Register event successfully"
     }
 }

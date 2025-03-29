@@ -143,4 +143,8 @@ class EventDetailController extends GetxController {
       }
     }
   }
+
+  String formatTime(String time) {
+    return time.split(':').sublist(0, 2).join(':');
+  }
 }

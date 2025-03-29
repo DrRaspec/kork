@@ -23,62 +23,70 @@ class EventView extends GetView<EventController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 17),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.events,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(Routes.searchEvent),
-                    child: Icon(
-                      Icons.search,
-                      color: Get.theme.colorScheme.tertiary,
-                      size: 24,
-                    ),
-                  ),
-                  const SizedBox(width: 22),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(Routes.filter),
-                    child: Icon(
-                      Icons.filter_list,
-                      color: Get.theme.colorScheme.tertiary,
-                      size: 24,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 24),
-                      _buildToggleBar(context),
-                      const SizedBox(height: 17),
-                      Obx(
-                        () => controller.isEvent.value
-                            ? _buildEventsView(context)
-                            : _buildNoUpcomingEventsView(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            controller.fetchAllCategoryEvents();
+            controller.fetchUpComingEvent();
+          },
+          child: Column(
+            children: [
+              const SizedBox(height: 17),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.events,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
-                    ],
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.searchEvent),
+                      child: Icon(
+                        Icons.search,
+                        color: Get.theme.colorScheme.tertiary,
+                        size: 24,
+                      ),
+                    ),
+                    const SizedBox(width: 22),
+                    GestureDetector(
+                      onTap: () => Get.toNamed(Routes.filter),
+                      child: Icon(
+                        Icons.filter_list,
+                        color: Get.theme.colorScheme.tertiary,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 24),
+                        _buildToggleBar(context),
+                        const SizedBox(height: 17),
+                        Obx(
+                          () => controller.isEvent.value
+                              ? _buildEventsView(context)
+                              : controller.upComingEvent.isEmpty
+                                  ? _buildNoUpcomingEventsView()
+                                  : _loadUpcomingEvent(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            // const SizedBox(height: 70),
-          ],
+              // const SizedBox(height: 70),
+            ],
+          ),
         ),
       ),
     );
@@ -205,7 +213,7 @@ class EventView extends GetView<EventController> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.eventDetail, arguments: category),
+              onTap: () => Get.toNamed(Routes.seeAll, arguments: category.name),
               child: Row(
                 children: [
                   Text(
@@ -245,6 +253,7 @@ class EventView extends GetView<EventController> {
               height: 174,
               child: GestureDetector(
                 onTap: () {
+                  print('event data ${events[index]}');
                   Get.toNamed(Routes.eventDetail, arguments: events[index]);
                 },
                 child: eventCard(events[index]),
@@ -295,6 +304,39 @@ class EventView extends GetView<EventController> {
         'No events available',
         style: TextStyle(color: Get.theme.colorScheme.tertiary),
       ),
+    );
+  }
+
+  Widget _loadUpcomingEvent() {
+    if (controller.isLoading.value) {
+      return _buildLoadingShimmer();
+    }
+
+    final upcomingEvent = controller.upComingEvent;
+    if (upcomingEvent.isEmpty) {
+      return _buildNoEventsPlaceholder();
+    }
+
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        var upcomingEvent = Event.fromJson(controller.upComingEvent[index]);
+        return SizedBox(
+          width: Get.width,
+          height: 174,
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed(Routes.eventDetail, arguments: upcomingEvent);
+            },
+            child: eventCard(upcomingEvent),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 8,
+      ),
+      itemCount: controller.upComingEvent.length,
     );
   }
 

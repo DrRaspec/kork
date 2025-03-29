@@ -198,7 +198,9 @@ class EventDetail extends GetView<EventDetailController> {
                                         ),
                                       ),
                                       Text(
-                                        controller.eventData.startTime,
+                                        controller.formatTime(
+                                          controller.eventData.startTime,
+                                        ),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color:
@@ -488,7 +490,7 @@ class EventDetail extends GetView<EventDetailController> {
             Container(
               width: Get.width,
               // height: 57,
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               decoration: BoxDecoration(
                 color: Get.theme.bottomNavigationBarTheme.backgroundColor,
               ),

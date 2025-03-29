@@ -174,7 +174,7 @@ Widget eventCard(Event event) {
                               ),
                               const SizedBox(width: 5),
                               Text(
-                                event.startTime,
+                                formatTime(event.startTime),
                                 style: const TextStyle(
                                   fontSize: 8,
                                   color: Color(0xffEAE9FC),
@@ -236,6 +236,10 @@ String formatDayMonth(DateTime date) {
   final month = monthFormatter.format(date);
 
   return '$day\n$month';
+}
+
+String formatTime(String time) {
+  return time.split(':').sublist(0, 2).join(':');
 }
 
 // Widget buildPlaceholder() {

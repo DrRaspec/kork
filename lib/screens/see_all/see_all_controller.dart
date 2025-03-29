@@ -1,7 +1,7 @@
 part of 'see_all_view.dart';
 
 class SeeAllViewController extends GetxController {
-  var argument = Get.arguments;
+  var argument = Get.arguments as String;
   late String title;
   var page = 1.obs;
   var status = Status.none.obs;
@@ -11,9 +11,7 @@ class SeeAllViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    if (argument is String) {
-      title = argument;
-    }
+    title = argument;
 
     fetchData();
 
@@ -36,7 +34,7 @@ class SeeAllViewController extends GetxController {
     try {
       var params = {
         // 'filter': title,
-        'filter': title.toLowerCase(), //will update
+        'filter': title.toLowerCase(),
         'page': page.value,
       };
       var response = await EventApiHelper.get('/events', params: params);

@@ -326,7 +326,6 @@ class MapController extends GetxController {
   }
 
   void saveLocation() async {
-    var selectLocationController = Get.find<SelectLocationController>();
     if (address.value.isEmpty ||
         _invalidAddressMessages.contains(address.value)) {
       Get.snackbar("Error", "Invalid location. Please select a valid place.",
@@ -334,16 +333,21 @@ class MapController extends GetxController {
       return;
     }
 
-    if (selectedLocation.value.latitude == 0 &&
-        selectedLocation.value.longitude == 0) {
-      Get.snackbar("Error", "Please select a location before saving.",
-          snackPosition: SnackPosition.BOTTOM);
-      return;
+    if (argument == Routes.login) {
+      var selectLocationController = Get.find<SelectLocationController>();
+      if (selectedLocation.value.latitude == 0 &&
+          selectedLocation.value.longitude == 0) {
+        Get.snackbar("Error", "Please select a location before saving.",
+            snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
+
+      selectLocationController.saveSignUp(selectedLocation.value);
     }
 
-    selectLocationController.saveSignUp(selectedLocation.value);
-
+    print('map argument $argument');
     if (argument != null) {
+      if (argument == 'back') Get.back();
       Get.toNamed(argument!);
     }
   }
