@@ -4,7 +4,7 @@ class HomeController extends GetxController {
   final searchController = TextEditingController();
   var mainControler = Get.find<MainController>();
   var eventController = Get.find<EventController>();
-  Rx<UserAccounts?> userData = Rx<UserAccounts?>(null);
+  Rx<User?> userData = Rx<User?>(null);
   final categories = RxMap<String, List<Event>>({});
   late Timer timer;
   var dotCount = 1.obs;
@@ -40,7 +40,7 @@ class HomeController extends GetxController {
       final responseData = mainControler.userData.value;
 
       if (responseData != null) {
-        userData.value = UserAccounts.fromMap(responseData);
+        userData.value = User.fromJson(responseData);
         convertLocation();
 
         print('Successfully processed user data: ${userData.value?.id}');

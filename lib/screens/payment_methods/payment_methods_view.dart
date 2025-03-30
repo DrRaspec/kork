@@ -1,7 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/helper/card_helper.dart';
+import 'package:kork/helper/payment_method.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -33,12 +38,19 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
               ),
             ),
             const SizedBox(height: 24),
-            ListView.separated(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemBuilder: (context, index) => cardWiget('4539148803436467'),
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount: 2,
+            Obx(
+              () => ListView.separated(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  var card =
+                      PaymentMethod.fromJson(controller.paymentMethod[index]);
+                  return cardWiget(card);
+                },
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
+                itemCount: controller.paymentMethod.length,
+              ),
             ),
             const SizedBox(height: 16),
             GestureDetector(
@@ -79,7 +91,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
   }
 }
 
-Widget cardWiget(String cardNumber) {
+Widget cardWiget(PaymentMethod card) {
   return GestureDetector(
     onTap: () => Get.back(),
     child: Container(
@@ -94,14 +106,14 @@ Widget cardWiget(String cardNumber) {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            getCardType(cardNumber) == 'Visa'
+            getCardType(card.cardNumber.toString()) == 'Visa'
                 ? 'assets/image/svg/Visa.svg'
                 : 'assets/image/svg/MasterCard.svg',
             width: 38,
           ),
           const SizedBox(width: 16),
           Text(
-            maskCardNumber(cardNumber),
+            maskCardNumber(card.cardNumber.toString()),
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,

@@ -252,7 +252,7 @@ Widget homeViewDetail() {
                           child: controller.userData.value == null
                               ? buildPlaceholder()
                               : Image.network(
-                                  controller.userData.value!.profileUrl,
+                                  controller.userData.value!.profileUrl!,
                                   fit: BoxFit.cover,
                                   loadingBuilder:
                                       (context, child, loadingProgress) {

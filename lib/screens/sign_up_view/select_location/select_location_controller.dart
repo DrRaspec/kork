@@ -158,7 +158,7 @@ class SelectLocationController extends GetxController {
 
       if (response.statusCode == 200 ||
           response.statusCode == 201 && response.data != null) {
-        var data = UserAccounts.fromMap(response.data);
+        var data = User.fromJson(response.data);
         if (data.token != null) {
           prefs.setBool('isLoggin', true);
           await storage.write(key: 'token', value: data.token!);

@@ -9,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/models/event_model.dart';
-import 'package:kork/models/user_accounts.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/filter_screens/filter/filter_view.dart';
 import 'package:kork/screens/main/main_view.dart';

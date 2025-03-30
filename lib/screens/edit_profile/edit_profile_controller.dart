@@ -4,7 +4,7 @@ class EditProfileViewController extends GetxController {
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
   var mainController = Get.find<MainController>();
-  Rx<UserAccounts?> userData = Rx<UserAccounts?>(null);
+  Rx<User?> userData = Rx<User?>(null);
   final storage = const FlutterSecureStorage();
   Rx<String> fullName = ''.obs;
   final ImagePicker picker = ImagePicker();
@@ -34,7 +34,7 @@ class EditProfileViewController extends GetxController {
       final userMap = mainController.userData.value;
 
       if (userMap != null) {
-        userData.value = userData.value = UserAccounts.fromMap(userMap);
+        userData.value = userData.value = User.fromJson(userMap);
 
         firstNameController.text = userData.value!.firstName;
         lastNameController.text = userData.value!.lastName;
@@ -95,7 +95,7 @@ class EditProfileViewController extends GetxController {
           if (data.isNotEmpty) {
             mainController.userData.value = data;
 
-            userData.value = UserAccounts.fromMap(data);
+            userData.value = User.fromJson(data);
             firstNameController.text = userData.value!.firstName;
             lastNameController.text = userData.value!.lastName;
             print('edit profile user data ${json.encode(userData.toJson())}');

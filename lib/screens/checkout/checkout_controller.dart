@@ -5,7 +5,7 @@ class CheckoutController extends GetxController {
   var ticketQuantity = <int>[].obs;
   var total = 0.0.obs;
   var isExpand = false.obs;
-  var discount = 0.0.obs;
+  var discountPrice = 0.0.obs;
 
   @override
   void onInit() {

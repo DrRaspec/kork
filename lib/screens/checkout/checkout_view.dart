@@ -104,7 +104,7 @@ class CheckoutView extends GetView<CheckoutController> {
                               Expanded(
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .select_payment_method,
+                                      .available_voucher,
                                   style: const TextStyle(
                                     color: Color(0xffEAE9FC),
                                     fontSize: 12,
@@ -183,12 +183,14 @@ class CheckoutView extends GetView<CheckoutController> {
                     child: Center(
                       child: Row(
                         children: [
-                          Text(
-                            '${AppLocalizations.of(context)!.total}: \$${controller.total.value}',
-                            style: TextStyle(
-                              color: Get.theme.colorScheme.tertiary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          Obx(
+                            () => Text(
+                              '${AppLocalizations.of(context)!.total}: \$${controller.total.value}',
+                              style: TextStyle(
+                                color: Get.theme.colorScheme.tertiary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           const Spacer(),

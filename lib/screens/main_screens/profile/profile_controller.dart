@@ -56,7 +56,7 @@ class ProfileController extends GetxController {
   }
 
   // void updateProfileInfo(Map<String, dynamic> data) {
-  //   var userInfo = UserAccounts.fromMap(data);
+  //   var userInfo = User.fromMap(data);
   //   firstName.value = userInfo.firstName;
   //   lastName.value = userInfo.lastName;
   //   fullName.value = '${firstName.value} ${lastName.value}';
@@ -69,7 +69,7 @@ class ProfileController extends GetxController {
       final responseData = mainController.userData.value;
 
       if (responseData != null) {
-        var userData = UserAccounts.fromMap(responseData);
+        var userData = User.fromJson(responseData);
 
         firstName.value = userData.firstName;
         lastName.value = userData.lastName;

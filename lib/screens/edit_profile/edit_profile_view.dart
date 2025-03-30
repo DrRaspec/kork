@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
-import 'package:kork/models/user_accounts.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
@@ -57,7 +57,7 @@ class EditProfileView extends GetView<EditProfileViewController> {
                               child: Obx(
                                 () => controller.selectedImage.value == null
                                     ? Image.network(
-                                        controller.userData.value!.profileUrl,
+                                        controller.userData.value!.profileUrl!,
                                         width: 116,
                                         height: 116,
                                         fit: BoxFit.cover,

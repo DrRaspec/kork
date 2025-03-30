@@ -223,8 +223,7 @@ class EventDetail extends GetView<EventDetailController> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Image.network(
-                                      // controller.eventData.organizer.photoUrl, //will use this when api available
-                                      'https://i.pinimg.com/736x/c1/bc/57/c1bc57a8a6e1154321349b163dc619a5.jpg',
+                                      controller.eventData.user.profileUrl!,
                                       fit: BoxFit.cover,
                                       loadingBuilder:
                                           (context, child, loadingProgress) {
