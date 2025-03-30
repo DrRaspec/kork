@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/build_placeholder.dart';
@@ -65,6 +71,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           itemCount: controller.data.tickets.length,
                         ),
                       ),
+                      const SizedBox(height: 16),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -76,7 +83,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
                       GestureDetector(
                         onTap: () => Get.toNamed(Routes.applyCoupon),
                         child: Container(
@@ -195,10 +202,7 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () => Get.toNamed(
-                              Routes.yourTicket,
-                              arguments: controller.data,
-                            ),
+                            onTap: controller.buyTicket,
                             child: Container(
                               width: 152,
                               height: 34,
@@ -224,7 +228,7 @@ class CheckoutView extends GetView<CheckoutController> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              // const SizedBox(height: 8),
             ],
           ),
         ),

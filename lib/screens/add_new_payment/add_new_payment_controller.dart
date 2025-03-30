@@ -21,6 +21,9 @@ class AddNewPaymentViewController extends GetxController
   var expireDateError = false.obs;
   late FocusNode expireDateFocus;
 
+  // var isSuccess = false;
+  var result = <String, dynamic>{};
+
   @override
   void onInit() {
     super.onInit();
@@ -48,14 +51,14 @@ class AddNewPaymentViewController extends GetxController
     _debounceTimer?.cancel();
   }
 
-  void checkValidation() {
+  bool checkValidation() {
     bool hasError = false;
     cardNumberError.value = false;
     cardType.value = getCardType(cardNumberController.text.trim());
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[0-9]+$').hasMatch(cardNumberController.text) ||
+    } else if (!RegExp(r'^[0-9]+$').hasMatch(cardNumberController.text) ||
         cardType.value == 'Unknown') {
       cardNumberError.value = true;
       hasError = true;
@@ -64,7 +67,7 @@ class AddNewPaymentViewController extends GetxController
     if (cardHolderController.text.isEmpty) {
       cardHolderError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[a-zA-Z]+$').hasMatch(cardHolderController.text)) {
+    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(cardHolderController.text)) {
       cardHolderError.value = true;
       hasError = true;
     }
@@ -72,7 +75,8 @@ class AddNewPaymentViewController extends GetxController
     if (expireDateController.text.trim().isEmpty) {
       expireDateError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[0-9]+$').hasMatch(expireDateController.text)) {
+    } else if (!RegExp(r'^[0-9]{2}/[0-9]{2}$')
+        .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
       hasError = true;
     }
@@ -81,13 +85,17 @@ class AddNewPaymentViewController extends GetxController
       Future.delayed(Duration.zero, () {
         if (cardNumberError.value == true) {
           cardNumberFocus.requestFocus();
-        } else if (cardNumberError.value == false &&
-            cardHolderError.value == true) {
-          cardNumberFocus.requestFocus();
+        } else if (cardHolderError.value == true) {
+          cardHolderFocus.requestFocus();
+        } else if (expireDateError.value == true) {
+          expireDateFocus.requestFocus();
+        } else if (ccvError.value == true) {
+          ccvFocus.requestFocus();
         }
       });
       cardType.value = 'Visa';
     }
+    return !hasError;
   }
 
   void onCardNumberChange() {
@@ -123,5 +131,42 @@ class AddNewPaymentViewController extends GetxController
     String year = input.substring(2, 4);
 
     return "$month/$year";
+  }
+
+  void addCard() async {
+    if (checkValidation()) {
+      const storage = FlutterSecureStorage();
+      var token = await storage.read(key: 'token');
+      var id = await storage.read(key: 'id');
+      if (token == null || id == null) {
+        await Get.find<AuthService>().logout();
+        return;
+      }
+      var formData = FormData.fromMap({
+        'card_number': cardNumberController.text,
+        'card_holder_name': cardHolderController.text,
+        'expired_date': expireDateController.text,
+        'cvv': ccvController.text,
+      });
+      try {
+        EventApiHelper.setToken(token);
+        var response = await EventApiHelper.post('/users/$id/payment-methods',
+            data: formData);
+        if (response.statusCode == 201) {
+          Get.snackbar('Success', 'Add Successful',
+              duration: const Duration(milliseconds: 300));
+          result = response.data;
+          Future.delayed(const Duration(milliseconds: 500), () {
+            Get.back(result: result);
+          });
+        }
+      } on DioException catch (e) {
+        var response = e.response;
+        print('e error ${e.error}');
+        print('response error ${response?.data}');
+        print('response status code ${response?.statusCode}');
+        Get.snackbar('Fail', 'Add fail');
+      }
+    }
   }
 }

@@ -237,3 +237,79 @@ class Ticket {
     };
   }
 }
+
+class BoughtTicket {
+  final int id;
+  final int eventId;
+  final int ticketId;
+  final int userId;
+  final String ticketCode;
+  final String price;
+  final bool paymentStatus;
+  final DateTime updatedAt;
+  final DateTime createdAt;
+
+  BoughtTicket({
+    required this.id,
+    required this.eventId,
+    required this.ticketId,
+    required this.userId,
+    required this.ticketCode,
+    required this.price,
+    required this.paymentStatus,
+    required this.updatedAt,
+    required this.createdAt,
+  });
+
+  factory BoughtTicket.fromJson(Map<String, dynamic> json) {
+    return BoughtTicket(
+      id: json['id'],
+      eventId: json['event_id'],
+      ticketId: json['ticket_id'],
+      userId: json['user_id'],
+      ticketCode: json['ticket_code'],
+      price: json['price'],
+      paymentStatus: json['payment_status'] ?? false,
+      updatedAt: DateTime.parse(json['updated_at']),
+      createdAt: DateTime.parse(json['created_at']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'event_id': eventId,
+      'ticket_id': ticketId,
+      'user_id': userId,
+      'ticket_code': ticketCode,
+      'price': price,
+      'payment_status': paymentStatus,
+      'updated_at': updatedAt.toIso8601String(),
+      'created_at': createdAt.toIso8601String(),
+    };
+  }
+
+  BoughtTicket copyWith({
+    int? id,
+    int? eventId,
+    int? ticketId,
+    int? userId,
+    String? ticketCode,
+    String? price,
+    bool? paymentStatus,
+    DateTime? updatedAt,
+    DateTime? createdAt,
+  }) {
+    return BoughtTicket(
+      id: id ?? this.id,
+      eventId: eventId ?? this.eventId,
+      ticketId: ticketId ?? this.ticketId,
+      userId: userId ?? this.userId,
+      ticketCode: ticketCode ?? this.ticketCode,
+      price: price ?? this.price,
+      paymentStatus: paymentStatus ?? this.paymentStatus,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+}

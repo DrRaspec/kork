@@ -45,7 +45,51 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                 itemBuilder: (context, index) {
                   var card =
                       PaymentMethod.fromJson(controller.paymentMethod[index]);
-                  return cardWiget(card);
+                  return Dismissible(
+                    key: Key(card.id.toString()),
+                    direction: DismissDirection.endToStart,
+                    background: Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
+                    confirmDismiss: (direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Delete Payment Method'),
+                          content: const Text(
+                            'Are you sure you want to delete this payment method?',
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    onDismissed: (direction) {
+                      controller.deletePaymentMethod(index, card.id);
+                    },
+                    child: cardWiget(card),
+                  );
+                  // return cardWiget(card);
                 },
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 16),
@@ -54,7 +98,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.addNewPayment),
+              onTap: controller.reloadData,
               child: Container(
                 height: 40,
                 width: double.infinity,

@@ -32,4 +32,32 @@ class PaymentMethodsViewController extends GetxController {
       print(e.response?.statusCode);
     }
   }
+
+  Future<void> deletePaymentMethod(int index, int paymentID) async {
+    const storage = FlutterSecureStorage();
+    var id = await storage.read(key: 'id');
+
+    if (id == null) {
+      await Get.find<AuthService>().logout();
+      return;
+    }
+
+    try {
+      var response = await PaymentMethodHelper.delete(
+          '/users/$id/payment-methods/$paymentID');
+      print('status code ${response.statusCode}');
+      if (response.statusCode == 200) {
+        paymentMethod.removeAt(index);
+      }
+    } on DioException catch (e) {
+      print(e.message);
+      print(e.response?.data);
+      print(e.response?.statusCode);
+    }
+  }
+
+  void reloadData() async {
+    var result = await Get.toNamed(Routes.addNewPayment);
+    if (result is Map<String, dynamic>) paymentMethod.add(result);
+  }
 }
