@@ -22,7 +22,6 @@ String extractTime(String time) {
 
 void getLocationAddress(LatLng street) async {
   try {
-
     final placemarks = await placemarkFromCoordinates(
       street.latitude,
       street.longitude,

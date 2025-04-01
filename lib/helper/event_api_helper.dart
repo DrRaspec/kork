@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
 
 class EventApiHelper {
-  static String url = dotenv.maybeGet('API_URL') ?? 'http://10.0.2.2:8000/api';
+  static String url = dotenv.maybeGet('API_URL')!;
   static final Dio _dio = Dio()
     ..interceptors.add(AppLogInterceptor())
     ..options = BaseOptions(

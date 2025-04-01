@@ -58,6 +58,8 @@ class PaymentMethodsViewController extends GetxController {
 
   void reloadData() async {
     var result = await Get.toNamed(Routes.addNewPayment);
-    if (result is Map<String, dynamic>) paymentMethod.add(result);
+    if (result is Map<String, dynamic> && result.isNotEmpty) {
+      paymentMethod.add(result);
+    }
   }
 }

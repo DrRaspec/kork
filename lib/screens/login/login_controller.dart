@@ -131,8 +131,13 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
         final mainController = Get.find<MainController>();
 
         try {
+          var url = dotenv.env['API_URL']!;
+          dio.options.baseUrl = url;
+          dio.interceptors.add(AppLogInterceptor());
+          dio.options.connectTimeout = const Duration(minutes: 1);
+          dio.options.receiveTimeout = const Duration(minutes: 1);
           var response = await dio.post(
-            'http://10.0.2.2:8000/api/login',
+            '/login',
             data: {
               'email': emailController.text,
               'password': passwordController.text,

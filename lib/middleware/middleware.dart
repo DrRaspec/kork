@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
@@ -95,7 +96,10 @@ class ApiService extends GetxService {
   void onInit() {
     super.onInit();
     dio.interceptors.add(AppLogInterceptor());
-    dio.options.baseUrl = 'http://10.0.2.2:8000/api';
+    dio.options.baseUrl =
+        dotenv.env['API_URL'] ?? 'https://kork-api.chandalen.dev/api';
+    // dio.options.baseUrl = 'http://10.0.2.2:8000/api';
+    // dio.options.baseUrl = 'https://kork-api.chandalen.dev/api';
     dio.options.connectTimeout = const Duration(minutes: 1);
     dio.options.receiveTimeout = const Duration(minutes: 1);
 

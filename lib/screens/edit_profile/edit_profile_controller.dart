@@ -68,7 +68,7 @@ class EditProfileViewController extends GetxController {
       File profileImage = selectedImage.value!;
       final dio = Dio()
         ..interceptors.add(AppLogInterceptor())
-        ..options.baseUrl = 'http://10.0.2.2:8000/api'
+        ..options.baseUrl = dotenv.env['API_URL']!
         ..options.headers = {
           // 'Content-Type': 'application/json', 'application/json', Dio will set it correctly for FormData
           'X-Requested-With': 'XMLHttpRequest',

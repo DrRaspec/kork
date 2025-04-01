@@ -99,7 +99,7 @@ class SelectLocationController extends GetxController {
         bool isSuccess = await saveSignUp(currentLocation.value);
         if (isSuccess) {
           if (Get.currentRoute != Routes.main) {
-            Get.toNamed(Routes.login);
+            Get.offAllNamed(Routes.login);
           }
         } else {
           Get.snackbar("Error", "Failed to save location. Please try again.");
@@ -141,7 +141,7 @@ class SelectLocationController extends GetxController {
               filename: profileImage.path.split('/').last)));
 
       dio.interceptors.add(AppLogInterceptor());
-      dio.options.baseUrl = 'http://10.0.2.2:8000/api';
+      dio.options.baseUrl = dotenv.env['API_URL']!;
       dio.options.connectTimeout = const Duration(minutes: 1);
       dio.options.receiveTimeout = const Duration(minutes: 1);
 
@@ -166,6 +166,7 @@ class SelectLocationController extends GetxController {
           return true;
         }
       }
+      return true;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout) {
         Get.snackbar(

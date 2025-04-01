@@ -160,7 +160,7 @@ class ProfileChangePasswordViewController extends GetxController
 
     final dio = Dio()
       ..interceptors.add(AppLogInterceptor())
-      ..options.baseUrl = 'http://10.0.2.2:8000/api'
+      ..options.baseUrl = dotenv.env['API_URL']!
       ..options.headers = {
         'X-Requested-With': 'XMLHttpRequest',
         'Authorization': 'Bearer $token',

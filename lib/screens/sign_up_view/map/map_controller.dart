@@ -1,7 +1,7 @@
 part of 'map_view.dart';
 
 class MapController extends GetxController {
-  String? argument = Get.arguments ?? Routes.main;
+  var argument = Get.arguments as String;
   var initialCameraPosition = const CameraPosition(
     target: LatLng(11.572543, 104.893275),
     zoom: 21,
@@ -329,36 +329,48 @@ class MapController extends GetxController {
     if (address.value.isEmpty ||
         _invalidAddressMessages.contains(address.value)) {
       Get.snackbar("Error", "Invalid location. Please select a valid place.",
-          snackPosition: SnackPosition.BOTTOM);
+          snackPosition: SnackPosition.TOP);
       return;
     }
 
     if (argument == Routes.login) {
-      var selectLocationController = Get.find<SelectLocationController>();
       if (selectedLocation.value.latitude == 0 &&
           selectedLocation.value.longitude == 0) {
         Get.snackbar("Error", "Please select a location before saving.",
             snackPosition: SnackPosition.BOTTOM);
         return;
       }
-
-      selectLocationController.saveSignUp(selectedLocation.value);
     }
 
     print('map argument $argument');
-    if (argument != null) {
-      if (argument == 'back') Get.back();
-      Get.toNamed(argument!);
+    if (argument == 'back') {
+      Get.back();
+    } else if (argument == Routes.login) {
+      var selectLocationController = Get.find<SelectLocationController>();
+      bool isSuccess =
+          await selectLocationController.saveSignUp(selectedLocation.value);
+
+      if (isSuccess) {
+        if (Get.currentRoute != Routes.main) {
+          Get.offAllNamed(Routes.login);
+        }
+      } else {
+        Get.snackbar("Error", "Failed to save location. Please try again.");
+      }
+    } else {
+      Get.toNamed(argument);
     }
   }
 
   final Set<String> _invalidAddressMessages = {
+    'Click on map to select location',
     'Error searching location',
     'No results found',
     'Loading...',
     'Processing input...',
     'Could not find location',
     'Error processing input',
-    'Searching...'
+    'Searching...',
+    'Unable to fetch address',
   };
 }

@@ -25,7 +25,7 @@ class MainController extends GetxController {
       }
       await fetchData();
     } catch (e) {
-      print('Error in MainController init: $e');
+      // print('Error in MainController init: $e');
       Get.snackbar('Error', 'Failed to initialize app');
     } finally {
       isLoading.value = false;
@@ -41,10 +41,9 @@ class MainController extends GetxController {
       }
 
       userData.value = await apiService.getUserData(id);
-      print('User data: ${userData.value}');
       userDataReady.value = true;
     } catch (e) {
-      print('Error fetching user data: $e');
+      // print('Error fetching user data: $e');
       Get.snackbar('Error', 'Failed to load user data');
       userDataReady.value = false;
     }
@@ -56,7 +55,7 @@ class MainController extends GetxController {
       userDataReady.value = false;
       await fetchData();
     } catch (e) {
-      print('Error refreshing user data: $e');
+      // print('Error refreshing user data: $e');
       Get.snackbar('Error', 'Failed to refresh user data');
     } finally {
       isLoading.value = false;

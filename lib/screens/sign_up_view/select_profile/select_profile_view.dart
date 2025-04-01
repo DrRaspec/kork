@@ -101,7 +101,8 @@ class SelectProfileView extends GetView<SelectProfileController> {
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
-                  onTap: () => Get.toNamed(Routes.selectLocation),
+                  onTap: () => Get.toNamed(Routes.selectLocation,
+                      arguments: Routes.login),
                   child: Container(
                     width: double.infinity,
                     height: 40,

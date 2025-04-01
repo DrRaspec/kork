@@ -1106,5 +1106,9 @@
     "organizer": "Organizer",
     "@organizer": {
         "description": "Organizer"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Retry"
     }
 }

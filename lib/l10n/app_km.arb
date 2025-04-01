@@ -275,5 +275,6 @@
     "description": "ការពិពណ៌នា",
     "success": "ជោគជ័យ",
     "register_event_success": "ចុះឈ្មោះព្រឹត្តិការណ៍ដោយជោគជ័យ",
-    "organizer": "អ្នករៀបចំ"
+    "organizer": "អ្នករៀបចំ",
+    "retry": "ព្យាយាមម្តងទៀត"
 }
