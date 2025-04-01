@@ -216,10 +216,10 @@ class EventDetail extends GetView<EventDetailController> {
                                 children: [
                                   Container(
                                     width: 40,
-                                    height: 41,
+                                    height: 40,
                                     clipBehavior: Clip.hardEdge,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.primary,
+                                      // color: Get.theme.colorScheme.primary,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Image.network(
@@ -240,7 +240,7 @@ class EventDetail extends GetView<EventDetailController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Ashfak Sayem',
+                                        '${controller.eventData.user.firstName} ${controller.eventData.user.lastName}',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
@@ -248,7 +248,7 @@ class EventDetail extends GetView<EventDetailController> {
                                         ),
                                       ),
                                       Text(
-                                        'Organizer',
+                                        AppLocalizations.of(context)!.organizer,
                                         style: TextStyle(
                                           fontSize: 12,
                                           color:
@@ -338,7 +338,7 @@ class EventDetail extends GetView<EventDetailController> {
                               ),
                               const SizedBox(height: 24),
                               Text(
-                                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                                controller.eventData.description,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,

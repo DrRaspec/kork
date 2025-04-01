@@ -74,8 +74,8 @@ class EditProfileViewController extends GetxController {
           'X-Requested-With': 'XMLHttpRequest',
           'Authorization': 'Bearer $token',
         }
-        ..options.connectTimeout = const Duration(seconds: 15)
-        ..options.receiveTimeout = const Duration(seconds: 15);
+        ..options.connectTimeout = const Duration(minutes: 1)
+        ..options.receiveTimeout = const Duration(minutes: 1);
 
       var formData = FormData.fromMap({
         '_method': 'PUT',

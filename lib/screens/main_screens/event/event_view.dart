@@ -300,9 +300,19 @@ class EventView extends GetView<EventController> {
         color: Colors.grey[200],
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
-        'No events available',
-        style: TextStyle(color: Get.theme.colorScheme.tertiary),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'No events available',
+            style: TextStyle(color: Get.theme.colorScheme.tertiary),
+          ),
+          Text(
+            'Check connection or try again later',
+            style:
+                TextStyle(color: Get.theme.colorScheme.tertiary, fontSize: 12),
+          ),
+        ],
       ),
     );
   }

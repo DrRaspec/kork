@@ -29,8 +29,8 @@ class TicketController extends GetxController {
         'X-Requested-With': 'XMLHttpRequest',
         'Authorization': 'Bearer $token',
       };
-      dio.options.connectTimeout = const Duration(seconds: 15);
-      dio.options.receiveTimeout = const Duration(seconds: 15);
+      dio.options.connectTimeout = const Duration(minutes: 1);
+      dio.options.receiveTimeout = const Duration(minutes: 1);
 
       var response = await dio.get('/users/$id/buy-tickets');
       var result = response.data as Map<String, dynamic>;

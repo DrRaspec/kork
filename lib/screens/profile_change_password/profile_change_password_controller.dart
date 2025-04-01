@@ -165,8 +165,8 @@ class ProfileChangePasswordViewController extends GetxController
         'X-Requested-With': 'XMLHttpRequest',
         'Authorization': 'Bearer $token',
       }
-      ..options.connectTimeout = const Duration(seconds: 15)
-      ..options.receiveTimeout = const Duration(seconds: 15);
+      ..options.connectTimeout = const Duration(minutes: 1)
+      ..options.receiveTimeout = const Duration(minutes: 1);
 
     var formData = FormData.fromMap({
       'current_password': currentPasswordController.text,
@@ -207,7 +207,6 @@ class ProfileChangePasswordViewController extends GetxController
         newPasswordError.isEmpty &&
         confirmPasswordError.isEmpty) {
       Get.snackbar('Success', 'Password Change Successfully');
-      
     }
   }
 }

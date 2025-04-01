@@ -142,8 +142,8 @@ class SelectLocationController extends GetxController {
 
       dio.interceptors.add(AppLogInterceptor());
       dio.options.baseUrl = 'http://10.0.2.2:8000/api';
-      dio.options.connectTimeout = const Duration(seconds: 10);
-      dio.options.receiveTimeout = const Duration(seconds: 10);
+      dio.options.connectTimeout = const Duration(minutes: 1);
+      dio.options.receiveTimeout = const Duration(minutes: 1);
 
       var response = await dio.post(
         '/register',

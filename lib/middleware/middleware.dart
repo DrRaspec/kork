@@ -96,8 +96,8 @@ class ApiService extends GetxService {
     super.onInit();
     dio.interceptors.add(AppLogInterceptor());
     dio.options.baseUrl = 'http://10.0.2.2:8000/api';
-    dio.options.connectTimeout = const Duration(seconds: 15);
-    dio.options.receiveTimeout = const Duration(seconds: 15);
+    dio.options.connectTimeout = const Duration(minutes: 1);
+    dio.options.receiveTimeout = const Duration(minutes: 1);
 
     dio.interceptors.add(
       InterceptorsWrapper(

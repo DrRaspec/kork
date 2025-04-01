@@ -274,5 +274,6 @@
     "incorrect_passowrd": "ពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
     "description": "ការពិពណ៌នា",
     "success": "ជោគជ័យ",
-    "register_event_success": "ចុះឈ្មោះព្រឹត្តិការណ៍ដោយជោគជ័យ"
+    "register_event_success": "ចុះឈ្មោះព្រឹត្តិការណ៍ដោយជោគជ័យ",
+    "organizer": "អ្នករៀបចំ"
 }

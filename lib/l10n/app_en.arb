@@ -1102,5 +1102,9 @@
     "register_event_success": "Register event successfully",
     "@register_event_success": {
         "description": "Register event successfully"
+    },
+    "organizer": "Organizer",
+    "@organizer": {
+        "description": "Organizer"
     }
 }

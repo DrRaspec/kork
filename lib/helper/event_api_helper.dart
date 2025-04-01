@@ -8,8 +8,8 @@ class EventApiHelper {
     ..interceptors.add(AppLogInterceptor())
     ..options = BaseOptions(
       baseUrl: url,
-      connectTimeout: const Duration(seconds: 15),
-      receiveTimeout: const Duration(seconds: 15),
+      connectTimeout: const Duration(minutes: 1),
+      receiveTimeout: const Duration(minutes: 1),
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
       },

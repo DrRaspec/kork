@@ -1,21 +1,17 @@
 part of 'add_event_view.dart';
 
 class AddEventViewController extends GetxController {
-  // Ticket Type and Ticket Types
   List<String> ticketTypes = ["1 Type", "2 Types", "3 Types", "4 Types"].obs;
   List<String> types = ["Standard", "Normal", "VIP", "VVIP"].obs;
 
-  // Ticket Controllers
   var ticketController = <TextEditingController>[].obs;
   var ticketPriceController = <TextEditingController>[].obs;
   var ticketQuantityController = <TextEditingController>[].obs;
   var selectedValue = Rx<String?>("4 Type");
 
-  // Image Picker
   final ImagePicker _picker = ImagePicker();
   var selectedImage = Rx<File?>(null);
 
-  // Event Details Controllers
   var nameController = TextEditingController();
   var focusName = FocusNode();
   var nameError = ''.obs;
@@ -48,7 +44,6 @@ class AddEventViewController extends GetxController {
   var focusDescription = FocusNode();
   var descriptionError = ''.obs;
 
-  // Payment Details Controllers
   var companyNameController = TextEditingController();
   var focusCompanyName = FocusNode();
   var companyNameError = ''.obs;
@@ -78,7 +73,6 @@ class AddEventViewController extends GetxController {
     super.onInit();
     updateControllers(selectedValue.value);
 
-    // Initialize Focus Nodes for Payment Details
     cardNumberFocus = FocusNode();
     cardHolderFocus = FocusNode();
     ccvFocus = FocusNode();
@@ -87,7 +81,6 @@ class AddEventViewController extends GetxController {
 
   @override
   void onClose() {
-    // Dispose of all controllers and focus nodes
     nameController.dispose();
     focusName.dispose();
 
@@ -115,7 +108,6 @@ class AddEventViewController extends GetxController {
     companyNameController.dispose();
     focusCompanyName.dispose();
 
-    // Dispose of ticket controllers
     for (var controller in ticketController) {
       controller.dispose();
     }
@@ -131,7 +123,6 @@ class AddEventViewController extends GetxController {
     }
     ticketQuantityController.clear();
 
-    // Dispose of payment-related controllers
     cardNumberController.dispose();
     cardNumberFocus.dispose();
 
@@ -152,7 +143,6 @@ class AddEventViewController extends GetxController {
   void updateControllers(String? value) {
     int count = int.tryParse(value?.split(" ")[0] ?? "0") ?? 0;
 
-    // Dispose of existing controllers
     for (var controller in ticketController) {
       controller.dispose();
     }
@@ -163,13 +153,11 @@ class AddEventViewController extends GetxController {
     }
     ticketPriceController.clear();
 
-    // Clear and dispose quantity controllers
     for (var controller in ticketQuantityController) {
       controller.dispose();
     }
     ticketQuantityController.clear();
 
-    // Create new controllers based on selected ticket type count
     for (int i = 0; i < count; i++) {
       ticketController.add(TextEditingController());
       ticketPriceController.add(TextEditingController());
@@ -202,10 +190,10 @@ class AddEventViewController extends GetxController {
             final endDate =
                 DateFormat('yyyy-MM-dd').parse(endDateController.text);
             if (endDate.isBefore(date)) {
-              endDateController.text = '';
+              endDateController.text = formattedDate;
             }
           } catch (e) {
-            endDateController.text = '';
+            endDateController.text = formattedDate;
           }
         }
       } else {
@@ -213,12 +201,37 @@ class AddEventViewController extends GetxController {
           try {
             final startDate =
                 DateFormat('yyyy-MM-dd').parse(startDateController.text);
-            if (date.isAfter(startDate)) {
+
+            if (!date.isBefore(startDate)) {
               endDateController.text = formattedDate;
+
+              if (date.isAtSameMomentAs(startDate) &&
+                  startTimeController.text.isNotEmpty &&
+                  endTimeController.text.isNotEmpty) {
+                final startTimeParts = startTimeController.text.split(':');
+                final endTimeParts = endTimeController.text.split(':');
+
+                if (startTimeParts.length == 2 && endTimeParts.length == 2) {
+                  final startHour = int.tryParse(startTimeParts[0]) ?? 0;
+                  final startMinute = int.tryParse(startTimeParts[1]) ?? 0;
+                  final endHour = int.tryParse(endTimeParts[0]) ?? 0;
+                  final endMinute = int.tryParse(endTimeParts[1]) ?? 0;
+
+                  if (endHour < startHour ||
+                      (endHour == startHour && endMinute <= startMinute)) {
+                    endTimeController.text = '';
+                    Get.snackbar(
+                      'Time Error',
+                      'End time must be after start time when dates are the same',
+                      snackPosition: SnackPosition.TOP,
+                    );
+                  }
+                }
+              }
             } else {
               Get.snackbar(
                 'Error',
-                'End date must be after start date',
+                'End date cannot be before start date',
                 snackPosition: SnackPosition.TOP,
               );
             }
@@ -245,19 +258,54 @@ class AddEventViewController extends GetxController {
     );
 
     if (time != null) {
-      int hour24 = (time.period == DayPeriod.pm && time.hour != 12)
-          ? time.hour + 12
-          : (time.period == DayPeriod.am && time.hour == 12)
-              ? 0
-              : time.hour;
-
+      int hour24 = (time.hour % 12) + (time.period == DayPeriod.pm ? 12 : 0);
       String formattedTime =
-          '${hour24.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+          '$hour24:${time.minute.toString().padLeft(2, '0')}';
 
       if (isStartTime) {
         startTimeController.text = formattedTime;
       } else {
         endTimeController.text = formattedTime;
+      }
+
+      if (startDateController.text.isNotEmpty &&
+          endDateController.text.isNotEmpty) {
+        DateTime startDate = DateTime.parse(startDateController.text);
+        DateTime endDate = DateTime.parse(endDateController.text);
+
+        Duration difference = endDate.difference(startDate);
+
+        if (difference.inDays > 30) {
+          Get.snackbar(
+            'Date Error',
+            'The end date cannot be more than 30 days after the start date',
+            snackPosition: SnackPosition.TOP,
+          );
+          endDateController.text = '';
+          return;
+        }
+
+        if (difference.inDays == 0 &&
+            startTimeController.text.isNotEmpty &&
+            endTimeController.text.isNotEmpty) {
+          final startTimeParts = startTimeController.text.split(':');
+          final endTimeParts = endTimeController.text.split(':');
+
+          final startHour = int.parse(startTimeParts[0]);
+          final startMinute = int.parse(startTimeParts[1]);
+          final endHour = int.parse(endTimeParts[0]);
+          final endMinute = int.parse(endTimeParts[1]);
+
+          if (endHour < startHour ||
+              (endHour == startHour && endMinute <= startMinute)) {
+            endTimeController.text = '';
+            Get.snackbar(
+              'Time Error',
+              'End time must be after start time when the dates are the same',
+              snackPosition: SnackPosition.TOP,
+            );
+          }
+        }
       }
     }
   }
@@ -385,7 +433,7 @@ class AddEventViewController extends GetxController {
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[0-9]+$').hasMatch(cardNumberController.text) ||
+    } else if (!RegExp(r'^[0-9]{13,19}$').hasMatch(cardNumberController.text) ||
         cardType.value == 'Unknown') {
       cardNumberError.value = true;
       hasError = true;
@@ -395,7 +443,8 @@ class AddEventViewController extends GetxController {
     if (cardHolderController.text.isEmpty) {
       cardHolderError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[a-zA-Z]+$').hasMatch(cardHolderController.text)) {
+    } else if (!RegExp(r'^[a-zA-Z\s\-]+$')
+        .hasMatch(cardHolderController.text)) {
       cardHolderError.value = true;
       hasError = true;
     }
@@ -404,13 +453,17 @@ class AddEventViewController extends GetxController {
     if (ccvController.text.trim().isEmpty) {
       ccvError.value = true;
       hasError = true;
+    } else if (!RegExp(r'^[0-9]{3,4}$').hasMatch(ccvController.text)) {
+      ccvError.value = true;
+      hasError = true;
     }
 
     // Validate Expire Date
     if (expireDateController.text.trim().isEmpty) {
       expireDateError.value = true;
       hasError = true;
-    } else if (RegExp(r'^[0-9]+$').hasMatch(expireDateController.text)) {
+    } else if (!RegExp(r'^(0[1-9]|1[0-2])\/[0-9]{2}$')
+        .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
       hasError = true;
     }
@@ -505,7 +558,22 @@ class AddEventViewController extends GetxController {
             'Success',
             'Event created successfully',
             snackPosition: SnackPosition.TOP,
-            duration: const Duration(milliseconds: 350),
+            duration: const Duration(milliseconds: 800),
+          );
+        } else {
+          String errorMessage =
+              response.data['message'] ?? 'Event creation failed';
+
+          if (response.data['errors'] != null &&
+              response.data['errors'] is Map) {
+            errorMessage +=
+                "\n${(response.data['errors'] as Map).values.expand((e) => e).join("\n")}";
+          }
+
+          Get.snackbar(
+            'Error',
+            errorMessage,
+            snackPosition: SnackPosition.TOP,
           );
         }
       } on DioException catch (e) {
@@ -513,16 +581,18 @@ class AddEventViewController extends GetxController {
         print('Error Message: ${e.message}');
         print('Status Code: ${e.response?.statusCode}');
 
+        String errorMessage =
+            e.response?.data['message'] ?? 'Event creation failed';
+
+        if (e.response?.data['errors'] != null &&
+            e.response?.data['errors'] is Map) {
+          errorMessage +=
+              "\n${(e.response?.data['errors'] as Map).values.expand((e) => e).join("\n")}";
+        }
+
         Get.snackbar(
           'Error',
-          e.response?.data['message'] ?? 'Failed to create event',
-          snackPosition: SnackPosition.TOP,
-        );
-      } catch (e) {
-        print('Unexpected Error: $e');
-        Get.snackbar(
-          'Error',
-          'An unexpected error occurred',
+          errorMessage,
           snackPosition: SnackPosition.TOP,
         );
       }
