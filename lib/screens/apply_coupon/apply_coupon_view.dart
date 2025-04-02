@@ -23,66 +23,62 @@ class ApplyCouponView extends GetView<ApplyCouponViewController> {
         child: Column(
           children: [
             const SizedBox(height: 24),
-            Obx(
-              () => SizedBox(
-                height: 40,
-                child: TextField(
-                  controller: controller.searchCouponController,
-                  textAlignVertical: TextAlignVertical.center,
-                  style:
-                      const TextStyle(color: Color(0xffEAE9FC), fontSize: 12),
-                  onChanged: (value) {
-                    controller.searchText.value = value;
-                    if (value.isEmpty) {
-                      controller.validCoupon.value = {};
-                    }
-                  },
-                  focusNode: controller.focusNode,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    filled: true,
-                    fillColor: Get.theme.colorScheme.secondary,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 11),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Get.theme.colorScheme.tertiary,
+            SizedBox(
+              height: 40,
+              child: TextField(
+                controller: controller.searchCouponController,
+                textAlignVertical: TextAlignVertical.center,
+                style: const TextStyle(color: Color(0xffEAE9FC), fontSize: 12),
+                onChanged: (value) {
+                  controller.searchText.value = value;
+                  if (value.isEmpty) {
+                    controller.validCoupon.value = {};
+                  }
+                },
+                focusNode: controller.focusNode,
+                decoration: InputDecoration(
+                  isDense: true,
+                  filled: true,
+                  fillColor: Get.theme.colorScheme.secondary,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 11),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 11),
+                    child: SvgPicture.asset(
+                      'assets/image/svg/search-normal.svg',
+                      colorFilter: ColorFilter.mode(
+                        Get.theme.colorScheme.surfaceTint,
+                        BlendMode.srcIn,
                       ),
                     ),
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 11),
-                      child: SvgPicture.asset(
-                        'assets/image/svg/search-normal.svg',
-                        colorFilter: ColorFilter.mode(
-                          Get.theme.colorScheme.surfaceTint,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                    suffixIcon: controller
-                            .searchCouponController.text.isNotEmpty
-                        ? GestureDetector(
-                            onTap: () {
-                              controller.searchCouponController.clear();
-                              controller.validCoupon.value = {};
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 11),
-                              child: SvgPicture.asset(
-                                'assets/image/svg/dangerous.svg',
-                                colorFilter: ColorFilter.mode(
-                                  Get.theme.colorScheme.surfaceTint,
-                                  BlendMode.srcIn,
-                                ),
+                  ),
+                  suffixIcon: controller.searchCouponController.text.isNotEmpty
+                      ? GestureDetector(
+                          onTap: () {
+                            controller.searchCouponController.clear();
+                            controller.validCoupon.value = {};
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 11),
+                            child: SvgPicture.asset(
+                              'assets/image/svg/dangerous.svg',
+                              colorFilter: ColorFilter.mode(
+                                Get.theme.colorScheme.surfaceTint,
+                                BlendMode.srcIn,
                               ),
                             ),
-                          )
-                        : const SizedBox.shrink(),
-                    hintText: AppLocalizations.of(context)!.search_coupon,
-                    hintStyle: TextStyle(
-                      color: Get.theme.colorScheme.surfaceTint,
-                      fontSize: 12,
-                    ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                  hintText: AppLocalizations.of(context)!.search_coupon,
+                  hintStyle: TextStyle(
+                    color: Get.theme.colorScheme.surfaceTint,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -102,7 +98,8 @@ class ApplyCouponView extends GetView<ApplyCouponViewController> {
             Obx(
               () => controller.validCoupon.isNotEmpty
                   ? GestureDetector(
-                      onTap: Get.back,
+                      onTap: () =>
+                          Get.back(result: controller.validCoupon['discount']),
                       child: Container(
                         height: 40,
                         width: double.infinity,

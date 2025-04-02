@@ -86,6 +86,5 @@ Future<void> loadEnvironment() async {
     print("API_URL: ${dotenv.env['API_URL'] ?? 'Not found'}");
   } catch (e) {
     print("Error loading .env file: $e");
-    dotenv.env['API_URL'] = 'https://kork-api.chandalen.dev/api';
   }
 }

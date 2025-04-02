@@ -4,8 +4,8 @@ class ApplyCouponViewController extends GetxController {
   var searchCouponController = TextEditingController();
   var searchText = ''.obs;
   var coupons = <Map<String, dynamic>>[
-    {'coupon': 'ANT!', 'discount': 20},
-    {'coupon': '168OK', 'discount': 10},
+    {'coupon': 'ANT!', 'discount': 2},
+    {'coupon': '168OK', 'discount': 1},
   ].obs;
   final focusNode = FocusNode();
   // final isValidCoupon = false.obs;

@@ -8,6 +8,7 @@ import 'package:get/get.dart' hide FormData;
 import 'package:kork/helper/card_helper.dart';
 import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/middleware/middleware.dart';
+import 'package:kork/utils/status.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/button_design.dart';
@@ -295,7 +296,12 @@ class AddNewPaymentView extends GetView<AddNewPaymentViewController> {
               //   }
               // },
               onTap: controller.addCard,
-              child: buttonDesign(text: AppLocalizations.of(context)!.add_card),
+              child: Obx(
+                () => buttonDesign(
+                  text: AppLocalizations.of(context)!.add_card,
+                  status: controller.status.value,
+                ),
+              ),
             ),
           ],
         ),

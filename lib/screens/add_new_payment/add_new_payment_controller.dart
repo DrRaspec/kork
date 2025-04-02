@@ -24,6 +24,8 @@ class AddNewPaymentViewController extends GetxController
   // var isSuccess = false;
   var result = <String, dynamic>{};
 
+  var status = Status.success.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -136,6 +138,7 @@ class AddNewPaymentViewController extends GetxController
   void addCard() async {
     if (checkValidation()) {
       const storage = FlutterSecureStorage();
+      status.value = Status.loading;
       var token = await storage.read(key: 'token');
       var id = await storage.read(key: 'id');
       if (token == null || id == null) {
@@ -153,14 +156,13 @@ class AddNewPaymentViewController extends GetxController
         var response = await EventApiHelper.post('/users/$id/payment-methods',
             data: formData);
         if (response.statusCode == 201) {
+          status.value = Status.success;
           Get.snackbar('Success', 'Add Successful',
               duration: const Duration(milliseconds: 300));
           result = response.data;
-          Future.delayed(const Duration(milliseconds: 500), () {
-            Get.back(result: result);
-          });
         }
       } on DioException catch (e) {
+        status.value = Status.error;
         var response = e.response;
         print('e error ${e.error}');
         print('response error ${response?.data}');

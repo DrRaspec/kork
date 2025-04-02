@@ -10,6 +10,7 @@ import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
 import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:kork/widget/custom_expansion.dart';
@@ -85,7 +86,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                       const SizedBox(height: 8),
                       GestureDetector(
-                        onTap: () => Get.toNamed(Routes.applyCoupon),
+                        onTap: controller.calculateDiscount,
                         child: Container(
                           height: 42,
                           width: double.infinity,
@@ -130,7 +131,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                       const SizedBox(height: 6),
                       GestureDetector(
-                        onTap: () => Get.toNamed(Routes.paymentMethod),
+                        onTap: controller.selectPaymentMethod,
                         child: Container(
                           height: 42,
                           width: double.infinity,

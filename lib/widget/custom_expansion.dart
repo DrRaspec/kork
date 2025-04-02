@@ -35,10 +35,12 @@ Widget customExpansion() {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    _buildDetailRow(
-                      context,
-                      AppLocalizations.of(context)!.voucher,
-                      '${controller.discountPrice.toStringAsFixed(2)}\$',
+                    Obx(
+                      () => _buildDetailRow(
+                        context,
+                        AppLocalizations.of(context)!.voucher,
+                        '${controller.discountPrice.toStringAsFixed(2)}\$',
+                      ),
                     ),
                     const Divider(color: Color(0x80EAE9FC)),
                     _buildDetailRow(

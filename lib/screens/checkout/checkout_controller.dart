@@ -7,6 +7,8 @@ class CheckoutController extends GetxController {
   var isExpand = false.obs;
   var discountPrice = 0.0.obs;
   var boughtTicket = <dynamic>[].obs;
+  var paymentStatus = false;
+  var feePercent = 10.0;
 
   @override
   void onInit() {
@@ -30,10 +32,12 @@ class CheckoutController extends GetxController {
   }
 
   void calculateTotal() {
-    total(0);
+    double subtotal = 0.0;
     for (int i = 0; i < ticketQuantity.length; i++) {
-      total.value += (ticketQuantity[i] * data.tickets[i].price);
+      subtotal += (ticketQuantity[i] * data.tickets[i].price);
     }
+    total.value = (subtotal - discountPrice.value).roundToDouble();
+    total.value = (total.value * (1 + feePercent / 100)).roundToDouble();
     print('total is: ${total.value}');
   }
 
@@ -42,6 +46,10 @@ class CheckoutController extends GetxController {
   }
 
   void buyTicket() async {
+    if (paymentStatus == false) {
+      Get.snackbar('Error', 'Please add payment method');
+      return;
+    }
     const storage = FlutterSecureStorage();
     var token = await storage.read(key: 'token');
     var id = data.id;
@@ -69,6 +77,8 @@ class CheckoutController extends GetxController {
         }
       }
 
+      formData.fields.add(MapEntry('payment_status', paymentStatus.toString()));
+
       if (validTicketIndex == 0) {
         Get.snackbar('Error', 'Please select at least one ticket');
         return;
@@ -94,5 +104,20 @@ class CheckoutController extends GetxController {
     }
   }
 
-  void calculateDiscount() {}
+  void selectPaymentMethod() async {
+    var result = await Get.toNamed(Routes.paymentMethod);
+    if (result == true) {
+      paymentStatus = true;
+    }
+  }
+
+  void calculateDiscount() async {
+    var result = await Get.toNamed(Routes.applyCoupon);
+    // var applyCouponController = Get.find<ApplyCouponViewController>();
+    if (result != null) {
+      var discountPercent = result / 100;
+      discountPrice.value = (total.value * discountPercent).roundToDouble();
+      calculateTotal();
+    }
+  }
 }
