@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -119,9 +120,15 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
                 const SizedBox(height: 16),
                 ListView.separated(
                   shrinkWrap: true,
-                  itemBuilder: (context, index) => ticketAvailable(
-                    ticketType: controller.eventTicketType[index],
-                    ticketQty: index == 3 ? 0 : 4,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Get.toNamed(
+                      Routes.myEventMember,
+                      arguments: controller.eventTicketType[index],
+                    ),
+                    child: ticketAvailable(
+                      ticketType: controller.eventTicketType[index],
+                      ticketQty: index == 3 ? 0 : 4,
+                    ),
                   ),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 8),

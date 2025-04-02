@@ -1,11 +1,14 @@
 import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -229,7 +232,7 @@ class LoginView extends GetView<LoginController> {
                                 },
                                 child: SizedBox(
                                   child: SvgPicture.asset(
-                                    controller.passwordObsecure.value
+                                    !controller.passwordObsecure.value
                                         ? 'assets/image/svg/eye.svg'
                                         : 'assets/image/svg/eye-slash.svg',
                                     fit: BoxFit.scaleDown,
@@ -279,26 +282,41 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
               const SizedBox(height: 24),
-              GestureDetector(
-                onTap: controller.loginOntap,
-                child: Container(
-                  width: double.infinity,
-                  height: 40,
-                  padding: EdgeInsets.zero,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Get.theme.colorScheme.primary,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.signin,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xffEAE9FC),
+              Obx(() => GestureDetector(
+                    onTap: controller.isLoading.value
+                        ? null
+                        : controller.loginOntap,
+                    child: Container(
+                      width: double.infinity,
+                      height: 40,
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: controller.isLoading.value
+                            ? Get.theme.colorScheme.primary.withOpacity(0.6)
+                            : Get.theme.colorScheme.primary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: controller.isLoading.value
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2.0,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Color(0xffEAE9FC),
+                                ),
+                              ),
+                            )
+                          : Text(
+                              AppLocalizations.of(context)!.signin,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xffEAE9FC),
+                              ),
+                            ),
                     ),
-                  ),
-                ),
-              ),
+                  )),
               const SizedBox(height: 15),
               SizedBox(
                 width: double.infinity,

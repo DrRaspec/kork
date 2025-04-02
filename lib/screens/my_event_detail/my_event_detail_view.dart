@@ -5,6 +5,7 @@ import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/my_event_option.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'my_event_detail_binding.dart';
 part 'my_event_detail_controller.dart';
@@ -16,7 +17,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
       appBar: AppBar(
         leading: buttonBack(),
         centerTitle: true,
-        title: appbarTitle('Event Name'),
+        title: appbarTitle(AppLocalizations.of(context)!.update_event),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -42,10 +43,13 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
               ),
             ),
             const SizedBox(height: 8),
-            myEventOption(
-              text: AppLocalizations.of(context)!.contact,
-              notification: 100,
-              icon: 'assets/image/svg/menu-board.svg',
+            GestureDetector(
+              onTap: controller.openGmail,
+              child: myEventOption(
+                text: AppLocalizations.of(context)!.contact,
+                notification: 100,
+                icon: 'assets/image/svg/menu-board.svg',
+              ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -56,9 +60,12 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
               ),
             ),
             const SizedBox(height: 16),
-            myEventOption(
-              text: AppLocalizations.of(context)!.update_event,
-              icon: 'assets/image/svg/edit-2.svg',
+            GestureDetector(
+              onTap: () => Get.toNamed(Routes.updateEvent),
+              child: myEventOption(
+                text: AppLocalizations.of(context)!.update_event,
+                icon: 'assets/image/svg/edit-2.svg',
+              ),
             ),
             const SizedBox(height: 8),
             Container(

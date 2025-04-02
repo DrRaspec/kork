@@ -1,6 +1,15 @@
-part of '../screens/main_screens/event/event_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:kork/models/event_model.dart';
+import 'package:kork/routes/routes.dart';
+import 'package:kork/widget/up_coming_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget eventCard() {
+Widget eventCard(Event event) {
   var context = Get.context;
   if (context == null) {
     return const SizedBox();
@@ -33,12 +42,11 @@ Widget eventCard() {
               ),
             ),
             Image.network(
-              // 'https://scontent-bkk1-1.xx.fbcdn.net/v/t39.30808-6/476237547_1169887787823699_6753392613596753970_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHQ1hMzCbLaVxy3F_opiCruR0o03Au51_9HSjTcC7nX_2be11gMPaOKWfk6RCcfnmSVtkijdOIaet2GViMXwDs6&_nc_ohc=7s9lZfRzsRcQ7kNvgHljbEx&_nc_oc=AdgnFKG-I3ygUamkIyK3-A7IrcriBlivsIAX7nLQuHb1uxCm4PbKSk1h8DfjfUzmrcE&_nc_zt=23&_nc_ht=scontent-bkk1-1.xx&_nc_gid=AVivFekG7Rp0aPU4SKoHwTC&oh=00_AYAauIR_RGlS82Z81mQjD6ySNQPRy3rZ6x8ZHJLA-zfaUg&oe=67CCF74C',
-              'https://d2vr64fd62ajh5.cloudfront.net/images/cat/posters-big-2021040614.webp',
+              event.posterUrl,
               width: Get.width,
               height: Get.height,
               fit: BoxFit.cover,
-              alignment: Alignment(0, -0.3),
+              alignment: const Alignment(0, -0.3),
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
                 return buildPlaceholder();
@@ -93,10 +101,10 @@ Widget eventCard() {
                           end: Alignment.bottomCenter,
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          '14\nApr',
-                          style: TextStyle(
+                          formatDayMonth(event.startDate),
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Color(0xffEAE9FC),
                           ),
@@ -113,7 +121,7 @@ Widget eventCard() {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Real Madrid ${AppLocalizations.of(context)!.vs} Barcelona',
+                            event.eventName,
                             style: const TextStyle(
                               color: Color(0xffEAE9FC),
                               fontSize: 10,
@@ -121,9 +129,9 @@ Widget eventCard() {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const Text(
-                            'Lorem ipsum dolor sit amet fried siLorem ipsum dolor sit amet fried si',
-                            style: TextStyle(
+                          Text(
+                            event.description,
+                            style: const TextStyle(
                               color: Color(0xffEAE9FC),
                               fontSize: 8,
                             ),
@@ -139,11 +147,19 @@ Widget eventCard() {
                                 color: Color(0xffEAE9FC),
                               ),
                               const SizedBox(width: 5),
-                              const Text(
-                                'Camp nou',
-                                style: TextStyle(
-                                  color: Color(0xffEAE9FC),
-                                  fontSize: 8,
+                              FutureBuilder<String>(
+                                future: getCityName(event.location),
+                                builder: (context, snapshot) => Text(
+                                  snapshot.connectionState ==
+                                          ConnectionState.waiting
+                                      ? 'Loading...'
+                                      : snapshot.hasError
+                                          ? 'Error'
+                                          : snapshot.data ?? 'Unknown City',
+                                  style: const TextStyle(
+                                    color: Color(0xffEAE9FC),
+                                    fontSize: 8,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 19),
@@ -157,9 +173,9 @@ Widget eventCard() {
                                 ),
                               ),
                               const SizedBox(width: 5),
-                              const Text(
-                                '7PM',
-                                style: TextStyle(
+                              Text(
+                                formatTime(event.startTime),
+                                style: const TextStyle(
                                   fontSize: 8,
                                   color: Color(0xffEAE9FC),
                                 ),
@@ -174,7 +190,7 @@ Widget eventCard() {
               ),
               const SizedBox(width: 30),
               GestureDetector(
-                onTap: () {},
+                onTap: () => Get.toNamed(Routes.eventDetail),
                 child: Row(
                   children: [
                     Text(
@@ -200,14 +216,40 @@ Widget eventCard() {
   );
 }
 
-Widget buildPlaceholder() {
-  return Shimmer.fromColors(
-    baseColor: const Color(0xffF5EFFF),
-    highlightColor: const Color(0xffE5D9F2),
-    child: Container(
-      width: Get.width,
-      height: Get.height,
-      color: const Color(0xFFCDC1FF),
-    ),
-  );
+Future<String> getCityName(LatLng latLng) async {
+  try {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+    Placemark place = placemarks.first;
+    return place.locality ?? 'Unknown City';
+  } catch (e) {
+    print("Error getting city name: $e");
+    return 'Error';
+  }
 }
+
+String formatDayMonth(DateTime date) {
+  final dayFormatter = DateFormat('d');
+  final monthFormatter = DateFormat('MMM');
+
+  final day = dayFormatter.format(date);
+  final month = monthFormatter.format(date);
+
+  return '$day\n$month';
+}
+
+String formatTime(String time) {
+  return time.split(':').sublist(0, 2).join(':');
+}
+
+// Widget buildPlaceholder() {
+//   return Shimmer.fromColors(
+//     baseColor: const Color(0xffF5EFFF),
+//     highlightColor: const Color(0xffE5D9F2),
+//     child: Container(
+//       width: Get.width,
+//       height: Get.height,
+//       color: const Color(0xFFCDC1FF),
+//     ),
+//   );
+// }

@@ -34,7 +34,7 @@ class SelectLocationController extends GetxController {
     _timer?.cancel();
 
     _timer = Timer.periodic(
-      const Duration(milliseconds: 500),
+      const Duration(milliseconds: 1000),
       (timer) {
         if (loadingText.value == AppLocalizations.of(Get.context!)!.loading) {
           loadingText.value = '${AppLocalizations.of(Get.context!)!.loading}.';
@@ -51,47 +51,6 @@ class SelectLocationController extends GetxController {
       },
     );
   }
-
-  // Future<void> getCurrentLocation() async {
-  //   if (isLoading.value) return;
-  //   isLoading.value = true;
-  //   startLoading();
-
-  //   try {
-  //     mapController.checkRequestPermission();
-
-  //     mapController.goToCurrentLocation();
-
-  //     await Future.delayed(const Duration(seconds: 1));
-  //     LatLng? location = mapController.selectedLocation.value;
-
-  //     currentLocation.value = location;
-
-  //     await Future.delayed(const Duration(milliseconds: 200));
-
-  //     if (currentLocation.value.latitude == 0 &&
-  //         currentLocation.value.longitude == 0) {
-  //       Get.snackbar(
-  //           "Error", "Failed to retrieve your location. Please try again.");
-  //       isLoading.value = false;
-  //       return;
-  //     } else {
-  //       bool isSuccess = await saveSignUp(currentLocation.value);
-  //       if (isSuccess) {
-  //         if (Get.currentRoute != Routes.main) {
-  //           Get.toNamed(Routes.main);
-  //         }
-  //       } else {
-  //         Get.snackbar("Error", "Failed to save location. Please try again.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     Get.snackbar("Error", "Failed to get location: $error");
-  //     print("Failed to get location: $error");
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
 
   Future<void> getCurrentLocation() async {
     if (isLoading.value) return;
@@ -140,7 +99,7 @@ class SelectLocationController extends GetxController {
         bool isSuccess = await saveSignUp(currentLocation.value);
         if (isSuccess) {
           if (Get.currentRoute != Routes.main) {
-            Get.toNamed(Routes.main);
+            Get.offAllNamed(Routes.login);
           }
         } else {
           Get.snackbar("Error", "Failed to save location. Please try again.");
@@ -182,9 +141,9 @@ class SelectLocationController extends GetxController {
               filename: profileImage.path.split('/').last)));
 
       dio.interceptors.add(AppLogInterceptor());
-      dio.options.baseUrl = 'http://10.0.2.2:8000/api';
-      dio.options.connectTimeout = const Duration(seconds: 5);
-      dio.options.receiveTimeout = const Duration(seconds: 3);
+      dio.options.baseUrl = dotenv.env['API_URL']!;
+      dio.options.connectTimeout = const Duration(minutes: 1);
+      dio.options.receiveTimeout = const Duration(minutes: 1);
 
       var response = await dio.post(
         '/register',
@@ -199,7 +158,7 @@ class SelectLocationController extends GetxController {
 
       if (response.statusCode == 200 ||
           response.statusCode == 201 && response.data != null) {
-        var data = UserAccounts.fromMap(response.data);
+        var data = User.fromJson(response.data);
         if (data.token != null) {
           prefs.setBool('isLoggin', true);
           await storage.write(key: 'token', value: data.token!);
@@ -207,6 +166,7 @@ class SelectLocationController extends GetxController {
           return true;
         }
       }
+      return true;
     } on DioException catch (e) {
       if (e.type == DioExceptionType.connectionTimeout) {
         Get.snackbar(

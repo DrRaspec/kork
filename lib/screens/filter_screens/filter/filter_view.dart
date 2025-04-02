@@ -283,7 +283,7 @@ class FilterView extends GetView<FilterController> {
                               ),
                               const Spacer(),
                               Text(
-                                '${controller.currentRange.value.start.toStringAsFixed(0)}\$-${controller.currentRange.value.end.toStringAsFixed(0)}',
+                                '${controller.currentRange.value.start.toStringAsFixed(0)}\$-${controller.currentRange.value.end.toStringAsFixed(0)}\$',
                                 style: TextStyle(
                                   color: Get.theme.colorScheme.primary,
                                   fontSize: 16,
@@ -329,7 +329,7 @@ class FilterView extends GetView<FilterController> {
               vertical: 13,
               horizontal: 16,
             ),
-            color: const Color(0xFFFAFAFA),
+            color: Get.theme.bottomNavigationBarTheme.backgroundColor,
             child: Row(
               children: [
                 Expanded(
@@ -340,8 +340,7 @@ class FilterView extends GetView<FilterController> {
 
                       controller.pickedDate.value = null;
 
-                      controller.currentRange.value =
-                          const RangeValues(80, 120);
+                      controller.currentRange.value = const RangeValues(20, 30);
 
                       controller.filterItem.value = <String, dynamic>{};
 
@@ -352,7 +351,7 @@ class FilterView extends GetView<FilterController> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: Get.theme.colorScheme.secondary,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                       alignment: Alignment.center,
@@ -361,7 +360,7 @@ class FilterView extends GetView<FilterController> {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
-                          color: Get.theme.colorScheme.secondary,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                     ),

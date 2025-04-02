@@ -13,6 +13,7 @@ class FirstOnboardingController extends GetxController {
       );
     } else {
       final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('hasSelectedLanguage', true);
       prefs.setBool('hasCompletedOnboarding', true);
       Get.offAllNamed(Routes.login);
     }

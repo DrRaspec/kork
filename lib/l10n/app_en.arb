@@ -1058,5 +1058,57 @@
     "logout": "Logout",
     "@logout": {
         "description": "Logout"
+    },
+    "kork": "Kork",
+    "@kork": {
+        "description": "Kork"
+    },
+    "app": "App",
+    "@app": {
+        "description": "App"
+    },
+    "current_password": "Current password",
+    "@current_password": {
+        "description": "Current password"
+    },
+    "re_enter_your_password": "Re-enter your password",
+    "@re_enter_your_password": {
+        "description": "Re-enter your password"
+    },
+    "error_current_password": "Current password is incorrect",
+    "@error_current_password": {
+        "description": "Current password is incorrect"
+    },
+    "innovation": "Innovation",
+    "@innovation": {
+        "description": "Innovation"
+    },
+    "game": "Game",
+    "@game": {
+        "description": "Game"
+    },
+    "incorrect_passowrd": "Incorrect password",
+    "@incorrect_passowrd": {
+        "description": "Incorrect password"
+    },
+    "description": "Description",
+    "@description": {
+        "description": "ការពិពណ៌នា"
+    },
+    "success": "Successful",
+    "@success": {
+        "description": "Successful"
+    },
+    "register_event_success": "Register event successfully",
+    "@register_event_success": {
+        "description": "Register event successfully"
+    },
+    "organizer": "Organizer",
+    "@organizer": {
+        "description": "Organizer"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Retry"
     }
 }

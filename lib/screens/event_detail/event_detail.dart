@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/models/event_detail_model.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:kork/helper/bookmark_helper.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/build_placeholder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'event_detail_controller.dart';
@@ -33,7 +39,7 @@ class EventDetail extends GetView<EventDetailController> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(
-                                controller.eventData.image,
+                                controller.eventData.posterUrl,
                               ),
                               fit: BoxFit.cover,
                               alignment: const Alignment(0, -0.3),
@@ -55,14 +61,7 @@ class EventDetail extends GetView<EventDetailController> {
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Get.theme.colorScheme.secondary,
-                                          Get.theme.colorScheme.primary
-                                        ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                      ),
+                                      color: Get.theme.colorScheme.secondary,
                                     ),
                                     child: const Icon(
                                       Icons.arrow_back_ios_new_outlined,
@@ -72,25 +71,27 @@ class EventDetail extends GetView<EventDetailController> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  child: Container(
-                                    width: 32,
-                                    height: 32,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Get.theme.colorScheme.secondary,
-                                          Get.theme.colorScheme.primary
-                                        ],
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
+                                  onTap: controller.markEvent,
+                                  child: Obx(
+                                    () => Container(
+                                      width: 32,
+                                      height: 32,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Get.theme.colorScheme.secondary,
                                       ),
-                                    ),
-                                    child: const Icon(
-                                      Icons.bookmark_border_outlined,
-                                      size: 21,
-                                      color: Color(0xffEAE9FC),
+                                      child: controller.isMarked.value
+                                          ? const Icon(
+                                              Icons.bookmark,
+                                              size: 21,
+                                              color: Color(0xffE5A000),
+                                            )
+                                          : const Icon(
+                                              Icons.bookmark_border_outlined,
+                                              size: 21,
+                                              color: Color(0xffEAE9FC),
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -105,7 +106,7 @@ class EventDetail extends GetView<EventDetailController> {
                             children: [
                               const SizedBox(height: 56),
                               Text(
-                                controller.eventData.title,
+                                controller.eventData.eventName,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Get.theme.colorScheme.tertiary,
@@ -189,7 +190,7 @@ class EventDetail extends GetView<EventDetailController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        controller.eventData.date,
+                                        controller.startDay,
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
@@ -197,7 +198,9 @@ class EventDetail extends GetView<EventDetailController> {
                                         ),
                                       ),
                                       Text(
-                                        controller.eventData.time,
+                                        controller.formatTime(
+                                          controller.eventData.startTime,
+                                        ),
                                         style: TextStyle(
                                           fontSize: 12,
                                           color:
@@ -213,14 +216,14 @@ class EventDetail extends GetView<EventDetailController> {
                                 children: [
                                   Container(
                                     width: 40,
-                                    height: 41,
+                                    height: 40,
                                     clipBehavior: Clip.hardEdge,
                                     decoration: BoxDecoration(
-                                      color: Get.theme.colorScheme.primary,
+                                      // color: Get.theme.colorScheme.primary,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Image.network(
-                                      controller.eventData.organizerProfile,
+                                      controller.eventData.user.profileUrl!,
                                       fit: BoxFit.cover,
                                       loadingBuilder:
                                           (context, child, loadingProgress) {
@@ -237,7 +240,7 @@ class EventDetail extends GetView<EventDetailController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Ashfak Sayem',
+                                        '${controller.eventData.user.firstName} ${controller.eventData.user.lastName}',
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Get.theme.colorScheme.tertiary,
@@ -245,7 +248,7 @@ class EventDetail extends GetView<EventDetailController> {
                                         ),
                                       ),
                                       Text(
-                                        'Organizer',
+                                        AppLocalizations.of(context)!.organizer,
                                         style: TextStyle(
                                           fontSize: 12,
                                           color:
@@ -271,11 +274,13 @@ class EventDetail extends GetView<EventDetailController> {
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => ticketType(
-                                    controller.eventData.ticket[index]['type'],
+                                    controller
+                                        .eventData.tickets[index].ticketType,
                                   ),
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(width: 15),
-                                  itemCount: controller.eventData.ticket.length,
+                                  itemCount:
+                                      controller.eventData.tickets.length,
                                 ),
                               ),
                               const SizedBox(height: 28),
@@ -333,7 +338,7 @@ class EventDetail extends GetView<EventDetailController> {
                               ),
                               const SizedBox(height: 24),
                               Text(
-                                'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                                controller.eventData.description,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -484,45 +489,33 @@ class EventDetail extends GetView<EventDetailController> {
             Container(
               width: Get.width,
               // height: 57,
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               decoration: BoxDecoration(
                 color: Get.theme.bottomNavigationBarTheme.backgroundColor,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${AppLocalizations.of(context)!.price}: ${controller.eventData.price}\$',
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () => Get.toNamed(
+                  Routes.checkout,
+                  arguments: controller.eventData,
+                ),
+                child: Container(
+                  width: 153,
+                  height: 39,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Get.theme.colorScheme.primary,
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.buy_now,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: Color(0xffEAE9FC),
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(
-                      Routes.checkout,
-                      arguments: controller.eventData,
-                    ),
-                    child: Container(
-                      width: 153,
-                      height: 39,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Get.theme.colorScheme.primary,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context)!.buy_now,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xffEAE9FC),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
             ),
           ],
@@ -535,7 +528,7 @@ class EventDetail extends GetView<EventDetailController> {
     return Material(
       child: Container(
         height: 30,
-        width: Get.width / controller.eventData.ticket.length - 19.3,
+        width: Get.width / controller.eventData.tickets.length - 19.3,
         decoration: BoxDecoration(
           color: Get.theme.colorScheme.primary,
           border: Border.all(

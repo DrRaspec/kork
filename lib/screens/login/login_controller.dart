@@ -13,6 +13,7 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
   var emailError = ''.obs;
   var passwordError = ''.obs;
+  var isLoading = false.obs;
 
   late AnimationController emailShakeController;
   late AnimationController passwordShakeController;
@@ -23,6 +24,9 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
   @override
   void onInit() async {
+    print(
+        "LoginController: onInit called for ID ${hashCode} at ${DateTime.now()}");
+    print("Current route: ${Get.currentRoute}");
     super.onInit();
 
     emailFocusNode = FocusNode();
@@ -49,14 +53,15 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
     prefs = await SharedPreferences.getInstance();
   }
 
-// In GetX, onReady() is a lifecycle method in GetxController that gets called after the widget has been rendered on the screen.
-  // @override
-  // void onReady() async {
-  //   super.onReady();
-  // }
+  @override
+  void onReady() {
+    print("LoginController: onReady called at ${DateTime.now()}");
+    super.onReady();
+  }
 
   @override
   void onClose() {
+    print("LoginController: Disposing with ID ${hashCode}");
     emailController.dispose();
     passwordController.dispose();
     emailShakeController.dispose();
@@ -100,8 +105,6 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
       triggerPasswordShake();
     }
 
-    hasError = await checkValidEmail();
-
     if (hasError) {
       Future.delayed(
         Duration.zero,
@@ -113,57 +116,79 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
           }
         },
       );
-      return;
     }
-  }
-
-  Future<bool> checkValidEmail() async {
-    try {
-      dio.interceptors.add(AppLogInterceptor());
-      dio.options.connectTimeout = const Duration(seconds: 15);
-      dio.options.receiveTimeout = const Duration(seconds: 15);
-      var response = await dio.post(
-        'http://10.0.2.2:8000/api/login',
-        data: {
-          'email': emailController.text,
-          'password': passwordController.text,
-        },
-        options: Options(
-          headers: {
-            'Accept': 'application/json',
-          },
-          contentType: 'application/json',
-        ),
-      );
-      var result = response.data as Map<String, dynamic>;
-      print('response data $result');
-      await storage.write(key: 'id', value: result['id'].toString());
-      await storage.write(key: 'token', value: result['token']);
-      return false;
-    } on DioException catch (e) {
-      var response = e.response;
-      // if (response != null && response.data is Map<String, dynamic>) {
-      if (response != null && response.statusCode == 422) {
-        var result = response.data as Map<String, dynamic>;
-        if (result.containsKey('error')) {
-          passwordError.value =
-              AppLocalizations.of(Get.context!)!.incorrect_email_password;
-          emailError.value =
-              AppLocalizations.of(Get.context!)!.incorrect_email_password;
-        }
-      } else {
-        printError(info: e.toString());
-      }
-    }
-    return true;
   }
 
   void loginOntap() async {
-    await validateInputs();
-    if (emailError.isEmpty && passwordError.isEmpty) {
-      Get.snackbar('Sign up', 'Sign up successful');
-      Get.toNamed(Routes.main);
-      prefs.setBool('isLoggin', true);
+    if (isLoading.value) return;
+
+    try {
+      isLoading.value = true;
+
+      await validateInputs();
+      if (emailError.isEmpty && passwordError.isEmpty) {
+        final authService = Get.find<AuthService>();
+        final mainController = Get.find<MainController>();
+
+        try {
+          var url = dotenv.env['API_URL']!;
+          dio.options.baseUrl = url;
+          dio.interceptors.add(AppLogInterceptor());
+          dio.options.connectTimeout = const Duration(minutes: 1);
+          dio.options.receiveTimeout = const Duration(minutes: 1);
+          var response = await dio.post(
+            '/login',
+            data: {
+              'email': emailController.text,
+              'password': passwordController.text,
+            },
+            options: Options(
+              headers: {'Accept': 'application/json'},
+              contentType: 'application/json',
+            ),
+          );
+
+          var userData = response.data as Map<String, dynamic>;
+
+          // Login and fetch user data
+          await authService.login(
+            token: userData['token'],
+            id: userData['id'].toString(),
+          );
+
+          // Explicitly fetch user data
+          await mainController.fetchData();
+
+          // Navigate to main screen
+          Get.offAllNamed(Routes.main);
+          Get.snackbar('Sign in', 'Signed in successfully');
+        } on DioException catch (e) {
+          _handleLoginError(e);
+        }
+      }
+    } catch (e) {
+      printError(info: 'Login error: $e');
+      Get.snackbar('Error', 'An unexpected error occurred during login');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void _handleLoginError(DioException e) {
+    var response = e.response;
+    if (response != null && response.statusCode == 422) {
+      var result = response.data as Map<String, dynamic>;
+      if (result.containsKey('error')) {
+        passwordError.value =
+            AppLocalizations.of(Get.context!)!.incorrect_email_password;
+        emailError.value =
+            AppLocalizations.of(Get.context!)!.incorrect_email_password;
+      }
+    } else {
+      printError(info: e.toString());
+      Get.snackbar('Error',
+          'Failed to connect to the server. Please check your internet connection.',
+          snackPosition: SnackPosition.TOP);
     }
   }
 }

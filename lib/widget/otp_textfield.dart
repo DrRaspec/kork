@@ -3,8 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 Widget otpTextField(
-    TextEditingController controller, FocusNode focusNode, BuildContext context,
-    {bool next = false, bool previous = false}) {
+  TextEditingController controller,
+  FocusNode focusNode,
+  BuildContext context, {
+  bool next = false,
+  bool previous = false,
+}) {
   return Container(
     width: 60,
     height: 60,
@@ -19,10 +23,12 @@ Widget otpTextField(
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         onChanged: (value) {
-          if (value.length == 1 && next) {
-            FocusScope.of(context).nextFocus();
-          } else if (value.isEmpty && previous) {
-            FocusScope.of(context).previousFocus();
+          if (value.isNotEmpty) {
+            if (next) {
+              FocusScope.of(context).nextFocus();
+            } else {
+              focusNode.unfocus(); 
+            }
           }
         },
         inputFormatters: [

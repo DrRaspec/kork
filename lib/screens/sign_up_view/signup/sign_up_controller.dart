@@ -25,6 +25,8 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   late Animation<double> passwordShakeAnimation;
   late Animation<double> confirmPasswordShakeAnimation;
 
+  var status = Status.success.obs;
+
   Timer? debounce;
 
   // var isNew = Get.find<VerifyOtpView>().controller.isNew;
@@ -99,80 +101,87 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> validateInput() async {
+    var url = dotenv.env['API_URL']!;
     emailError.value = '';
     passwordError.value = '';
     confirmPasswordError.value = '';
     bool hasError = false;
     dio.interceptors.add(AppLogInterceptor());
-    var response = await dio.post(
-      'http://10.0.2.2:8000/api/check-email',
-      data: {'email': emailController.text},
-      options: Options(
-        headers: {'content-type': 'application/json'},
-        validateStatus: (status) {
-          return status != null && status >= 200 && status <= 409;
-        },
-      ),
-    );
-
-    var result = response.data as Map<String, dynamic>;
-
-    if (emailController.text.trim().isEmpty) {
-      emailError.value =
-          '${AppLocalizations.of(Get.context!)!.email} ${AppLocalizations.of(Get.context!)!.cant_empty}';
-      triggerEmailShake();
-      hasError = true;
-    } else if (!RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
-    ).hasMatch(emailController.text.trim())) {
-      emailError.value = AppLocalizations.of(Get.context!)!.invalid_email;
-      triggerEmailShake();
-      hasError = true;
-    } else if (result['email'] == 'Email already exists') {
-      emailError.value =
-          AppLocalizations.of(Get.context!)!.email_already_registered;
-      triggerEmailShake();
-      hasError = true;
-    }
-
-    if (passwordController.text.isEmpty) {
-      passwordError.value =
-          '${AppLocalizations.of(Get.context!)!.password}${AppLocalizations.of(Get.context!)!.cant_empty}';
-      trigglePasswordShake();
-      hasError = true;
-    } else if (passwordController.text.length < 8 ||
-        !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
-            .hasMatch(passwordController.text)) {
-      passwordError.value = AppLocalizations.of(Get.context!)!.password_quide;
-      trigglePasswordShake();
-      hasError = true;
-    }
-
-    if (conPasswordController.text.isEmpty) {
-      confirmPasswordError.value =
-          '${AppLocalizations.of(Get.context!)!.confirm_password}${AppLocalizations.of(Get.context!)!.cant_empty}';
-      triggleConfirmPasswordShake();
-      hasError = true;
-    } else if (conPasswordController.text != passwordController.text) {
-      confirmPasswordError.value =
-          AppLocalizations.of(Get.context!)!.password_not_match;
-      trigglePasswordShake();
-      hasError = true;
-    }
-
-    if (hasError) {
-      Future.delayed(
-        Duration.zero,
-        () {
-          if (emailError.isNotEmpty) {
-            emailFocus.requestFocus();
-          } else if (passwordError.isNotEmpty) {
-            passwordFocus.requestFocus();
-          } else if (confirmPasswordError.isNotEmpty) {
-            confirmPasswordFocus.requestFocus();
-          }
-        },
+    try {
+      status.value = Status.loading;
+      var response = await dio.post(
+        '$url/check-email',
+        data: {'email': emailController.text},
+        options: Options(
+          headers: {'content-type': 'application/json'},
+          validateStatus: (status) {
+            return status != null && status >= 200 && status <= 409;
+          },
+        ),
       );
+      var result = response.data as Map<String, dynamic>;
+
+      status.value = Status.success;
+
+      if (emailController.text.trim().isEmpty) {
+        emailError.value =
+            '${AppLocalizations.of(Get.context!)!.email} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+        triggerEmailShake();
+        hasError = true;
+      } else if (!RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
+      ).hasMatch(emailController.text.trim())) {
+        emailError.value = AppLocalizations.of(Get.context!)!.invalid_email;
+        triggerEmailShake();
+        hasError = true;
+      } else if (result['email'] == 'Email already exists') {
+        emailError.value =
+            AppLocalizations.of(Get.context!)!.email_already_registered;
+        triggerEmailShake();
+        hasError = true;
+      }
+
+      if (passwordController.text.isEmpty) {
+        passwordError.value =
+            '${AppLocalizations.of(Get.context!)!.password}${AppLocalizations.of(Get.context!)!.cant_empty}';
+        trigglePasswordShake();
+        hasError = true;
+      } else if (passwordController.text.length < 8 ||
+          !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+              .hasMatch(passwordController.text)) {
+        passwordError.value = AppLocalizations.of(Get.context!)!.password_quide;
+        trigglePasswordShake();
+        hasError = true;
+      }
+
+      if (conPasswordController.text.isEmpty) {
+        confirmPasswordError.value =
+            '${AppLocalizations.of(Get.context!)!.confirm_password}${AppLocalizations.of(Get.context!)!.cant_empty}';
+        triggleConfirmPasswordShake();
+        hasError = true;
+      } else if (conPasswordController.text != passwordController.text) {
+        confirmPasswordError.value =
+            AppLocalizations.of(Get.context!)!.password_not_match;
+        trigglePasswordShake();
+        hasError = true;
+      }
+
+      if (hasError) {
+        Future.delayed(
+          Duration.zero,
+          () {
+            if (emailError.isNotEmpty) {
+              emailFocus.requestFocus();
+            } else if (passwordError.isNotEmpty) {
+              passwordFocus.requestFocus();
+            } else if (confirmPasswordError.isNotEmpty) {
+              confirmPasswordFocus.requestFocus();
+            }
+          },
+        );
+      }
+    } on DioException catch (e) {
+      status.value = Status.error;
     }
   }
 

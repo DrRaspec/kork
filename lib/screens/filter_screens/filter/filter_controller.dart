@@ -6,9 +6,9 @@ class FilterController extends GetxController {
 
   var pickedDate = Rxn<DateTime>();
 
-  var currentRange = const RangeValues(80, 120).obs;
+  var currentRange = const RangeValues(20, 30).obs;
   final double minPrice = 0;
-  final double maxPrice = 200;
+  final double maxPrice = 50;
 
   var filterItem = <String, dynamic>{}.obs;
 

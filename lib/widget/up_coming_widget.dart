@@ -3,27 +3,28 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/models/event_detail_model.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:shimmer/shimmer.dart';
 
 var _location = ''.obs;
 
 String extractTime(String time) {
-  List<String> parts = time.split(' ');
-  parts.removeAt(0);
-  return parts.join(' ');
+  try {
+    DateTime dateTime = DateFormat('HH:mm:ss').parse(time);
+    return DateFormat('HH:mm').format(dateTime);
+  } catch (e) {
+    return time;
+  }
 }
 
-void getLocationAddress(String street) async {
+void getLocationAddress(LatLng street) async {
   try {
-    List<String> parts = street.split(',');
-    double latitude = double.parse(parts[0].trim());
-    double longitude = double.parse(parts[1].trim());
-
     final placemarks = await placemarkFromCoordinates(
-      latitude,
-      longitude,
+      street.latitude,
+      street.longitude,
     );
 
     if (placemarks.isNotEmpty) {
@@ -44,11 +45,17 @@ void getLocationAddress(String street) async {
   }
 }
 
-Widget upComingWidget(Map<String, dynamic> items) {
+String formatDate(DateTime date) {
+  String day = DateFormat('d').format(date);
+  String month = DateFormat('MMMM').format(date);
+  return '$day\n$month';
+}
+
+Widget upComingWidget(Event item) {
   var context = Get.context;
   if (context == null) return const SizedBox();
-  var item = EventDetailModel.fromMap(items);
-  getLocationAddress(item.street);
+  // var item = Event.fromJson(items);
+  getLocationAddress(item.location);
   return Material(
     color: Colors.transparent,
     child: InkWell(
@@ -77,9 +84,9 @@ Widget upComingWidget(Map<String, dynamic> items) {
                 children: [
                   Positioned.fill(
                     child: Image.network(
-                      item.image,
+                      item.posterUrl,
                       fit: BoxFit.cover,
-                      alignment: Alignment(0, -0.3),
+                      alignment: const Alignment(0, -0.3),
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return buildPlaceholder();
@@ -122,7 +129,7 @@ Widget upComingWidget(Map<String, dynamic> items) {
                             horizontal: 5,
                           ),
                           child: Text(
-                            item.date.substring(0, item.date.length - 5),
+                            formatDate(item.startDate),
                             style: const TextStyle(
                               fontSize: 8,
                               color: Color(0xffEAE9FC),
@@ -130,6 +137,7 @@ Widget upComingWidget(Map<String, dynamic> items) {
                             softWrap: true,
                             maxLines: 2,
                             textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -173,7 +181,7 @@ Widget upComingWidget(Map<String, dynamic> items) {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        item.title,
+                        item.eventName,
                         style: const TextStyle(
                           color: Color(0xffEAE9FC),
                           fontSize: 12,
@@ -215,7 +223,7 @@ Widget upComingWidget(Map<String, dynamic> items) {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          extractTime(item.time),
+                          extractTime(item.startTime),
                           style: const TextStyle(
                             fontSize: 10,
                             color: Color(0xffEAE9FC),

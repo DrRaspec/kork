@@ -1,8 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:kork/models/event_detail_model.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/checkout/checkout_view.dart';
 import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -111,8 +116,8 @@ class YourTicketView extends GetView<YourTicketViewController> {
                 GestureDetector(
                   onTap: () {},
                   child: Container(
-                    width: 115,
-                    height: 27,
+                    width: 125,
+                    height: 28,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: Get.theme.colorScheme.primary,
@@ -153,8 +158,8 @@ class YourTicketView extends GetView<YourTicketViewController> {
                 GestureDetector(
                   onTap: () {},
                   child: Container(
-                    width: 115,
-                    height: 27,
+                    width: 125,
+                    height: 28,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       color: Get.theme.colorScheme.primary,
@@ -223,10 +228,26 @@ class YourTicketView extends GetView<YourTicketViewController> {
                 ],
               ),
             ),
-            const SizedBox(height: 8),
-            bookedEventCard(),
-            const SizedBox(height: 8),
-            bookedEventCard(),
+            // const SizedBox(height: 8),
+            // bookedEventCard(),
+            // const SizedBox(height: 8),
+            // bookedEventCard(),
+            const SizedBox(height: 16),
+            Obx(
+              () => Column(
+                children: List.generate(
+                  controller.buyedTickets.length,
+                  (index) {
+                    return Column(
+                      children: [
+                        bookedEventCard(),
+                        const SizedBox(height: 8),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

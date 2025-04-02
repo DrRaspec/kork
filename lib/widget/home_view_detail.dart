@@ -181,18 +181,25 @@ Widget homeViewDetail() {
                     const Spacer(),
                     Row(
                       children: [
-                        Text(
-                          AppLocalizations.of(context)!.view_ticket,
-                          style: const TextStyle(
-                            color: Color(0xffEAE9FC),
-                            fontSize: 12,
+                        GestureDetector(
+                          onTap: () => controller.updateScreen(2),
+                          child: Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.view_ticket,
+                                style: const TextStyle(
+                                  color: Color(0xffEAE9FC),
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(width: 2),
+                              const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Color(0xffEAE9FC),
+                                size: 8,
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 2),
-                        const Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Color(0xffEAE9FC),
-                          size: 8,
                         ),
                         SizedBox(width: Get.width * 0.01),
                         GestureDetector(
@@ -245,7 +252,7 @@ Widget homeViewDetail() {
                           child: controller.userData.value == null
                               ? buildPlaceholder()
                               : Image.network(
-                                  controller.userData.value!.profileUrl,
+                                  controller.userData.value!.profileUrl!,
                                   fit: BoxFit.cover,
                                   loadingBuilder:
                                       (context, child, loadingProgress) {

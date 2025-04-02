@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/theme/theme.dart';
-import 'package:kork/screens/main_screens/event/event_view.dart';
 
 part 'filtered_controller.dart';
 part 'filtered_binding.dart';
@@ -144,7 +143,8 @@ class FilteredView extends GetView<FilteredController> {
               ),
               SliverList.separated(
                 itemBuilder: (context, index) {
-                  return eventCard();
+                  // return eventCard();
+                  return const Text('Hello');
                 },
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 16),

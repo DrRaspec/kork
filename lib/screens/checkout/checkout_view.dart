@@ -1,9 +1,16 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/models/event_detail_model.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
 import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:kork/widget/custom_expansion.dart';
@@ -62,9 +69,10 @@ class CheckoutView extends GetView<CheckoutController> {
                           itemBuilder: (context, index) => ticketCard(index),
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 8),
-                          itemCount: controller.data.ticket.length,
+                          itemCount: controller.data.tickets.length,
                         ),
                       ),
+                      const SizedBox(height: 16),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -76,9 +84,9 @@ class CheckoutView extends GetView<CheckoutController> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
                       GestureDetector(
-                        onTap: () => Get.toNamed(Routes.applyCoupon),
+                        onTap: controller.calculateDiscount,
                         child: Container(
                           height: 42,
                           width: double.infinity,
@@ -104,7 +112,7 @@ class CheckoutView extends GetView<CheckoutController> {
                               Expanded(
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .select_payment_method,
+                                      .available_voucher,
                                   style: const TextStyle(
                                     color: Color(0xffEAE9FC),
                                     fontSize: 12,
@@ -123,7 +131,7 @@ class CheckoutView extends GetView<CheckoutController> {
                       ),
                       const SizedBox(height: 6),
                       GestureDetector(
-                        onTap: () => Get.toNamed(Routes.paymentMethod),
+                        onTap: controller.selectPaymentMethod,
                         child: Container(
                           height: 42,
                           width: double.infinity,
@@ -183,20 +191,19 @@ class CheckoutView extends GetView<CheckoutController> {
                     child: Center(
                       child: Row(
                         children: [
-                          Text(
-                            '${AppLocalizations.of(context)!.total}: \$${controller.total.value}',
-                            style: TextStyle(
-                              color: Get.theme.colorScheme.tertiary,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                          Obx(
+                            () => Text(
+                              '${AppLocalizations.of(context)!.total}: \$${controller.total.value}',
+                              style: TextStyle(
+                                color: Get.theme.colorScheme.tertiary,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () => Get.toNamed(
-                              Routes.yourTicket,
-                              arguments: controller.data,
-                            ),
+                            onTap: controller.buyTicket,
                             child: Container(
                               width: 152,
                               height: 34,
@@ -222,7 +229,7 @@ class CheckoutView extends GetView<CheckoutController> {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
+              // const SizedBox(height: 8),
             ],
           ),
         ),
@@ -251,7 +258,7 @@ class CheckoutView extends GetView<CheckoutController> {
               color: const Color(0xffE5D9F2),
             ),
             child: Image.network(
-              controller.data.image,
+              controller.data.posterUrl,
               fit: BoxFit.cover,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress != null) {
@@ -266,7 +273,7 @@ class CheckoutView extends GetView<CheckoutController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${controller.data.title} | ${controller.data.ticket[index]['type']}',
+                  '${controller.data.eventName} | ${controller.data.tickets[index].ticketType}',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xffEAE9FC),
@@ -274,7 +281,7 @@ class CheckoutView extends GetView<CheckoutController> {
                   ),
                 ),
                 Text(
-                  '${(controller.data.ticket[index]['price'] as num).toStringAsFixed(2)}\$',
+                  '${(controller.data.tickets[index].price as num).toStringAsFixed(2)}\$',
                   style: const TextStyle(
                     fontSize: 14,
                     color: Color(0xffEAE9FC),

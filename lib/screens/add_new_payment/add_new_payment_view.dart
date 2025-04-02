@@ -1,9 +1,14 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:kork/helper/card_helper.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/utils/status.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/button_design.dart';
@@ -16,7 +21,14 @@ class AddNewPaymentView extends GetView<AddNewPaymentViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: buttonBack(),
+        leading: GestureDetector(
+          onTap: () => Get.back(result: controller.result),
+          child: Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 20,
+            color: Get.theme.colorScheme.tertiary,
+          ),
+        ),
         centerTitle: true,
         title: appbarTitle(
           AppLocalizations.of(context)!.new_card,
@@ -274,16 +286,22 @@ class AddNewPaymentView extends GetView<AddNewPaymentViewController> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
-              onTap: () {
-                controller.checkValidation();
-                if (controller.ccvError.isFalse &&
-                    controller.expireDateError.isFalse &&
-                    controller.cardHolderError.isFalse &&
-                    controller.cardNumberError.isFalse) {
-                  Get.back();
-                }
-              },
-              child: buttonDesign(text: AppLocalizations.of(context)!.add_card),
+              // onTap: () {
+              //   controller.checkValidation();
+              //   if (controller.ccvError.isFalse &&
+              //       controller.expireDateError.isFalse &&
+              //       controller.cardHolderError.isFalse &&
+              //       controller.cardNumberError.isFalse) {
+              //     Get.back();
+              //   }
+              // },
+              onTap: controller.addCard,
+              child: Obx(
+                () => buttonDesign(
+                  text: AppLocalizations.of(context)!.add_card,
+                  status: controller.status.value,
+                ),
+              ),
             ),
           ],
         ),

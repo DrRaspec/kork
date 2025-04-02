@@ -5,6 +5,10 @@ class ChooseLanguageViewController extends GetxController {
 
   void changeLanguage(var isEnglish) {
     languageController.switchLanguage(isEnglish);
+
+    final prefs = Get.find<SharedPreferences>();
+    prefs.setBool('hasSelectedLanguage', true);
+
     Get.toNamed(Routes.firstOnBoarding);
   }
 }

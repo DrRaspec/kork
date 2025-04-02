@@ -34,8 +34,7 @@ class FirstOnboardingView extends GetView<FirstOnboardingController> {
                   fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
-                height: 530,
+              Expanded(
                 child: Column(
                   children: [
                     Expanded(
