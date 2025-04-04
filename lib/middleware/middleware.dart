@@ -81,10 +81,31 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
-    await storage.delete(key: 'token');
-    await storage.delete(key: 'id');
-    await setLoggedIn(false);
-    Get.offAllNamed(Routes.login);
+    try {
+      String url = dotenv.maybeGet('API_URL')!;
+      var token = await storage.read(key: 'token');
+      final dio = Dio()
+        ..interceptors.add(AppLogInterceptor())
+        ..options = BaseOptions(
+          baseUrl: url,
+          connectTimeout: const Duration(minutes: 1),
+          receiveTimeout: const Duration(minutes: 1),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': 'Bearer $token'
+          },
+        );
+      await dio.post('/logout');
+      await storage.delete(key: 'token');
+      await storage.delete(key: 'id');
+      await setLoggedIn(false);
+      Get.offAllNamed(Routes.login);
+    } on DioException catch (e) {
+      await storage.delete(key: 'token');
+      await storage.delete(key: 'id');
+      await setLoggedIn(false);
+      Get.offAllNamed(Routes.login);
+    }
   }
 }
 
@@ -96,8 +117,7 @@ class ApiService extends GetxService {
   void onInit() {
     super.onInit();
     dio.interceptors.add(AppLogInterceptor());
-    dio.options.baseUrl =
-        dotenv.env['API_URL']!;
+    dio.options.baseUrl = dotenv.env['API_URL']!;
     dio.options.connectTimeout = const Duration(minutes: 1);
     dio.options.receiveTimeout = const Duration(minutes: 1);
 

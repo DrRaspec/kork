@@ -1,5 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -54,22 +59,39 @@ class MyEventView extends GetView<MyEventViewController> {
               ],
             ),
             const SizedBox(height: 8),
-            ListView.separated(
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Divider(color: Get.theme.colorScheme.surfaceTint),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () => Get.toNamed(Routes.myEventDetail),
-                    child: bookedEventCard(),
-                  ),
-                  // const SizedBox(height: 16),
-                ],
-              ),
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemCount: 2,
+            Obx(
+              () => controller.myEvent.isEmpty
+                  ? const SizedBox.shrink()
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        var event =
+                            HostedEvent.fromJson(controller.myEvent[index]);
+                        return Column(
+                          children: [
+                            Divider(color: Get.theme.colorScheme.surfaceTint),
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              onTap: () async {
+                                await Get.toNamed(
+                                  Routes.myEventDetail,
+                                  arguments: event,
+                                );
+                                controller.loadHostedEvent();
+                              },
+                              child: bookedEventCard(
+                                event: controller.myEvent[index],
+                                isBooked: false,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 8),
+                      itemCount: controller.myEvent.length,
+                    ),
             ),
             const SizedBox(height: 16),
             GestureDetector(

@@ -10,7 +10,6 @@ import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
 import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:kork/widget/custom_expansion.dart';
@@ -202,23 +201,36 @@ class CheckoutView extends GetView<CheckoutController> {
                             ),
                           ),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: controller.buyTicket,
-                            child: Container(
-                              width: 152,
-                              height: 34,
-                              decoration: BoxDecoration(
-                                color: Get.theme.colorScheme.primary,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.confirm_pay,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          Obx(
+                            () => GestureDetector(
+                              onTap: controller.isLoading.value
+                                  ? null
+                                  : controller.buyTicket,
+                              child: Container(
+                                width: 152,
+                                height: 34,
+                                decoration: BoxDecoration(
+                                  color: Get.theme.colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(
+                                  child: controller.isLoading.value
+                                      ? const SizedBox(
+                                          width: 16,
+                                          height: 16,
+                                          child: CircularProgressIndicator(
+                                            color: Color(0xffEAE9FC),
+                                          ),
+                                        )
+                                      : Text(
+                                          AppLocalizations.of(context)!
+                                              .confirm_pay,
+                                          style: const TextStyle(
+                                            color: Color(0xffEAE9FC),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),

@@ -83,7 +83,7 @@ class MainApp extends StatelessWidget {
 Future<void> loadEnvironment() async {
   try {
     await dotenv.load(fileName: ".env");
-    print("API_URL: ${dotenv.env['API_URL'] ?? 'Not found'}");
+    // print("API_URL: ${dotenv.env['API_URL'] ?? 'Not found'}");
   } catch (e) {
     print("Error loading .env file: $e");
   }

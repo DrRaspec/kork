@@ -60,6 +60,14 @@ class EventApiHelper {
     }
   }
 
+  static Future<Response> logout() async {
+    try {
+      return await _dio.delete('/logout');
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
   static Response _handleError(dynamic error) {
     if (error is DioException) {
       return Response(

@@ -1,7 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/theme/theme.dart';
+import 'package:kork/utils/status.dart';
 
 part 'filtered_controller.dart';
 part 'filtered_binding.dart';

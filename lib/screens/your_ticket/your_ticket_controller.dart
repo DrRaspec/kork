@@ -39,7 +39,8 @@ class YourTicketViewController extends GetxController {
       var params = {'per_page': 3};
       var response =
           await EventApiHelper.get('/users/$id/buy-tickets', params: params);
-      var result = response.data as Map<String, dynamic>;
+      var result = response.data;
+      print('your ticket response $result');
       if (response.statusCode == 200 && result.containsKey("data")) {
         buyedTickets.value = result['data'];
       }
@@ -52,5 +53,11 @@ class YourTicketViewController extends GetxController {
         print('message: ${e.message}');
       }
     }
+  }
+
+  void getGenerateQrCode(BuildContext context) {
+    var ticket = BoughtTicket.fromJson(buyedTickets[1]);
+    print('ticket text ${ticket.ticketCode}');
+    generateQrCode(context, ticket, argument.eventName);
   }
 }

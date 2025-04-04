@@ -8,6 +8,7 @@ import 'package:kork/helper/payment_method.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/status.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/build_placeholder.dart';
@@ -28,6 +29,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
+            const SizedBox(height: 16),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -38,10 +40,16 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             Obx(
-              () => controller.paymentMethod.isEmpty
-                  ? buildPlaceholder(height: 40, borderRadius: 10)
+              () => controller.status.value == Status.loading
+                  ? Column(
+                      children: [
+                        buildPlaceholder(height: 40, borderRadius: 10),
+                        const SizedBox(height: 16),
+                        buildPlaceholder(height: 40, borderRadius: 10),
+                      ],
+                    )
                   : ListView.separated(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
@@ -93,9 +101,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                           onDismissed: (direction) {
                             controller.deletePaymentMethod(index, card.id);
                           },
-                          child: GestureDetector(
-                              onTap: () => Get.back(result: true),
-                              child: cardWiget(card)),
+                          child: cardWiget(card),
                         );
                         // return cardWiget(card);
                       },
@@ -104,7 +110,11 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                       itemCount: controller.paymentMethod.length,
                     ),
             ),
-            const SizedBox(height: 16),
+            Obx(
+              () => controller.paymentMethod.isEmpty
+                  ? const SizedBox.shrink()
+                  : const SizedBox(height: 16),
+            ),
             GestureDetector(
               onTap: controller.reloadData,
               child: Container(
@@ -145,7 +155,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
 
 Widget cardWiget(PaymentMethod card) {
   return GestureDetector(
-    onTap: () => Get.back(),
+    onTap: () => Get.back(result: true),
     child: Container(
       height: 40,
       width: double.infinity,

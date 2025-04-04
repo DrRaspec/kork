@@ -21,7 +21,12 @@ class TicketController extends GetxController {
   void init() async {
     token = await storage.read(key: 'token');
     id = await storage.read(key: 'id');
-    if (token == null || id == null) await Get.find<AuthService>().logout();
+    if (token == null || id == null) {
+      await Get.find<AuthService>().logout();
+      return;
+    }
+
+    EventApiHelper.setToken(token!);
     try {
       dio.interceptors.add(AppLogInterceptor());
       dio.options.baseUrl = url;

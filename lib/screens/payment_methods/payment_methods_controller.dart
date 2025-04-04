@@ -2,6 +2,7 @@ part of 'payment_methods_view.dart';
 
 class PaymentMethodsViewController extends GetxController {
   var paymentMethod = <dynamic>[].obs;
+  var status = Status.loading.obs;
   @override
   void onInit() {
     fetchPaymentMethod();
@@ -20,13 +21,16 @@ class PaymentMethodsViewController extends GetxController {
 
     try {
       PaymentMethodHelper.setToken(token);
+      status.value = Status.loading;
       var response =
           await PaymentMethodHelper.get('/users/$id/payment-methods');
       if (response.statusCode == 200) {
-        print('payment method data ${response.data['data']}');
+        status.value = Status.success;
+        // print('payment method data ${response.data['data']}');
         paymentMethod.assignAll(response.data['data']);
       }
     } on DioException catch (e) {
+      status.value = Status.error;
       print(e.message);
       print(e.response?.data);
       print(e.response?.statusCode);
@@ -58,6 +62,9 @@ class PaymentMethodsViewController extends GetxController {
 
   void reloadData() async {
     var result = await Get.toNamed(Routes.addNewPayment);
+    print('datatype payment method ${paymentMethod.runtimeType}');
+    print('payment method $paymentMethod');
+
     if (result is Map<String, dynamic> && result.isNotEmpty) {
       paymentMethod.add(result);
     }

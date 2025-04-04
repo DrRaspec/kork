@@ -58,7 +58,7 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     SizedBox(
                       height: 32,
                       width: Get.width,
@@ -76,7 +76,7 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -102,9 +102,9 @@ class FilterView extends GetView<FilterController> {
                       () => InkWell(
                         splashFactory: NoSplash.splashFactory,
                         onTap: () async {
-                          if (controller.filterItem.containsKey('time_date')) {
+                          if (controller.filterItem.containsKey('date')) {
                             controller.pickedDate.value = DateTime.tryParse(
-                                controller.filterItem['time_date']);
+                                controller.filterItem['date']);
                           }
                           controller.pickedDate.value = await showDatePicker(
                             context: context,
@@ -120,14 +120,12 @@ class FilterView extends GetView<FilterController> {
                             },
                           );
                           if (controller.pickedDate.value != null) {
-                            controller.filterItem['time_date'] =
+                            controller.filterItem['date'] =
                                 DateFormat('yyyy-MM-dd').format(
                               controller.pickedDate.value!,
                             );
                             controller.selectDate.value = '';
-                            print(
-                              controller.filterItem['time_date'],
-                            );
+                            print(controller.filterItem['date']);
                           }
                         },
                         child: Container(
@@ -188,7 +186,7 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Obx(
                       () => Material(
                         child: InkWell(
@@ -300,7 +298,7 @@ class FilterView extends GetView<FilterController> {
                                   values: controller.currentRange.value,
                                   min: controller.minPrice,
                                   max: controller.maxPrice,
-                                  divisions: 100, // Steps for smooth dragging
+                                  divisions: 100,
                                   activeColor: Colors.red,
                                   inactiveColor: Colors.red.withOpacity(0.3),
                                   labels: RangeLabels(
@@ -310,6 +308,10 @@ class FilterView extends GetView<FilterController> {
                                   onChanged: (RangeValues values) {
                                     if (values.end - values.start >= 10) {
                                       controller.currentRange.value = values;
+                                      controller.filterItem['min_price'] =
+                                          controller.currentRange.value.start;
+                                      controller.filterItem['max_price'] =
+                                          controller.currentRange.value.start;
                                     }
                                   },
                                 ),
@@ -369,7 +371,10 @@ class FilterView extends GetView<FilterController> {
                 const SizedBox(width: 15),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => Get.toNamed(Routes.filtered),
+                    onTap: () => Get.toNamed(
+                      Routes.filtered,
+                      arguments: controller.filterItem,
+                    ),
                     child: Container(
                       height: 34,
                       decoration: BoxDecoration(

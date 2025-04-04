@@ -59,11 +59,15 @@ class TicketView extends GetView<TicketController> {
                 SliverToBoxAdapter(
                   child: Column(
                     children: List.generate(
-                      3, // wil change to buyedTickets
+                      controller.buyedTickets.length,
                       (index) {
+                        // var event = BoughtTicket.fromJson(
+                        //     controller.buyedTickets[index]);
                         return Column(
                           children: [
-                            bookedEventCard(),
+                            bookedEventCard(
+                              event: controller.buyedTickets[index],
+                            ),
                             const SizedBox(height: 24),
                           ],
                         );
@@ -75,30 +79,34 @@ class TicketView extends GetView<TicketController> {
                 //   child: SizedBox(height: 24),
                 // ),
                 SliverToBoxAdapter(
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.more_event,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        AppLocalizations.of(context)!.see_all,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        size: 8,
-                        color: Get.theme.colorScheme.tertiary,
-                      ),
-                    ],
+                  child: Obx(
+                    () => controller.buyedTickets.isEmpty
+                        ? const SizedBox.shrink()
+                        : Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.more_event,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(
+                                AppLocalizations.of(context)!.see_all,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                size: 8,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ],
+                          ),
                   ),
                 ),
                 const SliverToBoxAdapter(

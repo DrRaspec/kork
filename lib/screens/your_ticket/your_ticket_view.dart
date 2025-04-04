@@ -13,6 +13,7 @@ import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:kork/widget/booked_event_card.dart';
+import 'package:kork/widget/generate_qr_code.dart';
 
 part 'your_ticket_binding.dart';
 part 'your_ticket_controller.dart';
@@ -114,7 +115,7 @@ class YourTicketView extends GetView<YourTicketViewController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () => controller.getGenerateQrCode(context),
                   child: Container(
                     width: 125,
                     height: 28,
@@ -240,7 +241,7 @@ class YourTicketView extends GetView<YourTicketViewController> {
                   (index) {
                     return Column(
                       children: [
-                        bookedEventCard(),
+                        bookedEventCard(event: controller.buyedTickets[index]),
                         const SizedBox(height: 8),
                       ],
                     );

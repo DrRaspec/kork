@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   var isValueAdded = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     print('home controller init');
     ever(mainControler.userDataReady, (isReady) {
@@ -31,8 +31,20 @@ class HomeController extends GetxController {
     timer = Timer.periodic(const Duration(milliseconds: 200), (timer) {
       dotCount.value = (dotCount % 3) + 1 as int;
     });
+    await setToken();
     fetchUpComingData();
     fetchShowingData();
+  }
+
+  Future<void> setToken() async {
+    const storage = FlutterSecureStorage();
+
+    var token = await storage.read(key: 'token');
+    if (token == null) {
+      await Get.find<AuthService>().logout();
+      return;
+    }
+    EventApiHelper.setToken(token);
   }
 
   void processUserData() {

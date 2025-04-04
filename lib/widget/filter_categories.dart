@@ -15,6 +15,8 @@ Widget filterCategories() {
     AppLocalizations.of(context)!.sport,
     AppLocalizations.of(context)!.concert,
     AppLocalizations.of(context)!.fashion,
+    AppLocalizations.of(context)!.innovation,
+    AppLocalizations.of(context)!.game,
   ];
   return ListView.separated(
     scrollDirection: Axis.horizontal,
@@ -25,7 +27,7 @@ Widget filterCategories() {
             filterController.updateSelectCategory(
               index + 1,
             );
-            filterController.filterItem['categories'] = categories[index];
+            filterController.filterItem['filter'] = categories[index];
           },
           child: Container(
             width: 133,

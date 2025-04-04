@@ -8,10 +8,22 @@ class EventController extends GetxController {
   var upComingEvent = <dynamic>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await setToken();
     fetchAllCategoryEvents();
     fetchUpComingEvent();
+  }
+
+  Future<void> setToken() async {
+    const storage = FlutterSecureStorage();
+
+    var token = await storage.read(key: 'token');
+    if (token == null) {
+      await Get.find<AuthService>().logout();
+      return;
+    }
+    EventApiHelper.setToken(token);
   }
 
   Future<void> fetchAllCategoryEvents() async {

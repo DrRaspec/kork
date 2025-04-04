@@ -157,8 +157,10 @@ class AddNewPaymentViewController extends GetxController
             data: formData);
         if (response.statusCode == 201) {
           status.value = Status.success;
-          Get.snackbar('Success', 'Add Successful',
-              duration: const Duration(milliseconds: 300));
+          Get.snackbar(
+            'Success',
+            'Add Successful',
+          );
           result = response.data;
         }
       } on DioException catch (e) {
