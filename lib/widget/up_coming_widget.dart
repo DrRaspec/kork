@@ -52,6 +52,7 @@ String formatDate(DateTime date) {
 }
 
 Widget upComingWidget(Event item) {
+  var bookMark = item.bookmarkStatus.obs;
   var context = Get.context;
   if (context == null) return const SizedBox();
   // var item = Event.fromJson(items);
@@ -60,7 +61,13 @@ Widget upComingWidget(Event item) {
     color: Colors.transparent,
     child: InkWell(
       splashFactory: NoSplash.splashFactory,
-      onTap: () => Get.toNamed(Routes.eventDetail, arguments: item),
+      onTap: () async {
+        var result = await Get.toNamed(Routes.eventDetail, arguments: item);
+        if (result is bool) {
+          item = item.copyWith(bookmarkStatus: result);
+          bookMark.value = result;
+        }
+      },
       child: Container(
         width: 198,
         height: 238,
@@ -160,11 +167,17 @@ Widget upComingWidget(Event item) {
                           end: Alignment.bottomCenter,
                         ),
                       ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.bookmark_border_rounded,
-                          size: 18,
-                          color: Color(0xffEAE9FC),
+                      child: Center(
+                        child: Obx(
+                          () => Icon(
+                            bookMark.value
+                                ? Icons.bookmark
+                                : Icons.bookmark_border_rounded,
+                            size: 18,
+                            color: item.bookmarkStatus
+                                ? const Color(0xffE5A000)
+                                : const Color(0xffEAE9FC),
+                          ),
                         ),
                       ),
                     ),

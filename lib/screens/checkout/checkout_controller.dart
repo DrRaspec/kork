@@ -40,8 +40,11 @@ class CheckoutController extends GetxController {
     }
     discountPrice.value =
         (subtotal * (discountPercent.value / 100)).roundToDouble();
-    total.value = ((subtotal - discountPrice.value) * (1 + feePercent / 100))
-        .roundToDouble();
+    total.value = double.parse(
+      ((subtotal - discountPrice.value) * (1 + feePercent / 100))
+          .toStringAsFixed(2),
+    );
+
     print('Total: ${total.value}, Discount: ${discountPrice.value}');
   }
 
@@ -96,13 +99,17 @@ class CheckoutController extends GetxController {
         boughtTicket.assignAll(response.data);
         Get.snackbar('Success', 'Tickets purchased successfully');
         Get.toNamed(Routes.yourTicket, arguments: data);
+      } else {
+        Get.snackbar(
+            'Error', response.data['error'] ?? 'Failed to purchase tickets');
       }
     } on DioException catch (e) {
       print(e.message);
       print(e.response?.data);
       print(e.response?.statusCode);
+      isLoading.value = false;
       Get.snackbar(
-          'Error', e.response?.data['message'] ?? 'Failed to purchase tickets');
+          'Error', e.response?.data['error'] ?? 'Failed to purchase tickets');
     }
   }
 

@@ -36,119 +36,132 @@ class HomeView extends GetView<HomeController> {
             controller.fetchUpComingData();
             controller.fetchShowingData();
           },
-          child: SingleChildScrollView(
-            child: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () => FocusScope.of(context).unfocus(),
-              onHorizontalDragUpdate: (details) {
-                if (details.delta.dx < -10) {
-                  controller.updateScreen(1);
-                }
-              },
-              child: Column(
-                children: [
-                  homeViewDetail(),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    height: 32,
-                    width: Get.width,
-                    child: eventCategory(),
-                  ),
-                  const SizedBox(height: 28),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: Column(
-                      children: [
-                        Obx(
-                          () => controller.categories['showing'] == null ||
-                                  controller.categories['showing']!.isEmpty
-                              ? const SizedBox.shrink()
-                              : Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: GestureDetector(
-                                    onTap: controller.categoryScreen,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .upcoming_event,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => FocusScope.of(context).unfocus(),
+                  onHorizontalDragUpdate: (details) {
+                    if (details.delta.dx < -10) {
+                      controller.updateScreen(1);
+                    }
+                  },
+                  child: Column(
+                    children: [
+                      homeViewDetail(),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        height: 32,
+                        width: Get.width,
+                        child: eventCategory(),
+                      ),
+                      const SizedBox(height: 28),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Column(
+                          children: [
+                            Obx(
+                              () => controller.categories['showing'] == null ||
+                                      controller.categories['showing']!.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: GestureDetector(
+                                        onTap: controller.categoryScreen,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .upcoming_event,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Get
+                                                    .theme.colorScheme.tertiary,
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .see_all,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Get
+                                                    .theme.colorScheme.tertiary,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 6),
+                                            Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                              size: 8,
+                                              color: Get
+                                                  .theme.colorScheme.tertiary,
+                                            ),
+                                          ],
                                         ),
-                                        const Spacer(),
-                                        Text(
-                                          AppLocalizations.of(context)!.see_all,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 6),
-                                        Icon(
-                                          Icons.arrow_forward_ios_outlined,
-                                          size: 8,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                        ),
-                        const SizedBox(height: 24),
-                        Obx(() => showItem('upcoming')),
-                        const SizedBox(height: 24),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: getFreeVoucher(),
-                        ),
-                        const SizedBox(height: 24),
-                        Obx(
-                          () => controller.categories['showing'] == null ||
-                                  controller.categories['showing']!.isEmpty
-                              ? const SizedBox.shrink()
-                              : Padding(
-                                  padding: const EdgeInsets.only(right: 16),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!.showing,
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
+                            ),
+                            const SizedBox(height: 24),
+                            Obx(() => showItem('upcoming')),
+                            const SizedBox(height: 24),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 16),
+                              child: getFreeVoucher(),
+                            ),
+                            const SizedBox(height: 24),
+                            Obx(
+                              () => controller.categories['showing'] == null ||
+                                      controller.categories['showing']!.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      padding: const EdgeInsets.only(right: 16),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .showing,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Get
+                                                  .theme.colorScheme.tertiary,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .see_all,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Get
+                                                  .theme.colorScheme.tertiary,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 6),
+                                          Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            size: 8,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ],
                                       ),
-                                      const Spacer(),
-                                      Text(
-                                        AppLocalizations.of(context)!.see_all,
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Get.theme.colorScheme.tertiary,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        size: 8,
-                                        color: Get.theme.colorScheme.tertiary,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                    ),
+                            ),
+                            const SizedBox(height: 24),
+                            Obx(() => showItem('showing')),
+                          ],
                         ),
-                        const SizedBox(height: 24),
-                        Obx(() => showItem('showing')),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 70),
+                    ],
                   ),
-                  const SizedBox(height: 70),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          }),
         ),
       ),
     );

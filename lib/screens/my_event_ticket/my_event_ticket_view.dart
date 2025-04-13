@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,7 +15,7 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
       appBar: AppBar(
         leading: buttonBack(),
         centerTitle: true,
-        title: appbarTitle('Event Name'),
+        title: appbarTitle(controller.argument.eventName),
       ),
       body: Column(
         children: [
@@ -85,75 +86,75 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.ticket_available,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Get.theme.colorScheme.tertiary,
-                        fontWeight: FontWeight.w500,
+            child: Obx(
+              () => Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        controller.selectedIndex.value == 0
+                            ? AppLocalizations.of(context)!.ticket_available
+                            : AppLocalizations.of(context)!.sold,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.tertiary,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '32',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xffEAE9FC),
+                      Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: Get.theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: Text(
+                            controller.selectedIndex.value == 0
+                                ? controller.ticketAvailable.value.toString()
+                                : controller.ticketSold.value.toString(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xffEAE9FC),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () => Get.toNamed(
-                      Routes.myEventMember,
-                      arguments: controller.eventTicketType[index],
-                    ),
-                    child: ticketAvailable(
-                      ticketType: controller.eventTicketType[index],
-                      ticketQty: index == 3 ? 0 : 4,
-                    ),
+                    ],
                   ),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 8),
-                  itemCount: controller.eventTicketType.length,
-                ),
-                // ticketAvailable(
-                //   ticketType: AppLocalizations.of(context)!.normal,
-                //   ticketQty: 26,
-                // ),
-                // const SizedBox(height: 8),
-                // ticketAvailable(
-                //   ticketType: AppLocalizations.of(context)!.standard,
-                //   ticketQty: 4,
-                // ),
-                // const SizedBox(height: 8),
-                // ticketAvailable(
-                //   ticketType: 'VIP',
-                //   ticketQty: 4,
-                // ),
-                // const SizedBox(height: 8),
-                // ticketAvailable(
-                //   ticketType: 'VVIP',
-                //   ticketQty: 0,
-                // )
-              ],
+                  const SizedBox(height: 16),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var ticket = controller.tickets[index] as Ticket;
+                      return GestureDetector(
+                        onTap: () => controller.selectedIndex.value == 0
+                            ? null
+                            : Get.toNamed(
+                                Routes.myEventMember,
+                                arguments: [
+                                  controller.argument.attendees,
+                                  ticket.ticketType
+                                ],
+                              ),
+                        child: ticketAvailable(
+                          isSold: controller.selectedIndex.value == 0
+                              ? false
+                              : true,
+                          ticketType: ticket.ticketType.toString(),
+                          ticketQty: controller.selectedIndex.value == 0
+                              ? ticket.availableQty
+                              : ticket.soldQty,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 8),
+                    itemCount: controller.tickets.length,
+                  ),
+                ],
+              ),
             ),
           )),
         ],
@@ -161,7 +162,11 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
     );
   }
 
-  Widget ticketAvailable({required String ticketType, required int ticketQty}) {
+  Widget ticketAvailable({
+    required String ticketType,
+    required int ticketQty,
+    bool isSold = false,
+  }) {
     return Container(
       width: double.infinity,
       height: 40,
@@ -182,7 +187,7 @@ class MyEventTicketView extends GetView<MyEventTicketViewController> {
             ),
           ),
           Text(
-            ticketQty == 0
+            ticketQty == 0 && !isSold
                 ? AppLocalizations.of(Get.context!)!.sold_out
                 : ticketQty.toString(),
             style: const TextStyle(

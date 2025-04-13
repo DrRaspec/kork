@@ -9,6 +9,7 @@ import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/status.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/my_event_option.dart';
@@ -33,7 +34,10 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.myEventTicketDetail),
+              onTap: () => Get.toNamed(
+                Routes.myEventTicketDetail,
+                arguments: controller.argument,
+              ),
               child: myEventOption(
                 text: AppLocalizations.of(context)!.ticket,
                 icon: 'assets/image/svg/ticket.svg',
@@ -44,7 +48,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
               text: AppLocalizations.of(context)!.total,
               icon: 'assets/image/svg/dollar-square.svg',
               customWidget: Text(
-                '\$1290',
+                controller.argument.soldTicketValue.toStringAsFixed(2),
                 style: TextStyle(
                   fontSize: 12,
                   color: Get.theme.colorScheme.surfaceTint,
@@ -56,7 +60,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
               onTap: controller.openGmail,
               child: myEventOption(
                 text: AppLocalizations.of(context)!.contact,
-                notification: 100,
+                // notification: 100,
                 icon: 'assets/image/svg/menu-board.svg',
               ),
             ),
@@ -70,6 +74,14 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
+              onTap: () => Get.toNamed(Routes.qrCodeScanner),
+              child: myEventOption(
+                text: AppLocalizations.of(context)!.scan_ticket,
+                icon: 'assets/image/svg/scan-barcode.svg',
+              ),
+            ),
+            const SizedBox(height: 8),
+            GestureDetector(
               onTap: () => Get.toNamed(Routes.updateEvent),
               child: myEventOption(
                 text: AppLocalizations.of(context)!.update_event,
@@ -78,7 +90,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
             ),
             const SizedBox(height: 8),
             GestureDetector(
-              onTap: controller.deleteEvent,
+              onTap: () => controller.onDeleteEvent(context),
               child: Container(
                 height: 40,
                 width: double.infinity,

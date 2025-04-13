@@ -54,7 +54,9 @@ class EventDetail extends GetView<EventDetailController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: Get.back,
+                                  onTap: () => Get.back(
+                                    result: controller.isMarked.value,
+                                  ),
                                   child: Container(
                                     width: 32,
                                     height: 32,
@@ -351,94 +353,136 @@ class EventDetail extends GetView<EventDetailController> {
                         ),
                       ],
                     ),
-                    Positioned(
-                      top: 200,
-                      child: Container(
-                        width: Get.width,
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: Get.width * 0.75,
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 13,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 76,
-                                child: Stack(
+                    controller.eventData.attendees.isEmpty
+                        ? const SizedBox.shrink()
+                        : Positioned(
+                            top: 200,
+                            child: Container(
+                              width: Get.width,
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: Get.width * 0.75,
+                                height: 50,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 13,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Get.theme.colorScheme.secondary,
+                                  borderRadius: BorderRadius.circular(50),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Positioned(
-                                      left: 40,
-                                      top: 0,
-                                      child: Container(
-                                        width: 34,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
+                                    SizedBox(
+                                      width: 76,
+                                      child: Stack(
+                                        children: [
+                                          Positioned(
+                                            left: 40,
+                                            top: 0,
+                                            child: Container(
+                                              width: 34,
+                                              height: 34,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: const DecorationImage(
+                                                  image: NetworkImage(
+                                                    'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
+                                                  ),
+                                                  fit: BoxFit.fitWidth,
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                ),
+                                                border: Border.all(
+                                                  width: 1.42,
+                                                  color: Get.theme.colorScheme
+                                                      .tertiary,
+                                                ),
+                                              ),
                                             ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
                                           ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
+                                          Positioned(
+                                            top: 0,
+                                            left: 20,
+                                            child: Container(
+                                              width: 34,
+                                              height: 34,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: const DecorationImage(
+                                                  image: NetworkImage(
+                                                    'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
+                                                  ),
+                                                  fit: BoxFit.fitWidth,
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                ),
+                                                border: Border.all(
+                                                  width: 1.42,
+                                                  color: Get.theme.colorScheme
+                                                      .tertiary,
+                                                ),
+                                              ),
+                                            ),
                                           ),
+                                          Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: Container(
+                                              width: 34,
+                                              height: 34,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: const DecorationImage(
+                                                  image: NetworkImage(
+                                                    'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
+                                                  ),
+                                                  fit: BoxFit.fitWidth,
+                                                  alignment:
+                                                      Alignment.topCenter,
+                                                ),
+                                                border: Border.all(
+                                                  width: 1.42,
+                                                  color: Get.theme.colorScheme
+                                                      .tertiary,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Obx(
+                                      () => Text(
+                                        controller.going.value != 0
+                                            ? '${controller.going}+ ${AppLocalizations.of(context)!.going}'
+                                            : '.....',
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xffEAE9FC),
+                                          fontWeight: FontWeight.w500,
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 20,
+                                    GestureDetector(
+                                      onTap: () =>
+                                          Get.toNamed(Routes.eventMember),
                                       child: Container(
-                                        width: 34,
+                                        width: 73,
                                         height: 34,
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-                                            ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
-                                          ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Get.theme.colorScheme.primary,
                                         ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: Container(
-                                        width: 34,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-                                            ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
-                                          ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          AppLocalizations.of(context)!.see_all,
+                                          style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xffEAE9FC),
                                           ),
                                         ),
                                       ),
@@ -446,42 +490,8 @@ class EventDetail extends GetView<EventDetailController> {
                                   ],
                                 ),
                               ),
-                              Obx(
-                                () => Text(
-                                  controller.going.value != 0
-                                      ? '${controller.going}+ ${AppLocalizations.of(context)!.going}'
-                                      : '.....',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xffEAE9FC),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => Get.toNamed(Routes.eventMember),
-                                child: Container(
-                                  width: 73,
-                                  height: 34,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Get.theme.colorScheme.primary,
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    AppLocalizations.of(context)!.see_all,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Color(0xffEAE9FC),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

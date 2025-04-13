@@ -66,24 +66,20 @@ class EventView extends GetView<EventController> {
                 ),
               ),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 24),
-                        _buildToggleBar(context),
-                        const SizedBox(height: 17),
-                        Obx(
-                          () => controller.isEvent.value
-                              ? _buildEventsView(context)
-                              : controller.upComingEvent.isEmpty
-                                  ? _buildNoUpcomingEventsView()
-                                  : _loadUpcomingEvent(),
-                        ),
-                      ],
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  children: [
+                    const SizedBox(height: 24),
+                    _buildToggleBar(context),
+                    const SizedBox(height: 17),
+                    Obx(
+                      () => controller.isEvent.value
+                          ? _buildEventsView(context)
+                          : controller.upComingEvent.isEmpty
+                              ? _buildNoUpcomingEventsView()
+                              : _loadUpcomingEvent(),
                     ),
-                  ),
+                  ],
                 ),
               ),
               // const SizedBox(height: 70),

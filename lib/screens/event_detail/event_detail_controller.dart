@@ -37,8 +37,9 @@ class EventDetailController extends GetxController {
     var tempID = await storage.read(key: 'id');
     if (tempID == null) Get.find<AuthService>().logout;
     id = tempID!;
-    var userId = await storage.read(key: 'id');
-    isMarked.value = prefs.getBool('${userId}_${eventData.id}') ?? false;
+    // var userId = await storage.read(key: 'id');
+    // isMarked.value = prefs.getBool('${userId}_${eventData.id}') ?? false;
+    isMarked.value = eventData.bookmarkStatus;
   }
 
   int roundDown(int number) {
@@ -125,20 +126,20 @@ class EventDetailController extends GetxController {
     var endPoint = '/users/$userId/bookmarks';
 
     BookmarkHelper.setToken(token!);
-    String bookmarkKey = '${userId}_${eventData.id}';
+    // String bookmarkKey = '${userId}_${eventData.id}';
 
     if (!isMarked.value) {
       var response = await BookmarkHelper.post(endPoint,
           data: {'event_id': eventData.id}, isFormData: true);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        prefs.setBool(bookmarkKey, true);
+        // eventData.copyWith(bookmarkStatus: true);
         isMarked.value = true;
       }
     } else {
       var deleteEndPoint = '$endPoint/${eventData.id}';
       var response = await BookmarkHelper.delete(deleteEndPoint);
       if (response.statusCode == 204) {
-        prefs.setBool(bookmarkKey, false);
+        // eventData.copyWith(bookmarkStatus: false);
         isMarked.value = false;
       }
     }

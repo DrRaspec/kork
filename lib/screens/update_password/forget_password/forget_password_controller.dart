@@ -58,4 +58,29 @@ class ForgetPasswordController extends GetxController
       });
     }
   }
+
+  Future<bool> sendOTP() async {
+    try {
+      var data = {"email": emailController.text};
+      var response = await EventApiHelper.post('/send', data: data);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      return false;
+    }
+  }
+
+  void onTap() async {
+    validateInput();
+    var isSendOTP = await sendOTP();
+    if (emailError.value.isEmpty && isSendOTP) {
+      Get.toNamed(
+        Routes.verifyOtp,
+        arguments: {'isNew': false, 'email': emailController.text},
+      );
+    }
+  }
 }

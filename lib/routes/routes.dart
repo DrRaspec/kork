@@ -42,4 +42,5 @@ class Routes {
   static const String myEventMember = '/my_event_member';
   static const String profileChangePassword = '/profile_change_password';
   static const String seeAll = '/see_all';
+  static const String qrCodeScanner = '/qr_code_scanner';
 }

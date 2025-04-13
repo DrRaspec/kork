@@ -145,11 +145,13 @@ class AddNewPaymentViewController extends GetxController
         await Get.find<AuthService>().logout();
         return;
       }
+      final cvv = ccvController.text.trim();
+      final validCvv = cvv.length > 3 ? cvv.substring(0, 3) : cvv;
       var formData = FormData.fromMap({
         'card_number': cardNumberController.text,
         'card_holder_name': cardHolderController.text,
         'expired_date': expireDateController.text,
-        'cvv': ccvController.text,
+        'cvv': validCvv,
       });
       try {
         EventApiHelper.setToken(token);
@@ -166,10 +168,14 @@ class AddNewPaymentViewController extends GetxController
       } on DioException catch (e) {
         status.value = Status.error;
         var response = e.response;
+        var data = response?.data as Map<String, dynamic>;
         print('e error ${e.error}');
-        print('response error ${response?.data}');
+        print('response error $data');
         print('response status code ${response?.statusCode}');
-        Get.snackbar('Fail', 'Add fail');
+        Get.snackbar(
+          'Fail',
+          data.containsKey('error') ? data['error'] : 'Add fail',
+        );
       }
     }
   }

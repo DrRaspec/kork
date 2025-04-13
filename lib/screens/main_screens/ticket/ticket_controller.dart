@@ -28,6 +28,13 @@ class TicketController extends GetxController {
 
     EventApiHelper.setToken(token!);
     try {
+      const storage = FlutterSecureStorage();
+      var token = await storage.read(key: 'token');
+      if (token == null || token.isEmpty) {
+        Get.find<AuthService>().logout;
+        return;
+      }
+      EventApiHelper.setToken(token);
       dio.interceptors.add(AppLogInterceptor());
       dio.options.baseUrl = url;
       dio.options.headers = {
@@ -40,6 +47,7 @@ class TicketController extends GetxController {
       var response = await dio.get('/users/$id/buy-tickets');
       var result = response.data as Map<String, dynamic>;
       if (response.statusCode == 200 && result.containsKey("data")) {
+        print('buyed ticket ${result['data']}');
         buyedTickets.value = result['data'];
       }
     } on DioException catch (e) {

@@ -49,7 +49,7 @@ class PaymentMethodsViewController extends GetxController {
     try {
       var response = await PaymentMethodHelper.delete(
           '/users/$id/payment-methods/$paymentID');
-      print('status code ${response.statusCode}');
+      // print('status code ${response.statusCode}');
       if (response.statusCode == 200) {
         paymentMethod.removeAt(index);
       }
@@ -61,12 +61,17 @@ class PaymentMethodsViewController extends GetxController {
   }
 
   void reloadData() async {
-    var result = await Get.toNamed(Routes.addNewPayment);
-    print('datatype payment method ${paymentMethod.runtimeType}');
-    print('payment method $paymentMethod');
+    try {
+      var result = await Get.toNamed(Routes.addNewPayment);
+      print('datatype result ${result.runtimeType}');
+      print('result $result');
 
-    if (result is Map<String, dynamic> && result.isNotEmpty) {
-      paymentMethod.add(result);
+      if (result is Map<String, dynamic> && result.isNotEmpty) {
+        print('work');
+        paymentMethod.add(result);
+      }
+    } catch (e) {
+      print('error is $e');
     }
   }
 }

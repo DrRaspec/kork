@@ -1,9 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/update_password/forget_password/forget_password_view.dart';
+import 'package:kork/utils/status.dart';
+import 'package:kork/widget/button_design.dart';
 import 'package:kork/widget/otp_textfield.dart';
 import 'package:kork/widget/underline_text.dart';
 
@@ -164,37 +168,41 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                           ],
                         ),
                   const SizedBox(height: 24),
-                  GestureDetector(
-                    onTap: () {
-                      controller.validateInput();
-                      if (controller.isEmpty.value) {
-                        if (controller.isNew) {
-                          Get.toNamed(Routes.selectProfile);
-                        } else {
-                          Get.toNamed(Routes.changePassword);
-                        }
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          controller.isNew
-                              ? AppLocalizations.of(context)!.confirm
-                              : AppLocalizations.of(context)!.next,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xffEAE9FC),
-                          ),
-                        ),
+                  Obx(
+                        () => GestureDetector(
+                      onTap: controller.status.value == Status.loading
+                          ? null
+                          : controller.onTapVerifyOTP,
+                      child: buttonDesign(
+                        text: controller.isNew
+                                    ? AppLocalizations.of(context)!.confirm
+                                    : AppLocalizations.of(context)!.next,
+                        status: controller.status.value,
                       ),
                     ),
                   ),
+                  // GestureDetector(
+                  //   onTap: controller.onTapVerifyOTP,
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 40,
+                  //     decoration: BoxDecoration(
+                  //       color: Get.theme.colorScheme.primary,
+                  //       borderRadius: BorderRadius.circular(5),
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         controller.isNew
+                  //             ? AppLocalizations.of(context)!.confirm
+                  //             : AppLocalizations.of(context)!.next,
+                  //         style: const TextStyle(
+                  //           fontSize: 16,
+                  //           color: Color(0xffEAE9FC),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

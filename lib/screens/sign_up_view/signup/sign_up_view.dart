@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/utils/status.dart';

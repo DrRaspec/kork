@@ -101,14 +101,14 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> validateInput() async {
-    var url = dotenv.env['API_URL']!;
-    emailError.value = '';
-    passwordError.value = '';
-    confirmPasswordError.value = '';
-    bool hasError = false;
-    dio.interceptors.add(AppLogInterceptor());
     try {
-      status.value = Status.loading;
+      var url = dotenv.env['API_URL']!;
+      emailError.value = '';
+      passwordError.value = '';
+      confirmPasswordError.value = '';
+      bool hasError = false;
+      dio.interceptors.add(AppLogInterceptor());
+      // status.value = Status.loading;
       var response = await dio.post(
         '$url/check-email',
         data: {'email': emailController.text},
@@ -121,7 +121,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       );
       var result = response.data as Map<String, dynamic>;
 
-      status.value = Status.success;
+      // status.value = Status.success;
 
       if (emailController.text.trim().isEmpty) {
         emailError.value =
@@ -185,20 +185,46 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  void onTap() async {
-    await validateInput();
-    if (emailError.isEmpty &&
-        passwordError.isEmpty &&
-        confirmPasswordError.isEmpty) {
-      Get.toNamed(Routes.verifyOtp, arguments: true);
+  Future<bool> sendOTP() async {
+    try {
+      var body = {"email": emailController.text};
+      var response = await EventApiHelper.post("/send", data: body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      var response = e.response;
+      Get.snackbar(
+        'Fail',
+        response == null ? 'fail to send OTP' : response.data['message'],
+      );
+      return false;
     }
   }
 
-  // void onChange(String value) {
-  //   if (debounce?.isActive ?? false) debounce?.cancel();
-  //   debounce = Timer(
-  //     const Duration(milliseconds: 200),
-  //     () => checkUniqueEmail(),
-  //   );
-  // }
+  void onTap() async {
+    status.value = Status.loading;
+    await validateInput();
+    var isSendOTP = await sendOTP();
+    status.value = Status.success;
+    if (emailError.isEmpty &&
+        passwordError.isEmpty &&
+        confirmPasswordError.isEmpty &&
+        isSendOTP) {
+      Get.toNamed(
+        Routes.verifyOtp,
+        arguments: {'isNew': true, 'email': emailController.text},
+      );
+    }
+  }
+
+// void onChange(String value) {
+//   if (debounce?.isActive ?? false) debounce?.cancel();
+//   debounce = Timer(
+//     const Duration(milliseconds: 200),
+//     () => checkUniqueEmail(),
+//   );
+// }
 }

@@ -1110,5 +1110,13 @@
     "retry": "Retry",
     "@retry": {
         "description": "Retry"
+    },
+    "scan_ticket": "Scan Ticket",
+    "@scan_ticket": {
+        "description": "Scan Ticket"
+    },
+    "flash": "Flash",
+    "@flash": {
+        "description": "Flash"
     }
 }

@@ -46,7 +46,7 @@ Widget customExpansion() {
                     _buildDetailRow(
                       context,
                       AppLocalizations.of(context)!.fee,
-                      '${controller.discountPrice.toStringAsFixed(2)}\$',
+                      '${controller.feePercent.toString()}%',
                     ),
                   ],
                 ),

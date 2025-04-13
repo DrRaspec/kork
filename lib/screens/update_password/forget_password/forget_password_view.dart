@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/routes/routes.dart';
 
 part 'forget_password_controller.dart';
@@ -186,12 +188,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                   ),
                   const SizedBox(height: 15),
                   GestureDetector(
-                    onTap: () {
-                      controller.validateInput();
-                      if (controller.emailError.value.isEmpty) {
-                        Get.toNamed(Routes.verifyOtp, arguments: false);
-                      }
-                    },
+                    onTap: controller.onTap,
                     child: Container(
                       width: double.infinity,
                       height: 40,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart' hide FormData;
@@ -254,6 +255,9 @@ class AddNewPaymentView extends GetView<AddNewPaymentViewController> {
                             focusNode: controller.ccvFocus,
                             maxLength: 3,
                             keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(3),
+                            ],
                             onChanged: (value) {
                               if (value.length > 3) {
                                 return;

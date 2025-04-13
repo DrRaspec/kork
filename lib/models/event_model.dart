@@ -363,78 +363,83 @@ class Ticket {
 
 class BoughtTicket {
   final int id;
-  final int eventId;
-  final int ticketId;
-  final int userId;
+  final Event event;
+  final Ticket ticket;
+  final User user;
   final String ticketCode;
   final String price;
-  final int paymentStatus;
-  final DateTime createdAt;
-  final String? posterUrl;
+  final String paymentStatus;
+  final DateTime purchaseDate;
 
   BoughtTicket({
     required this.id,
-    required this.eventId,
-    required this.ticketId,
-    required this.userId,
+    required this.event,
+    required this.ticket,
+    required this.user,
     required this.ticketCode,
     required this.price,
     required this.paymentStatus,
-    required this.createdAt,
-    this.posterUrl,
+    required this.purchaseDate,
   });
 
   factory BoughtTicket.fromJson(Map<String, dynamic> json) {
     return BoughtTicket(
       id: json['id'],
-      eventId: json['event']['id'],
-      ticketId: json['ticket']['id'],
-      userId: json['user']['id'],
+      event: Event.fromJson(json['event']),
+      ticket: Ticket.fromJson(json['ticket']),
+      user: User.fromJson(json['user']),
       ticketCode: json['ticket_code'],
       price: json['price'],
-      paymentStatus: json['payment_status'] ?? 0,
-      createdAt: DateTime.parse(json['buy_at']),
-      posterUrl: json['event']['poster_url'],
+      paymentStatus: json['payment_status'].toString(),
+      purchaseDate: DateTime.parse(json['buy_at']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'event_id': eventId,
-      'ticket_id': ticketId,
-      'user_id': userId,
+      'event': event.toJson(),
+      'ticket': ticket.toJson(),
+      'user': user.toJson(),
       'ticket_code': ticketCode,
       'price': price,
       'payment_status': paymentStatus,
-      'buy_at': createdAt.toIso8601String(),
-      'poster_url': posterUrl,
+      'buy_at': purchaseDate.toIso8601String(),
     };
   }
 
   BoughtTicket copyWith({
     int? id,
-    int? eventId,
-    int? ticketId,
-    int? userId,
+    Event? event,
+    Ticket? ticket,
+    User? user,
     String? ticketCode,
     String? price,
-    int? paymentStatus,
-    DateTime? createdAt,
-    String? posterUrl,
+    String? paymentStatus,
+    DateTime? purchaseDate,
   }) {
     return BoughtTicket(
       id: id ?? this.id,
-      eventId: eventId ?? this.eventId,
-      ticketId: ticketId ?? this.ticketId,
-      userId: userId ?? this.userId,
+      event: event ?? this.event,
+      ticket: ticket ?? this.ticket,
+      user: user ?? this.user,
       ticketCode: ticketCode ?? this.ticketCode,
       price: price ?? this.price,
       paymentStatus: paymentStatus ?? this.paymentStatus,
-      createdAt: createdAt ?? this.createdAt,
-      posterUrl: posterUrl ?? this.posterUrl,
+      purchaseDate: purchaseDate ?? this.purchaseDate,
     );
   }
+
+  // Helper methods
+  bool get isPaid => paymentStatus == "1";
+
+  int get eventId => event.id;
+
+  int get ticketId => ticket.id;
+
+  int get userId => user.id;
+
+  String? get posterUrl => event.posterUrl;
 }
 
 class HostedEvent {

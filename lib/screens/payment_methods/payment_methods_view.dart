@@ -25,128 +25,143 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
         centerTitle: true,
         title: appbarTitle(AppLocalizations.of(context)!.payment_method),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            const SizedBox(height: 16),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                AppLocalizations.of(context)!.online_payment_option,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Get.theme.colorScheme.tertiary,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          controller.fetchPaymentMethod();
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CustomScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            slivers: [
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    AppLocalizations.of(context)!.online_payment_option,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            Obx(
-              () => controller.status.value == Status.loading
-                  ? Column(
-                      children: [
-                        buildPlaceholder(height: 40, borderRadius: 10),
-                        const SizedBox(height: 16),
-                        buildPlaceholder(height: 40, borderRadius: 10),
-                      ],
-                    )
-                  : ListView.separated(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        var card = PaymentMethod.fromJson(
-                          controller.paymentMethod[index],
-                        );
-                        return Dismissible(
-                          key: Key(card.id.toString()),
-                          direction: DismissDirection.endToStart,
-                          background: Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.only(right: 20),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.white,
-                            ),
-                          ),
-                          confirmDismiss: (direction) async {
-                            return await showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Delete Payment Method'),
-                                content: const Text(
-                                  'Are you sure you want to delete this payment method?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(false),
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(true),
-                                    child: const Text(
-                                      'Delete',
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ),
-                                ],
-                              ),
+              const SliverToBoxAdapter(child: SizedBox(height: 16)),
+              SliverToBoxAdapter(
+                child: Obx(
+                  () => controller.status.value == Status.loading
+                      ? Column(
+                          children: [
+                            buildPlaceholder(height: 40, borderRadius: 10),
+                            const SizedBox(height: 16),
+                            buildPlaceholder(height: 40, borderRadius: 10),
+                          ],
+                        )
+                      : ListView.separated(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var card = PaymentMethod.fromJson(
+                              controller.paymentMethod[index],
                             );
+                            return Dismissible(
+                              key: Key(card.id.toString()),
+                              direction: DismissDirection.endToStart,
+                              background: Container(
+                                alignment: Alignment.centerRight,
+                                padding: const EdgeInsets.only(right: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              confirmDismiss: (direction) async {
+                                return await showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Delete Payment Method'),
+                                    content: const Text(
+                                      'Are you sure you want to delete this payment method?',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
+                                        child: const Text(
+                                          'Delete',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              onDismissed: (direction) {
+                                controller.deletePaymentMethod(index, card.id);
+                              },
+                              child: cardWiget(card),
+                            );
+                            // return cardWiget(card);
                           },
-                          onDismissed: (direction) {
-                            controller.deletePaymentMethod(index, card.id);
-                          },
-                          child: cardWiget(card),
-                        );
-                        // return cardWiget(card);
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 16),
-                      itemCount: controller.paymentMethod.length,
-                    ),
-            ),
-            Obx(
-              () => controller.paymentMethod.isEmpty
-                  ? const SizedBox.shrink()
-                  : const SizedBox(height: 16),
-            ),
-            GestureDetector(
-              onTap: controller.reloadData,
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Get.theme.colorScheme.secondary,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.add,
-                      size: 24,
-                      color: Color(0xffEAE9FC),
-                    ),
-                    const SizedBox(width: 16),
-                    Text(
-                      AppLocalizations.of(context)!.add_new_payment,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xffEAE9FC),
-                      ),
-                    ),
-                  ],
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 16),
+                          itemCount: controller.paymentMethod.length,
+                        ),
                 ),
               ),
-            )
-          ],
+              SliverToBoxAdapter(
+                child: Obx(
+                  () => controller.paymentMethod.isEmpty
+                      ? const SizedBox.shrink()
+                      : const SizedBox(height: 16),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: GestureDetector(
+                  onTap: controller.reloadData,
+                  child: Container(
+                    height: 40,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Get.theme.colorScheme.secondary,
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.add,
+                          size: 24,
+                          color: Color(0xffEAE9FC),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          AppLocalizations.of(context)!.add_new_payment,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xffEAE9FC),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
