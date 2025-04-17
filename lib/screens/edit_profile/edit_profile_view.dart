@@ -15,8 +15,10 @@ import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/button_design.dart';
+import 'package:kork/widget/up_coming_widget.dart';
 
 part 'edit_profile_binding.dart';
+
 part 'edit_profile_controller.dart';
 
 class EditProfileView extends GetView<EditProfileViewController> {
@@ -47,6 +49,8 @@ class EditProfileView extends GetView<EditProfileViewController> {
                         GestureDetector(
                           onTap: () => _showDialog(),
                           child: Container(
+                            height: 116,
+                            width: 116,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               border: Border.all(
@@ -57,20 +61,32 @@ class EditProfileView extends GetView<EditProfileViewController> {
                             child: ClipOval(
                               child: Obx(
                                 () => controller.selectedImage.value == null
-                                    ? Image.network(
-                                        controller.userData.value!.profileUrl!,
-                                        width: 116,
-                                        height: 116,
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                const Center(
-                                          child: Icon(
+                                    ? controller.userData.value != null
+                                        ? Image.network(
+                                            controller
+                                                .userData.value!.profileUrl!,
+                                            width: 116,
+                                            height: 116,
+                                            fit: BoxFit.cover,
+                                            loadingBuilder: (context, child,
+                                                loadingProgress) {
+                                              if (loadingProgress == null)
+                                                return child;
+                                              return buildPlaceholder();
+                                            },
+                                            errorBuilder:
+                                                (context, error, stackTrace) =>
+                                                    const Center(
+                                              child: Icon(
+                                                Icons.error,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          )
+                                        : const Icon(
                                             Icons.error,
                                             size: 30,
-                                          ),
-                                        ),
-                                      )
+                                          )
                                     : Image.file(
                                         controller.selectedImage.value!,
                                         width: 116,
@@ -82,11 +98,13 @@ class EditProfileView extends GetView<EditProfileViewController> {
                           ),
                         ),
                         const SizedBox(height: 18),
-                        Text(
-                          controller.fullName.value,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Get.theme.colorScheme.tertiary,
+                        Obx(
+                          () => Text(
+                            controller.fullName.value,
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 32),

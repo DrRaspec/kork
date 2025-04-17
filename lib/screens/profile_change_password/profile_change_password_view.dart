@@ -14,6 +14,7 @@ import 'package:kork/widget/button_design.dart';
 import 'package:kork/widget/shake_textfield.dart';
 
 part 'profile_change_password_binding.dart';
+
 part 'profile_change_password_controller.dart';
 
 class ProfileChangePasswordView
@@ -50,22 +51,24 @@ class ProfileChangePasswordView
                 children: [
                   Row(
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          text: controller.fullName,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: ' .',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
+                      Obx(
+                        () => RichText(
+                          text: TextSpan(
+                            text: controller.fullName.value,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Get.theme.colorScheme.tertiary,
                             ),
-                          ],
+                            children: [
+                              TextSpan(
+                                text: ' .',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Image.asset(

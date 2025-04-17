@@ -46,7 +46,6 @@ class MyEventDetailViewController extends GetxController {
           response.data['message']
               .toString()
               .contains('foreign key constraint fails')) {
-        // First close the dialog, then show snackbar
         Get.back();
         Get.snackbar(
           'Cannot Delete Event',
@@ -96,6 +95,18 @@ class MyEventDetailViewController extends GetxController {
         ],
       ),
     );
+  }
+
+  void updateEvent() async
+  {
+    var result = await Get.toNamed(
+      Routes.updateEvent,
+      arguments: argument,
+    );
+    if(result is HostedEvent) {
+        argument = result;
+        title.value = argument.eventName;
+    }
   }
 
   void openGmail() async {

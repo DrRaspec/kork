@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/widget/booked_event_card.dart';
 
 part 'my_event_binding.dart';
+
 part 'my_event_controller.dart';
 
 class MyEventView extends GetView<MyEventViewController> {
@@ -46,12 +47,14 @@ class MyEventView extends GetView<MyEventViewController> {
                     color: Get.theme.colorScheme.primary,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: const Center(
-                    child: Text(
-                      '2',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xffEAE9FC),
+                  child: Center(
+                    child: Obx(
+                      () => Text(
+                        controller.myEvent.length.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xffEAE9FC),
+                        ),
                       ),
                     ),
                   ),
@@ -137,5 +140,5 @@ class MyEventView extends GetView<MyEventViewController> {
     );
   }
 
-  // Widget
+// Widget
 }

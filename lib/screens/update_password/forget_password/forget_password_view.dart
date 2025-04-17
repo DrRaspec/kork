@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/helper/send_otp.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/status.dart';
+import 'package:kork/widget/button_design.dart';
 
 part 'forget_password_controller.dart';
 part 'forget_password_binding.dart';
@@ -187,26 +190,37 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  GestureDetector(
-                    onTap: controller.onTap,
-                    child: Container(
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Get.theme.colorScheme.primary,
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.next,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xffEAE9FC),
-                          ),
-                        ),
+                  Obx(
+                        () => GestureDetector(
+                      onTap: controller.status.value == Status.loading
+                          ? null
+                          : controller.onTap,
+                      child: buttonDesign(
+                        text: AppLocalizations.of(context)!.next,
+                        status: controller.status.value,
                       ),
                     ),
                   ),
+                  // GestureDetector(
+                  //   onTap: controller.onTap,
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 40,
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(5),
+                  //       color: Get.theme.colorScheme.primary,
+                  //     ),
+                  //     child: Center(
+                  //       child: Text(
+                  //         AppLocalizations.of(context)!.next,
+                  //         style: const TextStyle(
+                  //           fontSize: 16,
+                  //           color: Color(0xffEAE9FC),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

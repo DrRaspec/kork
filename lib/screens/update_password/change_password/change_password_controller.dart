@@ -2,8 +2,12 @@ part of 'change_password_view.dart';
 
 class ChangePasswordController extends GetxController
     with GetTickerProviderStateMixin {
+  var argument = Get.arguments as Map;
+
   final newPassword = TextEditingController();
   final conNewPassword = TextEditingController();
+  String code = '';
+  String email = '';
 
   var passwordObsecure = true.obs;
   var passwordError = ''.obs;
@@ -20,6 +24,9 @@ class ChangePasswordController extends GetxController
   @override
   void onInit() {
     super.onInit();
+
+    code = argument['code'];
+    email = argument['email'];
 
     passwordFocus = FocusNode();
     conPasswordFocus = FocusNode();
@@ -49,6 +56,32 @@ class ChangePasswordController extends GetxController
         .animate(conPasswordShakeController);
   }
 
+  void updatePassword() async {
+    try {
+      if (conPasswordError.isEmpty &&
+          passwordError.isEmpty) {
+        var formData = FormData.fromMap({
+          'email': email,
+          'code': code,
+          'password': newPassword.text,
+          'password_confirmation': conNewPassword.text,
+        });
+        var response = await EventApiHelper.post(
+          '/password-reset', data: formData,);
+      }
+    } on DioException catch (e) {
+      var response = e.response;
+      var data = response?.data;
+      var errorMessage = '';
+       if(data is Map && data.containsKey('error')) {
+        errorMessage = data['error'];
+      } else {
+         errorMessage = 'fail to change new password';
+       }
+      Get.snackbar('Fail', errorMessage);
+    }
+  }
+
   @override
   void onClose() {
     newPassword.dispose();
@@ -75,7 +108,8 @@ class ChangePasswordController extends GetxController
 
     if (newPassword.text.isEmpty) {
       passwordError.value =
-          '${AppLocalizations.of(Get.context!)!.password} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.password} ${AppLocalizations.of(
+          Get.context!)!.cant_empty}';
       trigglePasswordShake();
       hasError = true;
     } else if (newPassword.text.length < 8 ||
@@ -87,7 +121,8 @@ class ChangePasswordController extends GetxController
     }
     if (conNewPassword.text.isEmpty) {
       conPasswordError.value =
-          '${AppLocalizations.of(Get.context!)!.password} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.password} ${AppLocalizations.of(
+          Get.context!)!.cant_empty}';
       triggleConPasswordShake();
       hasError = true;
     } else if (conNewPassword.text.length < 8 ||

@@ -1,18 +1,32 @@
 import 'dart:async';
+
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kork/helper/card_helper.dart';
+import 'package:kork/helper/show_error_snack_bar.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/sign_up_view/map/map_view.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/widget/categories_dropdown.dart';
+import 'package:kork/widget/event_card.dart';
 import 'package:kork/widget/event_textfield.dart';
+import 'package:kork/helper/extension.dart';
+import 'package:kork/widget/up_coming_widget.dart';
+
+import '../../helper/event_api_helper.dart';
 
 part 'update_event_binding.dart';
+
 part 'update_event_controller.dart';
 
 class UpdateEventView extends GetView<UpdateEventViewController> {
@@ -40,33 +54,20 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppLocalizations.of(context)!.name,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalizations.of(context)!.name,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  eventTextField(
+                  Obx(() => eventTextField(
                     textController: controller.nameController,
                     errorMessage: controller.nameError.value,
                     hintText: AppLocalizations.of(context)!.event_title,
                     textFocus: controller.focusName,
-                  ),
+                  )),
                   const SizedBox(height: 8),
                   Row(
                     spacing: 16,
@@ -75,30 +76,16 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        AppLocalizations.of(context)!.location,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' *',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.primary,
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              AppLocalizations.of(context)!.location,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
                               ),
                             ),
                             const SizedBox(height: 8),
                             Obx(
-                              () => GestureDetector(
+                                  () => GestureDetector(
                                 onTap: controller.getLocation,
                                 child: eventTextField(
                                   textController: controller.locationController,
@@ -118,35 +105,18 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        AppLocalizations.of(context)!.category,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' *',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.primary,
-                                    ),
-                                  ),
-                                ],
+                            Text(
+                              AppLocalizations.of(context)!.category,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            eventTextField(
-                              textController: controller.nameController,
-                              errorMessage: controller.nameError.value,
-                              hintText:
-                                  AppLocalizations.of(context)!.event_category,
-                              textFocus: controller.focusName,
-                              svgIcon: 'assets/image/svg/category-2.svg',
+                            categoriesDropdown(
+                              categoryController: controller.categoryController,
+                              categoryError: controller.categoryError,
+                              initialValue: controller.categoryController.text,
                             ),
                           ],
                         ),
@@ -157,24 +127,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: AppLocalizations.of(context)!.date,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' *',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.primary,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        AppLocalizations.of(context)!.date,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -184,30 +141,30 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           Expanded(
                             child: GestureDetector(
                               onTap: controller.getDate,
-                              child: eventTextField(
+                              child: Obx(() => eventTextField(
                                 textController: controller.startDateController,
                                 errorMessage: controller.startDateError.value,
                                 hintText:
-                                    AppLocalizations.of(context)!.start_date,
+                                AppLocalizations.of(context)!.start_date,
                                 textFocus: controller.focusStartDate,
                                 svgIcon: 'assets/image/svg/calendar-3.svg',
                                 isEnable: false,
-                              ),
+                              )),
                             ),
                           ),
                           Expanded(
                             child: GestureDetector(
                               onTap: () =>
                                   controller.getDate(isStartDate: false),
-                              child: eventTextField(
+                              child: Obx(() => eventTextField(
                                 textController: controller.endDateController,
                                 errorMessage: controller.endDateError.value,
                                 hintText:
-                                    AppLocalizations.of(context)!.end_date,
+                                AppLocalizations.of(context)!.end_date,
                                 textFocus: controller.focusEndDate,
                                 svgIcon: 'assets/image/svg/calendar-3.svg',
                                 isEnable: false,
-                              ),
+                              )),
                             ),
                           ),
                         ],
@@ -218,24 +175,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: AppLocalizations.of(context)!.time,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' *',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.primary,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        AppLocalizations.of(context)!.time,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -246,12 +190,12 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             child: GestureDetector(
                               onTap: controller.getTime,
                               child: Obx(
-                                () => eventTextField(
+                                    () => eventTextField(
                                   textController:
-                                      controller.startTimeController,
+                                  controller.startTimeController,
                                   errorMessage: controller.startTimeError.value,
                                   hintText:
-                                      AppLocalizations.of(context)!.start_time,
+                                  AppLocalizations.of(context)!.start_time,
                                   textFocus: controller.focusStartTime,
                                   svgIcon: 'assets/image/svg/timer-start.svg',
                                   isEnable: false,
@@ -264,11 +208,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                               onTap: () =>
                                   controller.getTime(isStartTime: false),
                               child: Obx(
-                                () => eventTextField(
+                                    () => eventTextField(
                                   textController: controller.endTimeController,
                                   errorMessage: controller.endTimeError.value,
                                   hintText:
-                                      AppLocalizations.of(context)!.end_time,
+                                  AppLocalizations.of(context)!.end_time,
                                   textFocus: controller.focusEndTime,
                                   svgIcon: 'assets/image/svg/timer-pause.svg',
                                   isEnable: false,
@@ -279,24 +223,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: AppLocalizations.of(context)!.detail,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                            ),
-                            TextSpan(
-                              text: ' *',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Get.theme.colorScheme.primary,
-                              ),
-                            ),
-                          ],
+                      Text(
+                        AppLocalizations.of(context)!.detail,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -324,7 +255,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                                AppLocalizations.of(context)!.detail_guide,
+                            AppLocalizations.of(context)!.detail_guide,
                             hintStyle: TextStyle(
                               fontSize: 10,
                               color: Get.theme.colorScheme.tertiary,
@@ -350,93 +281,31 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                       color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  eventTextField(
-                    textController: controller.companyNameController,
-                    errorMessage: controller.companyNameError.value,
-                    hintText: AppLocalizations.of(context)!.company_name,
-                    textFocus: controller.focusCompanyName,
-                    isEnable: false,
-                  ),
-                  const SizedBox(height: 24),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      // value: AppLocalizations.of(context)!.ticket_information,
-                      hint: Text(
-                        AppLocalizations.of(context)!.ticket_information,
-                        style: TextStyle(
-                          color: Get.theme.colorScheme.tertiary,
-                          fontSize: 16,
-                        ),
-                      ),
-                      icon: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Get.theme.colorScheme.tertiary,
-                        size: 16,
-                      ),
-                      dropdownColor: Get.theme.scaffoldBackgroundColor,
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.tertiary,
-                        fontSize: 16,
-                      ),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        controller.selectedValue.value = newValue;
-                        controller.updateControllers(newValue);
-                      },
-                      items: controller.ticketTypes.map((String type) {
-                        return DropdownMenuItem<String>(
-                          value: type,
-                          child: Text(
-                            type,
-                            style: TextStyle(
-                              color: Get.theme.colorScheme.tertiary,
-                              fontSize: 16,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
                   const SizedBox(height: 16),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppLocalizations.of(context)!.ticket_ammout,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalizations.of(context)!.ticket_ammout,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                    () => SizedBox(
+                        () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
-                          controller.ticketController.length * 2 - 1,
-                          (index) {
+                          controller.ticketQuantityController.length * 2 - 1,
+                              (index) {
                             if (index % 2 == 0) {
                               var itemIndex = index ~/ 2;
-                              var ticketController =
-                                  controller.ticketController[itemIndex];
+                              var quantityController = controller.ticketQuantityController[itemIndex];
                               var type = controller.types[itemIndex];
 
                               return Expanded(
                                 flex: 1,
                                 child: ticketAmount(
-                                  ticketController,
+                                  quantityController,
                                   type,
                                 ),
                               );
@@ -449,36 +318,23 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppLocalizations.of(context)!.ticket_price,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalizations.of(context)!.ticket_price,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                    () => SizedBox(
+                        () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
                           controller.ticketPriceController.length,
-                          (index) {
+                              (index) {
                             var ticketPriceController =
-                                controller.ticketPriceController[index];
+                            controller.ticketPriceController[index];
                             var type = controller.types[index];
 
                             return Expanded(
@@ -499,7 +355,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                                       style: TextStyle(
                                         fontSize: 11,
                                         color:
-                                            Get.theme.colorScheme.surfaceTint,
+                                        Get.theme.colorScheme.surfaceTint,
                                       ),
                                     ),
                                   ],
@@ -512,24 +368,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppLocalizations.of(context)!.card_information,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalizations.of(context)!.card_information,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -573,10 +416,10 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
+                              const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText:
-                                  AppLocalizations.of(context)!.card_number,
+                              AppLocalizations.of(context)!.card_number,
                               hintStyle: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.surfaceTint,
@@ -585,7 +428,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           ),
                         ),
                         Obx(
-                          () => SvgPicture.asset(
+                              () => SvgPicture.asset(
                             controller.cardType.value == 'Visa'
                                 ? 'assets/image/svg/Visa.svg'
                                 : 'assets/image/svg/MasterCard.svg',
@@ -635,7 +478,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
+                              const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText: AppLocalizations.of(context)!
                                   .card_holder_name,
@@ -716,7 +559,8 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                                color: Get.theme.colorScheme.tertiary),
+                              color: Get.theme.colorScheme.tertiary,
+                            ),
                           ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -774,30 +618,17 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: AppLocalizations.of(context)!.event_poster,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.tertiary,
-                          ),
-                        ),
-                        TextSpan(
-                          text: ' *',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Get.theme.colorScheme.primary,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    AppLocalizations.of(context)!.event_poster,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                   const SizedBox(height: 16),
                   Obx(
-                    () => GestureDetector(
-                      onTap: () => controller.pickImage,
+                        () => GestureDetector(
+                      onTap: () => controller.pickImage(),
                       child: Container(
                         height: 114,
                         decoration: BoxDecoration(
@@ -807,32 +638,59 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: controller.selectedImage.value == null
+                            ? Obx(() => controller.poster.isEmpty
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/image/svg/Upload.svg',
-                                    width: 18,
-                                    colorFilter: ColorFilter.mode(
-                                      Get.theme.colorScheme.surfaceTint,
-                                      BlendMode.srcIn,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .upload_event_poster,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Image.file(
-                                controller.selectedImage.value!,
-                                fit: BoxFit.cover,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/image/svg/Upload.svg',
+                                width: 18,
+                                colorFilter: ColorFilter.mode(
+                                  Get.theme.colorScheme.surfaceTint,
+                                  BlendMode.srcIn,
+                                ),
                               ),
+                              const SizedBox(width: 8),
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .upload_event_poster,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color:
+                                  Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ])
+                            : Image.network(
+                          controller.poster.value,
+                          width: double.infinity,
+                          height: 114,
+                          fit: BoxFit.cover,
+                          loadingBuilder:
+                              (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return buildPlaceholder();
+                          },
+                          errorBuilder:
+                              (context, error, stackTrace) =>
+                              Container(
+                                width: Get.width,
+                                height: Get.height,
+                                color: const Color(0xffEAE9FC),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.error,
+                                    size: 24,
+                                    color:
+                                    Get.theme.colorScheme.secondary,
+                                  ),
+                                ),
+                              ),
+                        ))
+                            : Image.file(
+                          controller.selectedImage.value!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -846,7 +704,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
             left: 0,
             right: 0,
             child: GestureDetector(
-              onTap: () => Get.back(),
+              onTap: () => controller.onSubmit(),
               child: Container(
                 color: Get.theme.bottomNavigationBarTheme.backgroundColor,
                 padding: const EdgeInsets.symmetric(

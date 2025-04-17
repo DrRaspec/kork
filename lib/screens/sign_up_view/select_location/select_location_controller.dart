@@ -99,6 +99,7 @@ class SelectLocationController extends GetxController {
         bool isSuccess = await saveSignUp(currentLocation.value);
         if (isSuccess) {
           if (Get.currentRoute != Routes.main) {
+            Get.snackbar("Success", "Sign up successful");
             Get.offAllNamed(Routes.login);
           }
         } else {

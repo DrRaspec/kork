@@ -33,6 +33,8 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
 
   final dio = Dio();
 
+  bool canSendOTP = true;
+
   @override
   void onInit() {
     super.onInit();
@@ -185,38 +187,52 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
-  Future<bool> sendOTP() async {
-    try {
-      var body = {"email": emailController.text};
-      var response = await EventApiHelper.post("/send", data: body);
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-    } on DioException catch (e) {
-      var response = e.response;
-      Get.snackbar(
-        'Fail',
-        response == null ? 'fail to send OTP' : response.data['message'],
-      );
-      return false;
-    }
-  }
+  // Future<bool> sendOTP() async {
+  //   if (!canSendOTP) {
+  //     Get.snackbar("Please wait", "You can request another OTP shortly");
+  //     return false;
+  //   }
+  //
+  //   try {
+  //     var body = {"email": emailController.text};
+  //     var response = await EventApiHelper.post("/send", data: body);
+  //     if (response.statusCode == 200) {
+  //       canSendOTP = false;
+  //       Future.delayed(const Duration(minutes: 1), () {
+  //         canSendOTP = true;
+  //       });
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } on DioException catch (e) {
+  //     var response = e.response;
+  //     Get.snackbar(
+  //       'Fail',
+  //       response == null ? 'fail to send OTP' : response.data['message'],
+  //     );
+  //     return false;
+  //   }
+  // }
 
   void onTap() async {
+    if (status.value == Status.loading) return;
     status.value = Status.loading;
     await validateInput();
-    var isSendOTP = await sendOTP();
     status.value = Status.success;
     if (emailError.isEmpty &&
         passwordError.isEmpty &&
-        confirmPasswordError.isEmpty &&
-        isSendOTP) {
-      Get.toNamed(
-        Routes.verifyOtp,
-        arguments: {'isNew': true, 'email': emailController.text},
+        confirmPasswordError.isEmpty) {
+      var isSendOTP = await sendOTP(
+        canSendOTP: canSendOTP,
+        email: emailController.text,
       );
+      if (isSendOTP) {
+        Get.toNamed(
+          Routes.verifyOtp,
+          arguments: {'isNew': true, 'email': emailController.text},
+        );
+      }
     }
   }
 

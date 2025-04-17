@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +9,8 @@ import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/helper/extension.dart';
+import 'package:kork/helper/show_error_snack_bar.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/sign_up_view/map/map_view.dart';
 import 'package:kork/widget/appBarHelper.dart';
@@ -18,6 +19,7 @@ import 'package:kork/widget/categories_dropdown.dart';
 import 'package:kork/widget/event_textfield.dart';
 
 part 'add_event_binding.dart';
+
 part 'add_event_controller.dart';
 
 class AddEventView extends GetView<AddEventViewController> {
@@ -66,11 +68,13 @@ class AddEventView extends GetView<AddEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  eventTextField(
-                    textController: controller.nameController,
-                    errorMessage: controller.nameError.value,
-                    hintText: AppLocalizations.of(context)!.event_title,
-                    textFocus: controller.focusName,
+                  Obx(
+                        () => eventTextField(
+                      textController: controller.nameController,
+                      errorMessage: controller.nameError.value,
+                      hintText: AppLocalizations.of(context)!.event_title,
+                      textFocus: controller.focusName,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Row(
@@ -85,7 +89,7 @@ class AddEventView extends GetView<AddEventViewController> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        AppLocalizations.of(context)!.location,
+                                    AppLocalizations.of(context)!.location,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Get.theme.colorScheme.tertiary,
@@ -103,7 +107,7 @@ class AddEventView extends GetView<AddEventViewController> {
                             ),
                             const SizedBox(height: 8),
                             Obx(
-                              () => GestureDetector(
+                                  () => GestureDetector(
                                 onTap: controller.getLocation,
                                 child: eventTextField(
                                   textController: controller.locationController,
@@ -128,7 +132,7 @@ class AddEventView extends GetView<AddEventViewController> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        AppLocalizations.of(context)!.category,
+                                    AppLocalizations.of(context)!.category,
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Get.theme.colorScheme.tertiary,
@@ -145,7 +149,12 @@ class AddEventView extends GetView<AddEventViewController> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            categoriesDropdown(),
+                            Obx(
+                                  () => categoriesDropdown(
+                                categoryController: controller.categoryController,
+                                categoryError: controller.categoryError,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -182,14 +191,16 @@ class AddEventView extends GetView<AddEventViewController> {
                           Expanded(
                             child: GestureDetector(
                               onTap: controller.getDate,
-                              child: eventTextField(
-                                textController: controller.startDateController,
-                                errorMessage: controller.startDateError.value,
-                                hintText:
-                                    AppLocalizations.of(context)!.start_date,
-                                textFocus: controller.focusStartDate,
-                                svgIcon: 'assets/image/svg/calendar-3.svg',
-                                isEnable: false,
+                              child: Obx(
+                                    () => eventTextField(
+                                  textController: controller.startDateController,
+                                  errorMessage: controller.startDateError.value,
+                                  hintText:
+                                  AppLocalizations.of(context)!.start_date,
+                                  textFocus: controller.focusStartDate,
+                                  svgIcon: 'assets/image/svg/calendar-3.svg',
+                                  isEnable: false,
+                                ),
                               ),
                             ),
                           ),
@@ -197,14 +208,16 @@ class AddEventView extends GetView<AddEventViewController> {
                             child: GestureDetector(
                               onTap: () =>
                                   controller.getDate(isStartDate: false),
-                              child: eventTextField(
-                                textController: controller.endDateController,
-                                errorMessage: controller.endDateError.value,
-                                hintText:
-                                    AppLocalizations.of(context)!.end_date,
-                                textFocus: controller.focusEndDate,
-                                svgIcon: 'assets/image/svg/calendar-3.svg',
-                                isEnable: false,
+                              child: Obx(
+                                    () => eventTextField(
+                                  textController: controller.endDateController,
+                                  errorMessage: controller.endDateError.value,
+                                  hintText:
+                                  AppLocalizations.of(context)!.end_date,
+                                  textFocus: controller.focusEndDate,
+                                  svgIcon: 'assets/image/svg/calendar-3.svg',
+                                  isEnable: false,
+                                ),
                               ),
                             ),
                           ),
@@ -244,12 +257,12 @@ class AddEventView extends GetView<AddEventViewController> {
                             child: GestureDetector(
                               onTap: controller.getTime,
                               child: Obx(
-                                () => eventTextField(
+                                    () => eventTextField(
                                   textController:
-                                      controller.startTimeController,
+                                  controller.startTimeController,
                                   errorMessage: controller.startTimeError.value,
                                   hintText:
-                                      AppLocalizations.of(context)!.start_time,
+                                  AppLocalizations.of(context)!.start_time,
                                   textFocus: controller.focusStartTime,
                                   svgIcon: 'assets/image/svg/timer-start.svg',
                                   isEnable: false,
@@ -262,11 +275,11 @@ class AddEventView extends GetView<AddEventViewController> {
                               onTap: () =>
                                   controller.getTime(isStartTime: false),
                               child: Obx(
-                                () => eventTextField(
+                                    () => eventTextField(
                                   textController: controller.endTimeController,
                                   errorMessage: controller.endTimeError.value,
                                   hintText:
-                                      AppLocalizations.of(context)!.end_time,
+                                  AppLocalizations.of(context)!.end_time,
                                   textFocus: controller.focusEndTime,
                                   svgIcon: 'assets/image/svg/timer-pause.svg',
                                   isEnable: false,
@@ -322,7 +335,7 @@ class AddEventView extends GetView<AddEventViewController> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                                AppLocalizations.of(context)!.detail_guide,
+                            AppLocalizations.of(context)!.detail_guide,
                             hintStyle: TextStyle(
                               fontSize: 10,
                               color: Get.theme.colorScheme.tertiary,
@@ -341,43 +354,45 @@ class AddEventView extends GetView<AddEventViewController> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      // value: AppLocalizations.of(context)!.ticket_information,
-                      hint: Text(
-                        AppLocalizations.of(context)!.ticket_information,
+                  Obx(
+                        () => DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        // value: controller.selectedValue.value,
+                        hint: Text(
+                          AppLocalizations.of(context)!.ticket_information,
+                          style: TextStyle(
+                            color: Get.theme.colorScheme.tertiary,
+                            fontSize: 16,
+                          ),
+                        ),
+                        icon: Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Get.theme.colorScheme.tertiary,
+                          size: 16,
+                        ),
+                        dropdownColor: Get.theme.scaffoldBackgroundColor,
                         style: TextStyle(
                           color: Get.theme.colorScheme.tertiary,
                           fontSize: 16,
                         ),
-                      ),
-                      icon: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Get.theme.colorScheme.tertiary,
-                        size: 16,
-                      ),
-                      dropdownColor: Get.theme.scaffoldBackgroundColor,
-                      style: TextStyle(
-                        color: Get.theme.colorScheme.tertiary,
-                        fontSize: 16,
-                      ),
-                      isExpanded: true,
-                      onChanged: (String? newValue) {
-                        controller.selectedValue.value = newValue;
-                        controller.updateControllers(newValue);
-                      },
-                      items: controller.ticketTypes.map((String type) {
-                        return DropdownMenuItem<String>(
-                          value: type,
-                          child: Text(
-                            type,
-                            style: TextStyle(
-                              color: Get.theme.colorScheme.tertiary,
-                              fontSize: 16,
+                        isExpanded: true,
+                        onChanged: (String? newValue) {
+                          controller.selectedValue.value = newValue ?? '';
+                          controller.updateControllers(newValue);
+                        },
+                        items: controller.ticketTypes.map((String type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(
+                              type,
+                              style: TextStyle(
+                                color: Get.theme.colorScheme.tertiary,
+                                fontSize: 16,
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -403,12 +418,12 @@ class AddEventView extends GetView<AddEventViewController> {
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                    () => SizedBox(
+                        () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
                           controller.ticketController.length * 2 - 1,
-                          (index) {
+                              (index) {
                             if (index % 2 == 0) {
                               var itemIndex = index ~/ 2;
                               var ticketController = controller
@@ -453,14 +468,14 @@ class AddEventView extends GetView<AddEventViewController> {
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                    () => SizedBox(
+                        () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
                           controller.ticketPriceController.length,
-                          (index) {
+                              (index) {
                             var ticketPriceController =
-                                controller.ticketPriceController[index];
+                            controller.ticketPriceController[index];
                             var type = controller.types[index];
 
                             return Expanded(
@@ -481,7 +496,7 @@ class AddEventView extends GetView<AddEventViewController> {
                                       style: TextStyle(
                                         fontSize: 11,
                                         color:
-                                            Get.theme.colorScheme.surfaceTint,
+                                        Get.theme.colorScheme.surfaceTint,
                                       ),
                                     ),
                                   ],
@@ -555,10 +570,10 @@ class AddEventView extends GetView<AddEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
+                              const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText:
-                                  AppLocalizations.of(context)!.card_number,
+                              AppLocalizations.of(context)!.card_number,
                               hintStyle: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.surfaceTint,
@@ -567,7 +582,7 @@ class AddEventView extends GetView<AddEventViewController> {
                           ),
                         ),
                         Obx(
-                          () => SvgPicture.asset(
+                              () => SvgPicture.asset(
                             controller.cardType.value == 'Visa'
                                 ? 'assets/image/svg/Visa.svg'
                                 : 'assets/image/svg/MasterCard.svg',
@@ -617,7 +632,7 @@ class AddEventView extends GetView<AddEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
+                              const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText: AppLocalizations.of(context)!
                                   .card_holder_name,
@@ -778,7 +793,7 @@ class AddEventView extends GetView<AddEventViewController> {
                   ),
                   const SizedBox(height: 16),
                   Obx(
-                    () => GestureDetector(
+                        () => GestureDetector(
                       onTap: () => controller.pickImage(),
                       child: Container(
                         height: 114,
@@ -791,31 +806,31 @@ class AddEventView extends GetView<AddEventViewController> {
                         ),
                         child: controller.selectedImage.value == null
                             ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/image/svg/Upload.svg',
-                                    width: 18,
-                                    colorFilter: ColorFilter.mode(
-                                      Get.theme.colorScheme.surfaceTint,
-                                      BlendMode.srcIn,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .upload_event_poster,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Image.file(
-                                controller.selectedImage.value!,
-                                fit: BoxFit.fill,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/image/svg/Upload.svg',
+                              width: 18,
+                              colorFilter: ColorFilter.mode(
+                                Get.theme.colorScheme.surfaceTint,
+                                BlendMode.srcIn,
                               ),
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              AppLocalizations.of(context)!
+                                  .upload_event_poster,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                          ],
+                        )
+                            : Image.file(
+                          controller.selectedImage.value!,
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                   ),

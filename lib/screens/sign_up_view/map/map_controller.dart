@@ -352,6 +352,7 @@ class MapController extends GetxController {
 
       if (isSuccess) {
         if (Get.currentRoute != Routes.main) {
+          Get.snackbar("Success", "Sign up successful");
           Get.offAllNamed(Routes.login);
         }
       } else {

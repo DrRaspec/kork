@@ -11,7 +11,9 @@ class EventApiHelper {
       connectTimeout: const Duration(minutes: 1),
       receiveTimeout: const Duration(minutes: 1),
       headers: {
-        'X-Requested-With': 'XMLHttpRequest',
+        // 'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
     );
 

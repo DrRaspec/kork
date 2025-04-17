@@ -13,6 +13,7 @@ import 'package:kork/widget/booked_event_card.dart';
 import 'package:kork/widget/up_coming_widget.dart';
 
 part 'ticket_controller.dart';
+
 part 'ticket_binding.dart';
 
 class TicketView extends GetView<TicketController> {
@@ -57,21 +58,23 @@ class TicketView extends GetView<TicketController> {
                   child: SizedBox(height: 24),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: List.generate(
-                      controller.buyedTickets.length,
-                      (index) {
-                        // var event = BoughtTicket.fromJson(
-                        //     controller.buyedTickets[index]);
-                        return Column(
-                          children: [
-                            bookedEventCard(
-                              event: controller.buyedTickets[index],
-                            ),
-                            const SizedBox(height: 24),
-                          ],
-                        );
-                      },
+                  child: Obx(
+                    () => Column(
+                      children: List.generate(
+                          controller.buyedTickets.length,
+                        (index) {
+                          // var event = BoughtTicket.fromJson(
+                          //     controller.buyedTickets[index]);
+                          return Column(
+                            children: [
+                              bookedEventCard(
+                                event: controller.buyedTickets[index],
+                              ),
+                              const SizedBox(height: 24),
+                            ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

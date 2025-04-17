@@ -16,6 +16,7 @@ import 'package:kork/widget/my_event_option.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'my_event_detail_binding.dart';
+
 part 'my_event_detail_controller.dart';
 
 class MyEventDetailView extends GetView<MyEventDetailViewController> {
@@ -82,7 +83,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
             ),
             const SizedBox(height: 8),
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.updateEvent),
+              onTap: controller.updateEvent,
               child: myEventOption(
                 text: AppLocalizations.of(context)!.update_event,
                 icon: 'assets/image/svg/edit-2.svg',

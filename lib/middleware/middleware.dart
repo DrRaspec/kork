@@ -96,14 +96,14 @@ class AuthService extends GetxService {
           },
         );
       await dio.post('/logout');
-      await storage.delete(key: 'token');
-      await storage.delete(key: 'id');
-      await setLoggedIn(false);
+      // await storage.delete(key: 'token');
+      // await storage.delete(key: 'id');
+      // await setLoggedIn(false);
       Get.offAllNamed(Routes.login);
-    } on DioException catch (e) {
-      await storage.delete(key: 'token');
-      await storage.delete(key: 'id');
-      await setLoggedIn(false);
+    } catch (_) {
+    } finally {
+      await storage.deleteAll();
+      await prefs.clear();
       Get.offAllNamed(Routes.login);
     }
   }

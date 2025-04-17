@@ -77,6 +77,7 @@ class AddEventViewController extends GetxController {
     cardHolderFocus = FocusNode();
     ccvFocus = FocusNode();
     expireDateFocus = FocusNode();
+    categoryController.text = AppLocalizations.of(Get.context!)!.sport.firstCapitalize();
   }
 
   @override
@@ -330,57 +331,88 @@ class AddEventViewController extends GetxController {
     // Validate Name
     if (nameController.text.trim().isEmpty) {
       nameError.value =
-          '${AppLocalizations.of(Get.context!)!.name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(nameError.value);
+      focusName.requestFocus();
+      return false;
     }
 
     // Validate Location
     if (locationController.text.trim().isEmpty) {
       locationError.value =
-          '${AppLocalizations.of(Get.context!)!.location} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.location} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(locationError.value);
+      focusLocation.requestFocus();
+      return false;
     }
 
     // Validate Category
     if (categoryController.text.trim().isEmpty) {
       categoryError.value =
-          '${AppLocalizations.of(Get.context!)!.category} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.category} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(categoryError.value);
+      focusCategory.requestFocus();
+      return false;
     }
 
     // Validate Start Date
     if (startDateController.text.trim().isEmpty) {
       startDateError.value =
-          '${AppLocalizations.of(Get.context!)!.start_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.start_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(startDateError.value);
+      focusStartDate.requestFocus();
+      return false;
     }
 
     // Validate End Date
     if (endDateController.text.trim().isEmpty) {
       endDateError.value =
-          '${AppLocalizations.of(Get.context!)!.end_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.end_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(endDateError.value);
+      focusEndDate.requestFocus();
+      return false;
     }
 
     // Validate Start Time
     if (startTimeController.text.trim().isEmpty) {
       startTimeError.value =
-          '${AppLocalizations.of(Get.context!)!.start_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.start_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(startTimeError.value);
+      focusStartTime.requestFocus();
+      return false;
     }
 
     // Validate End Time
     if (endTimeController.text.trim().isEmpty) {
       endTimeError.value =
-          '${AppLocalizations.of(Get.context!)!.end_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.end_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(endTimeError.value);
+      focusEndTime.requestFocus();
+      return false;
     }
 
     // Validate Description
     if (descriptionController.text.trim().isEmpty) {
       descriptionError.value =
-          '${AppLocalizations.of(Get.context!)!.description} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+      '${AppLocalizations.of(Get.context!)!.description} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(descriptionError.value);
+      focusDescription.requestFocus();
+      return false;
+    }
+
+    // Validate Poster
+    if (selectedImage.value == null) {
+      hasError = true;
+      showErrorSnackBar('Event poster is required');
+      return false;
     }
 
     // Validate Ticket Types, Prices, and Quantities
@@ -396,120 +428,102 @@ class AddEventViewController extends GetxController {
       // Validate ticket price
       if (ticketPriceController[i].text.trim().isEmpty) {
         ticketPriceController[i].text = '0';
+        showErrorSnackBar('${types[i]} ticket price cannot be empty');
         hasError = true;
+        return false;
       } else {
         // Ensure price is a valid number
         if (double.tryParse(ticketPriceController[i].text) == null) {
           ticketPriceController[i].text = '0';
+          showErrorSnackBar('${types[i]} ticket price must be a valid number');
           hasError = true;
+          return false;
         }
       }
 
       // Validate ticket quantity
       if (ticketQuantityController[i].text.trim().isEmpty) {
         ticketQuantityController[i].text = '0';
+        showErrorSnackBar('${types[i]} ticket quantity cannot be empty');
         hasError = true;
+        return false;
       } else {
         // Ensure quantity is a valid integer
         if (int.tryParse(ticketQuantityController[i].text) == null) {
           ticketQuantityController[i].text = '0';
+          showErrorSnackBar('${types[i]} ticket quantity must be a valid number');
           hasError = true;
+          return false;
         }
       }
-    }
-
-    // Validate Poster
-    if (selectedImage.value == null) {
-      hasError = true;
-      Get.snackbar(
-        'Error',
-        'Event poster is required',
-        snackPosition: SnackPosition.TOP,
-      );
     }
 
     // Validate Card Number
     cardType.value = getCardType(cardNumberController.text.trim());
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
+      showErrorSnackBar('Card number cannot be empty');
       hasError = true;
+      cardNumberFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[0-9]{13,19}$').hasMatch(cardNumberController.text) ||
         cardType.value == 'Unknown') {
       cardNumberError.value = true;
+      showErrorSnackBar('Please enter a valid card number');
       hasError = true;
+      cardNumberFocus.requestFocus();
+      return false;
     }
 
     // Validate Card Holder
     if (cardHolderController.text.isEmpty) {
       cardHolderError.value = true;
+      showErrorSnackBar('Card holder name cannot be empty');
       hasError = true;
+      cardHolderFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[a-zA-Z\s\-]+$')
         .hasMatch(cardHolderController.text)) {
       cardHolderError.value = true;
+      showErrorSnackBar('Please enter a valid card holder name');
       hasError = true;
+      cardHolderFocus.requestFocus();
+      return false;
     }
 
     // Validate CCV
     if (ccvController.text.trim().isEmpty) {
       ccvError.value = true;
+      showErrorSnackBar('CCV cannot be empty');
       hasError = true;
+      ccvFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[0-9]{3,4}$').hasMatch(ccvController.text)) {
       ccvError.value = true;
+      showErrorSnackBar('Please enter a valid CCV');
       hasError = true;
+      ccvFocus.requestFocus();
+      return false;
     }
 
     // Validate Expire Date
     if (expireDateController.text.trim().isEmpty) {
       expireDateError.value = true;
+      showErrorSnackBar('Expiration date cannot be empty');
       hasError = true;
+      expireDateFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^(0[1-9]|1[0-2])\/[0-9]{2}$')
         .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
+      showErrorSnackBar('Please enter a valid expiration date (MM/YY)');
       hasError = true;
+      expireDateFocus.requestFocus();
+      return false;
     }
 
-    // Handle focus for first error field
-    if (hasError) {
-      Future.delayed(Duration.zero, () {
-        // Focus handling for various fields
-        if (nameError.isNotEmpty) {
-          focusName.requestFocus();
-        } else if (locationError.isNotEmpty) {
-          focusLocation.requestFocus();
-        } else if (categoryError.isNotEmpty) {
-          focusCategory.requestFocus();
-        } else if (startDateError.isNotEmpty) {
-          focusStartDate.requestFocus();
-        } else if (endDateError.isNotEmpty) {
-          focusEndDate.requestFocus();
-        } else if (startTimeError.isNotEmpty) {
-          focusStartTime.requestFocus();
-        } else if (endTimeError.isNotEmpty) {
-          focusEndTime.requestFocus();
-        } else if (descriptionError.isNotEmpty) {
-          focusDescription.requestFocus();
-        } else if (cardNumberError.value) {
-          cardNumberFocus.requestFocus();
-        } else if (cardHolderError.value) {
-          cardHolderFocus.requestFocus();
-        } else if (ccvError.value) {
-          ccvFocus.requestFocus();
-        } else if (expireDateError.value) {
-          expireDateFocus.requestFocus();
-        } else {
-          for (int i = 0; i < ticketCount; i++) {
-            if (ticketPriceController[i].text == '0') {
-              ticketPriceController[i].selection = TextSelection.fromPosition(
-                  TextPosition(offset: ticketPriceController[i].text.length));
-              break;
-            }
-          }
-        }
-      });
-
-      cardType.value = 'Visa';
-    }
-    return !hasError;
+    // If we got here, all validations passed
+    return true;
   }
 
   void onSubmit() async {

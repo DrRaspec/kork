@@ -95,7 +95,7 @@ class BookmarkView extends GetView<BookmarkViewController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'No upcoming events',
+                        'No bookmark events',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],

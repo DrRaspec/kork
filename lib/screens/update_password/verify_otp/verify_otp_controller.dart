@@ -110,7 +110,10 @@ class VerifyOtpController extends GetxController {
       if (isNew) {
         Get.toNamed(Routes.selectProfile);
       } else {
-        Get.toNamed(Routes.changePassword);
+        Get.toNamed(
+          Routes.changePassword,
+          arguments: {'code': otp, 'email': email},
+        );
       }
     }
   }

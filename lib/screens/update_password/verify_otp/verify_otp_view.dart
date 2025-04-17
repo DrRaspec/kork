@@ -126,7 +126,7 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                   const SizedBox(height: 24),
                   controller.isNew
                       ? GestureDetector(
-                          onTap: () => Get.toNamed(Routes.signup),
+                          onTap: () => Get.offNamed(Routes.signup),
                           child: Align(
                             alignment: Alignment.center,
                             child: CustomPaint(

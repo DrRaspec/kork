@@ -3,52 +3,56 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/screens/add_event/add_event_view.dart';
 
-Widget categoriesDropdown() {
+Widget categoriesDropdown({
+  required TextEditingController categoryController,
+  required RxString categoryError,
+  String? initialValue,
+}) {
   var context = Get.context;
   if (context == null) return const SizedBox.shrink();
-  var controller = Get.find<AddEventViewController>();
+
+  // Define available values list for validation
+  final availableValues = [
+    AppLocalizations.of(context)!.sport,
+    AppLocalizations.of(context)!.concert,
+    AppLocalizations.of(context)!.fashion,
+    AppLocalizations.of(context)!.game,
+    AppLocalizations.of(context)!.innovation,
+  ];
+
+  // Set initial value if provided and controller is empty
+  if (initialValue != null && categoryController.text.isEmpty) {
+    // Validate initial value
+    if (availableValues.contains(initialValue)) {
+      categoryController.text = initialValue;
+    } else {
+      // Default to first item if invalid initial value
+      categoryController.text = availableValues.first;
+    }
+  }
+
+  // Validate current controller value
+  if (categoryController.text.isNotEmpty && !availableValues.contains(categoryController.text)) {
+    // Reset to first option if current value is invalid
+    categoryController.text = availableValues.first;
+  }
+
   return SizedBox(
     width: double.infinity,
     height: 40,
     child: DropdownButtonFormField2(
-      items: [
-        DropdownMenuItem(
-          value: AppLocalizations.of(context)!.sport,
-          child: Text(
-            AppLocalizations.of(context)!.sport,
-          ),
-        ),
-        DropdownMenuItem(
-          value: AppLocalizations.of(context)!.concert,
-          child: Text(
-            AppLocalizations.of(context)!.concert,
-          ),
-        ),
-        DropdownMenuItem(
-          value: AppLocalizations.of(context)!.fashion,
-          child: Text(
-            AppLocalizations.of(context)!.fashion,
-          ),
-        ),
-        DropdownMenuItem(
-          value: AppLocalizations.of(context)!.game,
-          child: Text(
-            AppLocalizations.of(context)!.game,
-          ),
-        ),
-        DropdownMenuItem(
-          value: AppLocalizations.of(context)!.innovation,
-          child: Text(
-            AppLocalizations.of(context)!.innovation,
-          ),
-        ),
-      ],
+      value: categoryController.text.isNotEmpty ? categoryController.text : availableValues.first,
+      items: availableValues.map((String value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
       onChanged: (value) {
-        if (value != null || value!.isNotEmpty) {
-          controller.categoryController.text = value;
-          controller.categoryError.value = '';
+        if (value != null && value.isNotEmpty) {
+          categoryController.text = value.toString();
+          categoryError.value = '';
         }
       },
       decoration: InputDecoration(
@@ -67,7 +71,7 @@ Widget categoriesDropdown() {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(
-            color: controller.categoryError.isNotEmpty
+            color: categoryError.isNotEmpty
                 ? Get.theme.colorScheme.primary
                 : Get.theme.colorScheme.tertiary,
             width: 1.5,
@@ -89,7 +93,7 @@ Widget categoriesDropdown() {
             width: 18,
             height: 18,
             colorFilter: ColorFilter.mode(
-              controller.categoryError.isNotEmpty
+              categoryError.isNotEmpty
                   ? Get.theme.colorScheme.primary
                   : Get.theme.colorScheme.tertiary,
               BlendMode.srcIn,
@@ -108,7 +112,6 @@ Widget categoriesDropdown() {
         maxHeight: 100,
         elevation: 2,
         padding: EdgeInsets.zero,
-        // offset: const Offset(0, 5),
       ),
       style: TextStyle(
         color: Get.theme.colorScheme.tertiary,
@@ -118,7 +121,7 @@ Widget categoriesDropdown() {
         padding: EdgeInsets.only(right: 8),
       ),
       menuItemStyleData: const MenuItemStyleData(
-        height: 35, // Adjust as needed
+        height: 35,
         padding: EdgeInsets.symmetric(
           vertical: 2,
           horizontal: 16,
