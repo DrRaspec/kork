@@ -71,7 +71,9 @@ class CheckoutController extends GetxController {
       var formData = FormData();
       int validTicketIndex = 0;
 
-      for (var i = 0; i < data.tickets.length; i++) {
+      // for (var i = 0; i < data.tickets.length; i++) {
+      for (var i = 0; i < ticketQuantity.length; i++) {
+        print('tickets quantity length ${ticketQuantity.length}');
         if (ticketQuantity[i] > 0) {
           formData.fields.addAll([
             MapEntry('tickets[$validTicketIndex][ticket_id]',
@@ -80,6 +82,7 @@ class CheckoutController extends GetxController {
                 ticketQuantity[i].toString()),
           ]);
           validTicketIndex++;
+          print('tickets quantity length $validTicketIndex');
         }
       }
 
@@ -98,7 +101,7 @@ class CheckoutController extends GetxController {
       if (response.statusCode == 200) {
         boughtTicket.assignAll(response.data);
         Get.snackbar('Success', 'Tickets purchased successfully');
-        Get.toNamed(Routes.yourTicket, arguments: data);
+        Get.toNamed(Routes.yourTicket, arguments: boughtTicket);
       } else {
         Get.snackbar(
             'Error', response.data['error'] ?? 'Failed to purchase tickets');

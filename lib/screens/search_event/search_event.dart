@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/event_recent_search.dart';
 
 part 'search_event_binding.dart';
+
 part 'search_event_controller.dart';
 
 class SearchEvent extends GetView<SearchEventController> {
@@ -16,14 +19,14 @@ class SearchEvent extends GetView<SearchEventController> {
         child: Stack(
           children: [
             GestureDetector(
-              behavior: HitTestBehavior.translucent, // Ensures it captures taps
+              behavior: HitTestBehavior.translucent,
               onTap: () => FocusScope.of(context).unfocus(),
               onHorizontalDragUpdate: (details) {
                 if (details.delta.dx > 10) {
                   Get.back();
                 }
               },
-              child: const SizedBox.expand(), // Covers full screen
+              child: const SizedBox.expand(),
             ),
             SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -52,6 +55,7 @@ class SearchEvent extends GetView<SearchEventController> {
                               fontSize: 12,
                               color: Get.theme.colorScheme.surfaceTint,
                             ),
+                            onSubmitted: controller.onSubmit,
                             decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.search_outlined,
@@ -100,9 +104,35 @@ class SearchEvent extends GetView<SearchEventController> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  GestureDetector(
-                    onTap: () {},
-                    child: eventRecentSearch(),
+                  Obx(
+                    () => controller.recentSearch.isEmpty
+                        ? Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.no_recent_searches,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
+                            ),
+                          )
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final search = controller.recentSearch[index];
+                              return GestureDetector(
+                                onTap: () => controller.onRecentTap(search),
+                                child: eventRecentSearch(search),
+                              );
+                            },
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 8),
+                            itemCount: controller.recentSearch.length,
+                          ),
+                    // GestureDetector(
+                    //   onTap: () {},
+                    //   child: eventRecentSearch(),
+                    // ),
                   ),
                 ],
               ),

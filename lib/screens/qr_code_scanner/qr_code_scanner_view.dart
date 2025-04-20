@@ -1,8 +1,18 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/helper/show_error_snack_bar.dart';
 import 'package:kork/main.dart';
+import 'package:kork/middleware/middleware.dart';
+import 'package:kork/models/event_model.dart';
+import 'package:kork/screens/main/main_view.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 part 'qr_code_scanner_binding.dart';

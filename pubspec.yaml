@@ -41,6 +41,7 @@ dependencies:
   file_saver: ^0.2.14
   media_scanner: ^2.2.0
   mobile_scanner: ^6.0.7
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

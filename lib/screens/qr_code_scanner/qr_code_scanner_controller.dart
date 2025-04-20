@@ -2,7 +2,11 @@ part of 'qr_code_scanner_view.dart';
 
 class QrCodeScannerViewController extends GetxController {
   Rx<String> languageCode =
-      Get.find<LanguageController>().currentLocale.languageCode.obs;
+      Get
+          .find<LanguageController>()
+          .currentLocale
+          .languageCode
+          .obs;
   var isFlashOn = false.obs;
   final scannerController = MobileScannerController();
 
@@ -17,12 +21,91 @@ class QrCodeScannerViewController extends GetxController {
     super.onClose();
   }
 
-  void onDetectQrCode(BarcodeCapture barcode) {
-    final List<Barcode> barcodes = barcode.barcodes;
+  void onDetectQrCode(BarcodeCapture barcode) async {
+    final barcodes = barcode.barcodes;
     for (var element in barcodes) {
       if (element.rawValue != null) {
-        print('scanned qr code ${element.rawValue}');
+        try {
+          const storage = FlutterSecureStorage();
+          var token = await storage.read(key: 'token');
+          var id = await storage.read(key: 'id');
+          if (token == null || id == null) {
+            Get.find<AuthService>().logout();
+            return;
+          }
+          print('scanned qr code ${element.rawValue}');
+          var data = jsonDecode(element.rawValue!) as List;
+          print('decode data $data');
+          var formData = {
+            "_method": "DELETE",
+            "tickets": data,
+          };
+          var response = await EventApiHelper.post(
+            '/users/$id/scan-tickets',
+            data: formData,
+          );
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            scanSuccess();
+            Get.snackbar('Successful', 'Scan Successful');
+          }
+        } on DioException catch (e) {
+          String errorMessage = 'Scan Failed';
+
+          if (e.type == DioExceptionType.connectionTimeout ||
+              e.type == DioExceptionType.receiveTimeout ||
+              e.type == DioExceptionType.sendTimeout) {
+            errorMessage = 'Connection timeout. Please try again.';
+          } else if (e.type == DioExceptionType.connectionError) {
+            errorMessage = 'No internet connection. Please check your network.';
+          } else if (e.response != null) {
+            if (e.response!.statusCode == 401) {
+              errorMessage = 'Authentication failed. Please login again.';
+              Get.find<AuthService>().logout();
+            } else if (e.response!.statusCode == 403) {
+              errorMessage = 'You do not have permission to scan this ticket.';
+            } else if (e.response!.statusCode == 404) {
+              errorMessage = 'Invalid ticket or already scanned.';
+            } else if (e.response!.data != null &&
+                e.response!.data['message'] != null) {
+              errorMessage = e.response!.data['message'];
+            }
+          }
+
+          showErrorSnackBar(
+              errorMessage
+          );
+
+          print('QR Scan error: ${e.toString()}');
+        }
       }
+      // var eventName
+      // var response = await EventApiHelper.post('/users/2/scan-tickets');
     }
+  }}
+
+  void scanSuccess() {
+    Get.showOverlay(
+      asyncFunction: () async {
+        await Future.delayed(
+          const Duration(milliseconds: 800),
+        );
+        return;
+      },
+      loadingWidget: Center(
+        child: Container(
+          color: Colors.black54,
+          child: Center(
+            child: Lottie.asset(
+              'assets/animation/scan_successful.json',
+              width: 200,
+              height: 200,
+              fit: BoxFit.contain,
+              repeat: false,
+            ),
+          ),
+        ),
+      ),
+      opacity: 0.8,
+    );
   }
-}

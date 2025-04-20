@@ -3,7 +3,7 @@ part of 'profile_change_password_view.dart';
 class ProfileChangePasswordViewController extends GetxController
     with GetTickerProviderStateMixin {
   var editProfileController = Get.find<EditProfileViewController>();
-  late RxString fullName;
+  RxString fullName = ''.obs;
   Rx<String> languageCode =
       Get.find<LanguageController>().currentLocale.languageCode.obs;
   final storage = const FlutterSecureStorage();

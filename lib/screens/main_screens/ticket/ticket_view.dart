@@ -60,21 +60,29 @@ class TicketView extends GetView<TicketController> {
                 SliverToBoxAdapter(
                   child: Obx(
                     () => Column(
-                      children: List.generate(
+                      children: [
+                        ...List.generate(
                           controller.buyedTickets.length,
-                        (index) {
-                          // var event = BoughtTicket.fromJson(
-                          //     controller.buyedTickets[index]);
-                          return Column(
-                            children: [
-                              bookedEventCard(
-                                event: controller.buyedTickets[index],
-                              ),
-                              const SizedBox(height: 24),
-                            ],
-                          );
-                        },
-                      ),
+                          (index) {
+                            return Column(
+                              children: [
+                                bookedEventCard(
+                                  event: controller.buyedTickets[index],
+                                ),
+                                const SizedBox(height: 24),
+                              ],
+                            );
+                          },
+                        ),
+                        // Loading indicator
+                        Obx(() => controller.isLoading.value
+                            ? const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 16.0),
+                                child:
+                                    Center(child: CircularProgressIndicator()),
+                              )
+                            : const SizedBox.shrink()),
+                      ],
                     ),
                   ),
                 ),
@@ -83,7 +91,7 @@ class TicketView extends GetView<TicketController> {
                 // ),
                 SliverToBoxAdapter(
                   child: Obx(
-                    () => controller.buyedTickets.isEmpty
+                    () => controller.lastEvent.isEmpty
                         ? const SizedBox.shrink()
                         : Row(
                             children: [
@@ -118,33 +126,37 @@ class TicketView extends GetView<TicketController> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 238,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Obx(
-                        () => Row(
-                          children: List.generate(
-                            controller.lastEvent.length,
-                            (index) {
-                              final item =
-                                  Event.fromJson(controller.lastEvent[index]);
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 24,
+                  child: Obx(
+                    () => controller.lastEvent.isEmpty
+                        ? const SizedBox.shrink()
+                        : SizedBox(
+                            height: 238,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Obx(
+                                () => Row(
+                                  children: List.generate(
+                                    controller.lastEvent.length,
+                                    (index) {
+                                      final item = Event.fromJson(
+                                          controller.lastEvent[index]);
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 24,
+                                        ),
+                                        child: upComingWidget(item),
+                                      );
+                                    },
+                                  ),
                                 ),
-                                child: upComingWidget(item),
-                              );
-                            },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: 70),
-                ),
+                // const SliverToBoxAdapter(
+                //   child: SizedBox(height: 70),
+                // ),
               ],
             ),
           ),

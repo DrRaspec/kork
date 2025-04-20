@@ -107,8 +107,13 @@ class EditProfileViewController extends GetxController {
             lastNameController.text = userData.value!.lastName;
             fullName.value =
                 '${userData.value!.firstName} ${userData.value!.lastName}';
-            mainController.userData.value = userData.toJson();
-            mainController.update();
+            mainController.userData.value = userData.value!.toJson();
+            var homeController = Get.find<HomeController>();
+            // var profileController = Get.find<ProfileController>();
+            homeController.userData.value = userData.value;
+            // profileController.
+            homeController.processUserData();
+            // mainController.update();
 
             Get.snackbar('Success', 'Update Change Successfully');
           }

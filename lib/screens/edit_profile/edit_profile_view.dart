@@ -11,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/screens/main_screens/home/home_view.dart';
+import 'package:kork/screens/main_screens/profile/profile_view.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

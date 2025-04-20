@@ -219,7 +219,6 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     if (status.value == Status.loading) return;
     status.value = Status.loading;
     await validateInput();
-    status.value = Status.success;
     if (emailError.isEmpty &&
         passwordError.isEmpty &&
         confirmPasswordError.isEmpty) {
@@ -227,6 +226,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
         canSendOTP: canSendOTP,
         email: emailController.text,
       );
+      status.value = Status.success;
       if (isSendOTP) {
         Get.toNamed(
           Routes.verifyOtp,

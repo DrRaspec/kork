@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/helper/event_api_helper.dart';
-import 'package:kork/helper/generate_qr_code.dart';
+import 'package:kork/helper/qr_code_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
@@ -14,6 +14,7 @@ import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:kork/widget/booked_event_card.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'your_ticket_binding.dart';
 
@@ -54,38 +55,46 @@ class YourTicketView extends GetView<YourTicketViewController> {
             const SizedBox(height: 24),
             Column(
               children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 254,
-                    aspectRatio: 16 / 9,
-                    viewportFraction: 0.5,
-                    initialPage: 0,
-                    enableInfiniteScroll: true,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
-                    onPageChanged: (index, reason) {
-                      controller._currentIndex.value = index;
-                    },
-                  ),
-                  items: controller.imageList.map((imageUrl) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: Get.width * 0.5,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8.0),
+                Obx(
+                  () => controller.imageList.isEmpty
+                      ? ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 254,maxHeight: 254),
+                        child: const CircularProgressIndicator(),
+                      )
+                      : CarouselSlider(
+                          options: CarouselOptions(
+                            height: 254,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 0.5,
+                            initialPage: 0,
+                            enableInfiniteScroll: true,
+                            autoPlayCurve: Curves.fastOutSlowIn,
+                            enlargeCenterPage: true,
+                            scrollDirection: Axis.horizontal,
+                            onPageChanged: (index, reason) {
+                              controller._currentIndex.value = index;
+                            },
                           ),
-                          child: Image.network(
-                            imageUrl,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+                          items: controller.imageList.map((imageUrl) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                  width: Get.width * 0.5,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 5.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Image.network(
+                                    imageUrl,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            );
+                          }).toList(),
+                        ),
                 ),
                 Obx(
                   () => Row(
@@ -116,11 +125,15 @@ class YourTicketView extends GetView<YourTicketViewController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () => getGenerateQrCode(
-                    context,
-                    controller.buyedTickets,
-                    controller.argument.eventName,
-                  ),
+                  onTap: () async {
+                    // await controller.askPermission();
+                    generateTicketListQrCode(
+                      context,
+                      controller.argument,
+                      // controller.argument.eventName,
+                      // controller.argument.id.toString(),
+                    );
+                  },
                   child: Container(
                     width: 125,
                     height: 28,

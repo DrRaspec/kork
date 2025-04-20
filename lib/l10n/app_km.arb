@@ -278,5 +278,9 @@
     "organizer": "អ្នករៀបចំ",
     "retry": "ព្យាយាមម្តងទៀត",
     "scan_ticket": "ស្កេនសំបុត្រ",
-    "flash": "ពិល"
+    "flash": "ពិល",
+    "result": "លទ្ធផល",
+    "no_recent_searches": "មិនមានការស្វែងរកថ្មីៗទេ",
+    "no_results_found": "រកមិនឃើញលទ្ធផលទេ",
+    "something_went_wrong": "ប្រព័ន្ធមានបញ្ហា"
 }
