@@ -249,15 +249,15 @@ class ProfileView extends GetView<ProfileController> {
                                 text: AppLocalizations.of(context)!.bookmark,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () => Get.toNamed(Routes.notification),
-                              child: settingList(
-                                path: 'assets/image/svg/notification.svg',
-                                text:
-                                    AppLocalizations.of(context)!.notification,
-                                notificationNum: 100,
-                              ),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () => Get.toNamed(Routes.notification),
+                            //   child: settingList(
+                            //     path: 'assets/image/svg/notification.svg',
+                            //     text:
+                            //         AppLocalizations.of(context)!.notification,
+                            //     notificationNum: 100,
+                            //   ),
+                            // ),
                             GestureDetector(
                               onTap: () => Get.toNamed(Routes.paymentMethod),
                               child: settingList(

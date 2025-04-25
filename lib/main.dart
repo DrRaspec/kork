@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,7 +40,9 @@ part 'controllers/language_controller.dart';
 // }
 
 void main() async {
+  // WidgetsBinding widgetsBinding =
   WidgetsFlutterBinding.ensureInitialized();
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await loadEnvironment();
   await GetStorage.init();
 
@@ -50,6 +53,7 @@ void main() async {
   Get.put(AuthService(), permanent: true);
   Get.put(ApiService(), permanent: true);
   Get.put(MainController(), permanent: true);
+  // FlutterNativeSplash.remove();
 
 
   runApp(MainApp(prefs: prefs));

@@ -4,12 +4,15 @@ class BookedEventDetailController extends GetxController {
   late BoughtTicket eventData;
   Rx<String> displayLocation = ''.obs;
   Rx<String> location = ''.obs;
-  var going = 0.obs;
+  // var going = 0.obs;
+  var attendeeNumber = ''.obs;
   late String startDate;
   late String startDay;
+  var startTime = ''.obs;
+  var endTime = ''.obs;
   var storage = const FlutterSecureStorage();
-  late SharedPreferences prefs;
-  var isMarked = false.obs;
+  // late SharedPreferences prefs;
+  // var isMarked = false.obs;
   late String id;
   final List<String> weekdays = [
     "Monday",
@@ -21,6 +24,8 @@ class BookedEventDetailController extends GetxController {
     "Sunday"
   ];
 
+  var attendees = <Attendee>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -30,20 +35,37 @@ class BookedEventDetailController extends GetxController {
   void init() async {
     eventData = Get.arguments as BoughtTicket;
     getLocationAddress(eventData.event.location);
-    going.value = roundDown(56);
     startDay = weekdays[eventData.event.startDate.weekday - 1];
-    startDate = DateFormat('dd MMM yyyy').format(eventData.event.startDate);
-    prefs = await SharedPreferences.getInstance();
+    startDate = DateFormat('dd MMMM yyyy').format(eventData.event.startDate);
+    // prefs = await SharedPreferences.getInstance();
     var tempID = await storage.read(key: 'id');
     if (tempID == null) Get.find<AuthService>().logout;
     id = tempID!;
     // var userId = await storage.read(key: 'id');
     // isMarked.value = prefs.getBool('${userId}_${eventData.id}') ?? false;
-    isMarked.value = eventData.event.bookmarkStatus;
+    // isMarked.value = eventData.event.bookmarkStatus;
+    attendees.value = eventData.event.attendees;
+    // print('all attendee ${eventData.event.attendees.length}');
+    attendeeNumber.value = roundDown(attendees.length);
+    print('start time ${eventData.event.startTime}');
+    print('end time ${eventData.event.endTime}');
+    startTime.value = formatTime(eventData.event.startTime);
+    endTime.value = formatTime(eventData.event.endTime);
+    print('formatted start time ${startTime.value}');
+    print('formatted end time ${endTime.value}');
   }
 
-  int roundDown(int number) {
-    return (number ~/ 10) * 10;
+  String roundDown(int number) {
+    var total = 0;
+    var context = Get.context;
+    if(context == null) {
+      return '';
+    }
+    if(number > 10) {
+      total = (number ~/ 10) * 10;
+      return '$total+ ${AppLocalizations.of(context)!.going}';
+    }
+    return '$number ${AppLocalizations.of(context)!.going}';
   }
 
   void getLocationAddress(LatLng address) async {
@@ -120,30 +142,30 @@ class BookedEventDetailController extends GetxController {
     }
   }
 
-  void markEvent() async {
-    var token = await storage.read(key: 'token');
-    var userId = await storage.read(key: 'id');
-    var endPoint = '/users/$userId/bookmarks';
-
-    BookmarkHelper.setToken(token!);
-    // String bookmarkKey = '${userId}_${eventData.id}';
-
-    if (!isMarked.value) {
-      var response = await BookmarkHelper.post(endPoint,
-          data: {'event_id': eventData.id}, isFormData: true);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // eventData.copyWith(bookmarkStatus: true);
-        isMarked.value = true;
-      }
-    } else {
-      var deleteEndPoint = '$endPoint/${eventData.id}';
-      var response = await BookmarkHelper.delete(deleteEndPoint);
-      if (response.statusCode == 204) {
-        // eventData.copyWith(bookmarkStatus: false);
-        isMarked.value = false;
-      }
-    }
-  }
+  // void markEvent() async {
+  //   var token = await storage.read(key: 'token');
+  //   var userId = await storage.read(key: 'id');
+  //   var endPoint = '/users/$userId/bookmarks';
+  //
+  //   BookmarkHelper.setToken(token!);
+  //   // String bookmarkKey = '${userId}_${eventData.id}';
+  //
+  //   if (!isMarked.value) {
+  //     var response = await BookmarkHelper.post(endPoint,
+  //         data: {'event_id': eventData.id}, isFormData: true);
+  //     if (response.statusCode == 200 || response.statusCode == 201) {
+  //       // eventData.copyWith(bookmarkStatus: true);
+  //       isMarked.value = true;
+  //     }
+  //   } else {
+  //     var deleteEndPoint = '$endPoint/${eventData.id}';
+  //     var response = await BookmarkHelper.delete(deleteEndPoint);
+  //     if (response.statusCode == 204) {
+  //       // eventData.copyWith(bookmarkStatus: false);
+  //       isMarked.value = false;
+  //     }
+  //   }
+  // }
 
   String formatTime(String time) {
     return time.split(':').sublist(0, 2).join(':');

@@ -311,7 +311,7 @@ class FilterView extends GetView<FilterController> {
                                       controller.filterItem['min_price'] =
                                           controller.currentRange.value.start;
                                       controller.filterItem['max_price'] =
-                                          controller.currentRange.value.start;
+                                          controller.currentRange.value.end;
                                     }
                                   },
                                 ),

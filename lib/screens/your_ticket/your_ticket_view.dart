@@ -128,8 +128,8 @@ class YourTicketView extends GetView<YourTicketViewController> {
                   onTap: () async {
                     // await controller.askPermission();
                     generateTicketListQrCode(
-                      context,
-                      controller.argument,
+                     context: context,
+                      boughtTickets: controller.argument,
                       // controller.argument.eventName,
                       // controller.argument.id.toString(),
                     );
@@ -175,7 +175,9 @@ class YourTicketView extends GetView<YourTicketViewController> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () async {
+                    await takeScreenshot();
+                  },
                   child: Container(
                     width: 125,
                     height: 28,

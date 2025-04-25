@@ -26,8 +26,11 @@ class SplashScreenView extends GetView<SplashScreenViewController> {
             const SizedBox(height: 10),
             LottieBuilder.asset(
               'assets/animation/animation_splash_screen.json',
+              frameRate: FrameRate.max,
+              fit: BoxFit.cover,
               width: 64,
               height: 64,
+              repeat: true,
             ),
           ],
         ),

@@ -4,14 +4,20 @@ import 'package:get/get.dart';
 import 'package:kork/utils/status.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget buttonDesign(
-    {required String text, String? image, Status status = Status.success}) {
+Widget buttonDesign({
+  required String text,
+  String? image,
+  Status status = Status.success,
+  double width = double.infinity,
+  double height = 38,
+  double radius = 5,
+}) {
   return Container(
-    width: double.infinity,
-    height: 38,
+    width: width,
+    height: height,
     decoration: BoxDecoration(
       color: Get.theme.colorScheme.primary,
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(radius),
     ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,

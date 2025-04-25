@@ -22,17 +22,17 @@ class ContactUsView extends GetView<ContactUsViewController> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                AppLocalizations.of(context)!.contact_us_via,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Get.theme.colorScheme.tertiary,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: Text(
+            //     AppLocalizations.of(context)!.contact_us_via,
+            //     style: TextStyle(
+            //       fontSize: 16,
+            //       color: Get.theme.colorScheme.tertiary,
+            //     ),
+            //   ),
+            // ),
+            // const SizedBox(height: 16),
             Divider(color: Get.theme.colorScheme.surfaceTint),
             const SizedBox(height: 16),
             GestureDetector(
@@ -75,7 +75,7 @@ class ContactUsView extends GetView<ContactUsViewController> {
                   ),
                   const SizedBox(width: 16),
                   Text(
-                    '+855 96 270 654',
+                    '+855 61 214 642',
                     style: TextStyle(
                       fontSize: 14,
                       color: Get.theme.colorScheme.tertiary,

@@ -14,6 +14,13 @@ class FilterController extends GetxController {
 
   var selectedLocation = ''.obs;
 
+  @override
+  void onInit() {
+    filterItem['min_price'] = currentRange.value.start;
+    filterItem['max_price'] = currentRange.value.end;
+    super.onInit();
+  }
+
   void updateSelectCategory(int index) {
     selectCategory.value = index;
   }

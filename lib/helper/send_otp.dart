@@ -5,6 +5,7 @@ import 'package:kork/helper/event_api_helper.dart';
 Future<bool> sendOTP({
   required bool canSendOTP,
   required String email,
+  bool isRegister = true,
 }) async {
   if (!canSendOTP) {
     Get.snackbar("Please wait", "You can request another OTP shortly");
@@ -13,7 +14,8 @@ Future<bool> sendOTP({
 
   try {
     var body = {"email": email};
-    var response = await EventApiHelper.post("/send", data: body);
+    var endpoint = isRegister ? "/send" : '/send-reset';
+    var response = await EventApiHelper.post(endpoint, data: body);
     if (response.statusCode == 200) {
       canSendOTP = false;
       Future.delayed(const Duration(minutes: 1), () {

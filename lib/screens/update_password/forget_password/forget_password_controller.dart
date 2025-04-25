@@ -164,6 +164,7 @@ class ForgetPasswordController extends GetxController
     final isSendOTP = await sendOTP(
       canSendOTP: canSendOTP,
       email: emailController.text,
+      isRegister: false,
     );
     if (isSendOTP) {
       status.value = Status.success;

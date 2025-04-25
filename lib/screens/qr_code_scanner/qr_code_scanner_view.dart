@@ -12,6 +12,7 @@ import 'package:kork/main.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/widget/button_design.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 

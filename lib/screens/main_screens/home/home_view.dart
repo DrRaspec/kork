@@ -20,7 +20,9 @@ import 'package:kork/widget/get_free_voucher_widget.dart';
 import 'package:kork/widget/up_coming_widget.dart';
 
 part 'home_controller.dart';
+
 part 'home_binding.dart';
+
 part '../../../widget/home_view_detail.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -104,7 +106,12 @@ class HomeView extends GetView<HomeController> {
                                       ),
                                     ),
                             ),
-                            const SizedBox(height: 24),
+                            Obx(
+                              () => controller.categories['showing'] == null ||
+                                      controller.categories['showing']!.isEmpty
+                                  ? const SizedBox.shrink()
+                                  : const SizedBox(height: 24),
+                            ),
                             Obx(() => showItem('upcoming')),
                             const SizedBox(height: 24),
                             Padding(

@@ -83,10 +83,11 @@ class EventController extends GetxController {
           // print('event screen response data ${response.data}');
           // print('response data type ${response.data.runtimeType}');
           upComingEvent.value = response.data['data'] as List<dynamic>;
-        } else {
-          Get.snackbar('fail', 'Unexpected data format received');
-          logError('Unexpected data format', response.data);
         }
+        // else {
+        //   Get.snackbar('fail', 'Unexpected data format received');
+        //   logError('Unexpected data format', response.data);
+        // }
       } else {
         Get.snackbar('Error', 'Failed to load events: ${response.statusCode}');
         logError('HTTP Error', {

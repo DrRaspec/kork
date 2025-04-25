@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/models/event_model.dart';
 
 part 'event_member_binding.dart';
+
 part 'event_member_controller.dart';
 
 class EventMemberView extends GetView<EventMemberController> {
@@ -43,52 +45,62 @@ class EventMemberView extends GetView<EventMemberController> {
               ),
             ),
             const SizedBox(height: 24),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+            Obx(
+              () => ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Image.network(
+                          controller.attendees[index].profileUrl ?? 'unknown',
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      child: Image.network(
-                        'https://hips.hearstapps.com/hmg-prod/images/wiz_khalifa_photo_by_phil_blatch_newspix_getty_461033569.jpg?crop=1xw:1.0xh;center,top&resize=640:*',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Ma Nika',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${controller.attendees[index].firstName} ${controller.attendees[index].lastName}',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Get.theme.colorScheme.tertiary,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'ma.nika@example.com',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Get.theme.colorScheme.surfaceTint,
+                            Text(
+                              controller.attendees[index].email,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Get.theme.colorScheme.surfaceTint,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),const SizedBox(width: 16),
+                      Text(
+                        controller.attendees[index].totalQty.toString(),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.tertiary,
+                        ),
                       ),
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount: 5,
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: 16),
+                itemCount: controller.attendees.length,
+              ),
             ),
           ],
         ),

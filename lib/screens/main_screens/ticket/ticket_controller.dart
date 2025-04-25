@@ -17,6 +17,9 @@ class TicketController extends GetxController {
   var hasMoreData = true.obs;
   final ScrollController scrollController = ScrollController();
 
+  var isSelectionMode = false.obs;
+  var selectedTickets = <String>[].obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -36,7 +39,8 @@ class TicketController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels >= scrollController.position.maxScrollExtent * 0.8 &&
+    if (scrollController.position.pixels >=
+            scrollController.position.maxScrollExtent * 0.8 &&
         !isLoading.value &&
         hasMoreData.value) {
       loadMoreTickets();
@@ -75,6 +79,7 @@ class TicketController extends GetxController {
         } else {
           buyedTickets.addAll(newData);
         }
+        print('all showing tickets ${buyedTickets.length}');
       }
     } on DioException catch (e) {
       if (e.response != null) {
@@ -164,5 +169,45 @@ class TicketController extends GetxController {
     buyedTickets.clear();
     init();
     fetchLastData();
+  }
+
+  void startSelection() {
+    isSelectionMode.value = true;
+  }
+
+  bool isTicketSelection(String ticketCode) {
+    return selectedTickets.contains(ticketCode);
+  }
+
+  void toggleTicketSelection(String ticketCode) {
+    if (selectedTickets.contains(ticketCode)) {
+      selectedTickets.remove(ticketCode);
+
+      if (selectedTickets.isEmpty) {
+        isSelectionMode.value = false;
+        // selectedTickets.add(ticketCode);
+      }
+    } else {
+      selectedTickets.add(ticketCode);
+    }
+  }
+
+  void clearSelection() {
+    selectedTickets.clear();
+    isSelectionMode.value = false;
+  }
+
+  void genQrCode(BuildContext context) {
+    var selectedBoughtTicket = buyedTickets.where(
+      (item) {
+        var ticket = BoughtTicket.fromJson(item);
+        return selectedTickets.contains(ticket.ticketCode);
+      },
+    ).toList();
+    generateTicketListQrCode(
+      context: context,
+      boughtTickets: selectedBoughtTicket,
+      justView: true,
+    );
   }
 }

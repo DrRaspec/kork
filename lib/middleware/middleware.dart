@@ -96,14 +96,18 @@ class AuthService extends GetxService {
           },
         );
       await dio.post('/logout');
-      // await storage.delete(key: 'token');
-      // await storage.delete(key: 'id');
-      // await setLoggedIn(false);
-      Get.offAllNamed(Routes.login);
     } catch (_) {
     } finally {
+      final hasCompletedOnboarding =
+          prefs.getBool('hasCompletedOnboarding') ?? false;
+      final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
+
       await storage.deleteAll();
       await prefs.clear();
+
+      await prefs.setBool('hasCompletedOnboarding', hasCompletedOnboarding);
+      await prefs.setBool('hasSelectedLanguage', hasSelectedLanguage);
+
       Get.offAllNamed(Routes.login);
     }
   }

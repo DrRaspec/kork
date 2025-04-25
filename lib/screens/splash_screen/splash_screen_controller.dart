@@ -18,10 +18,15 @@ class SplashScreenViewController extends GetxController {
     _isNavigating.value = true;
     Future.delayed(
       const Duration(seconds: 2),
-      () {
+          () {
+        final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
+        if (!hasSelectedLanguage) {
+          Get.offAllNamed(Routes.chooseLanguage);
+          return;
+        }
+
         final hasCompletedOnboarding =
             prefs.getBool('hasCompletedOnboarding') ?? false;
-
         if (!hasCompletedOnboarding) {
           Get.offAllNamed(Routes.firstOnBoarding);
         } else {
