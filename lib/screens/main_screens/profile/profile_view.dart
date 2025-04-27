@@ -182,8 +182,8 @@ class ProfileView extends GetView<ProfileController> {
                                       Get.theme.colorScheme.tertiary,
                                       BlendMode.srcIn,
                                     ),
-                                    width: 16,
-                                    height: 16,
+                                    width: 20,
+                                    height: 20,
                                     fit: BoxFit.cover,
                                   ),
                                   const SizedBox(width: 8),
@@ -259,7 +259,8 @@ class ProfileView extends GetView<ProfileController> {
                             //   ),
                             // ),
                             GestureDetector(
-                              onTap: () => Get.toNamed(Routes.paymentMethod),
+                              onTap: () => Get.toNamed(Routes.paymentMethod,
+                                  arguments: false),
                               child: settingList(
                                 path: 'assets/image/svg/card.svg',
                                 text: AppLocalizations.of(context)!
@@ -294,8 +295,8 @@ class ProfileView extends GetView<ProfileController> {
                                 children: [
                                   SvgPicture.asset(
                                     'assets/image/svg/logout.svg',
-                                    width: 16,
-                                    height: 16,
+                                    width: 20,
+                                    height: 20,
                                     colorFilter: ColorFilter.mode(
                                       Get.theme.colorScheme.tertiary,
                                       BlendMode.srcIn,

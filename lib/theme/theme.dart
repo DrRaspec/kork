@@ -4,9 +4,9 @@ ThemeData lightMode = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     primary: Color(0xffC9131E),
-    secondary: Color.fromRGBO(51, 51, 51, 1),
+    secondary: Color(0xffEFEFEF),
     tertiary: Color(0xff404144),
-    surfaceTint: Color(0xA0404144),
+    surfaceTint: Color(0xff9F9FA1),
     onInverseSurface: Color(0xff1C1818),
   ),
   scaffoldBackgroundColor: const Color(0xffF7F8F9),

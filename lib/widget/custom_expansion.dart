@@ -42,7 +42,7 @@ Widget customExpansion() {
                         '${controller.discountPrice.toStringAsFixed(2)}\$',
                       ),
                     ),
-                    const Divider(color: Color(0x80EAE9FC)),
+                    Divider(color: Get.theme.colorScheme.surfaceTint),
                     _buildDetailRow(
                       context,
                       AppLocalizations.of(context)!.fee,
@@ -68,9 +68,9 @@ Widget customExpansion() {
                           ? AppLocalizations.of(context)!.show_less
                           : AppLocalizations.of(context)!.show_detail,
                       textAlign: TextAlign.left,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Color(0xffEAE9FC),
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                     ),
                     const Spacer(),
@@ -79,7 +79,7 @@ Widget customExpansion() {
                           ? Icons.keyboard_arrow_down_outlined
                           : Icons.keyboard_arrow_up_outlined,
                       size: 18,
-                      color: const Color(0xffEAE9FC),
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ],
                 )),
@@ -95,16 +95,16 @@ Widget _buildDetailRow(BuildContext context, String label, String value) {
     children: [
       Text(
         label,
-        style: const TextStyle(
-          color: Color(0x80EAE9FC),
+        style: TextStyle(
+          color: Get.theme.colorScheme.surfaceTint,
           fontSize: 10,
         ),
       ),
       const Spacer(),
       Text(
         value,
-        style: const TextStyle(
-          color: Color(0x80EAE9FC),
+        style: TextStyle(
+          color: Get.theme.colorScheme.surfaceTint,
           fontSize: 10,
         ),
       ),

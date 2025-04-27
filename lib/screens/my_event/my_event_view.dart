@@ -98,7 +98,10 @@ class MyEventView extends GetView<MyEventViewController> {
             ),
             const SizedBox(height: 16),
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.addEvent),
+              onTap: () async {
+                await Get.toNamed(Routes.addEvent);
+                controller.loadHostedEvent();
+              },
               child: Container(
                 height: 40,
                 width: double.infinity,
@@ -110,25 +113,25 @@ class MyEventView extends GetView<MyEventViewController> {
                 child: Row(
                   spacing: 16,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.add,
                       size: 24,
-                      color: Color(0xffEAE9FC),
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                     Expanded(
                       child: Text(
                         AppLocalizations.of(context)!.add_event,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xffEAE9FC),
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.arrow_forward_ios_outlined,
                       size: 16,
-                      color: Color(0xffEAE9FC),
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ],
                 ),

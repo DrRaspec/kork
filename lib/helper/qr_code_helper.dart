@@ -141,32 +141,15 @@ Future<void> generateTicketListQrCode({
   }
 }
 
-Future<void> generateQrCode({
-  required BuildContext context,
-  required BoughtTicket boughtTickets,
-}) async {
-  // var event = BoughtTicket.fromJson(boughtTickets[0]);
-  // var eventId = BoughtTicket.fromJson(boughtTickets[0]).eventId;
-  // if (boughtTickets.isEmpty) {
-  //   Get.snackbar(
-  //     'Error',
-  //     'No tickets available to download',
-  //     snackPosition: SnackPosition.BOTTOM,
-  //   );
-  //   return;
-  // }
-
-  // List<String> ticketCodes = [];
-  // for (var ticketData in boughtTickets) {
-  //   var ticket = BoughtTicket.fromJson(ticketData);
-  //   ticketCodes.add(ticket.ticketCode);
-  //   print('Ticket code: ${ticket.ticketCode}');
-  // }
-
+Future<void> generateQrCode(
+    {required BuildContext context,
+    required BoughtTicket boughtTickets,
+    required ScreenshotController screenshotController}) async {
   final jsonData = jsonEncode(boughtTickets.ticketCode);
 
   final completer = Completer<void>();
   final tempQrKey = GlobalKey();
+
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
@@ -174,21 +157,24 @@ Future<void> generateQrCode({
         completer.complete();
       });
 
-      return AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        content: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 380, maxHeight: 450),
+      return Dialog(
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: SizedBox(
+          width: Get.width * 0.9,
+          height: 450,
           child: RepaintBoundary(
             key: tempQrKey,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // Background template
+                // Background Container
                 Container(
-                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Get.theme.colorScheme.secondary,
+                    color: Get.theme.scaffoldBackgroundColor,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -208,7 +194,7 @@ Future<void> generateQrCode({
                         Text(
                           boughtTickets.event.description,
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 13,
                             color: Get.theme.colorScheme.surfaceTint,
                           ),
                           textAlign: TextAlign.center,
@@ -220,7 +206,7 @@ Future<void> generateQrCode({
                   ),
                 ),
 
-                // PrettyQrView implementation with event ID and ticket codes
+                // QR Code
                 Positioned(
                   top: 130,
                   child: Container(
@@ -235,7 +221,7 @@ Future<void> generateQrCode({
                       child: PrettyQrView(
                         qrImage: QrImage(
                           QrCode.fromData(
-                            data: jsonData, // Contains eventId and ticket codes
+                            data: jsonData,
                             errorCorrectLevel: QrErrorCorrectLevel.H,
                           ),
                         ),
@@ -253,11 +239,10 @@ Future<void> generateQrCode({
                   ),
                 ),
 
+                // Download and Screenshot buttons
                 Positioned(
                   bottom: 16,
-                  // left: 16,
                   child: Row(
-                    spacing: Get.width * 0.05,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
@@ -275,7 +260,6 @@ Future<void> generateQrCode({
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
-                            spacing: 8,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
@@ -287,11 +271,13 @@ Future<void> generateQrCode({
                                   BlendMode.srcIn,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               Container(
                                 width: 1,
                                 height: 11,
                                 color: const Color(0xffEAE9FC),
                               ),
+                              const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   AppLocalizations.of(context)!.download,
@@ -306,8 +292,11 @@ Future<void> generateQrCode({
                           ),
                         ),
                       ),
+                      const SizedBox(width: 16),
                       GestureDetector(
-                        onTap: () => takeScreenshot(),
+                        onTap: () => takeScreenshot(
+                          screenshotController,
+                        ),
                         child: Container(
                           width: 125,
                           height: 28,
@@ -317,7 +306,6 @@ Future<void> generateQrCode({
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
-                            spacing: 8,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
@@ -329,11 +317,13 @@ Future<void> generateQrCode({
                                   BlendMode.srcIn,
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               Container(
                                 width: 1,
                                 height: 11,
                                 color: const Color(0xffEAE9FC),
                               ),
+                              const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   AppLocalizations.of(context)!.screenshot,
@@ -358,23 +348,45 @@ Future<void> generateQrCode({
       );
     },
   );
+
+  await completer.future;
 }
 
 Future<void> saveTicketListQrCode(
     GlobalKey key, String eventName, int ticketCount) async {
   try {
-    // Check storage permission
-    var status = await Permission.storage.status;
-    if (!status.isGranted) {
-      await Permission.storage.request();
-      status = await Permission.storage.status;
+    if (Platform.isAndroid) {
+      // Check for the more specific permissions first
+      var photosStatus = await Permission.photos.status;
+      if (!photosStatus.isGranted) {
+        photosStatus = await Permission.photos.request();
+        if (!photosStatus.isGranted) {
+          // Try fallback to storage for older Android versions
+          var storageStatus = await Permission.storage.request();
+          if (!storageStatus.isGranted) {
+            Get.snackbar(
+              'Permission Denied',
+              'Storage permission is required to save QR code',
+              snackPosition: SnackPosition.TOP,
+            );
+            return;
+          }
+        }
+      }
+    } else {
+      // For iOS and other platforms
+      var status = await Permission.storage.status;
       if (!status.isGranted) {
-        Get.snackbar(
-          'Permission Denied',
-          'Storage permission is required to save QR code',
-          snackPosition: SnackPosition.TOP,
-        );
-        return;
+        await Permission.storage.request();
+        status = await Permission.storage.status;
+        if (!status.isGranted) {
+          Get.snackbar(
+            'Permission Denied',
+            'Storage permission is required to save QR code',
+            snackPosition: SnackPosition.TOP,
+          );
+          return;
+        }
       }
     }
 
@@ -433,15 +445,29 @@ Future<void> saveTicketListQrCode(
   }
 }
 
-Future<void> takeScreenshot() async {
-  final screenshot = ScreenshotController();
-  // Request storage permission
-  final status = await Permission.storage.request();
-  if (!status.isGranted) {
+Future<void> takeScreenshot(ScreenshotController screenshotController) async {
+  bool permissionGranted = false;
+  if (Platform.isAndroid) {
+    // For Android 13+, use photos permission
+    final status = await Permission.photos.request();
+    permissionGranted = status.isGranted;
+
+    // If still denied, try using storage permission as fallback for older versions
+    if (!permissionGranted) {
+      final storageStatus = await Permission.storage.request();
+      permissionGranted = storageStatus.isGranted;
+    }
+  } else {
+    // For iOS and other platforms
+    final status = await Permission.storage.request();
+    permissionGranted = status.isGranted;
+  }
+
+  if (!permissionGranted) {
     Get.snackbar(
       'Permission Denied',
-      'Storage permission is required to save screenshots',
-      snackPosition: SnackPosition.BOTTOM,
+      'Permission is required to save screenshots',
+      snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.red.withOpacity(0.8),
       colorText: Colors.white,
     );
@@ -450,7 +476,7 @@ Future<void> takeScreenshot() async {
 
   try {
     // Capture the screenshot as bytes
-    final Uint8List? imageBytes = await screenshot.capture();
+    final Uint8List? imageBytes = await screenshotController.capture();
 
     if (imageBytes != null) {
       // Get the timestamp for unique filename

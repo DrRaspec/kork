@@ -226,13 +226,17 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
         canSendOTP: canSendOTP,
         email: emailController.text,
       );
-      status.value = Status.success;
       if (isSendOTP) {
+        status.value = Status.success;
         Get.toNamed(
           Routes.verifyOtp,
           arguments: {'isNew': true, 'email': emailController.text},
         );
+      } else {
+        status.value = Status.error;
       }
+    } else {
+      status.value = Status.error;
     }
   }
 

@@ -4,13 +4,17 @@ class EventDetailController extends GetxController {
   late Event eventData;
   Rx<String> displayLocation = ''.obs;
   Rx<String> location = ''.obs;
-  var going = 0.obs;
+  // var going = 0.obs;
   late String startDate;
   late String startDay;
   var storage = const FlutterSecureStorage();
   late SharedPreferences prefs;
   var isMarked = false.obs;
   late String id;
+  var attendeeNumber = ''.obs;
+  var startTime = ''.obs;
+  var endTime = ''.obs;
+  var attendees = <Attendee>[].obs;
   final List<String> weekdays = [
     "Monday",
     "Tuesday",
@@ -30,7 +34,7 @@ class EventDetailController extends GetxController {
   void init() async {
     eventData = Get.arguments as Event;
     getLocationAddress(eventData.location);
-    going.value = roundDown(56);
+    // going.value = roundDown(56);
     startDay = weekdays[eventData.startDate.weekday - 1];
     startDate = DateFormat('dd MMM yyyy').format(eventData.startDate);
     prefs = await SharedPreferences.getInstance();
@@ -40,10 +44,27 @@ class EventDetailController extends GetxController {
     // var userId = await storage.read(key: 'id');
     // isMarked.value = prefs.getBool('${userId}_${eventData.id}') ?? false;
     isMarked.value = eventData.bookmarkStatus;
+    attendees.value = eventData.attendees;
+    attendeeNumber.value = roundDown(attendees.length);
+    print('start time ${eventData.startTime}');
+    print('end time ${eventData.endTime}');
+    startTime.value = formatTime(eventData.startTime);
+    endTime.value = formatTime(eventData.endTime);
+    print('formatted start time ${startTime.value}');
+    print('formatted end time ${endTime.value}');
   }
 
-  int roundDown(int number) {
-    return (number ~/ 10) * 10;
+  String roundDown(int number) {
+    var total = 0;
+    var context = Get.context;
+    if (context == null) {
+      return '';
+    }
+    if (number > 10) {
+      total = (number ~/ 10) * 10;
+      return '$total+ ${AppLocalizations.of(context)!.going}';
+    }
+    return '$number ${AppLocalizations.of(context)!.going}';
   }
 
   void getLocationAddress(LatLng address) async {

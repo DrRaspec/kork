@@ -47,7 +47,7 @@ void getLocationAddress(LatLng street) async {
 
 String formatDate(DateTime date) {
   String day = DateFormat('d').format(date);
-  String month = DateFormat('MMMM').format(date);
+  String month = DateFormat('MMM').format(date);
   return '$day\n$month';
 }
 

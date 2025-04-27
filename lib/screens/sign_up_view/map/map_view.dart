@@ -1,10 +1,16 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/screens/main/main_view.dart';
+import 'package:kork/screens/main_screens/home/home_view.dart';
 import 'package:kork/screens/sign_up_view/select_location/select_location_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -46,10 +52,10 @@ class MapView extends GetView<MapController> {
                       children: [
                         GestureDetector(
                           onTap: Get.back,
-                          child: const Icon(
+                          child: Icon(
                             Icons.arrow_back_ios_new_outlined,
                             size: 24,
-                            color: Color(0xffEAE9FC),
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                         ),
                         const SizedBox(width: 16),

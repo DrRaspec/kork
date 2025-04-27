@@ -34,7 +34,7 @@ class SeeAllViewController extends GetxController {
     try {
       var params = {
         // 'filter': title,
-        'filter': title.toLowerCase(),
+        title != 'today' ? 'filter' : 'date': title.toLowerCase(),
         'page': page.value,
       };
       var response = await EventApiHelper.get('/events', params: params);

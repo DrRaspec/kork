@@ -56,6 +56,9 @@ class AddNewPaymentViewController extends GetxController
   bool checkValidation() {
     bool hasError = false;
     cardNumberError.value = false;
+    cardHolderError.value = false;
+    expireDateError.value = false;
+    ccvError.value = false;
     cardType.value = getCardType(cardNumberController.text.trim());
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
@@ -81,6 +84,23 @@ class AddNewPaymentViewController extends GetxController
         .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
       hasError = true;
+    } else {
+      try {
+        final parts = expireDateController.text.split('/');
+        int month = int.parse(parts[0]);
+        int year = int.parse('20${parts[1]}');
+
+        final expirationDate = DateTime(year, month + 1, 0);
+        final currentDate = DateTime.now();
+
+        if (currentDate.isAfter(expirationDate)) {
+          expireDateError.value = true;
+          hasError = true;
+        }
+      } catch (e) {
+        expireDateError.value = true;
+        hasError = true;
+      }
     }
 
     if (hasError) {

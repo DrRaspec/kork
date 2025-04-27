@@ -1134,5 +1134,9 @@
     "something_went_wrong": "Something went wrong",
     "@something_went_wrong": {
         "description": "Something went wrong"
+    },
+    "delete_event": "Delete Event",
+    "@delete_event": {
+        "description": "Delete Event"
     }
 }

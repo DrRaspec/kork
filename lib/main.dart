@@ -40,9 +40,8 @@ part 'controllers/language_controller.dart';
 // }
 
 void main() async {
-  // WidgetsBinding widgetsBinding =
-  WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await loadEnvironment();
   await GetStorage.init();
 
@@ -54,7 +53,6 @@ void main() async {
   Get.put(ApiService(), permanent: true);
   Get.put(MainController(), permanent: true);
   // FlutterNativeSplash.remove();
-
 
   runApp(MainApp(prefs: prefs));
 }
@@ -120,8 +118,7 @@ class MainApp extends StatelessWidget {
           fontFamily: themeController.fontFamily.value,
         ),
       ),
-      themeMode: themeController.themeMode
-          .value,
+      themeMode: themeController.themeMode.value,
       getPages: appRoutes,
       initialRoute: Routes.splashScreen,
     );

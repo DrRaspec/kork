@@ -33,7 +33,8 @@ Widget categoriesDropdown({
   }
 
   // Validate current controller value
-  if (categoryController.text.isNotEmpty && !availableValues.contains(categoryController.text)) {
+  if (categoryController.text.isNotEmpty &&
+      !availableValues.contains(categoryController.text)) {
     // Reset to first option if current value is invalid
     categoryController.text = availableValues.first;
   }
@@ -42,7 +43,9 @@ Widget categoriesDropdown({
     width: double.infinity,
     height: 40,
     child: DropdownButtonFormField2(
-      value: categoryController.text.isNotEmpty ? categoryController.text : availableValues.first,
+      value: categoryController.text.isNotEmpty
+          ? categoryController.text
+          : availableValues.first,
       items: availableValues.map((String value) {
         return DropdownMenuItem(
           value: value,
@@ -90,8 +93,8 @@ Widget categoriesDropdown({
           padding: const EdgeInsets.only(right: 8),
           child: SvgPicture.asset(
             'assets/image/svg/category-2.svg',
-            width: 18,
-            height: 18,
+            width: 14,
+            height: 14,
             colorFilter: ColorFilter.mode(
               categoryError.isNotEmpty
                   ? Get.theme.colorScheme.primary

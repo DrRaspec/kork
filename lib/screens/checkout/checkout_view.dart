@@ -110,8 +110,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .available_voucher,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
+                                  style: TextStyle(
+                                    color: Get.theme.colorScheme.tertiary,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -155,8 +155,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .select_payment_method,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
+                                  style: TextStyle(
+                                    color: Get.theme.colorScheme.tertiary,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -265,7 +265,7 @@ class CheckoutView extends GetView<CheckoutController> {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: const Color(0xffE5D9F2),
+              color: Get.theme.colorScheme.tertiary,
             ),
             child: Image.network(
               controller.data.posterUrl,
@@ -284,17 +284,17 @@ class CheckoutView extends GetView<CheckoutController> {
               children: [
                 Text(
                   '${controller.data.eventName} | ${controller.data.tickets[index].ticketType}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xffEAE9FC),
+                    color: Get.theme.colorScheme.tertiary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   '${(controller.data.tickets[index].price as num).toStringAsFixed(2)}\$',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xffEAE9FC),
+                    color: Get.theme.colorScheme.tertiary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -324,10 +324,10 @@ class CheckoutView extends GetView<CheckoutController> {
                     Obx(
                       () => Text(
                         controller.ticketQuantity[index].toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xffEAE9FC),
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                     ),

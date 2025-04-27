@@ -79,6 +79,7 @@ class FilterView extends GetView<FilterController> {
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 8,
                       children: [
                         Obx(
                           () => filterDateWidget(
@@ -175,97 +176,97 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!.location,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Obx(
-                      () => Material(
-                        child: InkWell(
-                          splashFactory: NoSplash.splashFactory,
-                          onTap: controller.navigateToFilterLocation,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              color: Get.theme.colorScheme.filterBackground,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 45,
-                                      decoration: BoxDecoration(
-                                        color: Get.theme.colorScheme.tertiary
-                                            .withOpacity(
-                                          .2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Get.isDarkMode
-                                            ? Get.theme.colorScheme
-                                                .filterBackground
-                                            : const Color(0xffFAFAFA),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/image/svg/map-pin.svg',
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: ColorFilter.mode(
-                                        Get.theme.colorScheme.primary,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  controller.selectedLocation.value == ''
-                                      ? 'No location selected'
-                                      : controller.selectedLocation.value,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Get.theme.colorScheme.tertiary,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  size: 20,
-                                  color: Get.theme.colorScheme.primary,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
+                    // const SizedBox(height: 24),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Text(
+                    //     AppLocalizations.of(context)!.location,
+                    //     style: TextStyle(
+                    //       fontSize: 16,
+                    //       color: Get.theme.colorScheme.tertiary,
+                    //     ),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 16),
+                    // Obx(
+                    //   () => Material(
+                    //     child: InkWell(
+                    //       splashFactory: NoSplash.splashFactory,
+                    //       onTap: controller.navigateToFilterLocation,
+                    //       child: Container(
+                    //         padding: const EdgeInsets.symmetric(
+                    //           horizontal: 8,
+                    //           vertical: 8,
+                    //         ),
+                    //         decoration: BoxDecoration(
+                    //           border: Border.all(
+                    //             color: Get.theme.colorScheme.tertiary,
+                    //           ),
+                    //           borderRadius: BorderRadius.circular(15),
+                    //           color: Get.theme.colorScheme.filterBackground,
+                    //         ),
+                    //         child: Row(
+                    //           crossAxisAlignment: CrossAxisAlignment.center,
+                    //           children: [
+                    //             Stack(
+                    //               alignment: Alignment.center,
+                    //               children: [
+                    //                 Container(
+                    //                   width: 45,
+                    //                   height: 45,
+                    //                   decoration: BoxDecoration(
+                    //                     color: Get.theme.colorScheme.tertiary
+                    //                         .withOpacity(
+                    //                       .2,
+                    //                     ),
+                    //                     borderRadius: BorderRadius.circular(12),
+                    //                   ),
+                    //                 ),
+                    //                 Container(
+                    //                   width: 30,
+                    //                   height: 30,
+                    //                   decoration: BoxDecoration(
+                    //                     color: Get.isDarkMode
+                    //                         ? Get.theme.colorScheme
+                    //                             .filterBackground
+                    //                         : const Color(0xffFAFAFA),
+                    //                     borderRadius: BorderRadius.circular(10),
+                    //                   ),
+                    //                 ),
+                    //                 SvgPicture.asset(
+                    //                   'assets/image/svg/map-pin.svg',
+                    //                   width: 16,
+                    //                   height: 16,
+                    //                   colorFilter: ColorFilter.mode(
+                    //                     Get.theme.colorScheme.primary,
+                    //                     BlendMode.srcIn,
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //             const SizedBox(width: 16),
+                    //             Text(
+                    //               controller.selectedLocation.value == ''
+                    //                   ? 'No location selected'
+                    //                   : controller.selectedLocation.value,
+                    //               style: TextStyle(
+                    //                 fontSize: 15,
+                    //                 color: Get.theme.colorScheme.tertiary,
+                    //               ),
+                    //             ),
+                    //             const Spacer(),
+                    //             Icon(
+                    //               Icons.arrow_forward_ios_outlined,
+                    //               size: 20,
+                    //               color: Get.theme.colorScheme.primary,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    const SizedBox(height: 32),
                     Obx(
                       () => Column(
                         children: [
@@ -289,7 +290,7 @@ class FilterView extends GetView<FilterController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 75),
+                          const SizedBox(height: 24),
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,

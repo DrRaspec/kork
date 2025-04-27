@@ -1,0 +1,2 @@
+D:/Computer Language/Scholarship/FlutterNDart/My_Test_on_Project/github/kork/android/app/.cxx/RelWithDebInfo/235q5z4f/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/Computer Language/Scholarship/FlutterNDart/My_Test_on_Project/github/kork/android/app/.cxx/RelWithDebInfo/235q5z4f/arm64-v8a/CMakeFiles/rebuild_cache.dir

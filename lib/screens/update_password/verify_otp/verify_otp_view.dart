@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/helper/send_otp.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/update_password/forget_password/forget_password_view.dart';
 import 'package:kork/utils/status.dart';
@@ -153,10 +156,7 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                             ),
                             const SizedBox(width: 12),
                             GestureDetector(
-                              onTap: () => Get.offNamedUntil(
-                                Routes.login,
-                                (route) => false,
-                              ),
+                              onTap: controller.resendOTP,
                               child: Text(
                                 AppLocalizations.of(context)!.resend,
                                 style: const TextStyle(
@@ -169,14 +169,14 @@ class VerifyOtpView extends GetView<VerifyOtpController> {
                         ),
                   const SizedBox(height: 24),
                   Obx(
-                        () => GestureDetector(
+                    () => GestureDetector(
                       onTap: controller.status.value == Status.loading
                           ? null
                           : controller.onTapVerifyOTP,
                       child: buttonDesign(
                         text: controller.isNew
-                                    ? AppLocalizations.of(context)!.confirm
-                                    : AppLocalizations.of(context)!.next,
+                            ? AppLocalizations.of(context)!.confirm
+                            : AppLocalizations.of(context)!.next,
                         status: controller.status.value,
                       ),
                     ),

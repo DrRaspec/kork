@@ -595,23 +595,27 @@ class UpdateEventViewController extends GetxController {
       expireDateFocus.requestFocus();
       return false;
     } else {
+      // Check if the card is expired
       try {
-        String expDateStr = expireDateController.text;
-        List<String> parts = expDateStr.split('/');
-        int month = int.parse(parts[0]);
-        int year = int.parse(parts[1]) + 2000; // Convert '25' to '2025'
+        List<String> parts = expireDateController.text.split('/');
+        if (parts.length == 2) {
+          int expiryMonth = int.parse(parts[0]);
+          int expiryYear = int.parse('20${parts[1]}'); // Convert YY to 20YY
 
-        DateTime expDate =
-            DateTime(year, month + 1, 0); // Last day of the month
-        if (expDate.isBefore(DateTime.now())) {
-          expireDateError.value = true;
-          showErrorSnackBar('Card expiration date cannot be in the past');
-          expireDateFocus.requestFocus();
-          return false;
+          DateTime now = DateTime.now();
+          DateTime expiryDate = DateTime(
+              expiryYear, expiryMonth + 1, 0); // Last day of expiry month
+
+          if (expiryDate.isBefore(DateTime(now.year, now.month, 1))) {
+            expireDateError.value = true;
+            showErrorSnackBar('Card has expired');
+            expireDateFocus.requestFocus();
+            return false;
+          }
         }
       } catch (e) {
         expireDateError.value = true;
-        showErrorSnackBar('Invalid expiration date format');
+        showErrorSnackBar('Invalid expiration date');
         expireDateFocus.requestFocus();
         return false;
       }

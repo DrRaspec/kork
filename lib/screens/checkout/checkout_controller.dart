@@ -14,10 +14,18 @@ class CheckoutController extends GetxController {
 
   @override
   void onInit() {
-    ticketQuantity.assignAll(List.generate(
-      data.tickets.length,
-      (index) => 0,
-    ));
+    // ticketQuantity.assignAll(List.generate(
+    //   data.tickets.length,
+    //   (index) => 0,
+    // ));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ticketQuantity.assignAll(List.generate(
+        data.tickets.length,
+        (index) => 0,
+      ));
+      calculateTotal();
+    });
     super.onInit();
   }
 
@@ -38,8 +46,7 @@ class CheckoutController extends GetxController {
     for (int i = 0; i < ticketQuantity.length; i++) {
       subtotal += (ticketQuantity[i] * data.tickets[i].price!);
     }
-    discountPrice.value =
-        (subtotal * (discountPercent.value / 100)).roundToDouble();
+    discountPrice.value = subtotal * (discountPercent.value / 100);
     total.value = double.parse(
       ((subtotal - discountPrice.value) * (1 + feePercent / 100))
           .toStringAsFixed(2),
@@ -117,7 +124,7 @@ class CheckoutController extends GetxController {
   }
 
   void selectPaymentMethod() async {
-    var result = await Get.toNamed(Routes.paymentMethod);
+    var result = await Get.toNamed(Routes.paymentMethod, arguments: true);
     if (result == true) {
       paymentStatus = true;
     }
@@ -127,7 +134,9 @@ class CheckoutController extends GetxController {
     var result = await Get.toNamed(Routes.applyCoupon);
     if (result != null) {
       discountPercent.value = result.toDouble();
-      calculateTotal();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        calculateTotal();
+      });
     }
   }
 }

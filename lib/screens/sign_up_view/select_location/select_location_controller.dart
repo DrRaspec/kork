@@ -52,63 +52,144 @@ class SelectLocationController extends GetxController {
     );
   }
 
+  // Future<void> getCurrentLocation() async {
+  //   if (isLoading.value) return;
+  //   isLoading.value = true;
+  //   startLoading();
+
+  //   try {
+  //     // Check and request location permissions
+  //     LocationPermission permission = await Geolocator.checkPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       permission = await Geolocator.requestPermission();
+  //       if (permission == LocationPermission.denied) {
+  //         Get.snackbar("Error", "Location permission denied.");
+  //         isLoading.value = false;
+  //         return;
+  //       }
+  //     }
+
+  //     if (permission == LocationPermission.deniedForever) {
+  //       Get.snackbar("Error", "Location permission is permanently denied.");
+  //       isLoading.value = false;
+  //       return;
+  //     }
+
+  //     Position position = await Geolocator.getCurrentPosition(
+  //       locationSettings: const LocationSettings(
+  //         accuracy: LocationAccuracy.high,
+  //         distanceFilter: 10,
+  //       ),
+  //     );
+
+  //     LatLng location = LatLng(position.latitude, position.longitude);
+  //     currentLocation.value = location;
+
+  //     print('current location value $currentLocation');
+
+  //     await Future.delayed(const Duration(milliseconds: 200));
+
+  //     if (currentLocation.value.latitude == 0 &&
+  //         currentLocation.value.longitude == 0) {
+  //       Get.snackbar(
+  //           "Error", "Failed to retrieve your location. Please try again.");
+  //       isLoading.value = false;
+  //       return;
+  //     } else {
+  //       bool isSuccess = await saveSignUp(currentLocation.value);
+  //       if (isSuccess) {
+  //         if (Get.currentRoute != Routes.main) {
+  //           Get.snackbar("Success", "Sign up successful");
+  //           Get.offAllNamed(Routes.login);
+  //         }
+  //       } else {
+  //         Get.snackbar("Error", "Failed to save location. Please try again.");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     Get.snackbar("Error", "Failed to get location: $error");
+  //     print("Failed to get location: $error");
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
   Future<void> getCurrentLocation() async {
     if (isLoading.value) return;
     isLoading.value = true;
     startLoading();
 
     try {
-      // Check and request location permissions
+      // Check if location services are enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        Get.snackbar(
+          "Location Disabled",
+          "Please enable location services",
+          duration: const Duration(seconds: 3),
+          mainButton: TextButton(
+            onPressed: () async {
+              await Geolocator.openLocationSettings();
+            },
+            child:
+                const Text("Settings", style: TextStyle(color: Colors.white)),
+          ),
+        );
+        isLoading.value = false;
+        return;
+      }
+
+      // Check and request permission in one step
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          Get.snackbar("Error", "Location permission denied.");
+          Get.snackbar("Permission Denied", "Location access is needed");
           isLoading.value = false;
           return;
         }
       }
 
+      // Handle permanently denied case
       if (permission == LocationPermission.deniedForever) {
-        Get.snackbar("Error", "Location permission is permanently denied.");
+        Get.snackbar(
+          "Permission Required",
+          "Location permission required",
+          duration: const Duration(seconds: 5),
+          mainButton: TextButton(
+            onPressed: () async {
+              await Geolocator.openAppSettings();
+            },
+            child:
+                const Text("Settings", style: TextStyle(color: Colors.white)),
+          ),
+        );
         isLoading.value = false;
         return;
       }
 
+      // Get position with the correct parameters
       Position position = await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 10,
+          timeLimit: Duration(seconds: 15),
         ),
       );
 
       LatLng location = LatLng(position.latitude, position.longitude);
       currentLocation.value = location;
 
-      print('current location value $currentLocation');
-
-      await Future.delayed(const Duration(milliseconds: 200));
-
-      if (currentLocation.value.latitude == 0 &&
-          currentLocation.value.longitude == 0) {
-        Get.snackbar(
-            "Error", "Failed to retrieve your location. Please try again.");
-        isLoading.value = false;
-        return;
-      } else {
-        bool isSuccess = await saveSignUp(currentLocation.value);
-        if (isSuccess) {
-          if (Get.currentRoute != Routes.main) {
-            Get.snackbar("Success", "Sign up successful");
-            Get.offAllNamed(Routes.login);
-          }
-        } else {
-          Get.snackbar("Error", "Failed to save location. Please try again.");
+      // Rest of your implementation...
+      bool isSuccess = await saveSignUp(currentLocation.value);
+      if (isSuccess) {
+        if (Get.currentRoute != Routes.main) {
+          Get.snackbar("Success", "Sign up successful");
+          Get.offAllNamed(Routes.login);
         }
       }
-    } catch (error) {
-      Get.snackbar("Error", "Failed to get location: $error");
-      print("Failed to get location: $error");
+    } catch (e) {
+      Get.snackbar("Error", "Location error: $e");
+      print("Location error: $e");
     } finally {
       isLoading.value = false;
     }

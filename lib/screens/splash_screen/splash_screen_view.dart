@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:lottie/lottie.dart';
@@ -16,12 +19,15 @@ class SplashScreenView extends GetView<SplashScreenViewController> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              Get.isDarkMode
-                  ? 'assets/image/logo.png'
-                  : 'assets/image/light-logo.png',
-              width: 180,
-              fit: BoxFit.cover,
+            Obx(
+              () => Image.asset(
+                // Get.isDarkMode
+                //     ? 'assets/image/logo.png'
+                //     : 'assets/image/light-logo.png',
+                controller.image.value,
+                width: 180,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(height: 10),
             LottieBuilder.asset(

@@ -100,16 +100,23 @@ flutter:
         - asset: assets/fonts/kantumruyPro/KantumruyPro-Bold.ttf
           weight: 700
 
+# flutter_native_splash:
+#   color_dark: "#252525"  # Dark mode background
+#   image_dark: assets/image/logo.png
+  
+#   color: "#F2F0F0"  # Light mode background
+#   image: assets/image/light-logo.png
+
+#   android_12:
+#     image_dark: assets/image/logo.png
+#     icon_background_color_dark: "#252525"
+    
+#     image: assets/image/light-logo.png
+#     icon_background_color: "#F2F0F0"
+
 flutter_native_splash:
-  color: "#F2F0F0"  # Light mode background
-  image: assets/image/light-logo.png
-
-  color_dark: "#252525"  # Dark mode background
-  image_dark: assets/image/logo.png  # Optional: different logo for dark mode
-
+  color: "#252525"
+  image: assets/image/logo.png
   android_12:
-    image: assets/image/light-logo.png
-    icon_background_color: "#F2F0F0"
-
-    image_dark: assets/image/logo.png  # Optional: different logo for dark mode
-    icon_background_color_dark: "#252525"
+    image: assets/image/logo.png
+    icon_background_color: "#252525"

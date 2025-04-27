@@ -68,6 +68,8 @@ class AddEventViewController extends GetxController {
   var cardType = 'Visa'.obs;
   Timer? _debounceTimer;
 
+  var status = Status.none.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -77,7 +79,8 @@ class AddEventViewController extends GetxController {
     cardHolderFocus = FocusNode();
     ccvFocus = FocusNode();
     expireDateFocus = FocusNode();
-    categoryController.text = AppLocalizations.of(Get.context!)!.sport.firstCapitalize();
+    categoryController.text =
+        AppLocalizations.of(Get.context!)!.sport.firstCapitalize();
   }
 
   @override
@@ -331,7 +334,7 @@ class AddEventViewController extends GetxController {
     // Validate Name
     if (nameController.text.trim().isEmpty) {
       nameError.value =
-      '${AppLocalizations.of(Get.context!)!.name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(nameError.value);
       focusName.requestFocus();
@@ -341,7 +344,7 @@ class AddEventViewController extends GetxController {
     // Validate Location
     if (locationController.text.trim().isEmpty) {
       locationError.value =
-      '${AppLocalizations.of(Get.context!)!.location} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.location} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(locationError.value);
       focusLocation.requestFocus();
@@ -351,7 +354,7 @@ class AddEventViewController extends GetxController {
     // Validate Category
     if (categoryController.text.trim().isEmpty) {
       categoryError.value =
-      '${AppLocalizations.of(Get.context!)!.category} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.category} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(categoryError.value);
       focusCategory.requestFocus();
@@ -361,7 +364,7 @@ class AddEventViewController extends GetxController {
     // Validate Start Date
     if (startDateController.text.trim().isEmpty) {
       startDateError.value =
-      '${AppLocalizations.of(Get.context!)!.start_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.start_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(startDateError.value);
       focusStartDate.requestFocus();
@@ -371,7 +374,7 @@ class AddEventViewController extends GetxController {
     // Validate End Date
     if (endDateController.text.trim().isEmpty) {
       endDateError.value =
-      '${AppLocalizations.of(Get.context!)!.end_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.end_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(endDateError.value);
       focusEndDate.requestFocus();
@@ -381,7 +384,7 @@ class AddEventViewController extends GetxController {
     // Validate Start Time
     if (startTimeController.text.trim().isEmpty) {
       startTimeError.value =
-      '${AppLocalizations.of(Get.context!)!.start_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.start_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(startTimeError.value);
       focusStartTime.requestFocus();
@@ -391,7 +394,7 @@ class AddEventViewController extends GetxController {
     // Validate End Time
     if (endTimeController.text.trim().isEmpty) {
       endTimeError.value =
-      '${AppLocalizations.of(Get.context!)!.end_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.end_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(endTimeError.value);
       focusEndTime.requestFocus();
@@ -401,7 +404,7 @@ class AddEventViewController extends GetxController {
     // Validate Description
     if (descriptionController.text.trim().isEmpty) {
       descriptionError.value =
-      '${AppLocalizations.of(Get.context!)!.description} ${AppLocalizations.of(Get.context!)!.cant_empty}';
+          '${AppLocalizations.of(Get.context!)!.description} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
       showErrorSnackBar(descriptionError.value);
       focusDescription.requestFocus();
@@ -451,7 +454,8 @@ class AddEventViewController extends GetxController {
         // Ensure quantity is a valid integer
         if (int.tryParse(ticketQuantityController[i].text) == null) {
           ticketQuantityController[i].text = '0';
-          showErrorSnackBar('${types[i]} ticket quantity must be a valid number');
+          showErrorSnackBar(
+              '${types[i]} ticket quantity must be a valid number');
           hasError = true;
           return false;
         }
@@ -520,6 +524,33 @@ class AddEventViewController extends GetxController {
       hasError = true;
       expireDateFocus.requestFocus();
       return false;
+    } else {
+      // Check if the card is expired
+      try {
+        List<String> parts = expireDateController.text.split('/');
+        if (parts.length == 2) {
+          int expiryMonth = int.parse(parts[0]);
+          int expiryYear = int.parse('20${parts[1]}'); // Convert YY to 20YY
+
+          DateTime now = DateTime.now();
+          DateTime expiryDate = DateTime(
+              expiryYear, expiryMonth + 1, 0); // Last day of expiry month
+
+          if (expiryDate.isBefore(DateTime(now.year, now.month, 1))) {
+            expireDateError.value = true;
+            showErrorSnackBar('Card has expired');
+            hasError = true;
+            expireDateFocus.requestFocus();
+            return false;
+          }
+        }
+      } catch (e) {
+        expireDateError.value = true;
+        showErrorSnackBar('Invalid expiration date');
+        hasError = true;
+        expireDateFocus.requestFocus();
+        return false;
+      }
     }
 
     // If we got here, all validations passed
@@ -527,6 +558,7 @@ class AddEventViewController extends GetxController {
   }
 
   void onSubmit() async {
+    status.value = Status.none;
     if (checkValidation()) {
       try {
         var formData = FormData.fromMap({
@@ -561,6 +593,7 @@ class AddEventViewController extends GetxController {
 
         const storage = FlutterSecureStorage();
         var token = await storage.read(key: 'token') ?? 'error';
+        status.value = Status.loading;
         EventApiHelper.setToken(token);
         var response = await EventApiHelper.post('/events', data: formData);
 
@@ -568,6 +601,7 @@ class AddEventViewController extends GetxController {
         print('Response Data: ${response.data['errors']}');
 
         if (response.statusCode == 201 || response.statusCode == 200) {
+          status.value = Status.success;
           Get.snackbar(
             'Success',
             'Event created successfully',
@@ -575,14 +609,15 @@ class AddEventViewController extends GetxController {
             duration: const Duration(milliseconds: 800),
           );
         } else {
+          status.value = Status.error;
           String errorMessage =
               response.data['message'] ?? 'Event creation failed';
 
-          if (response.data['errors'] != null &&
-              response.data['errors'] is Map) {
-            errorMessage +=
-                "\n${(response.data['errors'] as Map).values.expand((e) => e).join("\n")}";
-          }
+          // if (response.data['errors'] != null &&
+          //     response.data['errors'] is Map) {
+          //   errorMessage +=
+          //       "\n${(response.data['errors'] as Map).values.expand((e) => e).join("\n")}";
+          // }
 
           Get.snackbar(
             'Error',
@@ -591,6 +626,7 @@ class AddEventViewController extends GetxController {
           );
         }
       } on DioException catch (e) {
+        status.value = Status.error;
         print('Dio Error: ${e.response?.data['errors']}');
         print('Error Message: ${e.message}');
         print('Status Code: ${e.response?.statusCode}');
@@ -598,11 +634,11 @@ class AddEventViewController extends GetxController {
         String errorMessage =
             e.response?.data['message'] ?? 'Event creation failed';
 
-        if (e.response?.data['errors'] != null &&
-            e.response?.data['errors'] is Map) {
-          errorMessage +=
-              "\n${(e.response?.data['errors'] as Map).values.expand((e) => e).join("\n")}";
-        }
+        // if (e.response?.data['errors'] != null &&
+        //     e.response?.data['errors'] is Map) {
+        //   errorMessage +=
+        //       "\n${(e.response?.data['errors'] as Map).values.expand((e) => e).toSet().join("\n")}";
+        // }
 
         Get.snackbar(
           'Error',

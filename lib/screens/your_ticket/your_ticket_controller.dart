@@ -8,6 +8,7 @@ class YourTicketViewController extends GetxController {
   var quantity = 0;
   var buyedTickets = <dynamic>[].obs;
   final GlobalKey qrKey = GlobalKey();
+  var screenshotController = ScreenshotController();
 
   @override
   void onInit() {

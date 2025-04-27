@@ -11,6 +11,7 @@ import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/event_detail/event_detail.dart';
+import 'package:kork/screens/main/main_view.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
 import 'package:kork/widget/booked_event_card.dart';
 import 'package:kork/widget/button_design.dart';
@@ -41,6 +42,7 @@ class TicketView extends GetView<TicketController> {
                 CustomScrollView(
                   controller: controller.scrollController,
                   scrollDirection: Axis.vertical,
+                  physics: const AlwaysScrollableScrollPhysics(),
                   slivers: [
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 17),
@@ -92,114 +94,132 @@ class TicketView extends GetView<TicketController> {
                     ),
                     SliverToBoxAdapter(
                       child: Obx(
-                        () => controller.buyedTickets.isNotEmpty? Column(
-                          children: [
-                            ...List.generate(
-                              controller.buyedTickets.length,
-                              (index) {
-                                var eventData = BoughtTicket.fromJson(
-                                  controller.buyedTickets[index],
-                                );
-                                final ticketCode = eventData.ticketCode;
-                                final isSelected =
-                                    controller.isTicketSelection(ticketCode);
+                        () => controller.buyedTickets.isNotEmpty
+                            ? Column(
+                                children: [
+                                  ...List.generate(
+                                    controller.buyedTickets.length,
+                                    (index) {
+                                      var eventData = BoughtTicket.fromJson(
+                                        controller.buyedTickets[index],
+                                      );
+                                      final ticketCode = eventData.ticketCode;
+                                      final isSelected = controller
+                                          .isTicketSelection(ticketCode);
 
-                                return Column(
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      // mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        // Checkbox for selection
-                                        if (controller.isSelectionMode.value)
-                                          GestureDetector(
-                                            onTap: () {
-                                              if (!controller
-                                                  .isSelectionMode.value) {
-                                                controller.startSelection();
-                                              }
-                                              controller.toggleTicketSelection(
-                                                  ticketCode);
-                                              HapticFeedback.selectionClick();
-                                            },
-                                            child: Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 12),
-                                              width: 24,
-                                              height: 24,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: isSelected
-                                                      ? Get.theme.colorScheme
-                                                          .primary
-                                                      : Colors.grey,
-                                                  width: 2,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                color: isSelected
-                                                    ? Get.theme.colorScheme
-                                                        .primary
-                                                    : Colors.transparent,
-                                              ),
-                                              child: isSelected
-                                                  ? const Icon(
-                                                      Icons.check,
-                                                      size: 16,
-                                                      color: const Color(
-                                                          0xffEAE9FC),
-                                                    )
-                                                  : null,
-                                            ),
-                                          ),
-                                        // Event card
-                                        Expanded(
-                                          child: GestureDetector(
-                                            onTap: () {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            // mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              // Checkbox for selection
                                               if (controller
-                                                  .isSelectionMode.value) {
-                                                controller
-                                                    .toggleTicketSelection(
-                                                        ticketCode);
-                                                HapticFeedback.selectionClick();
-                                              } else {
-                                                Get.toNamed(
-                                                  Routes.bookedEvent,
-                                                  arguments: eventData,
-                                                );
-                                              }
-                                            },
-                                            onLongPress: () {
-                                              controller.startSelection();
-                                              controller.toggleTicketSelection(
-                                                  ticketCode);
-                                              HapticFeedback.mediumImpact();
-                                            },
-                                            child: bookedEventCard(
-                                              event: controller
-                                                  .buyedTickets[index],
-                                            ),
+                                                  .isSelectionMode.value)
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    if (!controller
+                                                        .isSelectionMode
+                                                        .value) {
+                                                      controller
+                                                          .startSelection();
+                                                    }
+                                                    controller
+                                                        .toggleTicketSelection(
+                                                            ticketCode);
+                                                    HapticFeedback
+                                                        .selectionClick();
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            right: 12),
+                                                    width: 24,
+                                                    height: 24,
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                        color: isSelected
+                                                            ? Get
+                                                                .theme
+                                                                .colorScheme
+                                                                .primary
+                                                            : Colors.grey,
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      color: isSelected
+                                                          ? Get
+                                                              .theme
+                                                              .colorScheme
+                                                              .primary
+                                                          : Colors.transparent,
+                                                    ),
+                                                    child: isSelected
+                                                        ? const Icon(
+                                                            Icons.check,
+                                                            size: 16,
+                                                            color: const Color(
+                                                                0xffEAE9FC),
+                                                          )
+                                                        : null,
+                                                  ),
+                                                ),
+                                              // Event card
+                                              Expanded(
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    if (controller
+                                                        .isSelectionMode
+                                                        .value) {
+                                                      controller
+                                                          .toggleTicketSelection(
+                                                              ticketCode);
+                                                      HapticFeedback
+                                                          .selectionClick();
+                                                    } else {
+                                                      Get.toNamed(
+                                                        Routes.bookedEvent,
+                                                        arguments: eventData,
+                                                      );
+                                                    }
+                                                  },
+                                                  onLongPress: () {
+                                                    controller.startSelection();
+                                                    controller
+                                                        .toggleTicketSelection(
+                                                            ticketCode);
+                                                    HapticFeedback
+                                                        .mediumImpact();
+                                                  },
+                                                  child: bookedEventCard(
+                                                    event: controller
+                                                        .buyedTickets[index],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 24),
-                                  ],
-                                );
-                              },
-                            ),
-                            // Loading indicator
-                            controller.isLoading.value
-                                ? const Padding(
-                              padding:
-                              EdgeInsets.symmetric(vertical: 16.0),
-                              child: Center(
-                                  child: CircularProgressIndicator()),
-                            )
-                                : const SizedBox.shrink(),
-                          ],
-                        ) : const SizedBox.shrink(),
+                                          const SizedBox(height: 24),
+                                        ],
+                                      );
+                                    },
+                                  ),
+                                  // Loading indicator
+                                  controller.isLoading.value
+                                      ? const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 16.0),
+                                          child: Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
+                              )
+                            : const SizedBox.shrink(),
                       ),
                     ),
                     // const SliverToBoxAdapter(
@@ -209,30 +229,33 @@ class TicketView extends GetView<TicketController> {
                       child: Obx(
                         () => controller.lastEvent.isEmpty
                             ? const SizedBox.shrink()
-                            : Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.more_event,
-                                    style: TextStyle(
-                                      fontSize: 12,
+                            : GestureDetector(
+                                onTap: controller.seeAllEvent,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.more_event,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Get.theme.colorScheme.tertiary,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      AppLocalizations.of(context)!.see_all,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Get.theme.colorScheme.tertiary,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: 8,
                                       color: Get.theme.colorScheme.tertiary,
                                     ),
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    AppLocalizations.of(context)!.see_all,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Get.theme.colorScheme.tertiary,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 6),
-                                  Icon(
-                                    Icons.arrow_forward_ios_outlined,
-                                    size: 8,
-                                    color: Get.theme.colorScheme.tertiary,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                       ),
                     ),

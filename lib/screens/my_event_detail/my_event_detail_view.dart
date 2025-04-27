@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -114,7 +112,7 @@ class MyEventDetailView extends GetView<MyEventDetailViewController> {
                     ),
                     Expanded(
                       child: Text(
-                        AppLocalizations.of(context)!.add_event,
+                        AppLocalizations.of(context)!.delete_event,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

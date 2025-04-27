@@ -18,6 +18,9 @@ class VerifyOtpController extends GetxController {
 
   var isEmpty = true.obs;
 
+  var canSendOTP = true.obs;
+  Timer? _otpTimer;
+
   List<TextEditingController> get otpControllers => [
         textFieldOne,
         textFieldTwo,
@@ -48,6 +51,7 @@ class VerifyOtpController extends GetxController {
     for (var node in otpFocusNodes) {
       node.dispose();
     }
+    _otpTimer?.cancel();
     super.onClose();
   }
 
@@ -116,5 +120,31 @@ class VerifyOtpController extends GetxController {
         );
       }
     }
+  }
+
+  void resendOTP() async {
+    if (!canSendOTP.value) return;
+
+    canSendOTP.value = false;
+
+    final isSendOTP = await sendOTP(
+      canSendOTP: canSendOTP.value,
+      email: email,
+      isRegister: false,
+    );
+
+    if (isSendOTP) {
+      startOTPTimer();
+    } else {
+      canSendOTP.value = true;
+    }
+  }
+
+  void startOTPTimer() {
+    _otpTimer?.cancel();
+
+    _otpTimer = Timer(const Duration(minutes: 5), () {
+      canSendOTP.value = true;
+    });
   }
 }

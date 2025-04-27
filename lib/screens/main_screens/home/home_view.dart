@@ -66,8 +66,8 @@ class HomeView extends GetView<HomeController> {
                         child: Column(
                           children: [
                             Obx(
-                              () => controller.categories['showing'] == null ||
-                                      controller.categories['showing']!.isEmpty
+                              () => controller.categories['upcoming'] == null ||
+                                      controller.categories['upcoming']!.isEmpty
                                   ? const SizedBox.shrink()
                                   : Padding(
                                       padding: const EdgeInsets.only(right: 16),
@@ -107,8 +107,8 @@ class HomeView extends GetView<HomeController> {
                                     ),
                             ),
                             Obx(
-                              () => controller.categories['showing'] == null ||
-                                      controller.categories['showing']!.isEmpty
+                              () => controller.categories['upcoming'] == null ||
+                                      controller.categories['upcoming']!.isEmpty
                                   ? const SizedBox.shrink()
                                   : const SizedBox(height: 24),
                             ),
@@ -123,39 +123,42 @@ class HomeView extends GetView<HomeController> {
                               () => controller.categories['showing'] == null ||
                                       controller.categories['showing']!.isEmpty
                                   ? const SizedBox.shrink()
-                                  : Padding(
-                                      padding: const EdgeInsets.only(right: 16),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .showing,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Get
-                                                  .theme.colorScheme.tertiary,
+                                  : GestureDetector(
+                                    onTap: ()=> Get.toNamed(Routes.seeAll, arguments: 'today'),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(right: 16),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .showing,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Get
+                                                    .theme.colorScheme.tertiary,
+                                              ),
                                             ),
-                                          ),
-                                          const Spacer(),
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .see_all,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Get
-                                                  .theme.colorScheme.tertiary,
+                                            const Spacer(),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .see_all,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                color: Get
+                                                    .theme.colorScheme.tertiary,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(width: 6),
-                                          Icon(
-                                            Icons.arrow_forward_ios_outlined,
-                                            size: 8,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ],
+                                            const SizedBox(width: 6),
+                                            Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                              size: 8,
+                                              color:
+                                                  Get.theme.colorScheme.tertiary,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
+                                  ),
                             ),
                             const SizedBox(height: 24),
                             Obx(() => showItem('showing')),

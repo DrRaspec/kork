@@ -6,13 +6,12 @@ import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:kork/helper/bookmark_helper.dart';
 import 'package:kork/helper/qr_code_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/widget/build_placeholder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'booked_event_detail_controller.dart';
@@ -27,150 +26,113 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
     return Scaffold(
       body: SafeArea(
         bottom: false,
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Stack(
+        child: Screenshot(
+          controller: controller.screenshotController,
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 225,
-                          alignment: Alignment.topLeft,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                controller.eventData.event.posterUrl,
-                              ),
-                              fit: BoxFit.cover,
-                              alignment: const Alignment(0, -0.3),
-                            ),
+                    Container(
+                      width: double.infinity,
+                      height: 225,
+                      alignment: Alignment.topLeft,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            controller.eventData.event.posterUrl,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 13,
+                          fit: BoxFit.cover,
+                          alignment: const Alignment(0, -0.3),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 13,
+                        ),
+                        child: GestureDetector(
+                          onTap: Get.back,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: Get.theme.colorScheme.secondary,
                             ),
-                            child: GestureDetector(
-                              onTap: Get.back,
-                              child: Container(
-                                width: 32,
-                                height: 32,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Get.theme.colorScheme.secondary,
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_back_ios_new_outlined,
-                                  size: 20,
-                                  color: Color(0xffEAE9FC),
-                                ),
-                              ),
+                            child: Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              size: 20,
+                              color: Get.theme.colorScheme.tertiary,
                             ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //   children: [
-                            //     GestureDetector(
-                            //       onTap: () => Get.back(
-                            //         result: controller.isMarked.value,
-                            //       ),
-                            //       child: Container(
-                            //         width: 32,
-                            //         height: 32,
-                            //         alignment: Alignment.center,
-                            //         decoration: BoxDecoration(
-                            //           borderRadius: BorderRadius.circular(12),
-                            //           color: Get.theme.colorScheme.secondary,
-                            //         ),
-                            //         child: const Icon(
-                            //           Icons.arrow_back_ios_new_outlined,
-                            //           size: 20,
-                            //           color: Color(0xffEAE9FC),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     GestureDetector(
-                            //       onTap: controller.markEvent,
-                            //       child: Obx(
-                            //         () => Container(
-                            //           width: 32,
-                            //           height: 32,
-                            //           alignment: Alignment.center,
-                            //           decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(12),
-                            //             color: Get.theme.colorScheme.secondary,
-                            //           ),
-                            //           child: controller.isMarked.value
-                            //               ? const Icon(
-                            //                   Icons.bookmark,
-                            //                   size: 21,
-                            //                   color: Color(0xffE5A000),
-                            //                 )
-                            //               : const Icon(
-                            //                   Icons.bookmark_border_outlined,
-                            //                   size: 21,
-                            //                   color: Color(0xffEAE9FC),
-                            //                 ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
                           ),
                         ),
-                        // ,
-                        detail(context),
-                      ],
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     GestureDetector(
+                        //       onTap: () => Get.back(
+                        //         result: controller.isMarked.value,
+                        //       ),
+                        //       child: Container(
+                        //         width: 32,
+                        //         height: 32,
+                        //         alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(12),
+                        //           color: Get.theme.colorScheme.secondary,
+                        //         ),
+                        //         child: const Icon(
+                        //           Icons.arrow_back_ios_new_outlined,
+                        //           size: 20,
+                        //           color: Color(0xffEAE9FC),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     GestureDetector(
+                        //       onTap: controller.markEvent,
+                        //       child: Obx(
+                        //         () => Container(
+                        //           width: 32,
+                        //           height: 32,
+                        //           alignment: Alignment.center,
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(12),
+                        //             color: Get.theme.colorScheme.secondary,
+                        //           ),
+                        //           child: controller.isMarked.value
+                        //               ? const Icon(
+                        //                   Icons.bookmark,
+                        //                   size: 21,
+                        //                   color: Color(0xffE5A000),
+                        //                 )
+                        //               : const Icon(
+                        //                   Icons.bookmark_border_outlined,
+                        //                   size: 21,
+                        //                   color: Color(0xffEAE9FC),
+                        //                 ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                      ),
                     ),
-                    Obx(
-                      () {
-                        print(
-                            "Attendee count in view: ${controller.attendees.length}");
-                        return controller.attendees.isEmpty
-                            ? const SizedBox.shrink()
-                            : attendees(context: context);
-                      },
-                    ),
+                    // ,
+                    detail(context),
                   ],
                 ),
-              ),
-            ),
-            Container(
-              width: Get.width,
-              // height: 57,
-              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-              decoration: BoxDecoration(
-                color: Get.theme.bottomNavigationBarTheme.backgroundColor,
-              ),
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () => Get.toNamed(
-                  Routes.checkout,
-                  arguments: controller.eventData,
+                Obx(
+                  () {
+                    return controller.attendees.isEmpty
+                        ? const SizedBox.shrink()
+                        : attendees(context: context);
+                  },
                 ),
-                child: Container(
-                  width: 153,
-                  height: 39,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Get.theme.colorScheme.primary,
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.buy_now,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffEAE9FC),
-                    ),
-                  ),
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -307,9 +269,9 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                 controller.attendeeNumber.isNotEmpty
                     ? controller.attendeeNumber.value
                     : 'Unknown',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
-                  color: Color(0xffEAE9FC),
+                  color: Get.theme.colorScheme.tertiary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -543,6 +505,7 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                 onTap: () => generateQrCode(
                   context: context,
                   boughtTickets: controller.eventData,
+                  screenshotController: controller.screenshotController,
                 ),
                 child: Icon(
                   Icons.remove_red_eye,
@@ -579,7 +542,7 @@ class BookedEventDetailView extends GetView<BookedEventDetailController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${controller.eventData.user.firstName} ${controller.eventData.user.lastName}',
+                    '${controller.eventData.event.user.firstName} ${controller.eventData.event.user.lastName}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Get.theme.colorScheme.tertiary,

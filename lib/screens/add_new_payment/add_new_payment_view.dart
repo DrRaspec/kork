@@ -44,245 +44,271 @@ class AddNewPaymentView extends GetView<AddNewPaymentViewController> {
               alignment: Alignment.centerLeft,
               child: Text(
                 AppLocalizations.of(context)!.card_information,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: Color(0xffEAE9FC),
+                  color: Get.theme.colorScheme.tertiary,
                 ),
               ),
             ),
             const SizedBox(height: 15),
-            Container(
-              width: double.infinity,
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.secondary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 16,
-                children: [
-                  SvgPicture.asset(
-                    'assets/image/svg/card.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: const ColorFilter.mode(
-                      Color(0xffEAE9FC),
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  Container(
-                    width: 1,
-                    height: 21,
-                    color: const Color(0x80EAE9FC),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: controller.cardNumberController,
-                      textAlignVertical: TextAlignVertical.center,
-                      focusNode: controller.cardNumberFocus,
-                      onChanged: (_) => controller.onCardNumberChange(),
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Get.theme.colorScheme.tertiary,
+            Obx(
+              () => Container(
+                width: double.infinity,
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(10),
+                  border: controller.cardNumberError.isTrue
+                      ? Border.all(color: const Color(0xffFF4D4D), width: 2)
+                      : null,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 16,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/image/svg/card.svg',
+                      width: 24,
+                      height: 24,
+                      colorFilter: ColorFilter.mode(
+                        Get.theme.colorScheme.tertiary,
+                        BlendMode.srcIn,
                       ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 11),
-                        border: InputBorder.none,
-                        hintText: AppLocalizations.of(context)!.card_number,
-                        hintStyle: TextStyle(
+                    ),
+                    Container(
+                      width: 1,
+                      height: 21,
+                      color: Get.theme.colorScheme.surfaceTint,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: controller.cardNumberController,
+                        textAlignVertical: TextAlignVertical.center,
+                        focusNode: controller.cardNumberFocus,
+                        onChanged: (_) => controller.onCardNumberChange(),
+                        keyboardType: TextInputType.number,
+                        style: TextStyle(
                           fontSize: 12,
                           color: Get.theme.colorScheme.tertiary,
                         ),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 11),
+                          border: InputBorder.none,
+                          hintText: AppLocalizations.of(context)!.card_number,
+                          hintStyle: TextStyle(
+                            fontSize: 12,
+                            color: Get.theme.colorScheme.tertiary,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                  Obx(
-                    () => SvgPicture.asset(
-                      controller.cardType.value == 'Visa'
-                          ? 'assets/image/svg/Visa.svg'
-                          : 'assets/image/svg/MasterCard.svg',
-                      width: 38,
-                      height: 24,
+                    Obx(
+                      () => SvgPicture.asset(
+                        controller.cardType.value == 'Visa'
+                            ? 'assets/image/svg/Visa.svg'
+                            : 'assets/image/svg/MasterCard.svg',
+                        width: 38,
+                        height: 24,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Get.theme.colorScheme.secondary,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 16,
-                children: [
-                  SvgPicture.asset(
-                    'assets/image/svg/profile.svg',
-                    width: 24,
-                    height: 24,
-                    colorFilter: const ColorFilter.mode(
-                      Color(0xffEAE9FC),
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                  Container(
-                    width: 1,
-                    height: 21,
-                    color: const Color(0x80EAE9FC),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: controller.cardHolderController,
-                      textAlignVertical: TextAlignVertical.center,
-                      focusNode: controller.cardHolderFocus,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Get.theme.colorScheme.tertiary,
+            Obx(
+              () => Container(
+                width: double.infinity,
+                height: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(10),
+                  border: controller.cardHolderError.isTrue
+                      ? Border.all(color: const Color(0xffFF4D4D), width: 2)
+                      : null,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  spacing: 16,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/image/svg/profile.svg',
+                      width: 24,
+                      height: 24,
+                      colorFilter: ColorFilter.mode(
+                        Get.theme.colorScheme.tertiary,
+                        BlendMode.srcIn,
                       ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 11),
-                        border: InputBorder.none,
-                        hintText:
-                            AppLocalizations.of(context)!.card_holder_name,
-                        hintStyle: TextStyle(
+                    ),
+                    Container(
+                      width: 1,
+                      height: 21,
+                      color: Get.theme.colorScheme.surfaceTint,
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: controller.cardHolderController,
+                        textAlignVertical: TextAlignVertical.center,
+                        focusNode: controller.cardHolderFocus,
+                        style: TextStyle(
                           fontSize: 12,
                           color: Get.theme.colorScheme.tertiary,
                         ),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding:
+                              const EdgeInsets.symmetric(vertical: 11),
+                          border: InputBorder.none,
+                          hintText:
+                              AppLocalizations.of(context)!.card_holder_name,
+                          hintStyle: TextStyle(
+                            fontSize: 12,
+                            color: Get.theme.colorScheme.tertiary,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    height: 40,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Get.theme.colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 16,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/image/svg/calendar-2.svg',
-                          width: 24,
-                          height: 24,
-                          colorFilter: const ColorFilter.mode(
-                            Color(0xffEAE9FC),
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        Container(
-                          width: 1,
-                          height: 21,
-                          color: const Color(0x80EAE9FC),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: controller.expireDateController,
-                            textAlignVertical: TextAlignVertical.center,
-                            focusNode: controller.expireDateFocus,
-                            onChanged: (_) => controller.onExpireDateChange(),
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
+                  child: Obx(
+                    () => Container(
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(10),
+                        border: controller.expireDateError.isTrue
+                            ? Border.all(
+                                color: const Color(0xffFF4D4D),
+                                width: 2,
+                              )
+                            : null,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 16,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/image/svg/calendar-2.svg',
+                            width: 24,
+                            height: 24,
+                            colorFilter: ColorFilter.mode(
+                              Get.theme.colorScheme.tertiary,
+                              BlendMode.srcIn,
                             ),
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
-                              border: InputBorder.none,
-                              hintText:
-                                  AppLocalizations.of(context)!.expire_date,
-                              hintStyle: TextStyle(
+                          ),
+                          Container(
+                            width: 1,
+                            height: 21,
+                            color: const Color(0x80EAE9FC),
+                          ),
+                          Expanded(
+                            child: TextField(
+                              controller: controller.expireDateController,
+                              textAlignVertical: TextAlignVertical.center,
+                              focusNode: controller.expireDateFocus,
+                              onChanged: (_) => controller.onExpireDateChange(),
+                              style: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.tertiary,
                               ),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 11),
+                                border: InputBorder.none,
+                                hintText:
+                                    AppLocalizations.of(context)!.expire_date,
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: Container(
-                    height: 40,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Get.theme.colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      spacing: 16,
-                      children: [
-                        SvgPicture.asset(
-                          'assets/image/svg/card.svg',
-                          width: 24,
-                          height: 24,
-                          colorFilter: const ColorFilter.mode(
-                            Color(0xffEAE9FC),
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        Container(
-                          width: 1,
-                          height: 21,
-                          color: const Color(0x80EAE9FC),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: controller.ccvController,
-                            textAlignVertical: TextAlignVertical.center,
-                            focusNode: controller.ccvFocus,
-                            maxLength: 3,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(3),
-                            ],
-                            onChanged: (value) {
-                              if (value.length > 3) {
-                                return;
-                              }
-                            },
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Get.theme.colorScheme.tertiary,
+                  child: Obx(
+                    () => Container(
+                      height: 40,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: Get.theme.colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(10),
+                        border: controller.ccvError.isTrue
+                            ? Border.all(
+                                color: const Color(0xffFF4D4D),
+                                width: 2,
+                              )
+                            : null,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 16,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/image/svg/card.svg',
+                            width: 24,
+                            height: 24,
+                            colorFilter: ColorFilter.mode(
+                              Get.theme.colorScheme.tertiary,
+                              BlendMode.srcIn,
                             ),
-                            decoration: InputDecoration(
-                              isDense: true,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 11),
-                              border: InputBorder.none,
-                              hintText: AppLocalizations.of(context)!.ccv,
-                              hintStyle: TextStyle(
+                          ),
+                          Container(
+                            width: 1,
+                            height: 21,
+                            color: Get.theme.colorScheme.surfaceTint,
+                          ),
+                          Expanded(
+                            child: TextField(
+                              controller: controller.ccvController,
+                              textAlignVertical: TextAlignVertical.center,
+                              focusNode: controller.ccvFocus,
+                              maxLength: 3,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(3),
+                              ],
+                              onChanged: (value) {
+                                if (value.length > 3) {
+                                  return;
+                                }
+                              },
+                              style: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.tertiary,
                               ),
-                              counterText: "",
-                              counterStyle: const TextStyle(fontSize: 0),
+                              decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 11),
+                                border: InputBorder.none,
+                                hintText: AppLocalizations.of(context)!.ccv,
+                                hintStyle: TextStyle(
+                                  fontSize: 12,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                                counterText: "",
+                                counterStyle: const TextStyle(fontSize: 0),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

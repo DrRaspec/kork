@@ -51,6 +51,8 @@ class ChooseLanguageView extends GetView<ChooseLanguageViewController> {
                   onTap: () => controller.changeLanguage(false),
                   child: buttonDesign(
                     text: 'ភាសាខ្មែរ',
+                    // isKhmer: true,
+                    fontSize: 17,
                     image: 'assets/image/flags/kh.svg',
                   ),
                 ),

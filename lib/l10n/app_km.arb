@@ -102,7 +102,7 @@
     "get_your_ticket_here": "យកសំបុត្រអ្នកនៅទីនេះ",
     "get_your_ticket_here_guide": "សូមមេត្តារក្សាទុកសំបុត្ររបស់អ្នក នឹងប្រាកដថាមិនត្រូវបាត់បង់នោះទេ",
     "download": "ទាញយក",
-    "screenshot": "រូបថតអេក្រង់",
+    "screenshot": "ថតអេក្រង់",
     "add_event": "បន្ថែមព្រឹត្តិការណ៏",
     "event_information": "ព័ត៌មានអំពីព្រិត្តិការណ៏",
     "name": "ឈ្មោះ",
@@ -282,5 +282,6 @@
     "result": "លទ្ធផល",
     "no_recent_searches": "មិនមានការស្វែងរកថ្មីៗទេ",
     "no_results_found": "រកមិនឃើញលទ្ធផលទេ",
-    "something_went_wrong": "ប្រព័ន្ធមានបញ្ហា"
+    "something_went_wrong": "ប្រព័ន្ធមានបញ្ហា",
+    "delete_event": "លុបព្រឹត្តិការណ៍"
 }

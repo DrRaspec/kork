@@ -161,7 +161,7 @@ class LoginController extends GetxController with GetTickerProviderStateMixin {
 
           // Navigate to main screen
           Get.offAllNamed(Routes.main);
-          Get.snackbar('Sign in', 'Signed in successfully');
+          // Get.snackbar('Sign in', 'Signed in successfully');
         } on DioException catch (e) {
           _handleLoginError(e);
         }

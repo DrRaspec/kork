@@ -52,7 +52,8 @@ var appRoutes = [
     name: Routes.login,
     page: () => const LoginView(),
     binding: LoginBinding(),
-    middlewares: [NoAuthMiddleware()],
+    // middlewares: [NoAuthMiddleware()],
+    middlewares: [NoAuthMiddleware(), OnBoardingMiddleware()],
     preventDuplicates: true,
   ),
   GetPage(
@@ -92,7 +93,8 @@ var appRoutes = [
     name: Routes.main,
     page: () => const MainView(),
     binding: MainBinding(),
-    middlewares: [AuthMiddleware()],
+    // middlewares: [AuthMiddleware()],
+    middlewares: [AuthMiddleware(), OnBoardingMiddleware()],
   ),
   GetPage(
     name: Routes.home,
@@ -170,7 +172,7 @@ var appRoutes = [
     name: Routes.firstOnBoarding,
     page: () => FirstOnboardingView(),
     binding: FirstOnboardingBinding(),
-    middlewares: [OnBoardingMiddleware()],
+    // middlewares: [OnBoardingMiddleware()],
   ),
   GetPage(
     name: Routes.chooseLanguage,

@@ -30,7 +30,7 @@ class SearchResultController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     searchController.dispose();
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();

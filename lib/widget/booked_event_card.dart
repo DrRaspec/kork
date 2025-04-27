@@ -28,6 +28,7 @@ Widget buildCard(String imageUrl) {
     clipBehavior: Clip.hardEdge,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
+      color: Colors.red,
     ),
     child: Container(
       width: Get.width,
@@ -39,8 +40,12 @@ Widget buildCard(String imageUrl) {
       ),
       child: Image.network(
         imageUrl,
+        width: Get.width,
         fit: BoxFit.cover,
-        loadingBuilder: (context, child, loadingProgress) => buildPlaceholder(),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return buildPlaceholder();
+        },
         errorBuilder: (context, error, stackTrace) => const Center(
           child: Icon(Icons.error),
         ),

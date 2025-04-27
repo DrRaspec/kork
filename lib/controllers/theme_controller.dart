@@ -41,6 +41,9 @@ class ThemeController extends GetxController {
     // Apply the theme immediately
     Get.changeThemeMode(themeMode.value);
 
+    // Update native splash configuration for next launch
+    await updateNativeSplashConfig(!isDark);
+
     // Ensure the correct theme data is applied
     ThemeData updatedTheme = themeMode.value == ThemeMode.dark
         ? darkMode.copyWith(
@@ -61,6 +64,20 @@ class ThemeController extends GetxController {
     // Release the processing lock after a short delay
     await Future.delayed(const Duration(milliseconds: 200));
     isProcessingThemeChange.value = false;
+  }
+
+// Add this new method to update native splash config
+  Future<void> updateNativeSplashConfig(bool isLightMode) async {
+    try {
+      // This will preserve the user's theme choice for the next app launch
+      await prefs.setBool("splashLightMode", isLightMode);
+
+      // You could log this for debugging
+      print(
+          'Native splash theme preference updated: ${isLightMode ? 'Light' : 'Dark'}');
+    } catch (e) {
+      print('Error updating splash config: $e');
+    }
   }
 
   void updateFontFamily(String language) {

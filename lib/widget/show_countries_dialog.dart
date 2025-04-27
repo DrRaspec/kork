@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void showCountriesDialog(bool isPhone) {
   var controller = Get.find<FirstSignupController>();
   var scrollController = ScrollController();
+  var _searchResult = controller.countries.obs;
 
   scrollController.addListener(() {
     if (scrollController.position.pixels >=
@@ -34,6 +35,19 @@ void showCountriesDialog(bool isPhone) {
                   SizedBox(
                     height: 59,
                     child: TextFormField(
+                      onChanged: (value) {
+                        _searchResult.value =
+                            controller.countries.where((element) {
+                          return element.name
+                              .toLowerCase()
+                              .contains(value.toLowerCase());
+                        }).toList();
+                        if (value.isEmpty) {
+                          _searchResult.value = controller.countries;
+                        }
+                        // controller.searchCountries(value);
+                      },
+                      controller: controller.searchDialog,
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.search_country,
                         hintStyle: TextStyle(
@@ -51,7 +65,8 @@ void showCountriesDialog(bool isPhone) {
                           if (index >= controller.currentLenght.value) {
                             return const SizedBox.shrink();
                           }
-                          var item = controller.countries[index];
+                          // var item = controller.countries[index];
+                          var item = _searchResult[index];
                           return GestureDetector(
                             onTap: () {
                               if (isPhone) {
@@ -99,7 +114,8 @@ void showCountriesDialog(bool isPhone) {
                         },
                         separatorBuilder: (context, index) =>
                             const SizedBox(height: 16),
-                        itemCount: controller.currentLenght.value,
+                        // itemCount: controller.currentLenght.value,
+                        itemCount: _searchResult.length,
                       ),
                     ),
                   ),

@@ -3,8 +3,15 @@ part of 'payment_methods_view.dart';
 class PaymentMethodsViewController extends GetxController {
   var paymentMethod = <dynamic>[].obs;
   var status = Status.loading.obs;
+  var isClickAble = true.obs;
   @override
   void onInit() {
+    if (Get.arguments != null) {
+      var result = Get.arguments;
+      if (result is bool) {
+        isClickAble.value = result;
+      }
+    }
     fetchPaymentMethod();
     super.onInit();
   }
@@ -63,8 +70,8 @@ class PaymentMethodsViewController extends GetxController {
   void reloadData() async {
     try {
       var result = await Get.toNamed(Routes.addNewPayment);
-      print('datatype result ${result.runtimeType}');
-      print('result $result');
+      // print('datatype result ${result.runtimeType}');
+      // print('result $result');
 
       if (result is Map<String, dynamic> && result.isNotEmpty) {
         print('work');

@@ -32,14 +32,14 @@ Widget eventCategory() {
             borderRadius: BorderRadius.circular(20),
             color: Get.theme.colorScheme.secondary,
             border: Border.all(
-              color: const Color(0xffEAE9FC),
+              color: Get.theme.colorScheme.tertiary,
             ),
           ),
           child: Center(
             child: Text(
               categories[index],
-              style: const TextStyle(
-                color: Color(0xffEAE9FC),
+              style: TextStyle(
+                color: Get.theme.colorScheme.tertiary,
                 fontSize: 12,
               ),
             ),

@@ -210,4 +210,9 @@ class TicketController extends GetxController {
       justView: true,
     );
   }
+
+  void seeAllEvent() {
+    var mainController = Get.find<MainController>();
+    mainController.changeTabIndex(1);
+  }
 }

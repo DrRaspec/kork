@@ -11,6 +11,8 @@ Widget buttonDesign({
   double width = double.infinity,
   double height = 38,
   double radius = 5,
+  bool isKhmer = false,
+  double fontSize = 16,
 }) {
   return Container(
     width: width,
@@ -37,9 +39,10 @@ Widget buttonDesign({
         status == Status.success
             ? Text(
                 text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xffEAE9FC),
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: isKhmer ? FontWeight.w900 : FontWeight.normal,
+                  color: const Color(0xffEAE9FC),
                 ),
               )
             : status != Status.error
@@ -52,9 +55,9 @@ Widget buttonDesign({
                   )
                 : Text(
                     AppLocalizations.of(Get.context!)!.retry,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xffEAE9FC),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: const Color(0xffEAE9FC),
                     ),
                   ),
       ],

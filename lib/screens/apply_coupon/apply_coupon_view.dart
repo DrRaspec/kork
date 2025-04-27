@@ -28,7 +28,10 @@ class ApplyCouponView extends GetView<ApplyCouponViewController> {
               child: TextField(
                 controller: controller.searchCouponController,
                 textAlignVertical: TextAlignVertical.center,
-                style: const TextStyle(color: Color(0xffEAE9FC), fontSize: 12),
+                style: TextStyle(
+                  color: Get.theme.colorScheme.tertiary,
+                  fontSize: 12,
+                ),
                 onChanged: (value) {
                   controller.searchText.value = value;
                   if (value.isEmpty) {
@@ -123,17 +126,17 @@ class ApplyCouponView extends GetView<ApplyCouponViewController> {
                             Expanded(
                               child: Text(
                                 controller.validCoupon['coupon'],
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
-                                  color: Color(0xffEAE9FC),
+                                  color: Get.theme.colorScheme.tertiary,
                                 ),
                               ),
                             ),
                             Text(
                               '${controller.validCoupon['discount']}%',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xffEAE9FC),
+                                color: Get.theme.colorScheme.tertiary,
                               ),
                             ),
                           ],

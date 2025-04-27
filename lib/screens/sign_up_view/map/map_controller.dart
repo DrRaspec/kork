@@ -337,7 +337,7 @@ class MapController extends GetxController {
       if (selectedLocation.value.latitude == 0 &&
           selectedLocation.value.longitude == 0) {
         Get.snackbar("Error", "Please select a location before saving.",
-            snackPosition: SnackPosition.BOTTOM);
+            snackPosition: SnackPosition.TOP);
         return;
       }
     }
@@ -357,6 +357,50 @@ class MapController extends GetxController {
         }
       } else {
         Get.snackbar("Error", "Failed to save location. Please try again.");
+      }
+    } else if (argument == 'update location') {
+      try {
+        const storage = FlutterSecureStorage();
+        var id = await storage.read(key: 'id');
+        var token = await storage.read(key: 'token');
+
+        if (id == null || token == null) {
+          Get.offAllNamed(Routes.login);
+          return;
+        }
+        var formData = FormData.fromMap({
+          '_method': 'PUT',
+          'location':
+              '${selectedLocation.value.latitude},${selectedLocation.value.longitude}',
+        });
+        var response = await EventApiHelper.post(
+          '/users/$id',
+          data: formData,
+        );
+        if (response.statusCode == 200) {
+          var data = response.data as Map<String, dynamic>;
+          if (data.isNotEmpty) {
+            var mainController = Get.find<MainController>();
+            mainController.userData.value = data;
+            var homeController = Get.find<HomeController>();
+            homeController.userData.value = User.fromJson(data);
+            homeController.processUserData();
+
+            Get.back();
+
+            Get.snackbar('Success', 'Update Location Successfully');
+          }
+        }
+      } on DioException catch (e) {
+        var response = e.response;
+        var data = response?.data;
+        var errorMessage = '';
+        if (data is Map && data.containsKey('error')) {
+          errorMessage = data['error'];
+        } else {
+          errorMessage = 'fail to update location';
+        }
+        Get.snackbar('Fail', errorMessage);
       }
     } else {
       Get.toNamed(argument);

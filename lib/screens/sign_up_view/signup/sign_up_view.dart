@@ -7,7 +7,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/helper/send_otp.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/utils/app_log_interceptor.dart';
@@ -385,9 +384,14 @@ class SignUpView extends GetView<SignUpController> {
                       onTap: controller.status.value == Status.loading
                           ? null
                           : controller.onTap,
-                      child: buttonDesign(
-                        text: AppLocalizations.of(context)!.create_account,
-                        status: controller.status.value,
+                      child: Opacity(
+                        opacity: controller.status.value == Status.loading
+                            ? 0.7
+                            : 1.0,
+                        child: buttonDesign(
+                          text: AppLocalizations.of(context)!.create_account,
+                          status: controller.status.value,
+                        ),
                       ),
                     ),
                   ),

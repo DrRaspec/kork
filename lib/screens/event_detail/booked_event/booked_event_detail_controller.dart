@@ -11,6 +11,7 @@ class BookedEventDetailController extends GetxController {
   var startTime = ''.obs;
   var endTime = ''.obs;
   var storage = const FlutterSecureStorage();
+  var screenshotController = ScreenshotController();
   // late SharedPreferences prefs;
   // var isMarked = false.obs;
   late String id;
@@ -47,21 +48,17 @@ class BookedEventDetailController extends GetxController {
     attendees.value = eventData.event.attendees;
     // print('all attendee ${eventData.event.attendees.length}');
     attendeeNumber.value = roundDown(attendees.length);
-    print('start time ${eventData.event.startTime}');
-    print('end time ${eventData.event.endTime}');
     startTime.value = formatTime(eventData.event.startTime);
     endTime.value = formatTime(eventData.event.endTime);
-    print('formatted start time ${startTime.value}');
-    print('formatted end time ${endTime.value}');
   }
 
   String roundDown(int number) {
     var total = 0;
     var context = Get.context;
-    if(context == null) {
+    if (context == null) {
       return '';
     }
-    if(number > 10) {
+    if (number > 10) {
       total = (number ~/ 10) * 10;
       return '$total+ ${AppLocalizations.of(context)!.going}';
     }
@@ -116,7 +113,7 @@ class BookedEventDetailController extends GetxController {
           'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
 
       final Uri googleMapsAppUrl =
-      Uri.parse('comgooglemaps://?q=$latitude,$longitude');
+          Uri.parse('comgooglemaps://?q=$latitude,$longitude');
 
       if (await canLaunchUrl(googleMapsAppUrl)) {
         await launchUrl(googleMapsAppUrl);

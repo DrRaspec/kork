@@ -56,6 +56,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                             buildPlaceholder(height: 40, borderRadius: 10),
                             const SizedBox(height: 16),
                             buildPlaceholder(height: 40, borderRadius: 10),
+                            const SizedBox(height: 16),
                           ],
                         )
                       : ListView.separated(
@@ -141,18 +142,18 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.add,
                           size: 24,
-                          color: Color(0xffEAE9FC),
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                         const SizedBox(width: 16),
                         Text(
                           AppLocalizations.of(context)!.add_new_payment,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xffEAE9FC),
+                            color: Get.theme.colorScheme.tertiary,
                           ),
                         ),
                       ],
@@ -166,39 +167,40 @@ class PaymentMethodsView extends GetView<PaymentMethodsViewController> {
       ),
     );
   }
-}
 
-Widget cardWiget(PaymentMethod card) {
-  return GestureDetector(
-    onTap: () => Get.back(result: true),
-    child: Container(
-      height: 40,
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Get.theme.colorScheme.secondary,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            getCardType(card.cardNumber.toString()) == 'Visa'
-                ? 'assets/image/svg/Visa.svg'
-                : 'assets/image/svg/MasterCard.svg',
-            width: 38,
-          ),
-          const SizedBox(width: 16),
-          Text(
-            maskCardNumber(card.cardNumber.toString()),
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Color(0xffEAE9FC),
+  Widget cardWiget(PaymentMethod card) {
+    return GestureDetector(
+      onTap: () =>
+          controller.isClickAble.isTrue ? Get.back(result: true) : null,
+      child: Container(
+        height: 40,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Get.theme.colorScheme.secondary,
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              getCardType(card.cardNumber.toString()) == 'Visa'
+                  ? 'assets/image/svg/Visa.svg'
+                  : 'assets/image/svg/MasterCard.svg',
+              width: 38,
             ),
-          ),
-        ],
+            const SizedBox(width: 16),
+            Text(
+              maskCardNumber(card.cardNumber.toString()),
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Get.theme.colorScheme.tertiary,
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

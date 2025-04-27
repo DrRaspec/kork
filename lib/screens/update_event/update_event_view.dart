@@ -7,10 +7,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:kork/helper/card_helper.dart';
 import 'package:kork/helper/show_error_snack_bar.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
@@ -63,11 +61,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   ),
                   const SizedBox(height: 8),
                   Obx(() => eventTextField(
-                    textController: controller.nameController,
-                    errorMessage: controller.nameError.value,
-                    hintText: AppLocalizations.of(context)!.event_title,
-                    textFocus: controller.focusName,
-                  )),
+                        textController: controller.nameController,
+                        errorMessage: controller.nameError.value,
+                        hintText: AppLocalizations.of(context)!.event_title,
+                        textFocus: controller.focusName,
+                      )),
                   const SizedBox(height: 8),
                   Row(
                     spacing: 16,
@@ -85,7 +83,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             ),
                             const SizedBox(height: 8),
                             Obx(
-                                  () => GestureDetector(
+                              () => GestureDetector(
                                 onTap: controller.getLocation,
                                 child: eventTextField(
                                   textController: controller.locationController,
@@ -142,14 +140,16 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             child: GestureDetector(
                               onTap: controller.getDate,
                               child: Obx(() => eventTextField(
-                                textController: controller.startDateController,
-                                errorMessage: controller.startDateError.value,
-                                hintText:
-                                AppLocalizations.of(context)!.start_date,
-                                textFocus: controller.focusStartDate,
-                                svgIcon: 'assets/image/svg/calendar-3.svg',
-                                isEnable: false,
-                              )),
+                                    textController:
+                                        controller.startDateController,
+                                    errorMessage:
+                                        controller.startDateError.value,
+                                    hintText: AppLocalizations.of(context)!
+                                        .start_date,
+                                    textFocus: controller.focusStartDate,
+                                    svgIcon: 'assets/image/svg/calendar-3.svg',
+                                    isEnable: false,
+                                  )),
                             ),
                           ),
                           Expanded(
@@ -157,14 +157,15 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                               onTap: () =>
                                   controller.getDate(isStartDate: false),
                               child: Obx(() => eventTextField(
-                                textController: controller.endDateController,
-                                errorMessage: controller.endDateError.value,
-                                hintText:
-                                AppLocalizations.of(context)!.end_date,
-                                textFocus: controller.focusEndDate,
-                                svgIcon: 'assets/image/svg/calendar-3.svg',
-                                isEnable: false,
-                              )),
+                                    textController:
+                                        controller.endDateController,
+                                    errorMessage: controller.endDateError.value,
+                                    hintText:
+                                        AppLocalizations.of(context)!.end_date,
+                                    textFocus: controller.focusEndDate,
+                                    svgIcon: 'assets/image/svg/calendar-3.svg',
+                                    isEnable: false,
+                                  )),
                             ),
                           ),
                         ],
@@ -190,12 +191,12 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             child: GestureDetector(
                               onTap: controller.getTime,
                               child: Obx(
-                                    () => eventTextField(
+                                () => eventTextField(
                                   textController:
-                                  controller.startTimeController,
+                                      controller.startTimeController,
                                   errorMessage: controller.startTimeError.value,
                                   hintText:
-                                  AppLocalizations.of(context)!.start_time,
+                                      AppLocalizations.of(context)!.start_time,
                                   textFocus: controller.focusStartTime,
                                   svgIcon: 'assets/image/svg/timer-start.svg',
                                   isEnable: false,
@@ -208,11 +209,11 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                               onTap: () =>
                                   controller.getTime(isStartTime: false),
                               child: Obx(
-                                    () => eventTextField(
+                                () => eventTextField(
                                   textController: controller.endTimeController,
                                   errorMessage: controller.endTimeError.value,
                                   hintText:
-                                  AppLocalizations.of(context)!.end_time,
+                                      AppLocalizations.of(context)!.end_time,
                                   textFocus: controller.focusEndTime,
                                   svgIcon: 'assets/image/svg/timer-pause.svg',
                                   isEnable: false,
@@ -255,7 +256,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                            AppLocalizations.of(context)!.detail_guide,
+                                AppLocalizations.of(context)!.detail_guide,
                             hintStyle: TextStyle(
                               fontSize: 10,
                               color: Get.theme.colorScheme.tertiary,
@@ -291,15 +292,16 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                        () => SizedBox(
+                    () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
                           controller.ticketQuantityController.length * 2 - 1,
-                              (index) {
+                          (index) {
                             if (index % 2 == 0) {
                               var itemIndex = index ~/ 2;
-                              var quantityController = controller.ticketQuantityController[itemIndex];
+                              var quantityController = controller
+                                  .ticketQuantityController[itemIndex];
                               var type = controller.types[itemIndex];
 
                               return Expanded(
@@ -327,14 +329,14 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   ),
                   const SizedBox(height: 8),
                   Obx(
-                        () => SizedBox(
+                    () => SizedBox(
                       height: 50,
                       child: Row(
                         children: List.generate(
                           controller.ticketPriceController.length,
-                              (index) {
+                          (index) {
                             var ticketPriceController =
-                            controller.ticketPriceController[index];
+                                controller.ticketPriceController[index];
                             var type = controller.types[index];
 
                             return Expanded(
@@ -355,7 +357,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                                       style: TextStyle(
                                         fontSize: 11,
                                         color:
-                                        Get.theme.colorScheme.surfaceTint,
+                                            Get.theme.colorScheme.surfaceTint,
                                       ),
                                     ),
                                   ],
@@ -416,10 +418,10 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                              const EdgeInsets.symmetric(vertical: 11),
+                                  const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText:
-                              AppLocalizations.of(context)!.card_number,
+                                  AppLocalizations.of(context)!.card_number,
                               hintStyle: TextStyle(
                                 fontSize: 12,
                                 color: Get.theme.colorScheme.surfaceTint,
@@ -428,7 +430,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                           ),
                         ),
                         Obx(
-                              () => SvgPicture.asset(
+                          () => SvgPicture.asset(
                             controller.cardType.value == 'Visa'
                                 ? 'assets/image/svg/Visa.svg'
                                 : 'assets/image/svg/MasterCard.svg',
@@ -478,7 +480,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                             decoration: InputDecoration(
                               isDense: true,
                               contentPadding:
-                              const EdgeInsets.symmetric(vertical: 11),
+                                  const EdgeInsets.symmetric(vertical: 11),
                               border: InputBorder.none,
                               hintText: AppLocalizations.of(context)!
                                   .card_holder_name,
@@ -627,7 +629,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                   ),
                   const SizedBox(height: 16),
                   Obx(
-                        () => GestureDetector(
+                    () => GestureDetector(
                       onTap: () => controller.pickImage(),
                       child: Container(
                         height: 114,
@@ -639,58 +641,66 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                         ),
                         child: controller.selectedImage.value == null
                             ? Obx(() => controller.poster.isEmpty
-                            ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                'assets/image/svg/Upload.svg',
-                                width: 18,
-                                colorFilter: ColorFilter.mode(
-                                  Get.theme.colorScheme.surfaceTint,
-                                  BlendMode.srcIn,
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                        SvgPicture.asset(
+                                          'assets/image/svg/Upload.svg',
+                                          width: 18,
+                                          colorFilter: ColorFilter.mode(
+                                            Get.theme.colorScheme.surfaceTint,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .upload_event_poster,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                          ),
+                                        ),
+                                      ])
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(5),
+                                    child: Image.network(
+                                      controller.poster.value,
+                                      width: double.infinity,
+                                      height: 114,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        }
+                                        return buildPlaceholder();
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Container(
+                                        width: Get.width,
+                                        height: Get.height,
+                                        color: const Color(0xffEAE9FC),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.error,
+                                            size: 24,
+                                            color:
+                                                Get.theme.colorScheme.secondary,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ))
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.file(
+                                  controller.selectedImage.value!,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .upload_event_poster,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color:
-                                  Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                            ])
-                            : Image.network(
-                          controller.poster.value,
-                          width: double.infinity,
-                          height: 114,
-                          fit: BoxFit.cover,
-                          loadingBuilder:
-                              (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return buildPlaceholder();
-                          },
-                          errorBuilder:
-                              (context, error, stackTrace) =>
-                              Container(
-                                width: Get.width,
-                                height: Get.height,
-                                color: const Color(0xffEAE9FC),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.error,
-                                    size: 24,
-                                    color:
-                                    Get.theme.colorScheme.secondary,
-                                  ),
-                                ),
-                              ),
-                        ))
-                            : Image.file(
-                          controller.selectedImage.value!,
-                          fit: BoxFit.cover,
-                        ),
                       ),
                     ),
                   ),
