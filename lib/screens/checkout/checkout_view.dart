@@ -284,6 +284,8 @@ class CheckoutView extends GetView<CheckoutController> {
               children: [
                 Text(
                   '${controller.data.eventName} | ${controller.data.tickets[index].ticketType}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,
                     color: Get.theme.colorScheme.tertiary,

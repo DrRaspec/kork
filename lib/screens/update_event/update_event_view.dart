@@ -699,6 +699,7 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                                 child: Image.file(
                                   controller.selectedImage.value!,
                                   fit: BoxFit.cover,
+                                  wid
                                 ),
                               ),
                       ),

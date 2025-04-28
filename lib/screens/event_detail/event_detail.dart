@@ -188,29 +188,30 @@ class EventDetail extends GetView<EventDetailController> {
                                     ),
                                   ),
                                   const SizedBox(width: 25),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        controller.startDay,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Get.theme.colorScheme.tertiary,
-                                          fontWeight: FontWeight.w700,
+                                  Obx(
+                                    () => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller.startDate,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        controller.formatTime(
-                                          controller.eventData.startTime,
+                                        Text(
+                                          '${controller.startDay} ${controller.startTime.value} - ${controller.endTime.value}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Get
+                                                .theme.colorScheme.surfaceTint,
+                                          ),
                                         ),
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color:
-                                              Get.theme.colorScheme.surfaceTint,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),

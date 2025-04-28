@@ -169,8 +169,8 @@ class QrCodeScannerViewController extends GetxController {
               child: Center(
                 child: Lottie.asset(
                   'assets/animation/scan_successful.json',
-                  width: 65,
-                  height: 65,
+                  width: 70,
+                  height: 70,
                   fit: BoxFit.cover,
                   repeat: false,
                 ),
