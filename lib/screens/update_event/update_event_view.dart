@@ -266,14 +266,14 @@ class UpdateEventView extends GetView<UpdateEventViewController> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
-                  Text(
-                    AppLocalizations.of(context)!.organizer_information,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ),
+                  // const SizedBox(height: 24),
+                  // Text(
+                  //   AppLocalizations.of(context)!.organizer_information,
+                  //   style: TextStyle(
+                  //     fontSize: 16,
+                  //     color: Get.theme.colorScheme.tertiary,
+                  //   ),
+                  // ),
                   const SizedBox(height: 24),
                   Text(
                     AppLocalizations.of(context)!.company,

@@ -540,84 +540,97 @@ class UpdateEventViewController extends GetxController {
       }
     }
 
-    // Validate Card Number
-    cardType.value = getCardType(cardNumberController.text.trim());
-    if (cardNumberController.text.trim().isEmpty) {
-      cardNumberError.value = true;
-      showErrorSnackBar('Card number cannot be empty');
-      cardNumberFocus.requestFocus();
-      return false;
-    } else if (!RegExp(r'^[0-9]{13,19}$').hasMatch(cardNumberController.text) ||
-        cardType.value == 'Unknown') {
-      cardNumberError.value = true;
-      showErrorSnackBar('Please enter a valid card number');
-      cardNumberFocus.requestFocus();
-      return false;
-    }
+    // Card validation - only if all fields have values (making it optional)
+    bool hasCardInfo = cardNumberController.text.trim().isNotEmpty ||
+        cardHolderController.text.trim().isNotEmpty ||
+        ccvController.text.trim().isNotEmpty ||
+        expireDateController.text.trim().isNotEmpty;
 
-    // Validate Card Holder
-    if (cardHolderController.text.isEmpty) {
-      cardHolderError.value = true;
-      showErrorSnackBar('Card holder name cannot be empty');
-      cardHolderFocus.requestFocus();
-      return false;
-    } else if (!RegExp(r'^[a-zA-Z\s\-]+$')
-        .hasMatch(cardHolderController.text)) {
-      cardHolderError.value = true;
-      showErrorSnackBar('Please enter a valid card holder name');
-      cardHolderFocus.requestFocus();
-      return false;
-    }
+    if (hasCardInfo) {
+      // Validate Card Number
+      cardType.value = getCardType(cardNumberController.text.trim());
+      if (cardNumberController.text.trim().isEmpty) {
+        cardNumberError.value = true;
+        showErrorSnackBar(
+            'Card number cannot be empty if other card fields are provided');
+        cardNumberFocus.requestFocus();
+        return false;
+      } else if (!RegExp(r'^[0-9]{13,19}$')
+              .hasMatch(cardNumberController.text) ||
+          cardType.value == 'Unknown') {
+        cardNumberError.value = true;
+        showErrorSnackBar('Please enter a valid card number');
+        cardNumberFocus.requestFocus();
+        return false;
+      }
 
-    // Validate CCV
-    if (ccvController.text.trim().isEmpty) {
-      ccvError.value = true;
-      showErrorSnackBar('CCV cannot be empty');
-      ccvFocus.requestFocus();
-      return false;
-    } else if (!RegExp(r'^[0-9]{3,4}$').hasMatch(ccvController.text)) {
-      ccvError.value = true;
-      showErrorSnackBar('Please enter a valid CCV');
-      ccvFocus.requestFocus();
-      return false;
-    }
+      // Validate Card Holder
+      if (cardHolderController.text.isEmpty) {
+        cardHolderError.value = true;
+        showErrorSnackBar(
+            'Card holder name cannot be empty if other card fields are provided');
+        cardHolderFocus.requestFocus();
+        return false;
+      } else if (!RegExp(r'^[a-zA-Z\s\-]+$')
+          .hasMatch(cardHolderController.text)) {
+        cardHolderError.value = true;
+        showErrorSnackBar('Please enter a valid card holder name');
+        cardHolderFocus.requestFocus();
+        return false;
+      }
 
-    // Validate Expire Date
-    if (expireDateController.text.trim().isEmpty) {
-      expireDateError.value = true;
-      showErrorSnackBar('Expiration date cannot be empty');
-      expireDateFocus.requestFocus();
-      return false;
-    } else if (!RegExp(r'^(0[1-9]|1[0-2])\/[0-9]{2}$')
-        .hasMatch(expireDateController.text)) {
-      expireDateError.value = true;
-      showErrorSnackBar('Please enter a valid expiration date (MM/YY)');
-      expireDateFocus.requestFocus();
-      return false;
-    } else {
-      // Check if the card is expired
-      try {
-        List<String> parts = expireDateController.text.split('/');
-        if (parts.length == 2) {
-          int expiryMonth = int.parse(parts[0]);
-          int expiryYear = int.parse('20${parts[1]}'); // Convert YY to 20YY
+      // Validate CCV
+      if (ccvController.text.trim().isEmpty) {
+        ccvError.value = true;
+        showErrorSnackBar(
+            'CCV cannot be empty if other card fields are provided');
+        ccvFocus.requestFocus();
+        return false;
+      } else if (!RegExp(r'^[0-9]{3,4}$').hasMatch(ccvController.text)) {
+        ccvError.value = true;
+        showErrorSnackBar('Please enter a valid CCV');
+        ccvFocus.requestFocus();
+        return false;
+      }
 
-          DateTime now = DateTime.now();
-          DateTime expiryDate = DateTime(
-              expiryYear, expiryMonth + 1, 0); // Last day of expiry month
-
-          if (expiryDate.isBefore(DateTime(now.year, now.month, 1))) {
-            expireDateError.value = true;
-            showErrorSnackBar('Card has expired');
-            expireDateFocus.requestFocus();
-            return false;
-          }
-        }
-      } catch (e) {
+      // Validate Expire Date
+      if (expireDateController.text.trim().isEmpty) {
         expireDateError.value = true;
-        showErrorSnackBar('Invalid expiration date');
+        showErrorSnackBar(
+            'Expiration date cannot be empty if other card fields are provided');
         expireDateFocus.requestFocus();
         return false;
+      } else if (!RegExp(r'^(0[1-9]|1[0-2])\/[0-9]{2}$')
+          .hasMatch(expireDateController.text)) {
+        expireDateError.value = true;
+        showErrorSnackBar('Please enter a valid expiration date (MM/YY)');
+        expireDateFocus.requestFocus();
+        return false;
+      } else {
+        // Check if the card is expired
+        try {
+          List<String> parts = expireDateController.text.split('/');
+          if (parts.length == 2) {
+            int expiryMonth = int.parse(parts[0]);
+            int expiryYear = int.parse('20${parts[1]}'); // Convert YY to 20YY
+
+            DateTime now = DateTime.now();
+            DateTime expiryDate = DateTime(
+                expiryYear, expiryMonth + 1, 0); // Last day of expiry month
+
+            if (expiryDate.isBefore(DateTime(now.year, now.month, 1))) {
+              expireDateError.value = true;
+              showErrorSnackBar('Card has expired');
+              expireDateFocus.requestFocus();
+              return false;
+            }
+          }
+        } catch (e) {
+          expireDateError.value = true;
+          showErrorSnackBar('Invalid expiration date');
+          expireDateFocus.requestFocus();
+          return false;
+        }
       }
     }
 
@@ -659,6 +672,23 @@ class UpdateEventViewController extends GetxController {
           'start_time': formattedStartTime,
           'end_time': formattedEndTime,
         });
+
+        // Only add card fields if they are provided
+        bool hasCardInfo = cardNumberController.text.trim().isNotEmpty &&
+            cardHolderController.text.trim().isNotEmpty &&
+            ccvController.text.trim().isNotEmpty &&
+            expireDateController.text.trim().isNotEmpty;
+
+        if (hasCardInfo) {
+          formData.fields
+              .add(MapEntry('card_number', cardNumberController.text));
+          formData.fields
+              .add(MapEntry('card_holder', cardHolderController.text));
+          formData.fields.add(MapEntry('ccv', ccvController.text));
+          formData.fields
+              .add(MapEntry('expire_date', expireDateController.text));
+          formData.fields.add(MapEntry('card_type', cardType.value));
+        }
 
         if (selectedImage.value != null) {
           formData.files.add(MapEntry(

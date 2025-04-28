@@ -197,7 +197,7 @@ Widget eventCard(Event event) {
               GestureDetector(
                 onTap: () => Get.toNamed(Routes.eventDetail),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.more_detial,
@@ -206,10 +206,13 @@ Widget eventCard(Event event) {
                         fontSize: 8,
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xffEAE9FC),
-                      size: 6,
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1),
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xffEAE9FC),
+                        size: 6,
+                      ),
                     ),
                   ],
                 ),

@@ -21,14 +21,14 @@ Widget bookedEventCard(
 }
 
 Widget buildCard(String imageUrl) {
-  print('iamge url $imageUrl');
+  // print('iamge url $imageUrl');
   return Container(
     width: Get.width,
     height: 100,
     clipBehavior: Clip.hardEdge,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(10),
-      color: Colors.red,
+      color: Get.theme.colorScheme.secondary,
     ),
     child: Container(
       width: Get.width,
