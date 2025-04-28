@@ -79,10 +79,11 @@ class EventController extends GetxController {
       EventApiHelper.setToken(token);
       var response = await EventApiHelper.get('/events', params: param);
       if (response.statusCode != null && response.statusCode! < 300) {
-        if (response.data != null && response.data! is List) {
+        if (response.data != null) {
           // print('event screen response data ${response.data}');
           // print('response data type ${response.data.runtimeType}');
-          upComingEvent.value = response.data['data'] as List<dynamic>;
+          upComingEvent.value = response.data['data'] as List;
+          print('upcoming event ${response.data['data']}');
         }
         // else {
         //   Get.snackbar('fail', 'Unexpected data format received');
@@ -138,5 +139,10 @@ class EventController extends GetxController {
 
   void logError(String type, dynamic detail) {
     print('ERROR [$type]: $detail');
+  }
+
+  void onPopResult() {
+    var mainController = Get.find<MainController>();
+    mainController.changeTabIndex(0);
   }
 }

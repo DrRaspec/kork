@@ -262,9 +262,11 @@ class AddEventViewController extends GetxController {
     );
 
     if (time != null) {
-      int hour24 = (time.hour % 12) + (time.period == DayPeriod.pm ? 12 : 0);
+      int hour24 = time.hour;
+
       String formattedTime =
-          '$hour24:${time.minute.toString().padLeft(2, '0')}';
+          '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+      print('formatted time: $formattedTime');
 
       if (isStartTime) {
         startTimeController.text = formattedTime;
@@ -578,6 +580,9 @@ class AddEventViewController extends GetxController {
           'start_time': startTimeController.text,
           'end_time': endTimeController.text,
         });
+
+        print('send start time: ${startTimeController.text}');
+        print('send end time: ${endTimeController.text}');
 
         int ticketCount =
             int.tryParse(selectedValue.value?.split(" ")[0] ?? "0") ?? 0;

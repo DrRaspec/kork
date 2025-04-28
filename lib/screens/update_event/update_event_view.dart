@@ -768,6 +768,7 @@ Widget ticketAmount(TextEditingController controller, String text) {
       controller: controller,
       textAlignVertical: TextAlignVertical.center,
       textAlign: TextAlign.center,
+      keyboardType: TextInputType.number,
       style: TextStyle(
         color: Get.theme.colorScheme.surfaceTint,
         fontSize: 10,
@@ -800,8 +801,9 @@ Widget ticketPrice(TextEditingController controller) {
       controller: controller,
       textAlignVertical: TextAlignVertical.center,
       textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Get.theme.colorScheme.tertiary,
+      keyboardType: TextInputType.number,
+      style: const TextStyle(
+        color: Color(0xffEAE9FC),
         fontSize: 10,
       ),
       decoration: InputDecoration(

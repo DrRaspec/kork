@@ -215,4 +215,9 @@ class TicketController extends GetxController {
     var mainController = Get.find<MainController>();
     mainController.changeTabIndex(1);
   }
+
+  void onPopResult() {
+    var mainController = Get.find<MainController>();
+    mainController.changeTabIndex(0);
+  }
 }

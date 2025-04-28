@@ -89,6 +89,11 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await mainController.authService.logout();
+    mainController.changeTabIndex(0);
+  }
+
+  void willPop() {
+    mainController.changeTabIndex(0);
   }
 
   // void logout() async {
