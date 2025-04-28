@@ -16,7 +16,6 @@ Widget filterDateWidget(String text) {
       onTap: () {
         controller.pickedDate.value = null;
         controller.updateSelectDate(text);
-        controller.filterItem['time_date'] = text;
       },
       child: Container(
         padding: const EdgeInsets.symmetric(

@@ -12,6 +12,7 @@ class FilteredController extends GetxController
 
   @override
   void onInit() {
+    print('argument: $argument');
     animationController = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,

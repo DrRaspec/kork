@@ -54,86 +54,84 @@ class FilteredView extends GetView<FilteredController> {
                   () => SizedBox(
                     height: 32,
                     width: Get.width,
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            controller.currentIndex.value = -1;
-                          },
-                          child: Container(
-                            width: 135,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: controller.currentIndex.value == -1
-                                  ? Get.theme.colorScheme.primary
-                                  : Get.theme.colorScheme.filterBackground,
-                              border: Border.all(
+                    child: SingleChildScrollView(
+                      // <-- ADD THIS
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              controller.currentIndex.value = -1;
+                            },
+                            child: Container(
+                              width: 135,
+                              height: 32,
+                              decoration: BoxDecoration(
                                 color: controller.currentIndex.value == -1
                                     ? Get.theme.colorScheme.primary
-                                    : Get.theme.colorScheme.tertiary,
+                                    : Get.theme.colorScheme.filterBackground,
+                                border: Border.all(
+                                  color: controller.currentIndex.value == -1
+                                      ? Get.theme.colorScheme.primary
+                                      : Get.theme.colorScheme.tertiary,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
                               ),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Icon(
-                                    Icons.filter_list,
-                                    size: 20,
-                                    color: controller.currentIndex.value == -1
-                                        ? const Color(0xffEAE9FC)
-                                        : Get.theme.colorScheme.tertiary,
-                                  ),
-                                  Text(
-                                    AppLocalizations.of(context)!.filter,
-                                    style: TextStyle(
-                                      fontSize: 12,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Icon(
+                                      Icons.filter_list,
+                                      size: 20,
                                       color: controller.currentIndex.value == -1
                                           ? const Color(0xffEAE9FC)
                                           : Get.theme.colorScheme.tertiary,
                                     ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: controller.toggleExpansion,
-                                    child: AnimatedRotation(
-                                      turns:
-                                          controller.isExpanded.value ? -0.25 : 0.0,
-                                      duration: const Duration(milliseconds: 300),
-                                      child: Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 24,
-                                        color: controller.currentIndex.value == -1
+                                    Text(
+                                      AppLocalizations.of(context)!.filter,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: controller.currentIndex.value ==
+                                                -1
                                             ? const Color(0xffEAE9FC)
                                             : Get.theme.colorScheme.tertiary,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    GestureDetector(
+                                      onTap: controller.toggleExpansion,
+                                      child: AnimatedRotation(
+                                        turns: controller.isExpanded.value
+                                            ? -0.25
+                                            : 0.0,
+                                        duration:
+                                            const Duration(milliseconds: 300),
+                                        child: Icon(
+                                          Icons.keyboard_arrow_down,
+                                          size: 24,
+                                          color: controller
+                                                      .currentIndex.value ==
+                                                  -1
+                                              ? const Color(0xffEAE9FC)
+                                              : Get.theme.colorScheme.tertiary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Flexible(
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: controller.isExpanded.value
-                                ? Get.width - 163
-                                : 0,
-                            // 163 = filter width (135) + spacing (12) + padding (16) * 2
-                            curve: Curves.easeOut,
-                            child: controller.isExpanded.value
-                                ? _buildCategoriesList()
-                                : null,
-                          ),
-                        ),
-                      ],
+                          const SizedBox(width: 12),
+                          if (controller.isExpanded.value)
+                            _buildCategoriesList(), // <-- REMOVE AnimatedContainer, just place the list directly
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -164,7 +162,7 @@ class FilteredView extends GetView<FilteredController> {
                               if (index.isOdd) {
                                 return const SizedBox(height: 16);
                               }
-                              final itemIndex = index ~/ 2;
+                              // final itemIndex = index ~/ 2;
                               var item =
                                   Event.fromJson(controller.events[index]);
                               return eventCard(item);
@@ -182,59 +180,59 @@ class FilteredView extends GetView<FilteredController> {
   }
 
   Widget _buildCategoriesList() {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (context, index) {
-        var category = controller.argument.keys.elementAt(index);
-        var updateCategory = category.replaceAll('_', ' ');
-        return GestureDetector(
-          onTap: () {
-            if (controller.currentIndex.value == index) {
-              controller.currentIndex.value = -1;
-              controller.fetchData();
-            } else {
-              controller.currentIndex.value = index;
-              controller.fetchData(filter: category);
-            }
-          },
-          child: Obx(
-            () => Container(
-              width: 135,
-              height: 32,
-              decoration: BoxDecoration(
-                color: controller.currentIndex.value == index
-                    ? Get.theme.colorScheme.primary
-                    : Get.theme.colorScheme.filterBackground,
-                border: Border.all(
-                  color: controller.currentIndex.value == index
-                      ? Get.theme.colorScheme.primary
-                      : Get.theme.colorScheme.tertiary,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 4,
-                ),
-                child: Center(
-                  child: Text(
-                    updateCategory.firstCapitalize(),
-                    style: TextStyle(
-                      fontSize: 12,
+    return Row(
+      children: List.generate(
+        controller.argument.length,
+        (index) {
+          var category = controller.argument.keys.elementAt(index);
+          return Padding(
+            padding: const EdgeInsets.only(right: 7),
+            child: GestureDetector(
+              onTap: () {
+                if (controller.currentIndex.value == index) {
+                  controller.currentIndex.value = -1;
+                  controller.fetchData();
+                } else {
+                  controller.currentIndex.value = index;
+                  controller.fetchData(filter: category);
+                }
+              },
+              child: Obx(
+                () => Container(
+                  width: 135,
+                  height: 32,
+                  decoration: BoxDecoration(
+                    color: controller.currentIndex.value == index
+                        ? Get.theme.colorScheme.primary
+                        : Get.theme.colorScheme.filterBackground,
+                    border: Border.all(
                       color: controller.currentIndex.value == index
-                          ? const Color(0xffEAE9FC)
+                          ? Get.theme.colorScheme.primary
                           : Get.theme.colorScheme.tertiary,
+                    ),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Center(
+                    child: Text(
+                      controller.argument[category] is double
+                          ? controller.argument[category].toStringAsFixed(0)
+                          : controller.argument[category]
+                              .toString()
+                              .firstCapitalize(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: controller.currentIndex.value == index
+                            ? const Color(0xffEAE9FC)
+                            : Get.theme.colorScheme.tertiary,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(width: 7),
-      itemCount: controller.argument.length,
+          );
+        },
+      ),
     );
   }
 }

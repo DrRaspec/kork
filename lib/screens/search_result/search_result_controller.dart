@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart'; // Add this import
+import 'package:get_storage/get_storage.dart';
 import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/screens/search_event/search_event.dart';
 import 'package:kork/utils/status.dart';
@@ -16,15 +16,15 @@ class SearchResultController extends GetxController {
   var isLastPage = false.obs;
   var isLoading = false.obs;
   var scrollController = ScrollController();
-  var recentSearch = <String>[].obs; // Add this
-  final int maxRecentSearch = 5; // Add this
+  var recentSearch = <String>[].obs;
+  final int maxRecentSearch = 5;
 
   @override
   void onInit() {
     searchController.text = argument;
     scrollController.addListener(_scrollListener);
-    loadRecentSearch(); // Add this
-    saveSearch(argument); // Add this to save the initial search
+    loadRecentSearch();
+    saveSearch(argument);
     searchEvent(isLoadMore: false);
     super.onInit();
   }

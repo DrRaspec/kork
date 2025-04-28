@@ -73,10 +73,10 @@ class SearchResultView extends GetView<SearchResultController> {
                               color: Get.theme.colorScheme.surfaceTint,
                             ),
                             isDense: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 14,
-                              vertical: 11,
-                            ),
+                            // contentPadding: const EdgeInsets.symmetric(
+                            //   horizontal: 14,
+                            //   vertical: 11,
+                            // ),
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -91,8 +91,8 @@ class SearchResultView extends GetView<SearchResultController> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             suffixIcon: GestureDetector(
-                              onTap: () => controller.resetSearch(
-                                  clearSearchText: true),
+                              onTap: () =>
+                                  controller.resetSearch(clearSearchText: true),
                               child: Padding(
                                 padding: const EdgeInsets.all(12),
                                 child: SvgPicture.asset(
@@ -153,8 +153,7 @@ class SearchResultView extends GetView<SearchResultController> {
                             const SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: controller.resetSearch,
-                              child:
-                                  Text(AppLocalizations.of(context)!.retry),
+                              child: Text(AppLocalizations.of(context)!.retry),
                             ),
                           ],
                         ),

@@ -1,7 +1,7 @@
 part of 'filter_view.dart';
 
 class FilterController extends GetxController {
-  var selectCategory = 0.obs;
+  var selectCategory = (-1).obs;
   var selectDate = ''.obs;
 
   var pickedDate = Rxn<DateTime>();
@@ -18,15 +18,34 @@ class FilterController extends GetxController {
   void onInit() {
     filterItem['min_price'] = currentRange.value.start;
     filterItem['max_price'] = currentRange.value.end;
+    // filterItem['max_price'] = currentRange.value.end;
     super.onInit();
   }
 
-  void updateSelectCategory(int index) {
-    selectCategory.value = index;
+  void updateSelectCategory(int index, {String? categoryName}) {
+    if (selectCategory.value == index) {
+      selectCategory.value = -1;
+      if (filterItem.containsKey('filter')) {
+        filterItem.remove('filter');
+      }
+    } else {
+      selectCategory.value = index;
+      if (categoryName != null) {
+        filterItem['filter'] = categoryName.toLowerCase();
+      }
+    }
   }
 
   void updateSelectDate(String value) {
-    selectDate.value = value;
+    if (selectDate.value == value) {
+      selectDate.value = '';
+      if (filterItem.containsKey('date')) {
+        filterItem.remove('date');
+      }
+    } else {
+      selectDate.value = value;
+      filterItem['date'] = value;
+    }
   }
 
   void navigateToFilterLocation() async {

@@ -105,7 +105,8 @@ class FilterView extends GetView<FilterController> {
                         onTap: () async {
                           if (controller.filterItem.containsKey('date')) {
                             controller.pickedDate.value = DateTime.tryParse(
-                                controller.filterItem['date']);
+                              controller.filterItem['date'],
+                            );
                           }
                           controller.pickedDate.value = await showDatePicker(
                             context: context,
@@ -176,96 +177,6 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    // const SizedBox(height: 24),
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: Text(
-                    //     AppLocalizations.of(context)!.location,
-                    //     style: TextStyle(
-                    //       fontSize: 16,
-                    //       color: Get.theme.colorScheme.tertiary,
-                    //     ),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 16),
-                    // Obx(
-                    //   () => Material(
-                    //     child: InkWell(
-                    //       splashFactory: NoSplash.splashFactory,
-                    //       onTap: controller.navigateToFilterLocation,
-                    //       child: Container(
-                    //         padding: const EdgeInsets.symmetric(
-                    //           horizontal: 8,
-                    //           vertical: 8,
-                    //         ),
-                    //         decoration: BoxDecoration(
-                    //           border: Border.all(
-                    //             color: Get.theme.colorScheme.tertiary,
-                    //           ),
-                    //           borderRadius: BorderRadius.circular(15),
-                    //           color: Get.theme.colorScheme.filterBackground,
-                    //         ),
-                    //         child: Row(
-                    //           crossAxisAlignment: CrossAxisAlignment.center,
-                    //           children: [
-                    //             Stack(
-                    //               alignment: Alignment.center,
-                    //               children: [
-                    //                 Container(
-                    //                   width: 45,
-                    //                   height: 45,
-                    //                   decoration: BoxDecoration(
-                    //                     color: Get.theme.colorScheme.tertiary
-                    //                         .withOpacity(
-                    //                       .2,
-                    //                     ),
-                    //                     borderRadius: BorderRadius.circular(12),
-                    //                   ),
-                    //                 ),
-                    //                 Container(
-                    //                   width: 30,
-                    //                   height: 30,
-                    //                   decoration: BoxDecoration(
-                    //                     color: Get.isDarkMode
-                    //                         ? Get.theme.colorScheme
-                    //                             .filterBackground
-                    //                         : const Color(0xffFAFAFA),
-                    //                     borderRadius: BorderRadius.circular(10),
-                    //                   ),
-                    //                 ),
-                    //                 SvgPicture.asset(
-                    //                   'assets/image/svg/map-pin.svg',
-                    //                   width: 16,
-                    //                   height: 16,
-                    //                   colorFilter: ColorFilter.mode(
-                    //                     Get.theme.colorScheme.primary,
-                    //                     BlendMode.srcIn,
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //             const SizedBox(width: 16),
-                    //             Text(
-                    //               controller.selectedLocation.value == ''
-                    //                   ? 'No location selected'
-                    //                   : controller.selectedLocation.value,
-                    //               style: TextStyle(
-                    //                 fontSize: 15,
-                    //                 color: Get.theme.colorScheme.tertiary,
-                    //               ),
-                    //             ),
-                    //             const Spacer(),
-                    //             Icon(
-                    //               Icons.arrow_forward_ios_outlined,
-                    //               size: 20,
-                    //               color: Get.theme.colorScheme.primary,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     const SizedBox(height: 32),
                     Obx(
                       () => Column(
@@ -338,16 +249,31 @@ class FilterView extends GetView<FilterController> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      controller.selectCategory.value = 0;
-                      controller.selectDate.value = '';
+                      if (controller.filterItem.containsKey('filter')) {
+                        controller.filterItem.remove('filter');
+                      }
+                      if (controller.filterItem.containsKey('date')) {
+                        controller.filterItem.remove('date');
+                      }
+                      // if (controller.filterItem.containsKey('min_price')) {
+                      //   controller.filterItem.remove('min_price');
+                      // }
+                      // if (controller.filterItem.containsKey('max_price')) {
+                      //   controller.filterItem.remove('max_price');
+                      // }
+                      controller.selectCategory.value = -1;
 
+                      controller.selectDate.value = '';
                       controller.pickedDate.value = null;
 
                       controller.currentRange.value = const RangeValues(20, 30);
 
-                      controller.filterItem.value = <String, dynamic>{};
+                      // controller.filterItem.clear();
+                      controller.filterItem['min_price'] = 20;
+                      controller.filterItem['max_price'] = 30;
 
                       controller.selectedLocation.value = '';
+                      print('filterItem: ${controller.filterItem}');
                     },
                     child: Container(
                       height: 34,
@@ -372,10 +298,13 @@ class FilterView extends GetView<FilterController> {
                 const SizedBox(width: 15),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => Get.toNamed(
-                      Routes.filtered,
-                      arguments: controller.filterItem,
-                    ),
+                    onTap: () {
+                      print('filterItem: ${controller.filterItem}');
+                      Get.toNamed(
+                        Routes.filtered,
+                        arguments: controller.filterItem,
+                      );
+                    },
                     child: Container(
                       height: 34,
                       decoration: BoxDecoration(
