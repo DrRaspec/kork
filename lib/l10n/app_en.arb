@@ -1110,5 +1110,33 @@
     "retry": "Retry",
     "@retry": {
         "description": "Retry"
+    },
+    "scan_ticket": "Scan Ticket",
+    "@scan_ticket": {
+        "description": "Scan Ticket"
+    },
+    "flash": "Flash",
+    "@flash": {
+        "description": "Flash"
+    },
+    "result": "Result",
+    "@result": {
+        "description": "Result"
+    },
+    "no_recent_searches": "No recent searches",
+    "@no_recent_searches": {
+        "description": "No recent searches"
+    },
+    "no_results_found": "No results found",
+    "@no_results_found": {
+        "description": "No results found"
+    },
+    "something_went_wrong": "Something went wrong",
+    "@something_went_wrong": {
+        "description": "Something went wrong"
+    },
+    "delete_event": "Delete Event",
+    "@delete_event": {
+        "description": "Delete Event"
     }
 }

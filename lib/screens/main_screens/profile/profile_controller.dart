@@ -21,6 +21,7 @@ class ProfileController extends GetxController {
       isEnglish.value = value;
     });
 
+    // Keep your existing code
     ever(mainController.userDataReady, (isReady) {
       if (isReady && mainController.userData.value != null) {
         updateProfileInfo();
@@ -31,14 +32,13 @@ class ProfileController extends GetxController {
         mainController.userData.value != null) {
       updateProfileInfo();
     }
-    // mainController.userData.listen((data) {
-    //   if (data != null) {
-    //     updateProfileInfo(data);
-    //   }
-    // });
-    // if (mainController.userData.value != null) {
-    //   updateProfileInfo(mainController.userData.value!);
-    // }
+
+    // Add this new listener for userData changes
+    ever(mainController.userData, (_) {
+      if (mainController.userData.value != null) {
+        updateProfileInfo();
+      }
+    });
 
     prefs = await SharedPreferences.getInstance();
   }
@@ -52,6 +52,7 @@ class ProfileController extends GetxController {
   void switchLanguage(bool value) {
     if (isEnglish.value != value) {
       languageController.switchLanguage(value);
+      isEnglish.value = value; //from ai
     }
   }
 
@@ -88,6 +89,11 @@ class ProfileController extends GetxController {
 
   void logout() async {
     await mainController.authService.logout();
+    mainController.changeTabIndex(0);
+  }
+
+  void willPop() {
+    mainController.changeTabIndex(0);
   }
 
   // void logout() async {

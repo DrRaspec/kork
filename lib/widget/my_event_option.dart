@@ -24,15 +24,15 @@ Widget myEventOption({
           width: 24,
           height: 24,
           colorFilter:
-              const ColorFilter.mode(Color(0xffEAE9FC), BlendMode.srcIn),
+              ColorFilter.mode(Get.theme.colorScheme.tertiary, BlendMode.srcIn),
         ),
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Color(0xffEAE9FC),
+              color: Get.theme.colorScheme.tertiary,
             ),
           ),
         ),
@@ -50,16 +50,16 @@ Widget myEventOption({
                     notification > 99 ? '99+' : notification.toString(),
                     style: TextStyle(
                       fontSize: notification > 99 ? 10 : 12,
-                      color: const Color(0xffEAE9FC),
+                      color: Get.theme.colorScheme.tertiary,
                     ),
                   ),
                 ),
               ),
         customWidget ??
-            const Icon(
+            Icon(
               Icons.arrow_forward_ios_outlined,
               size: 16,
-              color: Color(0xffEAE9FC),
+              color: Get.theme.colorScheme.tertiary,
             ),
       ],
     ),

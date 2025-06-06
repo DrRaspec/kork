@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/routes/routes.dart';
+import 'package:kork/utils/status.dart';
 
 part 'change_password_controller.dart';
 part 'change_password_binding.dart';
@@ -332,31 +335,42 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  GestureDetector(
-                    onTap: () {
-                      controller.validateInput();
-                      if (controller.conPasswordError.isEmpty &&
-                          controller.passwordError.isEmpty) {
-                        Get.offNamedUntil(
-                          Routes.login,
-                          (route) => false,
-                        );
-                      }
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Get.theme.colorScheme.primary,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.done,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color(0xffEAE9FC),
-                          ),
+                  Obx(
+                    () => GestureDetector(
+                      onTap: () {
+                        if (controller.status.value == Status.loading) return;
+                        controller.validateInput();
+                        if (controller.conPasswordError.isEmpty &&
+                            controller.passwordError.isEmpty) {
+                          controller.updatePassword();
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: controller.status.value == Status.loading
+                              ? Get.theme.colorScheme.primary
+                                  .withAlpha((0.8 * 255).round())
+                              : Get.theme.colorScheme.primary,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: controller.status.value == Status.loading
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Color(0xffEAE9FC),
+                                  ),
+                                )
+                              : Text(
+                                  AppLocalizations.of(context)!.done,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xffEAE9FC),
+                                  ),
+                                ),
                         ),
                       ),
                     ),

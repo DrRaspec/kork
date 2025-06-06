@@ -67,10 +67,13 @@ Widget eventCard(Event event) {
         height: 147,
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
+          borderRadius: const BorderRadius.vertical(
+            bottom: Radius.circular(10),
+          ),
           gradient: LinearGradient(
             colors: [
-              Get.theme.colorScheme.secondary.withOpacity(0),
-              Get.theme.colorScheme.secondary.withOpacity(0.9),
+              const Color(0xff333333).withOpacity(0),
+              const Color(0xff333333).withOpacity(0.9),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -86,6 +89,7 @@ Widget eventCard(Event event) {
             children: [
               Expanded(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Container(
                       width: 38,
@@ -118,6 +122,7 @@ Widget eventCard(Event event) {
                     const SizedBox(width: 11),
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -192,6 +197,7 @@ Widget eventCard(Event event) {
               GestureDetector(
                 onTap: () => Get.toNamed(Routes.eventDetail),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       AppLocalizations.of(context)!.more_detial,
@@ -200,10 +206,13 @@ Widget eventCard(Event event) {
                         fontSize: 8,
                       ),
                     ),
-                    const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Color(0xffEAE9FC),
-                      size: 6,
+                    const Padding(
+                      padding: EdgeInsets.only(top: 1),
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Color(0xffEAE9FC),
+                        size: 6,
+                      ),
                     ),
                   ],
                 ),

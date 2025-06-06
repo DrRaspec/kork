@@ -60,17 +60,20 @@ class EditProfileViewController extends GetxController {
       return;
     }
 
-    if ((firstNameController.text.isNotEmpty &&
-            firstNameController.text != userData.value!.firstName) ||
-        (lastNameController.text.isNotEmpty &&
-            lastNameController.text != userData.value!.lastName) ||
-        selectedImage.value != null) {
-      File profileImage = selectedImage.value!;
+    final isFirstNameChanged = firstNameController.text.isNotEmpty &&
+        firstNameController.text != userData.value!.firstName;
+
+    final isLastNameChanged = lastNameController.text.isNotEmpty &&
+        lastNameController.text != userData.value!.lastName;
+
+    final isImageSelected = selectedImage.value != null;
+
+    // Only continue if something actually changed
+    if (isFirstNameChanged || isLastNameChanged || isImageSelected) {
       final dio = Dio()
         ..interceptors.add(AppLogInterceptor())
         ..options.baseUrl = dotenv.env['API_URL']!
         ..options.headers = {
-          // 'Content-Type': 'application/json', 'application/json', Dio will set it correctly for FormData
           'X-Requested-With': 'XMLHttpRequest',
           'Authorization': 'Bearer $token',
         }
@@ -83,10 +86,15 @@ class EditProfileViewController extends GetxController {
         'last_name': lastNameController.text,
       });
 
-      formData.files.add(MapEntry(
+      if (isImageSelected) {
+        formData.files.add(MapEntry(
           'profile_url',
-          await MultipartFile.fromFile(profileImage.path,
-              filename: profileImage.path.split('/').last)));
+          await MultipartFile.fromFile(
+            selectedImage.value!.path,
+            filename: selectedImage.value!.path.split('/').last,
+          ),
+        ));
+      }
 
       try {
         var response = await dio.post('/users/$id', data: formData);
@@ -94,21 +102,31 @@ class EditProfileViewController extends GetxController {
           var data = response.data as Map<String, dynamic>;
           if (data.isNotEmpty) {
             mainController.userData.value = data;
-
             userData.value = User.fromJson(data);
             firstNameController.text = userData.value!.firstName;
             lastNameController.text = userData.value!.lastName;
-            print('edit profile user data ${json.encode(userData.toJson())}');
-            mainController.userData.value = response.data;
+            fullName.value =
+                '${userData.value!.firstName} ${userData.value!.lastName}';
+            mainController.userData.value = userData.value!.toJson();
+            var homeController = Get.find<HomeController>();
+            // var profileController = Get.find<ProfileController>();
+            homeController.userData.value = userData.value;
+            // profileController.
+            homeController.processUserData();
+            // mainController.update();
+
             Get.snackbar('Success', 'Update Change Successfully');
           }
         }
       } on DioException catch (e) {
-        print(e.message);
+        print('Error during profile update: ${e.message}');
         if (e.response != null) {
-          print(e.response!.statusCode);
+          print('Status code: ${e.response!.statusCode}');
+          print('Response: ${e.response!.data}');
         }
       }
+    } else {
+      Get.snackbar('No changes', 'Nothing to update.');
     }
   }
 }

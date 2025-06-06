@@ -56,6 +56,9 @@ class AddNewPaymentViewController extends GetxController
   bool checkValidation() {
     bool hasError = false;
     cardNumberError.value = false;
+    cardHolderError.value = false;
+    expireDateError.value = false;
+    ccvError.value = false;
     cardType.value = getCardType(cardNumberController.text.trim());
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
@@ -81,6 +84,23 @@ class AddNewPaymentViewController extends GetxController
         .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
       hasError = true;
+    } else {
+      try {
+        final parts = expireDateController.text.split('/');
+        int month = int.parse(parts[0]);
+        int year = int.parse('20${parts[1]}');
+
+        final expirationDate = DateTime(year, month + 1, 0);
+        final currentDate = DateTime.now();
+
+        if (currentDate.isAfter(expirationDate)) {
+          expireDateError.value = true;
+          hasError = true;
+        }
+      } catch (e) {
+        expireDateError.value = true;
+        hasError = true;
+      }
     }
 
     if (hasError) {
@@ -145,11 +165,13 @@ class AddNewPaymentViewController extends GetxController
         await Get.find<AuthService>().logout();
         return;
       }
+      final cvv = ccvController.text.trim();
+      final validCvv = cvv.length > 3 ? cvv.substring(0, 3) : cvv;
       var formData = FormData.fromMap({
         'card_number': cardNumberController.text,
         'card_holder_name': cardHolderController.text,
         'expired_date': expireDateController.text,
-        'cvv': ccvController.text,
+        'cvv': validCvv,
       });
       try {
         EventApiHelper.setToken(token);
@@ -157,17 +179,23 @@ class AddNewPaymentViewController extends GetxController
             data: formData);
         if (response.statusCode == 201) {
           status.value = Status.success;
-          Get.snackbar('Success', 'Add Successful',
-              duration: const Duration(milliseconds: 300));
+          Get.snackbar(
+            'Success',
+            'Add Successful',
+          );
           result = response.data;
         }
       } on DioException catch (e) {
         status.value = Status.error;
         var response = e.response;
+        var data = response?.data as Map<String, dynamic>;
         print('e error ${e.error}');
-        print('response error ${response?.data}');
+        print('response error $data');
         print('response status code ${response?.statusCode}');
-        Get.snackbar('Fail', 'Add fail');
+        Get.snackbar(
+          'Fail',
+          data.containsKey('error') ? data['error'] : 'Add fail',
+        );
       }
     }
   }

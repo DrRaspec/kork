@@ -23,38 +23,44 @@ Widget homeViewDetail() {
                   : 'assets/image/light-logo.png',
               width: 35,
             ),
-            Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.current_location,
+            GestureDetector(
+              onTap: () => Get.toNamed(
+                Routes.mapView,
+                arguments: 'update location',
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.current_location,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Get.theme.colorScheme.surfaceTint,
+                        ),
+                      ),
+                      const SizedBox(width: 1),
+                      Icon(
+                        Icons.arrow_drop_down,
+                        size: 16,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ],
+                  ),
+                  Obx(
+                    () => Text(
+                      controller.location.value.isNotEmpty
+                          ? controller.location.value
+                          : '${loadingText.value}${'.' * controller.dotCount.value}',
                       style: TextStyle(
                         fontSize: 12,
-                        color: Get.theme.colorScheme.surfaceTint,
+                        color: Get.theme.colorScheme.tertiary,
                       ),
                     ),
-                    const SizedBox(width: 1),
-                    Icon(
-                      Icons.arrow_drop_down,
-                      size: 16,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
-                  ],
-                ),
-                Obx(
-                  () => Text(
-                    controller.location.value.isNotEmpty
-                        ? controller.location.value
-                        : '${loadingText.value}${'.' * controller.dotCount.value}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Get.theme.colorScheme.tertiary,
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Stack(
               children: [

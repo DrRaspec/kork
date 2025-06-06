@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,7 +8,6 @@ import 'package:kork/helper/event_api_helper.dart';
 import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
-import 'package:kork/screens/apply_coupon/apply_coupon_view.dart';
 import 'package:kork/widget/build_placeholder.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:kork/widget/custom_expansion.dart';
@@ -113,8 +110,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .available_voucher,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
+                                  style: TextStyle(
+                                    color: Get.theme.colorScheme.tertiary,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -158,8 +155,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .select_payment_method,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
+                                  style: TextStyle(
+                                    color: Get.theme.colorScheme.tertiary,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -202,23 +199,36 @@ class CheckoutView extends GetView<CheckoutController> {
                             ),
                           ),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: controller.buyTicket,
-                            child: Container(
-                              width: 152,
-                              height: 34,
-                              decoration: BoxDecoration(
-                                color: Get.theme.colorScheme.primary,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.confirm_pay,
-                                  style: const TextStyle(
-                                    color: Color(0xffEAE9FC),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                          Obx(
+                            () => GestureDetector(
+                              onTap: controller.isLoading.value
+                                  ? null
+                                  : controller.buyTicket,
+                              child: Container(
+                                width: 152,
+                                height: 34,
+                                decoration: BoxDecoration(
+                                  color: Get.theme.colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Center(
+                                  child: controller.isLoading.value
+                                      ? const SizedBox(
+                                          width: 16,
+                                          height: 16,
+                                          child: CircularProgressIndicator(
+                                            color: Color(0xffEAE9FC),
+                                          ),
+                                        )
+                                      : Text(
+                                          AppLocalizations.of(context)!
+                                              .confirm_pay,
+                                          style: const TextStyle(
+                                            color: Color(0xffEAE9FC),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
@@ -255,7 +265,7 @@ class CheckoutView extends GetView<CheckoutController> {
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: const Color(0xffE5D9F2),
+              color: Get.theme.colorScheme.tertiary,
             ),
             child: Image.network(
               controller.data.posterUrl,
@@ -274,17 +284,19 @@ class CheckoutView extends GetView<CheckoutController> {
               children: [
                 Text(
                   '${controller.data.eventName} | ${controller.data.tickets[index].ticketType}',
-                  style: const TextStyle(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xffEAE9FC),
+                    color: Get.theme.colorScheme.tertiary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   '${(controller.data.tickets[index].price as num).toStringAsFixed(2)}\$',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xffEAE9FC),
+                    color: Get.theme.colorScheme.tertiary,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -314,10 +326,10 @@ class CheckoutView extends GetView<CheckoutController> {
                     Obx(
                       () => Text(
                         controller.ticketQuantity[index].toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xffEAE9FC),
+                          color: Get.theme.colorScheme.tertiary,
                         ),
                       ),
                     ),

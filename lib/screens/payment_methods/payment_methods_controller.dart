@@ -2,8 +2,16 @@ part of 'payment_methods_view.dart';
 
 class PaymentMethodsViewController extends GetxController {
   var paymentMethod = <dynamic>[].obs;
+  var status = Status.loading.obs;
+  var isClickAble = true.obs;
   @override
   void onInit() {
+    if (Get.arguments != null) {
+      var result = Get.arguments;
+      if (result is bool) {
+        isClickAble.value = result;
+      }
+    }
     fetchPaymentMethod();
     super.onInit();
   }
@@ -20,13 +28,16 @@ class PaymentMethodsViewController extends GetxController {
 
     try {
       PaymentMethodHelper.setToken(token);
+      status.value = Status.loading;
       var response =
           await PaymentMethodHelper.get('/users/$id/payment-methods');
       if (response.statusCode == 200) {
-        print('payment method data ${response.data['data']}');
+        status.value = Status.success;
+        // print('payment method data ${response.data['data']}');
         paymentMethod.assignAll(response.data['data']);
       }
     } on DioException catch (e) {
+      status.value = Status.error;
       print(e.message);
       print(e.response?.data);
       print(e.response?.statusCode);
@@ -45,7 +56,7 @@ class PaymentMethodsViewController extends GetxController {
     try {
       var response = await PaymentMethodHelper.delete(
           '/users/$id/payment-methods/$paymentID');
-      print('status code ${response.statusCode}');
+      // print('status code ${response.statusCode}');
       if (response.statusCode == 200) {
         paymentMethod.removeAt(index);
       }
@@ -57,9 +68,17 @@ class PaymentMethodsViewController extends GetxController {
   }
 
   void reloadData() async {
-    var result = await Get.toNamed(Routes.addNewPayment);
-    if (result is Map<String, dynamic> && result.isNotEmpty) {
-      paymentMethod.add(result);
+    try {
+      var result = await Get.toNamed(Routes.addNewPayment);
+      // print('datatype result ${result.runtimeType}');
+      // print('result $result');
+
+      if (result is Map<String, dynamic> && result.isNotEmpty) {
+        print('work');
+        paymentMethod.add(result);
+      }
+    } catch (e) {
+      print('error is $e');
     }
   }
 }

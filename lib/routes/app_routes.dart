@@ -21,6 +21,9 @@ import 'package:kork/screens/notification/notification_view.dart';
 import 'package:kork/screens/on_boarding/first_onboarding_view.dart';
 import 'package:kork/screens/payment_methods/payment_methods_view.dart';
 import 'package:kork/screens/profile_change_password/profile_change_password_view.dart';
+import 'package:kork/screens/qr_code_scanner/qr_code_scanner_view.dart';
+import 'package:kork/screens/search_result/search_result_binding.dart';
+import 'package:kork/screens/search_result/search_result_view.dart';
 import 'package:kork/screens/see_all/see_all_view.dart';
 import 'package:kork/screens/splash_screen/splash_screen_view.dart';
 import 'package:kork/screens/update_event/update_event_view.dart';
@@ -49,7 +52,8 @@ var appRoutes = [
     name: Routes.login,
     page: () => const LoginView(),
     binding: LoginBinding(),
-    middlewares: [NoAuthMiddleware()],
+    // middlewares: [NoAuthMiddleware()],
+    middlewares: [NoAuthMiddleware(), OnBoardingMiddleware()],
     preventDuplicates: true,
   ),
   GetPage(
@@ -89,7 +93,8 @@ var appRoutes = [
     name: Routes.main,
     page: () => const MainView(),
     binding: MainBinding(),
-    middlewares: [AuthMiddleware()],
+    // middlewares: [AuthMiddleware()],
+    middlewares: [AuthMiddleware(), OnBoardingMiddleware()],
   ),
   GetPage(
     name: Routes.home,
@@ -167,7 +172,7 @@ var appRoutes = [
     name: Routes.firstOnBoarding,
     page: () => FirstOnboardingView(),
     binding: FirstOnboardingBinding(),
-    middlewares: [OnBoardingMiddleware()],
+    // middlewares: [OnBoardingMiddleware()],
   ),
   GetPage(
     name: Routes.chooseLanguage,
@@ -263,5 +268,15 @@ var appRoutes = [
     name: Routes.seeAll,
     page: () => SeeAllView(),
     binding: SeeAllViewBinding(),
+  ),
+  GetPage(
+    name: Routes.qrCodeScanner,
+    page: () => QrCodeScannerView(),
+    binding: QrCodeScannerViewBinding(),
+  ),
+  GetPage(
+    name: Routes.searchResult,
+    page: () => const SearchResultView(),
+    binding: SearchResultBinding(),
   ),
 ];

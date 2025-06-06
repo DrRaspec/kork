@@ -55,7 +55,7 @@ class BookmarkView extends GetView<BookmarkViewController> {
             () {
               if (controller.status.value == Status.loading &&
                   controller.bookmarks.isEmpty) {
-                return const CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator());
               } else if (controller.status.value == Status.error &&
                   controller.bookmarks.isEmpty) {
                 return Center(
@@ -95,7 +95,7 @@ class BookmarkView extends GetView<BookmarkViewController> {
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        'No upcoming events',
+                        'No bookmark events',
                         style: TextStyle(fontSize: 18),
                       ),
                     ],

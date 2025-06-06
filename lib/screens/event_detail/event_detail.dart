@@ -54,7 +54,9 @@ class EventDetail extends GetView<EventDetailController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  onTap: Get.back,
+                                  onTap: () => Get.back(
+                                    result: controller.isMarked.value,
+                                  ),
                                   child: Container(
                                     width: 32,
                                     height: 32,
@@ -63,10 +65,10 @@ class EventDetail extends GetView<EventDetailController> {
                                       borderRadius: BorderRadius.circular(12),
                                       color: Get.theme.colorScheme.secondary,
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.arrow_back_ios_new_outlined,
                                       size: 20,
-                                      color: Color(0xffEAE9FC),
+                                      color: Get.theme.colorScheme.tertiary,
                                     ),
                                   ),
                                 ),
@@ -87,10 +89,11 @@ class EventDetail extends GetView<EventDetailController> {
                                               size: 21,
                                               color: Color(0xffE5A000),
                                             )
-                                          : const Icon(
+                                          : Icon(
                                               Icons.bookmark_border_outlined,
                                               size: 21,
-                                              color: Color(0xffEAE9FC),
+                                              color: Get
+                                                  .theme.colorScheme.tertiary,
                                             ),
                                     ),
                                   ),
@@ -185,29 +188,30 @@ class EventDetail extends GetView<EventDetailController> {
                                     ),
                                   ),
                                   const SizedBox(width: 25),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        controller.startDay,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Get.theme.colorScheme.tertiary,
-                                          fontWeight: FontWeight.w700,
+                                  Obx(
+                                    () => Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller.startDate,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color:
+                                                Get.theme.colorScheme.tertiary,
+                                            fontWeight: FontWeight.w700,
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                        controller.formatTime(
-                                          controller.eventData.startTime,
+                                        Text(
+                                          '${controller.startDay} ${controller.startTime.value} - ${controller.endTime.value}',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Get
+                                                .theme.colorScheme.surfaceTint,
+                                          ),
                                         ),
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color:
-                                              Get.theme.colorScheme.surfaceTint,
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -270,7 +274,7 @@ class EventDetail extends GetView<EventDetailController> {
                               ),
                               const SizedBox(height: 24),
                               SizedBox(
-                                height: 24,
+                                height: 30,
                                 child: ListView.separated(
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) => ticketType(
@@ -283,50 +287,50 @@ class EventDetail extends GetView<EventDetailController> {
                                       controller.eventData.tickets.length,
                                 ),
                               ),
-                              const SizedBox(height: 28),
-                              Text(
-                                AppLocalizations.of(context)!.contact_organizer,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Get.theme.colorScheme.tertiary,
-                                ),
-                              ),
-                              const SizedBox(height: 24),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  GestureDetector(
-                                    onTap: () => Get.toNamed(
-                                      Routes.contactOrganizer,
-                                      arguments: false,
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.contact,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Get.theme.colorScheme.tertiary,
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Get.toNamed(
-                                      Routes.contactOrganizer,
-                                      arguments: true,
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.report,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Get.theme.colorScheme.tertiary,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              // const SizedBox(height: 28),
+                              // Text(
+                              //   AppLocalizations.of(context)!.contact_organizer,
+                              //   style: TextStyle(
+                              //     fontSize: 14,
+                              //     fontWeight: FontWeight.w500,
+                              //     color: Get.theme.colorScheme.tertiary,
+                              //   ),
+                              // ),
+                              // const SizedBox(height: 24),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceEvenly,
+                              //   children: [
+                              //     GestureDetector(
+                              //       onTap: () => Get.toNamed(
+                              //         Routes.contactOrganizer,
+                              //         arguments: false,
+                              //       ),
+                              //       child: Text(
+                              //         AppLocalizations.of(context)!.contact,
+                              //         style: TextStyle(
+                              //           fontSize: 14,
+                              //           fontWeight: FontWeight.w500,
+                              //           color: Get.theme.colorScheme.tertiary,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     GestureDetector(
+                              //       onTap: () => Get.toNamed(
+                              //         Routes.contactOrganizer,
+                              //         arguments: true,
+                              //       ),
+                              //       child: Text(
+                              //         AppLocalizations.of(context)!.report,
+                              //         style: TextStyle(
+                              //           fontSize: 14,
+                              //           fontWeight: FontWeight.w500,
+                              //           color: Get.theme.colorScheme.tertiary,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
                               const SizedBox(height: 24),
                               Text(
                                 AppLocalizations.of(context)!.about_event,
@@ -351,137 +355,11 @@ class EventDetail extends GetView<EventDetailController> {
                         ),
                       ],
                     ),
-                    Positioned(
-                      top: 200,
-                      child: Container(
-                        width: Get.width,
-                        alignment: Alignment.center,
-                        child: Container(
-                          width: Get.width * 0.75,
-                          height: 50,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 13,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Get.theme.colorScheme.secondary,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 76,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      left: 40,
-                                      top: 0,
-                                      child: Container(
-                                        width: 34,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://huntertalent.com.au/wp-content/uploads/2024/04/male-fashion-model-698x1024.jpg',
-                                            ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
-                                          ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 20,
-                                      child: Container(
-                                        width: 34,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://models.bestmodelsagency.com/recursos/clientes/F31110A5-6133-4F2E-96A8-927FA9485371/list.jpg?v1589811317?202410081559',
-                                            ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
-                                          ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: Container(
-                                        width: 34,
-                                        height: 34,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: const DecorationImage(
-                                            image: NetworkImage(
-                                              'https://huntertalent.com.au/wp-content/uploads/2024/04/hunter-talent-male-modelling-300x422.jpg',
-                                            ),
-                                            fit: BoxFit.fitWidth,
-                                            alignment: Alignment.topCenter,
-                                          ),
-                                          border: Border.all(
-                                            width: 1.42,
-                                            color:
-                                                Get.theme.colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Obx(
-                                () => Text(
-                                  controller.going.value != 0
-                                      ? '${controller.going}+ ${AppLocalizations.of(context)!.going}'
-                                      : '.....',
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xffEAE9FC),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => Get.toNamed(Routes.eventMember),
-                                child: Container(
-                                  width: 73,
-                                  height: 34,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Get.theme.colorScheme.primary,
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    AppLocalizations.of(context)!.see_all,
-                                    style: const TextStyle(
-                                      fontSize: 15,
-                                      color: Color(0xffEAE9FC),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    Obx(
+                      () => controller.attendees.isEmpty
+                          ? const SizedBox.shrink()
+                          : attendees(context: context),
+                    )
                   ],
                 ),
               ),
@@ -546,6 +424,145 @@ class EventDetail extends GetView<EventDetailController> {
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget attendees({required BuildContext context}) {
+    return Positioned(
+      top: 200,
+      child: Container(
+        width: Get.width,
+        alignment: Alignment.center,
+        child: Container(
+          width: Get.width * 0.75,
+          height: 50,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 13,
+            vertical: 8,
+          ),
+          decoration: BoxDecoration(
+            color: Get.theme.colorScheme.secondary,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 76,
+                child: Stack(
+                  children: [
+                    controller.attendees.length < 3
+                        ? const SizedBox(width: 34, height: 34)
+                        : Positioned(
+                            left: 40,
+                            top: 0,
+                            child: Container(
+                              width: 34,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Get.theme.colorScheme.secondary,
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    controller.attendees[2].profileUrl ??
+                                        'unknown',
+                                  ),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.topCenter,
+                                ),
+                                border: Border.all(
+                                  width: 1.42,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ),
+                          ),
+                    controller.attendees.length < 2
+                        ? const SizedBox(width: 34, height: 34)
+                        : Positioned(
+                            top: 0,
+                            left: controller.attendees.length != 2 ? 20 : 32,
+                            child: Container(
+                              width: 34,
+                              height: 34,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    controller.attendees[1].profileUrl ??
+                                        'unknown',
+                                  ),
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.topCenter,
+                                ),
+                                border: Border.all(
+                                  width: 1.42,
+                                  color: Get.theme.colorScheme.tertiary,
+                                ),
+                              ),
+                            ),
+                          ),
+                    Positioned(
+                      top: 0,
+                      left: controller.attendees.length != 1 ? 0 : 20,
+                      child: Container(
+                        width: 34,
+                        height: 34,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              controller.attendees[0].profileUrl ?? 'unknown',
+                            ),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
+                          ),
+                          border: Border.all(
+                            width: 1.42,
+                            color: Get.theme.colorScheme.tertiary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Text(
+                controller.attendeeNumber.isNotEmpty
+                    ? controller.attendeeNumber.value
+                    : 'Unknown',
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Get.theme.colorScheme.tertiary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              GestureDetector(
+                onTap: () => Get.toNamed(
+                  Routes.eventMember,
+                  arguments: controller.attendees,
+                ),
+                child: Container(
+                  width: 73,
+                  height: 34,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Get.theme.colorScheme.primary,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppLocalizations.of(context)!.see_all,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xffEAE9FC),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

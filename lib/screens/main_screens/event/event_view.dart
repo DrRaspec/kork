@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/middleware/middleware.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/screens/main/main_view.dart';
@@ -21,71 +23,71 @@ class EventView extends GetView<EventController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            controller.fetchAllCategoryEvents();
-            controller.fetchUpComingEvent();
-          },
-          child: Column(
-            children: [
-              const SizedBox(height: 17),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.events,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Get.theme.colorScheme.tertiary,
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(Routes.searchEvent),
-                      child: Icon(
-                        Icons.search,
-                        color: Get.theme.colorScheme.tertiary,
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: 22),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(Routes.filter),
-                      child: Icon(
-                        Icons.filter_list,
-                        color: Get.theme.colorScheme.tertiary,
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 24),
-                        _buildToggleBar(context),
-                        const SizedBox(height: 17),
-                        Obx(
-                          () => controller.isEvent.value
-                              ? _buildEventsView(context)
-                              : controller.upComingEvent.isEmpty
-                                  ? _buildNoUpcomingEventsView()
-                                  : _loadUpcomingEvent(),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) => controller.onPopResult(),
+      child: Scaffold(
+        body: SafeArea(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              controller.fetchAllCategoryEvents();
+              controller.fetchUpComingEvent();
+            },
+            child: Column(
+              children: [
+                const SizedBox(height: 17),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.events,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Get.theme.colorScheme.tertiary,
                         ),
-                      ],
-                    ),
+                      ),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.searchEvent),
+                        child: Icon(
+                          Icons.search,
+                          color: Get.theme.colorScheme.tertiary,
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 22),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(Routes.filter),
+                        child: Icon(
+                          Icons.filter_list,
+                          color: Get.theme.colorScheme.tertiary,
+                          size: 24,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              // const SizedBox(height: 70),
-            ],
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    children: [
+                      const SizedBox(height: 24),
+                      _buildToggleBar(context),
+                      const SizedBox(height: 17),
+                      Obx(
+                        () => controller.isEvent.value
+                            ? _buildEventsView(context)
+                            : controller.upComingEvent.isEmpty
+                                ? _buildNoUpcomingEventsView()
+                                : _loadUpcomingEvent(),
+                      ),
+                    ],
+                  ),
+                ),
+                // const SizedBox(height: 70),
+              ],
+            ),
           ),
         ),
       ),
@@ -98,7 +100,7 @@ class EventView extends GetView<EventController> {
       height: 39,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xff252525),
+        color: Get.theme.colorScheme.secondary,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Obx(
@@ -132,9 +134,11 @@ class EventView extends GetView<EventController> {
                         alignment: Alignment.center,
                         child: Text(
                           AppLocalizations.of(context)!.event,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xffEAE9FC),
+                            color: controller.isEvent.value
+                                ? const Color(0xffEAE9FC)
+                                : Get.theme.colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -152,9 +156,11 @@ class EventView extends GetView<EventController> {
                         alignment: Alignment.center,
                         child: Text(
                           AppLocalizations.of(context)!.up_coming,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xffEAE9FC),
+                            color: controller.isEvent.value == false
+                                ? const Color(0xffEAE9FC)
+                                : Get.theme.colorScheme.tertiary,
                           ),
                         ),
                       ),

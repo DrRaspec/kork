@@ -2,8 +2,12 @@ part of 'change_password_view.dart';
 
 class ChangePasswordController extends GetxController
     with GetTickerProviderStateMixin {
+  var argument = Get.arguments as Map;
+
   final newPassword = TextEditingController();
   final conNewPassword = TextEditingController();
+  String code = '';
+  String email = '';
 
   var passwordObsecure = true.obs;
   var passwordError = ''.obs;
@@ -17,9 +21,14 @@ class ChangePasswordController extends GetxController
   late AnimationController conPasswordShakeController;
   late Animation<double> conPasswordShakeAnimation;
 
+  var status = Status.none.obs;
+
   @override
   void onInit() {
     super.onInit();
+
+    code = argument['code'];
+    email = argument['email'];
 
     passwordFocus = FocusNode();
     conPasswordFocus = FocusNode();
@@ -47,6 +56,48 @@ class ChangePasswordController extends GetxController
     conPasswordShakeAnimation = Tween<double>(begin: 0, end: 1)
         .chain(CurveTween(curve: Curves.elasticIn))
         .animate(conPasswordShakeController);
+  }
+
+  void updatePassword() async {
+    status.value = Status.none;
+    try {
+      if (conPasswordError.isEmpty && passwordError.isEmpty) {
+        var formData = FormData.fromMap({
+          // '_method': 'PUT',
+          'email': email,
+          // 'code': code,
+          'password': newPassword.text,
+          'password_confirmation': conNewPassword.text,
+        });
+        status.value = Status.loading;
+        var response = await EventApiHelper.post(
+          '/password-reset',
+          data: formData,
+        );
+        if (response.statusCode == 200) {
+          status.value = Status.success;
+          var data = response.data as Map<String, dynamic>;
+          Get.offAllNamed(
+            Routes.login,
+          );
+          if (data.isNotEmpty) {
+            Get.snackbar('Success', 'Update Change Successfully');
+          }
+        }
+      }
+    } on DioException catch (e) {
+      status.value = Status.error;
+      var response = e.response;
+      var data = response?.data;
+      print('error: $data');
+      var errorMessage = '';
+      if (data is Map && data.containsKey('error')) {
+        errorMessage = data['error'];
+      } else {
+        errorMessage = 'fail to change new password';
+      }
+      Get.snackbar('Fail', errorMessage);
+    }
   }
 
   @override

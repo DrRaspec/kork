@@ -54,7 +54,7 @@ class ContactUsViewController extends GetxController {
   }
 
   Future<void> makePhoneCall() async {
-    const String phoneNumber = '+85596270654';
+    const String phoneNumber = '+85561214642';
     final Uri callUri = Uri.parse('tel:$phoneNumber');
 
     try {

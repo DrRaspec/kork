@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:kork/helper/event_api_helper.dart';
+import 'package:kork/helper/extension.dart';
 import 'package:kork/models/event_model.dart';
 import 'package:kork/routes/routes.dart';
 import 'package:kork/utils/status.dart';
@@ -20,7 +21,7 @@ class SeeAllView extends GetView<SeeAllViewController> {
         leading: buttonBack(),
         centerTitle: true,
         title: appbarTitle(
-          controller.title,
+          controller.title.firstCapitalize(),
         ),
       ),
       body: Obx(
@@ -67,7 +68,7 @@ class SeeAllView extends GetView<SeeAllViewController> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'No upcoming events',
+                    'No events',
                     style: TextStyle(fontSize: 18),
                   ),
                 ],
@@ -100,7 +101,7 @@ class SeeAllView extends GetView<SeeAllViewController> {
               itemCount: controller.eventData.length +
                   (controller.status.value == Status.loadingMore ? 1 : 0),
             );
-          } 
+          }
         },
       ),
     );

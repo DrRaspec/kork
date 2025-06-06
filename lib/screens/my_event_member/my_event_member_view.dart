@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kork/models/event_model.dart';
 import 'package:kork/widget/appBarHelper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -13,8 +14,11 @@ class MyEventMemberView extends GetView<MyEventMemberViewController> {
       appBar: AppBar(
         leading: buttonBack(),
         centerTitle: true,
-        title: appbarTitle(
-            '${controller.screenTitle} ${AppLocalizations.of(context)!.ticket}'),
+        title: Obx(
+          () => appbarTitle(controller.ticketType.isEmpty
+              ? ''
+              : '${controller.ticketType.value} ${AppLocalizations.of(context)!.ticket}'),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -36,6 +40,8 @@ class MyEventMemberView extends GetView<MyEventMemberViewController> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
+                var attendee = controller.matchAttendees[index];
+                var ticketQty = controller.ticketDetail[index];
                 return Row(
                   children: [
                     Container(
@@ -46,8 +52,15 @@ class MyEventMemberView extends GetView<MyEventMemberViewController> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Image.network(
-                        'https://hips.hearstapps.com/hmg-prod/images/wiz_khalifa_photo_by_phil_blatch_newspix_getty_461033569.jpg?crop=1xw:1.0xh;center,top&resize=640:*',
+                        attendee.profileUrl!,
                         fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Center(
+                          child: Icon(
+                            Icons.error,
+                            size: 18,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -57,14 +70,14 @@ class MyEventMemberView extends GetView<MyEventMemberViewController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Ma Nika',
+                            '${attendee.firstName} ${attendee.lastName}',
                             style: TextStyle(
                               fontSize: 12,
                               color: Get.theme.colorScheme.tertiary,
                             ),
                           ),
                           Text(
-                            'ma.nika@example.com',
+                            attendee.email,
                             style: TextStyle(
                               fontSize: 10,
                               color: Get.theme.colorScheme.surfaceTint,
@@ -73,11 +86,19 @@ class MyEventMemberView extends GetView<MyEventMemberViewController> {
                         ],
                       ),
                     ),
+                    const Spacer(),
+                    Text(
+                      ticketQty.qty.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Get.theme.colorScheme.tertiary,
+                      ),
+                    ),
                   ],
                 );
               },
               separatorBuilder: (context, index) => const SizedBox(height: 16),
-              itemCount: 5,
+              itemCount: controller.matchAttendees.length,
             ),
           ],
         ),

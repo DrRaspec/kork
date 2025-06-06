@@ -68,6 +68,8 @@ class AddEventViewController extends GetxController {
   var cardType = 'Visa'.obs;
   Timer? _debounceTimer;
 
+  var status = Status.none.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -77,6 +79,8 @@ class AddEventViewController extends GetxController {
     cardHolderFocus = FocusNode();
     ccvFocus = FocusNode();
     expireDateFocus = FocusNode();
+    categoryController.text =
+        AppLocalizations.of(Get.context!)!.sport.firstCapitalize();
   }
 
   @override
@@ -258,9 +262,11 @@ class AddEventViewController extends GetxController {
     );
 
     if (time != null) {
-      int hour24 = (time.hour % 12) + (time.period == DayPeriod.pm ? 12 : 0);
+      int hour24 = time.hour;
+
       String formattedTime =
-          '$hour24:${time.minute.toString().padLeft(2, '0')}';
+          '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}';
+      print('formatted time: $formattedTime');
 
       if (isStartTime) {
         startTimeController.text = formattedTime;
@@ -332,6 +338,9 @@ class AddEventViewController extends GetxController {
       nameError.value =
           '${AppLocalizations.of(Get.context!)!.name} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(nameError.value);
+      focusName.requestFocus();
+      return false;
     }
 
     // Validate Location
@@ -339,6 +348,9 @@ class AddEventViewController extends GetxController {
       locationError.value =
           '${AppLocalizations.of(Get.context!)!.location} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(locationError.value);
+      focusLocation.requestFocus();
+      return false;
     }
 
     // Validate Category
@@ -346,6 +358,9 @@ class AddEventViewController extends GetxController {
       categoryError.value =
           '${AppLocalizations.of(Get.context!)!.category} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(categoryError.value);
+      focusCategory.requestFocus();
+      return false;
     }
 
     // Validate Start Date
@@ -353,6 +368,9 @@ class AddEventViewController extends GetxController {
       startDateError.value =
           '${AppLocalizations.of(Get.context!)!.start_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(startDateError.value);
+      focusStartDate.requestFocus();
+      return false;
     }
 
     // Validate End Date
@@ -360,6 +378,9 @@ class AddEventViewController extends GetxController {
       endDateError.value =
           '${AppLocalizations.of(Get.context!)!.end_date} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(endDateError.value);
+      focusEndDate.requestFocus();
+      return false;
     }
 
     // Validate Start Time
@@ -367,6 +388,9 @@ class AddEventViewController extends GetxController {
       startTimeError.value =
           '${AppLocalizations.of(Get.context!)!.start_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(startTimeError.value);
+      focusStartTime.requestFocus();
+      return false;
     }
 
     // Validate End Time
@@ -374,6 +398,9 @@ class AddEventViewController extends GetxController {
       endTimeError.value =
           '${AppLocalizations.of(Get.context!)!.end_time} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(endTimeError.value);
+      focusEndTime.requestFocus();
+      return false;
     }
 
     // Validate Description
@@ -381,6 +408,16 @@ class AddEventViewController extends GetxController {
       descriptionError.value =
           '${AppLocalizations.of(Get.context!)!.description} ${AppLocalizations.of(Get.context!)!.cant_empty}';
       hasError = true;
+      showErrorSnackBar(descriptionError.value);
+      focusDescription.requestFocus();
+      return false;
+    }
+
+    // Validate Poster
+    if (selectedImage.value == null) {
+      hasError = true;
+      showErrorSnackBar('Event poster is required');
+      return false;
     }
 
     // Validate Ticket Types, Prices, and Quantities
@@ -396,123 +433,134 @@ class AddEventViewController extends GetxController {
       // Validate ticket price
       if (ticketPriceController[i].text.trim().isEmpty) {
         ticketPriceController[i].text = '0';
+        showErrorSnackBar('${types[i]} ticket price cannot be empty');
         hasError = true;
+        return false;
       } else {
         // Ensure price is a valid number
         if (double.tryParse(ticketPriceController[i].text) == null) {
           ticketPriceController[i].text = '0';
+          showErrorSnackBar('${types[i]} ticket price must be a valid number');
           hasError = true;
+          return false;
         }
       }
 
       // Validate ticket quantity
       if (ticketQuantityController[i].text.trim().isEmpty) {
         ticketQuantityController[i].text = '0';
+        showErrorSnackBar('${types[i]} ticket quantity cannot be empty');
         hasError = true;
+        return false;
       } else {
         // Ensure quantity is a valid integer
         if (int.tryParse(ticketQuantityController[i].text) == null) {
           ticketQuantityController[i].text = '0';
+          showErrorSnackBar(
+              '${types[i]} ticket quantity must be a valid number');
           hasError = true;
+          return false;
         }
       }
-    }
-
-    // Validate Poster
-    if (selectedImage.value == null) {
-      hasError = true;
-      Get.snackbar(
-        'Error',
-        'Event poster is required',
-        snackPosition: SnackPosition.TOP,
-      );
     }
 
     // Validate Card Number
     cardType.value = getCardType(cardNumberController.text.trim());
     if (cardNumberController.text.trim().isEmpty) {
       cardNumberError.value = true;
+      showErrorSnackBar('Card number cannot be empty');
       hasError = true;
+      cardNumberFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[0-9]{13,19}$').hasMatch(cardNumberController.text) ||
         cardType.value == 'Unknown') {
       cardNumberError.value = true;
+      showErrorSnackBar('Please enter a valid card number');
       hasError = true;
+      cardNumberFocus.requestFocus();
+      return false;
     }
 
     // Validate Card Holder
     if (cardHolderController.text.isEmpty) {
       cardHolderError.value = true;
+      showErrorSnackBar('Card holder name cannot be empty');
       hasError = true;
+      cardHolderFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[a-zA-Z\s\-]+$')
         .hasMatch(cardHolderController.text)) {
       cardHolderError.value = true;
+      showErrorSnackBar('Please enter a valid card holder name');
       hasError = true;
+      cardHolderFocus.requestFocus();
+      return false;
     }
 
     // Validate CCV
     if (ccvController.text.trim().isEmpty) {
       ccvError.value = true;
+      showErrorSnackBar('CCV cannot be empty');
       hasError = true;
+      ccvFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^[0-9]{3,4}$').hasMatch(ccvController.text)) {
       ccvError.value = true;
+      showErrorSnackBar('Please enter a valid CCV');
       hasError = true;
+      ccvFocus.requestFocus();
+      return false;
     }
 
     // Validate Expire Date
     if (expireDateController.text.trim().isEmpty) {
       expireDateError.value = true;
+      showErrorSnackBar('Expiration date cannot be empty');
       hasError = true;
+      expireDateFocus.requestFocus();
+      return false;
     } else if (!RegExp(r'^(0[1-9]|1[0-2])\/[0-9]{2}$')
         .hasMatch(expireDateController.text)) {
       expireDateError.value = true;
+      showErrorSnackBar('Please enter a valid expiration date (MM/YY)');
       hasError = true;
-    }
+      expireDateFocus.requestFocus();
+      return false;
+    } else {
+      // Check if the card is expired
+      try {
+        List<String> parts = expireDateController.text.split('/');
+        if (parts.length == 2) {
+          int expiryMonth = int.parse(parts[0]);
+          int expiryYear = int.parse('20${parts[1]}'); // Convert YY to 20YY
 
-    // Handle focus for first error field
-    if (hasError) {
-      Future.delayed(Duration.zero, () {
-        // Focus handling for various fields
-        if (nameError.isNotEmpty) {
-          focusName.requestFocus();
-        } else if (locationError.isNotEmpty) {
-          focusLocation.requestFocus();
-        } else if (categoryError.isNotEmpty) {
-          focusCategory.requestFocus();
-        } else if (startDateError.isNotEmpty) {
-          focusStartDate.requestFocus();
-        } else if (endDateError.isNotEmpty) {
-          focusEndDate.requestFocus();
-        } else if (startTimeError.isNotEmpty) {
-          focusStartTime.requestFocus();
-        } else if (endTimeError.isNotEmpty) {
-          focusEndTime.requestFocus();
-        } else if (descriptionError.isNotEmpty) {
-          focusDescription.requestFocus();
-        } else if (cardNumberError.value) {
-          cardNumberFocus.requestFocus();
-        } else if (cardHolderError.value) {
-          cardHolderFocus.requestFocus();
-        } else if (ccvError.value) {
-          ccvFocus.requestFocus();
-        } else if (expireDateError.value) {
-          expireDateFocus.requestFocus();
-        } else {
-          for (int i = 0; i < ticketCount; i++) {
-            if (ticketPriceController[i].text == '0') {
-              ticketPriceController[i].selection = TextSelection.fromPosition(
-                  TextPosition(offset: ticketPriceController[i].text.length));
-              break;
-            }
+          DateTime now = DateTime.now();
+          DateTime expiryDate = DateTime(
+              expiryYear, expiryMonth + 1, 0); // Last day of expiry month
+
+          if (expiryDate.isBefore(DateTime(now.year, now.month, 1))) {
+            expireDateError.value = true;
+            showErrorSnackBar('Card has expired');
+            hasError = true;
+            expireDateFocus.requestFocus();
+            return false;
           }
         }
-      });
-
-      cardType.value = 'Visa';
+      } catch (e) {
+        expireDateError.value = true;
+        showErrorSnackBar('Invalid expiration date');
+        hasError = true;
+        expireDateFocus.requestFocus();
+        return false;
+      }
     }
-    return !hasError;
+
+    // If we got here, all validations passed
+    return true;
   }
 
   void onSubmit() async {
+    status.value = Status.none;
     if (checkValidation()) {
       try {
         var formData = FormData.fromMap({
@@ -533,6 +581,9 @@ class AddEventViewController extends GetxController {
           'end_time': endTimeController.text,
         });
 
+        print('send start time: ${startTimeController.text}');
+        print('send end time: ${endTimeController.text}');
+
         int ticketCount =
             int.tryParse(selectedValue.value?.split(" ")[0] ?? "0") ?? 0;
 
@@ -547,6 +598,7 @@ class AddEventViewController extends GetxController {
 
         const storage = FlutterSecureStorage();
         var token = await storage.read(key: 'token') ?? 'error';
+        status.value = Status.loading;
         EventApiHelper.setToken(token);
         var response = await EventApiHelper.post('/events', data: formData);
 
@@ -554,6 +606,7 @@ class AddEventViewController extends GetxController {
         print('Response Data: ${response.data['errors']}');
 
         if (response.statusCode == 201 || response.statusCode == 200) {
+          status.value = Status.success;
           Get.snackbar(
             'Success',
             'Event created successfully',
@@ -561,14 +614,15 @@ class AddEventViewController extends GetxController {
             duration: const Duration(milliseconds: 800),
           );
         } else {
+          status.value = Status.error;
           String errorMessage =
               response.data['message'] ?? 'Event creation failed';
 
-          if (response.data['errors'] != null &&
-              response.data['errors'] is Map) {
-            errorMessage +=
-                "\n${(response.data['errors'] as Map).values.expand((e) => e).join("\n")}";
-          }
+          // if (response.data['errors'] != null &&
+          //     response.data['errors'] is Map) {
+          //   errorMessage +=
+          //       "\n${(response.data['errors'] as Map).values.expand((e) => e).join("\n")}";
+          // }
 
           Get.snackbar(
             'Error',
@@ -577,6 +631,7 @@ class AddEventViewController extends GetxController {
           );
         }
       } on DioException catch (e) {
+        status.value = Status.error;
         print('Dio Error: ${e.response?.data['errors']}');
         print('Error Message: ${e.message}');
         print('Status Code: ${e.response?.statusCode}');
@@ -584,11 +639,11 @@ class AddEventViewController extends GetxController {
         String errorMessage =
             e.response?.data['message'] ?? 'Event creation failed';
 
-        if (e.response?.data['errors'] != null &&
-            e.response?.data['errors'] is Map) {
-          errorMessage +=
-              "\n${(e.response?.data['errors'] as Map).values.expand((e) => e).join("\n")}";
-        }
+        // if (e.response?.data['errors'] != null &&
+        //     e.response?.data['errors'] is Map) {
+        //   errorMessage +=
+        //       "\n${(e.response?.data['errors'] as Map).values.expand((e) => e).toSet().join("\n")}";
+        // }
 
         Get.snackbar(
           'Error',

@@ -15,6 +15,8 @@ Widget filterCategories() {
     AppLocalizations.of(context)!.sport,
     AppLocalizations.of(context)!.concert,
     AppLocalizations.of(context)!.fashion,
+    AppLocalizations.of(context)!.innovation,
+    AppLocalizations.of(context)!.game,
   ];
   return ListView.separated(
     scrollDirection: Axis.horizontal,
@@ -22,21 +24,23 @@ Widget filterCategories() {
       return Obx(
         () => GestureDetector(
           onTap: () {
-            filterController.updateSelectCategory(
-              index + 1,
-            );
-            filterController.filterItem['categories'] = categories[index];
+            if (filterController.selectCategory.value == index) {
+              filterController.updateSelectCategory(index);
+            } else {
+              filterController.updateSelectCategory(index,
+                  categoryName: categories[index]);
+            }
           },
           child: Container(
             width: 133,
             height: 32,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: filterController.selectCategory.value == index + 1
+              color: filterController.selectCategory.value == index
                   ? Get.theme.colorScheme.primary
                   : Get.theme.colorScheme.filterBackground,
               border: Border.all(
-                color: filterController.selectCategory.value == index + 1
+                color: filterController.selectCategory.value == index
                     ? Get.theme.colorScheme.primary
                     : Get.theme.colorScheme.tertiary,
               ),
@@ -45,7 +49,7 @@ Widget filterCategories() {
               child: Text(
                 categories[index],
                 style: TextStyle(
-                  color: filterController.selectCategory.value == index + 1
+                  color: filterController.selectCategory.value == index
                       ? const Color(0xffEAE9FC)
                       : Get.theme.colorScheme.tertiary,
                   fontSize: 12,

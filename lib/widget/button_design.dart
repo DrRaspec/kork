@@ -4,14 +4,22 @@ import 'package:get/get.dart';
 import 'package:kork/utils/status.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Widget buttonDesign(
-    {required String text, String? image, Status status = Status.success}) {
+Widget buttonDesign({
+  required String text,
+  String? image,
+  Status status = Status.success,
+  double width = double.infinity,
+  double height = 38,
+  double radius = 5,
+  bool isKhmer = false,
+  double fontSize = 16,
+}) {
   return Container(
-    width: double.infinity,
-    height: 38,
+    width: width,
+    height: height,
     decoration: BoxDecoration(
       color: Get.theme.colorScheme.primary,
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(radius),
     ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,9 +39,10 @@ Widget buttonDesign(
         status == Status.success
             ? Text(
                 text,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Color(0xffEAE9FC),
+                style: TextStyle(
+                  fontSize: fontSize,
+                  fontWeight: isKhmer ? FontWeight.w900 : FontWeight.normal,
+                  color: const Color(0xffEAE9FC),
                 ),
               )
             : status != Status.error
@@ -46,9 +55,9 @@ Widget buttonDesign(
                   )
                 : Text(
                     AppLocalizations.of(Get.context!)!.retry,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xffEAE9FC),
+                    style: TextStyle(
+                      fontSize: fontSize,
+                      color: const Color(0xffEAE9FC),
                     ),
                   ),
       ],

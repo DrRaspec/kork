@@ -5,17 +5,27 @@ class CheckoutController extends GetxController {
   var ticketQuantity = <int>[].obs;
   var total = 0.0.obs;
   var isExpand = false.obs;
+  var discountPercent = 0.0.obs;
   var discountPrice = 0.0.obs;
   var boughtTicket = <dynamic>[].obs;
   var paymentStatus = false;
   var feePercent = 10.0;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
-    ticketQuantity.assignAll(List.generate(
-      data.tickets.length,
-      (index) => 0,
-    ));
+    // ticketQuantity.assignAll(List.generate(
+    //   data.tickets.length,
+    //   (index) => 0,
+    // ));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ticketQuantity.assignAll(List.generate(
+        data.tickets.length,
+        (index) => 0,
+      ));
+      calculateTotal();
+    });
     super.onInit();
   }
 
@@ -34,11 +44,15 @@ class CheckoutController extends GetxController {
   void calculateTotal() {
     double subtotal = 0.0;
     for (int i = 0; i < ticketQuantity.length; i++) {
-      subtotal += (ticketQuantity[i] * data.tickets[i].price);
+      subtotal += (ticketQuantity[i] * data.tickets[i].price!);
     }
-    total.value = (subtotal - discountPrice.value).roundToDouble();
-    total.value = (total.value * (1 + feePercent / 100)).roundToDouble();
-    print('total is: ${total.value}');
+    discountPrice.value = subtotal * (discountPercent.value / 100);
+    total.value = double.parse(
+      ((subtotal - discountPrice.value) * (1 + feePercent / 100))
+          .toStringAsFixed(2),
+    );
+
+    print('Total: ${total.value}, Discount: ${discountPrice.value}');
   }
 
   void toggleExpand() {
@@ -46,7 +60,7 @@ class CheckoutController extends GetxController {
   }
 
   void buyTicket() async {
-    if (paymentStatus == false) {
+    if (!paymentStatus) {
       Get.snackbar('Error', 'Please add payment method');
       return;
     }
@@ -62,10 +76,11 @@ class CheckoutController extends GetxController {
     try {
       EventApiHelper.setToken(token);
       var formData = FormData();
-
       int validTicketIndex = 0;
 
-      for (var i = 0; i < data.tickets.length; i++) {
+      // for (var i = 0; i < data.tickets.length; i++) {
+      for (var i = 0; i < ticketQuantity.length; i++) {
+        print('tickets quantity length ${ticketQuantity.length}');
         if (ticketQuantity[i] > 0) {
           formData.fields.addAll([
             MapEntry('tickets[$validTicketIndex][ticket_id]',
@@ -74,38 +89,42 @@ class CheckoutController extends GetxController {
                 ticketQuantity[i].toString()),
           ]);
           validTicketIndex++;
+          print('tickets quantity length $validTicketIndex');
         }
       }
 
-      formData.fields.add(MapEntry('payment_status', paymentStatus.toString()));
+      formData.fields
+          .add(MapEntry('payment_status', paymentStatus ? "1" : "0"));
 
       if (validTicketIndex == 0) {
         Get.snackbar('Error', 'Please select at least one ticket');
         return;
       }
-
+      isLoading.value = true;
       var response =
           await EventApiHelper.post('/events/$id/buy-tickets', data: formData);
+      isLoading.value = false;
 
       if (response.statusCode == 200) {
         boughtTicket.assignAll(response.data);
         Get.snackbar('Success', 'Tickets purchased successfully');
-        Get.toNamed(
-          Routes.yourTicket,
-          arguments: data,
-        );
+        Get.toNamed(Routes.yourTicket, arguments: boughtTicket);
+      } else {
+        Get.snackbar(
+            'Error', response.data['error'] ?? 'Failed to purchase tickets');
       }
     } on DioException catch (e) {
       print(e.message);
       print(e.response?.data);
       print(e.response?.statusCode);
+      isLoading.value = false;
       Get.snackbar(
-          'Error', e.response?.data['message'] ?? 'Failed to purchase tickets');
+          'Error', e.response?.data['error'] ?? 'Failed to purchase tickets');
     }
   }
 
   void selectPaymentMethod() async {
-    var result = await Get.toNamed(Routes.paymentMethod);
+    var result = await Get.toNamed(Routes.paymentMethod, arguments: true);
     if (result == true) {
       paymentStatus = true;
     }
@@ -113,11 +132,11 @@ class CheckoutController extends GetxController {
 
   void calculateDiscount() async {
     var result = await Get.toNamed(Routes.applyCoupon);
-    // var applyCouponController = Get.find<ApplyCouponViewController>();
     if (result != null) {
-      var discountPercent = result / 100;
-      discountPrice.value = (total.value * discountPercent).roundToDouble();
-      calculateTotal();
+      discountPercent.value = result.toDouble();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        calculateTotal();
+      });
     }
   }
 }

@@ -47,7 +47,13 @@ Widget eventTextField({
         suffixIcon: svgIcon != null
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: 11),
-                child: SvgPicture.asset(svgIcon),
+                child: SvgPicture.asset(
+                  svgIcon,
+                  colorFilter: ColorFilter.mode(
+                    Get.theme.colorScheme.tertiary,
+                    BlendMode.srcIn,
+                  ),
+                ),
               )
             : const SizedBox.shrink(),
       ),

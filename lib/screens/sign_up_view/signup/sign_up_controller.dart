@@ -33,6 +33,8 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
 
   final dio = Dio();
 
+  bool canSendOTP = true;
+
   @override
   void onInit() {
     super.onInit();
@@ -101,14 +103,14 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
   }
 
   Future<void> validateInput() async {
-    var url = dotenv.env['API_URL']!;
-    emailError.value = '';
-    passwordError.value = '';
-    confirmPasswordError.value = '';
-    bool hasError = false;
-    dio.interceptors.add(AppLogInterceptor());
     try {
-      status.value = Status.loading;
+      var url = dotenv.env['API_URL']!;
+      emailError.value = '';
+      passwordError.value = '';
+      confirmPasswordError.value = '';
+      bool hasError = false;
+      dio.interceptors.add(AppLogInterceptor());
+      // status.value = Status.loading;
       var response = await dio.post(
         '$url/check-email',
         data: {'email': emailController.text},
@@ -121,7 +123,7 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
       );
       var result = response.data as Map<String, dynamic>;
 
-      status.value = Status.success;
+      // status.value = Status.success;
 
       if (emailController.text.trim().isEmpty) {
         emailError.value =
@@ -185,20 +187,64 @@ class SignUpController extends GetxController with GetTickerProviderStateMixin {
     }
   }
 
+  // Future<bool> sendOTP() async {
+  //   if (!canSendOTP) {
+  //     Get.snackbar("Please wait", "You can request another OTP shortly");
+  //     return false;
+  //   }
+  //
+  //   try {
+  //     var body = {"email": emailController.text};
+  //     var response = await EventApiHelper.post("/send", data: body);
+  //     if (response.statusCode == 200) {
+  //       canSendOTP = false;
+  //       Future.delayed(const Duration(minutes: 1), () {
+  //         canSendOTP = true;
+  //       });
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } on DioException catch (e) {
+  //     var response = e.response;
+  //     Get.snackbar(
+  //       'Fail',
+  //       response == null ? 'fail to send OTP' : response.data['message'],
+  //     );
+  //     return false;
+  //   }
+  // }
+
   void onTap() async {
+    if (status.value == Status.loading) return;
+    status.value = Status.loading;
     await validateInput();
     if (emailError.isEmpty &&
         passwordError.isEmpty &&
         confirmPasswordError.isEmpty) {
-      Get.toNamed(Routes.verifyOtp, arguments: true);
+      var isSendOTP = await sendOTP(
+        canSendOTP: canSendOTP,
+        email: emailController.text,
+      );
+      if (isSendOTP) {
+        status.value = Status.success;
+        Get.toNamed(
+          Routes.verifyOtp,
+          arguments: {'isNew': true, 'email': emailController.text},
+        );
+      } else {
+        status.value = Status.error;
+      }
+    } else {
+      status.value = Status.error;
     }
   }
 
-  // void onChange(String value) {
-  //   if (debounce?.isActive ?? false) debounce?.cancel();
-  //   debounce = Timer(
-  //     const Duration(milliseconds: 200),
-  //     () => checkUniqueEmail(),
-  //   );
-  // }
+// void onChange(String value) {
+//   if (debounce?.isActive ?? false) debounce?.cancel();
+//   debounce = Timer(
+//     const Duration(milliseconds: 200),
+//     () => checkUniqueEmail(),
+//   );
+// }
 }

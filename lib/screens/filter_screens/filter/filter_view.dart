@@ -58,7 +58,7 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     SizedBox(
                       height: 32,
                       width: Get.width,
@@ -76,9 +76,10 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      spacing: 8,
                       children: [
                         Obx(
                           () => filterDateWidget(
@@ -102,9 +103,10 @@ class FilterView extends GetView<FilterController> {
                       () => InkWell(
                         splashFactory: NoSplash.splashFactory,
                         onTap: () async {
-                          if (controller.filterItem.containsKey('time_date')) {
+                          if (controller.filterItem.containsKey('date')) {
                             controller.pickedDate.value = DateTime.tryParse(
-                                controller.filterItem['time_date']);
+                              controller.filterItem['date'],
+                            );
                           }
                           controller.pickedDate.value = await showDatePicker(
                             context: context,
@@ -120,14 +122,12 @@ class FilterView extends GetView<FilterController> {
                             },
                           );
                           if (controller.pickedDate.value != null) {
-                            controller.filterItem['time_date'] =
+                            controller.filterItem['date'] =
                                 DateFormat('yyyy-MM-dd').format(
                               controller.pickedDate.value!,
                             );
                             controller.selectDate.value = '';
-                            print(
-                              controller.filterItem['time_date'],
-                            );
+                            print(controller.filterItem['date']);
                           }
                         },
                         child: Container(
@@ -177,97 +177,7 @@ class FilterView extends GetView<FilterController> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!.location,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Get.theme.colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    Obx(
-                      () => Material(
-                        child: InkWell(
-                          splashFactory: NoSplash.splashFactory,
-                          onTap: controller.navigateToFilterLocation,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Get.theme.colorScheme.tertiary,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                              color: Get.theme.colorScheme.filterBackground,
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 45,
-                                      decoration: BoxDecoration(
-                                        color: Get.theme.colorScheme.tertiary
-                                            .withOpacity(
-                                          .2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: Get.isDarkMode
-                                            ? Get.theme.colorScheme
-                                                .filterBackground
-                                            : const Color(0xffFAFAFA),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/image/svg/map-pin.svg',
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: ColorFilter.mode(
-                                        Get.theme.colorScheme.primary,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  controller.selectedLocation.value == ''
-                                      ? 'No location selected'
-                                      : controller.selectedLocation.value,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Get.theme.colorScheme.tertiary,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  size: 20,
-                                  color: Get.theme.colorScheme.primary,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 32),
                     Obx(
                       () => Column(
                         children: [
@@ -291,7 +201,7 @@ class FilterView extends GetView<FilterController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 75),
+                          const SizedBox(height: 24),
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -300,7 +210,7 @@ class FilterView extends GetView<FilterController> {
                                   values: controller.currentRange.value,
                                   min: controller.minPrice,
                                   max: controller.maxPrice,
-                                  divisions: 100, // Steps for smooth dragging
+                                  divisions: 100,
                                   activeColor: Colors.red,
                                   inactiveColor: Colors.red.withOpacity(0.3),
                                   labels: RangeLabels(
@@ -310,6 +220,10 @@ class FilterView extends GetView<FilterController> {
                                   onChanged: (RangeValues values) {
                                     if (values.end - values.start >= 10) {
                                       controller.currentRange.value = values;
+                                      controller.filterItem['min_price'] =
+                                          controller.currentRange.value.start;
+                                      controller.filterItem['max_price'] =
+                                          controller.currentRange.value.end;
                                     }
                                   },
                                 ),
@@ -335,16 +249,31 @@ class FilterView extends GetView<FilterController> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      controller.selectCategory.value = 0;
-                      controller.selectDate.value = '';
+                      if (controller.filterItem.containsKey('filter')) {
+                        controller.filterItem.remove('filter');
+                      }
+                      if (controller.filterItem.containsKey('date')) {
+                        controller.filterItem.remove('date');
+                      }
+                      // if (controller.filterItem.containsKey('min_price')) {
+                      //   controller.filterItem.remove('min_price');
+                      // }
+                      // if (controller.filterItem.containsKey('max_price')) {
+                      //   controller.filterItem.remove('max_price');
+                      // }
+                      controller.selectCategory.value = -1;
 
+                      controller.selectDate.value = '';
                       controller.pickedDate.value = null;
 
                       controller.currentRange.value = const RangeValues(20, 30);
 
-                      controller.filterItem.value = <String, dynamic>{};
+                      // controller.filterItem.clear();
+                      controller.filterItem['min_price'] = 20;
+                      controller.filterItem['max_price'] = 30;
 
                       controller.selectedLocation.value = '';
+                      print('filterItem: ${controller.filterItem}');
                     },
                     child: Container(
                       height: 34,
@@ -369,7 +298,13 @@ class FilterView extends GetView<FilterController> {
                 const SizedBox(width: 15),
                 Expanded(
                   child: GestureDetector(
-                    onTap: () => Get.toNamed(Routes.filtered),
+                    onTap: () {
+                      print('filterItem: ${controller.filterItem}');
+                      Get.toNamed(
+                        Routes.filtered,
+                        arguments: controller.filterItem,
+                      );
+                    },
                     child: Container(
                       height: 34,
                       decoration: BoxDecoration(

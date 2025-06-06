@@ -13,8 +13,8 @@ Widget settingList({
       children: [
         SvgPicture.asset(
           path,
-          width: 16,
-          height: 16,
+          width: 20,
+          height: 20,
           colorFilter: ColorFilter.mode(
             Get.theme.colorScheme.tertiary,
             BlendMode.srcIn,

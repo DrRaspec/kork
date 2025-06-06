@@ -11,7 +11,9 @@ class EventApiHelper {
       connectTimeout: const Duration(minutes: 1),
       receiveTimeout: const Duration(minutes: 1),
       headers: {
-        'X-Requested-With': 'XMLHttpRequest',
+        // 'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
     );
 
@@ -23,55 +25,78 @@ class EventApiHelper {
       {Map<String, dynamic>? params}) async {
     try {
       return await _dio.get(endpoint, queryParameters: params);
+    } on DioException {
+      rethrow;
     } catch (e) {
-      return _handleError(e);
+      return Response(
+        requestOptions: RequestOptions(path: endpoint),
+        statusCode: 500,
+        data: {'error': 'Unknown error: ${e.toString()}'},
+      );
     }
   }
 
   static Future<Response> post(String endpoint,
-      {dynamic data, bool isFormData = false}) async {
+      {dynamic data}) async {
     try {
       return await _dio.post(
         endpoint,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: data,
       );
+    } on DioException {
+      rethrow;
     } catch (e) {
-      return _handleError(e);
+      return Response(
+        requestOptions: RequestOptions(path: endpoint),
+        statusCode: 500,
+        data: {'error': 'Unknown error: ${e.toString()}'},
+      );
     }
   }
 
   static Future<Response> put(String endpoint,
-      {dynamic data, bool isFormData = false}) async {
+      {dynamic data}) async {
     try {
       return await _dio.put(
         endpoint,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: data,
       );
+    } on DioException {
+      rethrow;
     } catch (e) {
-      return _handleError(e);
+      return Response(
+        requestOptions: RequestOptions(path: endpoint),
+        statusCode: 500,
+        data: {'error': 'Unknown error: ${e.toString()}'},
+      );
     }
   }
 
   static Future<Response> delete(String endpoint) async {
     try {
       return await _dio.delete(endpoint);
+    } on DioException {
+      rethrow;
     } catch (e) {
-      return _handleError(e);
+      return Response(
+        requestOptions: RequestOptions(path: endpoint),
+        statusCode: 500,
+        data: {'error': 'Unknown error: ${e.toString()}'},
+      );
     }
   }
 
-  static Response _handleError(dynamic error) {
-    if (error is DioException) {
+  static Future<Response> logout() async {
+    try {
+      return await _dio.delete('/logout');
+    } on DioException {
+      rethrow;
+    } catch (e) {
       return Response(
-        requestOptions: RequestOptions(path: ''),
-        statusCode: error.response?.statusCode,
-        data: {'error': error.message},
+        requestOptions: RequestOptions(path: '/logout'),
+        statusCode: 500,
+        data: {'error': 'Unknown error: ${e.toString()}'},
       );
     }
-    return Response(
-      requestOptions: RequestOptions(path: ''),
-      statusCode: 500,
-      data: {'error': 'Unknown error'},
-    );
   }
 }

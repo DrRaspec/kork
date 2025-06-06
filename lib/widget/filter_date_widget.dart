@@ -11,35 +11,38 @@ Widget filterDateWidget(String text) {
     return const SizedBox();
   }
 
-  return GestureDetector(
-    onTap: () {
-      controller.pickedDate.value = null;
-      controller.updateSelectDate(text);
-      controller.filterItem['time_date'] = text;
-    },
-    child: Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 23,
-        vertical: 8,
-      ),
-      decoration: BoxDecoration(
-        color: isMatch
-            ? Get.theme.colorScheme.primary
-            : Get.theme.colorScheme.filterBackground,
-        border: Border.all(
+  return Expanded(
+    child: GestureDetector(
+      onTap: () {
+        controller.pickedDate.value = null;
+        controller.updateSelectDate(text);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          // horizontal: 23,
+          vertical: 8,
+        ),
+        decoration: BoxDecoration(
           color: isMatch
               ? Get.theme.colorScheme.primary
-              : Get.theme.colorScheme.tertiary,
+              : Get.theme.colorScheme.filterBackground,
+          border: Border.all(
+            color: isMatch
+                ? Get.theme.colorScheme.primary
+                : Get.theme.colorScheme.tertiary,
+          ),
+          borderRadius: BorderRadius.circular(8),
         ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: isMatch
-              ? const Color(0xffEAE9FC)
-              : Get.theme.colorScheme.tertiary,
-          fontSize: 15,
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isMatch
+                  ? const Color(0xffEAE9FC)
+                  : Get.theme.colorScheme.tertiary,
+              fontSize: 14,
+            ),
+          ),
         ),
       ),
     ),

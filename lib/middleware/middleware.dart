@@ -10,6 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
+    if (route == Routes.splashScreen) {
+      return null;
+    }
+
     final prefs = Get.find<SharedPreferences>();
     final isLoggedIn = prefs.getBool('isLoggin') ?? false;
 
@@ -23,6 +27,10 @@ class AuthMiddleware extends GetMiddleware {
 class NoAuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
+    if (route == Routes.splashScreen) {
+      return null;
+    }
+
     final prefs = Get.find<SharedPreferences>();
     final isLoggedIn = prefs.getBool('isLoggin') ?? false;
 
@@ -36,6 +44,12 @@ class NoAuthMiddleware extends GetMiddleware {
 class OnBoardingMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
+    if (route == Routes.splashScreen ||
+        route == Routes.chooseLanguage ||
+        route == Routes.firstOnBoarding) {
+      return null;
+    }
+
     final prefs = Get.find<SharedPreferences>();
 
     final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
@@ -45,9 +59,8 @@ class OnBoardingMiddleware extends GetMiddleware {
 
     final hasCompletedOnboarding =
         prefs.getBool('hasCompletedOnboarding') ?? false;
-    if (hasCompletedOnboarding) {
-      final isLoggedIn = prefs.getBool('isLoggin') ?? false;
-      return RouteSettings(name: isLoggedIn ? Routes.main : Routes.login);
+    if (!hasCompletedOnboarding) {
+      return const RouteSettings(name: Routes.firstOnBoarding);
     }
 
     return null;
@@ -81,10 +94,35 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
-    await storage.delete(key: 'token');
-    await storage.delete(key: 'id');
-    await setLoggedIn(false);
-    Get.offAllNamed(Routes.login);
+    try {
+      String url = dotenv.maybeGet('API_URL')!;
+      var token = await storage.read(key: 'token');
+      final dio = Dio()
+        ..interceptors.add(AppLogInterceptor())
+        ..options = BaseOptions(
+          baseUrl: url,
+          connectTimeout: const Duration(minutes: 1),
+          receiveTimeout: const Duration(minutes: 1),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': 'Bearer $token'
+          },
+        );
+      await dio.post('/logout');
+    } catch (_) {
+    } finally {
+      final hasCompletedOnboarding =
+          prefs.getBool('hasCompletedOnboarding') ?? false;
+      final hasSelectedLanguage = prefs.getBool('hasSelectedLanguage') ?? false;
+
+      await storage.deleteAll();
+      await prefs.clear();
+
+      await prefs.setBool('hasCompletedOnboarding', hasCompletedOnboarding);
+      await prefs.setBool('hasSelectedLanguage', hasSelectedLanguage);
+
+      Get.offAllNamed(Routes.login);
+    }
   }
 }
 
@@ -96,8 +134,7 @@ class ApiService extends GetxService {
   void onInit() {
     super.onInit();
     dio.interceptors.add(AppLogInterceptor());
-    dio.options.baseUrl =
-        dotenv.env['API_URL']!;
+    dio.options.baseUrl = dotenv.env['API_URL']!;
     dio.options.connectTimeout = const Duration(minutes: 1);
     dio.options.receiveTimeout = const Duration(minutes: 1);
 
