@@ -1,3 +1,1 @@
-## To run this app you need to run this command 
-## flutter pub get
-## flutter gen-l10nev
+## My first Flutter project it a bit laggy
